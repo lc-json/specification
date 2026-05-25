@@ -1,0 +1,8 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "specVersion": "1.0",
+  "title": "Missing documentType — invalid per §3.2",
+  "language": "en",
+  "supportLanguage": null,
+  "units": []
+}

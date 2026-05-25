@@ -1,0 +1,12 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.0",
+  "title": "Forward-compat: unknown optional field",
+  "language": "en",
+  "supportLanguage": null,
+  "units": [],
+  "x-future-extension": {
+    "comment": "Per NORMATIVE.md §5.4, consumers MUST NOT reject documents solely because they contain additional fields. Future minor versions may add optional fields without breaking 1.0 consumers."
+  }
+}

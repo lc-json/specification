@@ -1,0 +1,49 @@
+{
+  "type": "placement",
+  "globalId": "550e8400-e29b-41d4-a716-446655441720",
+  "title": "The Industrial Revolution and the Working Day — Place the Missing Paragraphs",
+  "tags": [
+    "exam:cae-part-7",
+    "history:industrial-revolution:labour",
+    "qualification:c1-advanced"
+  ],
+  "points": 12.0,
+  "difficulty": 7.0,
+  "hint": "Each missing paragraph develops a single argument — a cause, a counter-example, a turning point. Track the discourse markers at the start and end of each paragraph block, and the topic carried across paragraphs. The distractor is plausible on the topic but does not connect to the surrounding argument.",
+  "prompt": "Six paragraphs have been removed from this essay. Place each missing paragraph into the gap where it best fits. There is one extra paragraph you do not need.",
+  "placementUnit": "paragraph",
+  "passage": "Before the industrial revolution, most work in Europe followed the rhythms of daylight, the agricultural year, and a calendar of religious holidays. Labourers in the countryside might work from dawn until dusk in summer, but only a few hours a day in winter; they expected dozens of feast days off across the year, and the line between work and rest was set by custom rather than by a clock.\n\n@@@1\n\nThe factory changed all of this. Machines did not slow down at dusk, did not pause for harvest, and did not observe the church calendar. To make the most of expensive equipment, owners ran their mills as continuously as their workforce could endure, and they expected workers to fit themselves to the machine's tempo rather than the other way round.\n\n@@@2\n\nResistance was immediate, but for the first half of the nineteenth century it was largely defensive. Workers and their advocates argued that the new working day was inhuman, but they did not yet have legal tools to limit it. Children as young as seven worked twelve- or thirteen-hour shifts in some textile mills, and adult workers fared little better.\n\n@@@3\n\nA series of factory acts in Britain — beginning with the 1833 Factory Act and culminating in the 1847 Ten Hours Act — gradually rolled the working day back. The 1833 act limited the hours of children under thirteen and required some basic schooling; the 1847 act capped women's and young people's working day at ten hours, and in practice this often set a ceiling for everyone in the same factory.\n\n@@@4\n\nBy the 1870s, the demand had shifted from limiting hours to claiming them — the eight-hour day, with the rest of the day for rest and self-improvement. The slogan 'eight hours' work, eight hours' rest, eight hours' for what we will' captured a new conception of labour: no longer a way of life that absorbed the whole person, but one component of it, bounded by clocks the worker could read.\n\n@@@5\n\nWhat the nineteenth century invented was not, in the end, the long working day; that had always existed in agriculture. It was the working day as a measured, contractually-bounded unit, fenced off from leisure by a clock that everyone could see.\n\n@@@6\n\nThe history of the modern working day is therefore not a story of progressive shortening of inherently long labour, but of the slow construction of a boundary around work itself.",
+  "placements": [
+    {
+      "gap": 1,
+      "item": "This pre-industrial pattern was not idyllic — the work could be exhausting and the seasons unforgiving — but it was governed by external rhythms that everyone understood. The clock as we know it played almost no role; bells and the position of the sun marked time."
+    },
+    {
+      "gap": 2,
+      "item": "Workers were now expected to arrive on time, to remain at their station, and to keep working at a uniform pace for hours on end. The clock — installed prominently in factory yards and workshops — became the new arbiter of effort, and the foreman's role was largely to enforce its readings."
+    },
+    {
+      "gap": 3,
+      "item": "Reformers — clergy, doctors, sympathetic factory owners — described the human cost in vivid detail, but parliament was slow to act. The dominant economic doctrine held that any restriction on working hours would damage Britain's competitive position and ultimately harm workers themselves."
+    },
+    {
+      "gap": 4,
+      "item": "These laws did not abolish exploitation, and they applied unevenly across industries; agricultural and domestic workers were largely outside their scope. But they established a principle: the state could legitimately set limits on the working day, and a worker's time was not unconditionally for sale."
+    },
+    {
+      "gap": 5,
+      "item": "Trade unions in Britain, France, the United States, and Australia all rallied around this demand in the closing decades of the century, and by 1919 the International Labour Organization had adopted the eight-hour day as one of its founding principles."
+    },
+    {
+      "gap": 6,
+      "item": "That boundary turned out to be hard-won and reversible. Even today, the eight-hour day is contested in many sectors, and the rise of remote work and digital communication has blurred the very clock-line that the nineteenth century laboured to draw."
+    }
+  ],
+  "distractors": [
+    "The growth of the British railway network during the same period transformed the speed of long-distance travel. By the 1850s, journeys that had taken several days by stagecoach could be completed in hours, knitting the country into a single integrated market for goods, news, and people."
+  ],
+  "feedback": {
+    "correct": "Well done. The argument moves: pre-industrial rhythms (gap 1) → factory clock and the new tempo (gap 2) → early defensive resistance against long hours (gap 3) → factory acts as the legal turning point (gap 4) → eight-hour day demand and its international adoption (gap 5) → the historian's reframing in the conclusion (gap 6). The distractor about railways is true and contemporary but does not advance the essay's argument about working hours.",
+    "incorrect": "Read each missing paragraph as a self-contained move in the essay's argument and then check whether it answers the question raised by the paragraph above and sets up the paragraph below. Gap 4 should follow the description of the 1833 / 1847 acts and explain what they accomplished in principle; gap 5 should expand the eight-hour-day demand to its international adoption; the railways paragraph is the distractor — interesting but off-topic for an essay specifically about the working day."
+  }
+}

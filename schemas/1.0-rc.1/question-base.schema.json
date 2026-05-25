@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.1/question-base.schema.json",
+  "title": "LC-JSON Question Base Schema",
+  "description": "Common properties shared by all LC-JSON question types. Property order in the schema matches the canonical wire-format emit order so that conforming producers can use the schema as an authoring reference.",
+  "type": "object",
+  "required": [
+    "type",
+    "globalId",
+    "prompt"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Question type discriminator (slot 200, MUST be first property in JSON)",
+      "enum": [
+        "simpleGapFill",
+        "trueFalseQuestion",
+        "multipleChoice",
+        "wordBankCloze",
+        "multiGapCloze",
+        "multipleChoiceCloze",
+        "shortAnswer",
+        "essay",
+        "matching",
+        "ordering",
+        "association",
+        "hotspot",
+        "graphicGapMatch",
+        "graphicAssociate",
+        "graphicOrder",
+        "fileUpload",
+        "mediaPromptedEssay",
+        "sentenceTransformation",
+        "placement"
+      ]
+    },
+    "globalId": {
+      "type": "string",
+      "description": "Global unique identifier (Guid format) — slot 210",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+      "default": "00000000-0000-0000-0000-000000000000"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short title for admin/list views — slot 211",
+      "default": ""
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tag array for categorization — slot 213",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "points": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Points awarded for correct answer — slot 220",
+      "minimum": 0.0,
+      "default": 1.0
+    },
+    "difficulty": {
+      "type": "number",
+      "description": "Estimated difficulty for the intended learners (0.0 = extremely easy, 10.0 = extremely difficult) — slot 221",
+      "minimum": 0.0,
+      "maximum": 10.0,
+      "default": 5.0
+    },
+    "hint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional hint text — slot 230",
+      "default": null
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Main question text/prompt — slot 240",
+      "minLength": 1
+    },
+    "feedback": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Optional feedback bundle — slot 390 (trails everything)",
+      "properties": {
+        "correct": {
+          "type": "string",
+          "description": "Feedback shown when answer is correct",
+          "default": ""
+        },
+        "incorrect": {
+          "type": "string",
+          "description": "Feedback shown when answer is incorrect",
+          "default": ""
+        },
+        "choiceFeedback": {
+          "type": "object",
+          "description": "Per-choice feedback (key = choice identifier)",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        }
+      },
+      "default": null
+    },
+    "id": {
+      "type": "integer",
+      "description": "Pre-1.0 database ID (TD-110: dropped from wire; kept for backward-compat parsing of pre-Phase-2 exports).",
+      "minimum": 0,
+      "default": 0
+    },
+    "responseId": {
+      "type": "string",
+      "description": "Pre-1.0 response tracking identifier (TD-110: dropped from wire; kept for backward-compat parsing of pre-Phase-2 exports — see TD-111 for proper QTI export).",
+      "default": "RESPONSE"
+    }
+  }
+}

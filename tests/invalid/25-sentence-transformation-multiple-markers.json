@@ -1,0 +1,26 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: SentenceTransformation targetSentence has multiple @@@ markers",
+  "language": "en",
+  "questions": [
+    {
+      "type": "sentenceTransformation",
+      "globalId": "33333333-3333-4333-8333-333333333325",
+      "title": "ST with two @@@ markers",
+      "points": 2.0,
+      "difficulty": 5.0,
+      "prompt": "Complete the second sentence so that it has a similar meaning to the first, using the keyword.",
+      "promptSentence": "I haven't seen John for three weeks.",
+      "keyword": "LAST",
+      "targetSentence": "The @@@ was three @@@ ago.",
+      "allOrNothing": false,
+      "acceptedChunks": {
+        "1": ["last time I saw John"],
+        "2": ["weeks"]
+      },
+      "prohibitExtraWordsBetweenChunks": true
+    }
+  ]
+}

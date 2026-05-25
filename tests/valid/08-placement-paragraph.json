@@ -1,0 +1,28 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Placement — paragraph-mode conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "placement",
+      "globalId": "22222222-2222-4222-8222-222222222202",
+      "title": "Paragraph placement",
+      "points": 4.0,
+      "difficulty": 6.0,
+      "prompt": "Place each missing paragraph into the gap where it best fits.",
+      "placementUnit": "paragraph",
+      "passage": "Coined money had served European trade for centuries.\n\n@@@1\n\nWhat converted private bills into public currency was the cost of seventeenth-century war.\n\n@@@2\n\nBy the eighteenth century, paper notes circulated alongside coin in most major economies.",
+      "placements": [
+        { "gap": 1, "item": "But coin was heavy, easily counterfeited, and forever in short supply where mints were distant." },
+        { "gap": 2, "item": "Governments issued paper bills to pay armies, and merchants accepted them because the alternative was no payment at all." }
+      ],
+      "allowPartialCredit": true,
+      "feedback": {
+        "correct": "Yes.",
+        "incorrect": "Re-read the passage."
+      }
+    }
+  ]
+}

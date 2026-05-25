@@ -1,0 +1,188 @@
+{
+  "specVersion": "1.0",
+  "description": "LC-JSON 1.0 conformance test corpus. Conforming consumers MUST pass every valid case and fail every invalid case.",
+  "valid": [
+    {
+      "file": "valid/01-course-minimal.json",
+      "schema": "course.schema.json",
+      "demonstrates": ["§3.2 root fields", "§3.3 course artifact", "§4.4 camelCase property naming"]
+    },
+    {
+      "file": "valid/02-question-set-minimal.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": ["§3.2 root fields", "§3.3 questionSet artifact", "§4.2 canonical camelCase question discriminator"]
+    },
+    {
+      "file": "valid/03-unknown-optional-field.json",
+      "schema": "course.schema.json",
+      "demonstrates": ["§5.4 unknown fields ignored — forward-compat reservation"]
+    },
+    {
+      "file": "valid/04-reserved-question-type.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": ["§5.5 reserved enum values accepted on import", "§6 Reserved and unknown types — base case"]
+    },
+    {
+      "file": "valid/05-reserved-type-with-extensions.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": ["§6.4 round-trip preservation — reserved type with tool-specific extension fields (imageUrl, regions, correctRegionId) MUST be preserved verbatim across consumer read/write cycles"]
+    },
+    {
+      "file": "valid/06-html-with-video-track.json",
+      "schema": "course.schema.json",
+      "demonstrates": ["§10 + HTML_SAFETY.md §7 — <video> with captions <track>, conforming media handling (controls, poster, preload, no autoplay/loop)"]
+    },
+    {
+      "file": "valid/07-placement-sentence.json",
+      "schema": "placement.schema.json",
+      "demonstrates": ["placement.schema.json — sentence-mode placement with placements:[{gap, item}] and a distractor item"]
+    },
+    {
+      "file": "valid/08-placement-paragraph.json",
+      "schema": "placement.schema.json",
+      "demonstrates": ["placement.schema.json — paragraph-mode placement with @@@N markers alone on their paragraphs"]
+    },
+    {
+      "file": "valid/09-placement-section-label.json",
+      "schema": "placement.schema.json",
+      "demonstrates": ["placement.schema.json — sectionLabel-mode placement with markers at section starts (IELTS Matching Headings / analytical meta-labels)"]
+    },
+    {
+      "file": "valid/10-placement-toefl-decoy-gaps.json",
+      "schema": "placement.schema.json",
+      "demonstrates": ["placement.schema.json — TOEFL Sentence Insertion variant: 4 @@@N markers in passage but a single placements[] entry; the unanswered markers are valid decoy positions"]
+    },
+    {
+      "file": "valid/11-rtl-writing-systems.json",
+      "schema": "course.schema.json",
+      "demonstrates": ["ACCESSIBILITY.md §6.2 — `language` propagation and `dir` preservation on HTML-bearing fields", "HTML_SAFETY.md §3.1 — universal `lang`/`dir` attributes on inline (span) and block (blockquote) elements", "mixed-direction content: LTR document with embedded RTL spans + per-block RTL blockquotes across four major RTL writing systems (Arabic, Urdu, Persian, Hebrew)"]
+    },
+    {
+      "file": "valid/12-accessibility-round-trip.json",
+      "schema": "course.schema.json",
+      "demonstrates": ["NORMATIVE §12.1 — base-conformance accessibility-preservation floor: `alt` on `<img>`, `<track>` on `<video>`, `lang`/`dir` on HTML spans, document-root `language`/`supportLanguage`, and `x-`-namespaced accessibility metadata on a reserved-type question MUST all round-trip through any conforming consumer"]
+    }
+  ],
+  "invalid": [
+    {
+      "file": "invalid/01-missing-document-type.json",
+      "violatedClause": "§3.2",
+      "violation": "Missing required root field: documentType"
+    },
+    {
+      "file": "invalid/02-missing-spec-version.json",
+      "violatedClause": "§3.2",
+      "violation": "Missing required root field: specVersion"
+    },
+    {
+      "file": "invalid/04-pascal-case-question-type.json",
+      "violatedClause": "§4.2",
+      "violation": "Question type discriminator emitted in PascalCase ('TrueFalseQuestion') instead of canonical camelCase ('trueFalseQuestion')"
+    },
+    {
+      "file": "invalid/05-non-uuid-global-id.json",
+      "violatedClause": "§4.3",
+      "violation": "Question globalId is not a valid RFC 4122 UUID"
+    },
+    {
+      "file": "invalid/06-pascal-case-property.json",
+      "violatedClause": "§4.4",
+      "violation": "Property name emitted in PascalCase ('Title') instead of canonical camelCase ('title')"
+    },
+    {
+      "file": "invalid/07-spec-version-2-0.json",
+      "violatedClause": "§5.2",
+      "violation": "specVersion '2.0' has major version > 1; consumer MUST reject"
+    },
+    {
+      "file": "invalid/08-spec-version-malformed.json",
+      "violatedClause": "§3.2",
+      "violation": "specVersion 'one-point-zero' does not match the required pattern ^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+    },
+    {
+      "file": "invalid/09-uppercase-item-type.json",
+      "violatedClause": "§4.2",
+      "violation": "Item type discriminator emitted in uppercase ('CONTENT') instead of canonical lowercase ('content')"
+    },
+    {
+      "file": "invalid/10-wrapped-envelope.json",
+      "violatedClause": "§4.1",
+      "violation": "Document uses a wrapped envelope ({\"course\":{...}}) instead of the canonical flat root"
+    },
+    {
+      "file": "invalid/11-bare-payload.json",
+      "violatedClause": "§4.1",
+      "violation": "Document uses a bare payload (no documentType, no $schema) instead of the canonical flat root"
+    },
+    {
+      "file": "invalid/12-unit-missing-global-id.json",
+      "violatedClause": "§4.4",
+      "violation": "Unit is missing the required globalId field — every Unit/Lesson/Item/Question MUST carry a globalId for stable identity across re-imports"
+    },
+    {
+      "file": "invalid/13-html-with-script.json",
+      "violatedClause": "§11 + HTML_SAFETY.md §2.4 + §3.5",
+      "violation": "ContentItem.html contains a forbidden <script> element and an onclick event handler — both are XSS-class violations the consumer MUST reject"
+    },
+    {
+      "file": "invalid/14-placement-missing-placements.json",
+      "violatedClause": "placement.schema.json (required: placements)",
+      "violation": "placement question is missing the required placements[] array"
+    },
+    {
+      "file": "invalid/15-placement-empty-placements.json",
+      "violatedClause": "placement.schema.json (placements.minItems: 1)",
+      "violation": "placement.placements[] is an empty array; minItems is 1 (the TOEFL variant still requires at least one placement entry — the unanswered markers are decoy gaps, not zero placements)"
+    },
+    {
+      "file": "invalid/16-placement-orphan-gap.json",
+      "violatedClause": "placement domain rule (validate_course.py)",
+      "violation": "placements[].gap = 7 references a marker (@@@7) that is not present in passage; orphan placement entries fail validation"
+    },
+    {
+      "file": "invalid/17-placement-duplicate-gap.json",
+      "violatedClause": "placement domain rule (validate_course.py)",
+      "violation": "placements[] contains duplicate gap value (gap: 1 appears twice); each gap may only have one placement entry"
+    },
+    {
+      "file": "invalid/18-placement-bad-placement-unit.json",
+      "violatedClause": "placement.schema.json (placementUnit.enum)",
+      "violation": "placementUnit value 'word' is outside the enum — placement supports only 'sentence', 'paragraph', and 'sectionLabel'; word-level placement is covered by wordBankCloze"
+    },
+    {
+      "file": "invalid/19-placement-gap-as-string.json",
+      "violatedClause": "placement.schema.json (placements[].gap.type: integer)",
+      "violation": "placements[].gap is a string ('1') rather than an integer (1); the @@@N marker convention is integer-keyed"
+    },
+    {
+      "file": "invalid/20-missing-language.json",
+      "violatedClause": "question-set.schema.json (required: language) + ACCESSIBILITY.md §6.1 / WCAG 3.1.1 Language of Page",
+      "violation": "QuestionSet root is missing the required `language` field. As of rc.1, `language` is in the required[] list of both course.schema.json and question-set.schema.json because a delivering consumer needs it to set the rendering surface's `lang` attribute (WCAG 3.1.1) and to drive RTL detection. A document without root `language` cannot be rendered accessibly."
+    },
+    {
+      "file": "invalid/21-mcq-no-correct-option.json",
+      "violatedClause": "VALIDATION.md §9.3 (KG-3 closure) — multipleChoice domain rule (validate_course.py: validate_multiple_choice)",
+      "violation": "MultipleChoice with all-zero `optionsAndPoints` values. An MCQ MUST have at least one option with points > 0; otherwise no submission can earn credit. Surfaced as an ERROR by validate_course.py's validate_multiple_choice domain pass."
+    },
+    {
+      "file": "invalid/22-mcq-options-points-missing-entry.json",
+      "violatedClause": "VALIDATION.md §9.3 (KG-4 closure) — multipleChoice domain rule (validate_course.py: validate_multiple_choice)",
+      "violation": "MultipleChoice `optionsAndPoints` is missing an entry for the third option (`gamma`). Every value in `options` MUST appear as a key in `optionsAndPoints` so the consumer can score it deterministically."
+    },
+    {
+      "file": "invalid/23-word-bank-cloze-gap-count-mismatch.json",
+      "violatedClause": "VALIDATION.md §9.4 (KG-1 closure) — wordBankCloze domain rule (validate_course.py: validate_word_bank_cloze + _check_cloze_gap_consistency)",
+      "violation": "wordBankCloze passage contains @@@1, @@@2, @@@3 but `gapAcceptedAnswers` only has keys for gaps 1 and 2. The marker set in `passage` MUST equal the key set in `gapAcceptedAnswers`; otherwise the third gap has no accepted answer and the question cannot be graded."
+    },
+    {
+      "file": "invalid/24-multiple-choice-cloze-index-out-of-bounds.json",
+      "violatedClause": "VALIDATION.md §9.6 (KG-5 closure) — multipleChoiceCloze domain rule (validate_course.py: validate_multiple_choice_cloze)",
+      "violation": "multipleChoiceCloze `correctAnswers['1']` is 5 but `gapOptions['1']` has only 2 options (valid indices 0..1). The correctAnswers index MUST be within the bounds of the corresponding gapOptions array; otherwise no submission can match the correct answer."
+    },
+    {
+      "file": "invalid/25-sentence-transformation-multiple-markers.json",
+      "violatedClause": "VALIDATION.md §9.9 — sentenceTransformation domain rule (validate_course.py: validate_sentence_transformation)",
+      "violation": "SentenceTransformation `targetSentence` contains two `@@@` markers ('The @@@ was three @@@ ago.'). The convention is exactly one `@@@` regardless of `acceptedChunks` count — chunks are sequential answer pieces typed at that single position, not separate gaps. Multiple markers are ambiguous (which chunk goes where?) and are rejected with an ERROR."
+    }
+  ]
+}

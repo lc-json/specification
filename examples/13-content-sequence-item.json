@@ -1,0 +1,19 @@
+{
+  "type": "contentsequence",
+  "globalId": "6bdf394e-70bc-4bb4-ba76-26849b2898be",
+  "sequence": 3,
+  "title": "Immigration to the United States in the late 19th and early 20th centuries",
+  "tags": [
+    "history:immigration:united-states",
+    "grade:9"
+  ],
+  "instructions": "Read the article on immigration and complete the two exercises.",
+  "suggestedTime": 12,
+  "isOptional": false,
+  "contentItemId": "459200f8-0da7-429d-8f16-fa1cf30e8adf",
+  "layout": "Auto",
+  "relatedItemIds": [
+    "0211b07e-4dfe-4378-81b4-c6c9ebb39a40",
+    "8c761f85-a6c9-4f53-955c-27ce42c9e0f4"
+  ]
+}

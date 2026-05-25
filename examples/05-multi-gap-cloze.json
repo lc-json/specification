@@ -1,0 +1,65 @@
+{
+  "type": "multiGapCloze",
+  "globalId": "550e8400-e29b-41d4-a716-446655440005",
+  "title": "Prepositions - Open Cloze (FCE Reading Part 2 Style)",
+  "tags": [
+    "grammar:prepositions",
+    "exam:fce-reading-part2",
+    "level:B2",
+    "skill:context"
+  ],
+  "points": 8.0,
+  "difficulty": 6.0,
+  "hint": "Gap 1: direction/location preposition. Gap 2: surface preposition. Gap 3: proximity preposition. Gap 4: time phrase article. Gap 5: phrasal verb preposition.",
+  "prompt": "Complete the passage by filling in the blanks with ONE word only. No word bank is provided.",
+  "passage": "She walked @@@1 the park and sat @@@2 a bench @@@3 the lake. After @@@4 while, she took @@@5 her book and started reading. The peaceful atmosphere @@@6 the park helped her relax @@@7 a stressful day @@@8 work.",
+  "gapAcceptedAnswers": {
+    "1": [
+      "through",
+      "in",
+      "into",
+      "to"
+    ],
+    "2": [
+      "on"
+    ],
+    "3": [
+      "by",
+      "near",
+      "beside",
+      "next to"
+    ],
+    "4": [
+      "a"
+    ],
+    "5": [
+      "out"
+    ],
+    "6": [
+      "of",
+      "in"
+    ],
+    "7": [
+      "after"
+    ],
+    "8": [
+      "at"
+    ]
+  },
+  "gapCaseSensitive": null,
+  "gapFeedback": {
+    "1": "Direction or location: 'through' (moving across), 'in/into' (entering), or 'to' (going towards) all work here.",
+    "2": "We sit ON horizontal surfaces like benches, chairs, or sofas.",
+    "3": "Proximity prepositions: 'by', 'near', 'beside', 'next to' all indicate being close to something.",
+    "4": "The fixed phrase is 'after A while' (not 'after the while').",
+    "5": "Phrasal verb: 'take OUT' = remove something from a container.",
+    "6": "'The atmosphere OF the park' or 'IN the park' both work grammatically.",
+    "7": "'After a stressful day' - time preposition.",
+    "8": "'At work' is a fixed collocation meaning 'at one's workplace'."
+  },
+  "allowPartialCredit": true,
+  "feedback": {
+    "correct": "Excellent work! You've successfully identified all the correct prepositions and function words from context. This demonstrates strong grammatical awareness and reading comprehension at B2 level.",
+    "incorrect": "Review the passage carefully. Think about common preposition collocations: 'walk through/in/into the park', 'sit on a bench', 'by/near/beside the lake', 'after a while', 'take out'. Context is key!"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.0",
+  "title": "Accessibility Round-Trip Preservation",
+  "description": "Demonstrates NORMATIVE §12.1 — the accessibility-preservation floor required of every conforming consumer. A consumer that ingests this document and re-emits it MUST preserve: `alt` on `<img>`, `<track>` on `<video>`, `lang` and `dir` on HTML spans, the document-root `language` and `supportLanguage`, and any `x-`-namespaced accessibility metadata on reserved-type questions.",
+  "language": "en",
+  "supportLanguage": "es",
+  "units": [
+    {
+      "globalId": "12121212-aaaa-4aaa-aaaa-121212121212",
+      "title": "Round-trip preservation showcase",
+      "sequence": 0,
+      "lessons": [
+        {
+          "globalId": "23232323-aaaa-4aaa-aaaa-232323232323",
+          "title": "Accessibility affordances that must survive",
+          "sequence": 0,
+          "items": [
+            {
+              "type": "content",
+              "globalId": "34343434-aaaa-4aaa-aaaa-343434343434",
+              "title": "Mixed accessible content",
+              "sequence": 0,
+              "html": "<p>This block carries an image with descriptive alt text, a captioned video, and an inline Arabic span.</p><p><img src=\"https://example.com/water-cycle.png\" alt=\"A diagram of the water cycle: evaporation rising from the ocean, condensation forming clouds, precipitation falling as rain.\"></p><p><video controls width=\"640\" poster=\"https://example.com/intro-poster.jpg\"><source src=\"https://example.com/intro.mp4\" type=\"video/mp4\"><track kind=\"captions\" src=\"https://example.com/intro.en.vtt\" srclang=\"en\" label=\"English\" default></video></p><p>The Arabic word for \"language\" is <span lang=\"ar\" dir=\"rtl\">لغة</span>.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "45454545-aaaa-4aaa-aaaa-454545454545",
+              "title": "Reserved-type with accessibility extension",
+              "sequence": 1,
+              "instructions": "Reserved-type questions are preserved verbatim by conforming consumers, including their `x-`-namespaced accessibility metadata.",
+              "isGraded": false,
+              "questions": [
+                {
+                  "type": "hotspot",
+                  "globalId": "56565656-aaaa-4aaa-aaaa-565656565656",
+                  "title": "Identify the cell nucleus",
+                  "tags": ["subject:biology"],
+                  "points": 2.0,
+                  "difficulty": 4.0,
+                  "prompt": "Click the cell nucleus in the diagram.",
+                  "imageUrl": "https://example.com/cell-diagram.png",
+                  "regions": [
+                    {"id": "nucleus", "shape": "circle", "cx": 200, "cy": 150, "r": 40},
+                    {"id": "mitochondria", "shape": "ellipse", "cx": 100, "cy": 220, "rx": 30, "ry": 18}
+                  ],
+                  "correctRegionId": "nucleus",
+                  "x-acme-altDescriptions": {
+                    "nucleus": "The dense round structure near the centre of the cell, containing the genetic material.",
+                    "mitochondria": "Bean-shaped organelles distributed throughout the cell, responsible for energy production."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# LC-JSON reference Python tools — runtime dependencies
+#
+# validate_course.py uses jsonschema for primary schema validation.
+# run_corpus.py (the conformance corpus harness) wraps validate_course.py
+# and adds no dependencies of its own.
+#
+# Install:
+#     pip install -r tools/requirements.txt
+#
+# Or, outside a virtualenv:
+#     pip install --user -r tools/requirements.txt
+
+jsonschema>=4.18

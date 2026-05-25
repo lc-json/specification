@@ -1,0 +1,100 @@
+name: Build and deploy spec site
+
+# Builds the mdBook site from src/, copies schemas/examples/tests/tools
+# alongside, and publishes the result to the gh-pages branch.
+#
+# Triggers: push to main, plus manual run via workflow_dispatch.
+#
+# Pages serves https://lc-json.org from the gh-pages branch.
+# Schemas resolve at https://lc-json.org/<version>/<file>.schema.json
+# (currently /1.0-rc.1/ for the rc.1 publication; /1.0/ once 1.0 final ships).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write    # needed for peaceiris/actions-gh-pages to push
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  conformance:
+    # Runs the LC-JSON conformance corpus on every push and PR. The site
+    # build job depends on this so a corpus regression blocks deployment.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install validator dependencies
+        run: pip install -r tools/requirements.txt
+
+      - name: Run conformance corpus (strict)
+        run: python tools/run_corpus.py
+
+  build-and-deploy:
+    needs: conformance
+    # Only deploy on push to main; PRs run the build for verification only.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: 'latest'
+
+      - name: Build mdBook
+        run: mdbook build
+
+      # Copy schemas into the published output so they resolve at
+      # lc-json.org/1.0-rc.1/*.schema.json (the URL embedded in every
+      # conforming rc.1 JSON file's $schema field). The /1.0/ URL
+      # path is reserved for 1.0 final per NORMATIVE.md §8.3.
+      - name: Copy schemas to book output
+        run: |
+          mkdir -p book/1.0-rc.1
+          cp -v schemas/1.0-rc.1/*.schema.json book/1.0-rc.1/
+
+      # Copy examples, tests, and tools so they're browseable at
+      # lc-json.org/<path>/. Documents in src/ link to these.
+      - name: Copy examples to book output
+        run: cp -rv examples book/examples
+
+      - name: Copy conformance tests to book output
+        run: cp -rv tests book/tests
+
+      - name: Copy reference tools to book output
+        run: cp -rv tools book/tools
+
+      # Verify the schemas are reachable at the canonical paths.
+      - name: Verify schema URL paths
+        run: |
+          test -f book/1.0-rc.1/course.schema.json || (echo "ERROR: course.schema.json missing from book/1.0-rc.1/" && exit 1)
+          test -f book/1.0-rc.1/question-set.schema.json || (echo "ERROR: question-set.schema.json missing from book/1.0-rc.1/" && exit 1)
+          schema_count=$(ls book/1.0-rc.1/*.schema.json | wc -l)
+          echo "Schemas at /1.0-rc.1/: $schema_count files"
+          test "$schema_count" -ge 23 || (echo "ERROR: expected ≥23 schemas, got $schema_count" && exit 1)
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
+          publish_branch: gh-pages
+          cname: lc-json.org
+          force_orphan: true
+          commit_message: "deploy: ${{ github.event.head_commit.message }}"

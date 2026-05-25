@@ -1,0 +1,39 @@
+# Governance
+
+## Stewardship
+
+LC-JSON (Learning Content JSON) is currently maintained by **Brent Miller**, the originator of the specification. The project operates under a benevolent-dictator model: substantive proposals are reviewed and accepted, modified, or rejected by the maintainer, with deliberations conducted publicly via GitHub Issues and Discussions on this repository.
+
+This is a single-maintainer steward model. It is appropriate for a specification at its early stage — one originator, no working group, a small but growing community of implementers. It is not a permanent posture.
+
+## How decisions are made
+
+| Change type | Process |
+|---|---|
+| Typo, broken link, formatting | PR welcome directly. Merged quickly. |
+| Schema or example bug fix | Open an issue describing the bug and a test case (positive or negative) demonstrating it. PR welcome alongside or after the issue. |
+| New question type | Open an issue first describing the type, its scoring semantics, and the audience (which exam, which level, which subject). A reference schema, an example, and conformance test cases are required before merge. |
+| Breaking change to existing schemas | Strongly discouraged within a major version (see `NORMATIVE.md` §8). Requires a new minor or major version with a new URL path. Open an issue to discuss before any PR. |
+| Process or governance change | Open an issue. Substantial changes will be discussed publicly before being adopted. |
+
+Substantive proposals (anything beyond a typo or non-normative fix) are documented in `proposals/` (added when the first such RFC lands) as one-page RFCs with a clear status line: `draft`, `accepted`, or `rejected`.
+
+## Working group
+
+A formal working group will be considered when **at least two independent third-party implementations of LC-JSON exist and are in active use**. "Independent" means not built or maintained by the same organisation that originated the specification.
+
+Until that threshold is met, decisions remain with the maintainer. Forks are permitted under the Apache 2.0 license; community input is welcomed via Issues and Discussions, but accepted changes are at the maintainer's discretion.
+
+Once the threshold is met, the maintainer will publish a transition plan: charter, working-group composition criteria, decision-making process, and (if appropriate) custodial handoff to a foundation or neutral steward.
+
+## Trademark and naming
+
+"Lesson Commons" is a trademark of Brent Miller and is **not asserted** over the LC-JSON specification, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation. Implementers may state conformance freely.
+
+The specification's name and canonical URL (`lc-json.org`) are not vendor-coupled by design. If stewardship of LC-JSON ever passes to a foundation, working group, or successor maintainer, the name and URL travel with the specification, not with any sponsoring organisation.
+
+## Contact
+
+- **Issues and proposals:** open an issue on this repository.
+- **Conformance questions:** consult [`NORMATIVE.md`](NORMATIVE.md); it is the authoritative source for implementer requirements.
+- **Maintainer correspondence:** via GitHub.

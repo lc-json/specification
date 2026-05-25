@@ -1,0 +1,27 @@
+{
+  "type": "ordering",
+  "globalId": "550e8400-e29b-41d4-a716-446655441640",
+  "title": "Paper Currency in Europe — Order the Argument",
+  "tags": [
+    "history:economic-history:europe",
+    "qualification:a-level",
+    "bloom:analyze"
+  ],
+  "points": 4.0,
+  "difficulty": 7.0,
+  "hint": "Look for the structural cues — which paragraph states the thesis, which sets up historical background, which moves to a specific case, and which generalises again at the end.",
+  "prompt": "Rearrange these four paragraphs of a short essay into the correct order — introduction, background, central case, conclusion.",
+  "sourceText": "For most of European history, money meant coin: gold, silver, copper struck with a sovereign's mark and weighed by hand. The shift to paper currency, completed only in the eighteenth century, reshaped both finance and the relationship between citizen and state. This essay argues that paper notes were adopted not for their convenience to traders, but because warfare made the movement of coin impossibly slow.\n\nCoined money had served European trade for centuries, but it carried hidden costs. Coins debased in transit, precious metals had to be assayed, and long-distance shipments required armed escort. By 1600, Italian and Dutch merchants were already settling balances on paper through bills of exchange — a trader's IOU rather than a sovereign's coin. The infrastructure of paper credit existed long before paper currency did.\n\nWhat converted private bills into public currency was the cost of seventeenth-century war. The Bank of England, founded in 1694 to fund William III's campaigns against France, issued notes that the Crown promised to redeem in gold. Other states soon followed: Sweden's Riksbank had experimented with notes in the 1660s; France's Banque Royale appeared in 1716. In each case, the trigger was a treasury that could not move coin fast enough to pay troops in the field.\n\nPaper currency, then, did not emerge as a clever convenience for shoppers. It emerged as a fiscal weapon. Once a state could print credit against future taxes, it could fight longer, project power further, and bind its merchants more tightly to the political order. The notes in our wallets descend from that wartime expedient — a reminder that ordinary monetary instruments often carry political DNA.",
+  "items": [
+    "For most of European history, money meant coin: gold, silver, copper struck with a sovereign's mark and weighed by hand. The shift to paper currency, completed only in the eighteenth century, reshaped both finance and the relationship between citizen and state. This essay argues that paper notes were adopted not for their convenience to traders, but because warfare made the movement of coin impossibly slow.",
+    "Coined money had served European trade for centuries, but it carried hidden costs. Coins debased in transit, precious metals had to be assayed, and long-distance shipments required armed escort. By 1600, Italian and Dutch merchants were already settling balances on paper through bills of exchange — a trader's IOU rather than a sovereign's coin. The infrastructure of paper credit existed long before paper currency did.",
+    "What converted private bills into public currency was the cost of seventeenth-century war. The Bank of England, founded in 1694 to fund William III's campaigns against France, issued notes that the Crown promised to redeem in gold. Other states soon followed: Sweden's Riksbank had experimented with notes in the 1660s; France's Banque Royale appeared in 1716. In each case, the trigger was a treasury that could not move coin fast enough to pay troops in the field.",
+    "Paper currency, then, did not emerge as a clever convenience for shoppers. It emerged as a fiscal weapon. Once a state could print credit against future taxes, it could fight longer, project power further, and bind its merchants more tightly to the political order. The notes in our wallets descend from that wartime expedient — a reminder that ordinary monetary instruments often carry political DNA."
+  ],
+  "scoringMode": "kendall",
+  "orderingUnit": "paragraph",
+  "feedback": {
+    "correct": "Well argued. The essay opens with a thesis (warfare, not convenience, drove paper currency), retreats to the deeper background of pre-existing paper credit, advances to the specific case of seventeenth-century state banks, and closes by generalising the political-economic claim. Recognising that arc — thesis → background → case → conclusion — is the comprehension goal here.",
+    "incorrect": "Look for argumentative position rather than chronology alone. The opening paragraph names the claim explicitly ('this essay argues…'); the background paragraph explains what already existed; the case paragraph names institutions and dates; the conclusion generalises ('Paper currency, then…'). Chronology alone would put the medieval bills before the thesis — but in essay structure, the thesis must come first."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Reserved question type — accepted on import",
+  "language": "en",
+  "questions": [
+    {
+      "type": "association",
+      "globalId": "22222222-2222-4222-8222-222222222222",
+      "title": "Reserved type placeholder",
+      "tags": [],
+      "points": 1.0,
+      "difficulty": 1.0,
+      "prompt": "Per NORMATIVE.md §6 (Reserved and unknown types), consumers MUST accept reserved question types declared in question-base.schema.json's enum even when no per-type schema ships. The consumer MUST preserve the question verbatim across read/write cycles, MUST NOT silently drop it, and MUST treat its earned points as zero; the consumer MAY refuse to render or grade but MUST NOT reject the document on import for that reason alone."
+    }
+  ]
+}

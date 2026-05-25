@@ -1,0 +1,15 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "sourceQuestionSetId": "550e8400-e29b-41d4-a716-446655442001",
+  "version": "1.2",
+  "title": "Hybrid Engines — Unit Review",
+  "description": "A unit review question bank for an automotive vocational training module on hybrid engines and powertrains.",
+  "language": "en",
+  "tags": [
+    "vocational",
+    "automotive:hybrid-powertrains"
+  ],
+  "questions": []
+}

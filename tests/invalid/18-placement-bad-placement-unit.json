@@ -1,0 +1,22 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: placementUnit value is outside the enum",
+  "language": "en",
+  "questions": [
+    {
+      "type": "placement",
+      "globalId": "33333333-3333-4333-8333-333333333318",
+      "title": "Bad placementUnit",
+      "points": 2.0,
+      "difficulty": 5.0,
+      "prompt": "Place the items.",
+      "placementUnit": "word",
+      "passage": "alpha @@@1 beta",
+      "placements": [
+        { "gap": 1, "item": "x" }
+      ]
+    }
+  ]
+}

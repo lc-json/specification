@@ -1,0 +1,9 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "2.0",
+  "title": "Future spec version — invalid for 1.0 consumers per §5.2",
+  "language": "en",
+  "supportLanguage": null,
+  "units": []
+}

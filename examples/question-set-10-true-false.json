@@ -1,0 +1,193 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "sourceQuestionSetId": "550e8400-e29b-41d4-a716-446655442300",
+  "version": "1.0",
+  "title": "World Facts — 10 True/False",
+  "description": "A richer LC-JSON question-set example: 10 standalone trueFalseQuestion entries spanning geography, science, history, and common misconceptions. Each question carries hint text, per-question feedback, and topic tags. Use this as a template for hand-authored TF banks targeting the QuestionSet artifact.",
+  "language": "en",
+  "tags": [
+    "trivia",
+    "subject:general-knowledge"
+  ],
+  "questions": [
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442301",
+      "title": "Earth's Natural Satellites",
+      "tags": [
+        "subject:astronomy"
+      ],
+      "points": 1.0,
+      "difficulty": 1.0,
+      "hint": "Earth has only one body that orbits it naturally. Other planets like Mars (Phobos, Deimos) or Jupiter have many.",
+      "prompt": "The Earth has only one natural satellite.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — the Moon is Earth's only natural satellite. (Several thousand artificial satellites also orbit Earth, but those don't count as 'natural'.)",
+        "incorrect": "Actually true. The Moon is Earth's only natural satellite. You may be thinking of artificial satellites — there are thousands of those — but Earth has just one natural moon."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442302",
+      "title": "Tallest Mountain on Earth",
+      "tags": [
+        "subject:geography"
+      ],
+      "points": 1.0,
+      "difficulty": 6.0,
+      "hint": "Be careful with the wording: 'tallest base-to-peak' is not the same as 'highest above sea level'.",
+      "prompt": "Mount Everest is the tallest mountain on Earth when measured from base to peak.",
+      "correctAnswer": false,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — Everest has the highest peak above sea level (8,849 m), but Mauna Kea in Hawaii is the tallest from base to peak: about 10,200 m, with most of it underwater.",
+        "incorrect": "Actually false. Everest is the highest peak above sea level, but Mauna Kea (Hawaii) is taller measured base-to-peak — around 10,200 m, with most of it submerged."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442303",
+      "title": "Australia: Country and Continent",
+      "tags": [
+        "subject:geography"
+      ],
+      "points": 1.0,
+      "difficulty": 3.0,
+      "prompt": "Australia is both a country and a continent.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — Australia is unique in this regard. The country occupies the entire continental landmass.",
+        "incorrect": "Actually true. Australia is one of the seven continents and the country covers the whole continental landmass."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442304",
+      "title": "First People in the Americas",
+      "tags": [
+        "subject:history"
+      ],
+      "points": 1.0,
+      "difficulty": 5.0,
+      "hint": "Distinguish 'first humans' from 'first Europeans'. Look much further back than the medieval period.",
+      "prompt": "The first people to reach the Americas were the Vikings, led by Leif Erikson, who landed in Newfoundland around 1000 CE.",
+      "correctAnswer": false,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "That's right — the Vikings (Leif Erikson at L'Anse aux Meadows, ~1000 CE, documented in archaeology and the Vinland Sagas) were the first known *Europeans*, not the first people. Indigenous peoples migrated from Asia via Beringia at least 15,000 years ago — possibly ~23,000 (White Sands footprints, New Mexico).",
+        "incorrect": "Actually false. The Vikings (Leif Erikson, L'Anse aux Meadows, ~1000 CE) were the first known *Europeans* in the Americas, but Indigenous peoples had been there for at least 15,000 years — possibly ~23,000 — having crossed from Asia via Beringia."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442305",
+      "title": "Lightning Strikes",
+      "tags": [
+        "subject:meteorology"
+      ],
+      "points": 1.0,
+      "difficulty": 4.0,
+      "prompt": "Lightning never strikes the same place twice.",
+      "correctAnswer": false,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — this is a folk saying, not a fact. Tall structures like the Empire State Building are struck dozens of times per year.",
+        "incorrect": "Actually false. The saying is folklore. Tall objects (skyscrapers, mountain peaks, lightning rods) are routinely struck multiple times — the Empire State Building is hit 20-25 times a year on average."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442306",
+      "title": "Speed of Sound in Water",
+      "tags": [
+        "subject:physics"
+      ],
+      "points": 1.0,
+      "difficulty": 5.0,
+      "hint": "Sound travels faster through denser media because the molecules are closer together and pass vibrations on more quickly.",
+      "prompt": "Sound travels faster in water than in air.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — sound moves at about 1,480 m/s in water versus 343 m/s in air. Whales use this for long-range communication.",
+        "incorrect": "Actually true. Sound is roughly 4× faster in water (1,480 m/s) than in air (343 m/s) because water molecules are packed more tightly."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442307",
+      "title": "Capital of Brazil",
+      "tags": [
+        "subject:geography"
+      ],
+      "points": 1.0,
+      "difficulty": 3.0,
+      "hint": "Rio is famous (Carnival, Christ the Redeemer), but the capital was deliberately moved inland in 1960.",
+      "prompt": "The capital of Brazil is Rio de Janeiro.",
+      "correctAnswer": false,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — Brazil's capital is Brasília, a planned city built inland that became capital in 1960. Rio was the capital before that.",
+        "incorrect": "Actually false. Rio de Janeiro was Brazil's capital until 1960, when the seat of government moved to the newly-built Brasília."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442308",
+      "title": "Are Sharks Mammals?",
+      "tags": [
+        "subject:biology"
+      ],
+      "points": 1.0,
+      "difficulty": 2.0,
+      "prompt": "Sharks are mammals.",
+      "correctAnswer": false,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — sharks are fish (cartilaginous fish, class Chondrichthyes). They breathe through gills and lay eggs or give live birth depending on species.",
+        "incorrect": "Actually false. Sharks are fish, not mammals. They have gills, not lungs, and a skeleton made of cartilage rather than bone. Whales and dolphins are the marine mammals you might be thinking of."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442309",
+      "title": "Largest Desert on Earth",
+      "tags": [
+        "subject:geography"
+      ],
+      "points": 1.0,
+      "difficulty": 7.0,
+      "hint": "A 'desert' is defined by precipitation, not by sand or temperature. Where on Earth gets the least rain or snowfall annually?",
+      "prompt": "Antarctica is the largest desert in the world.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — deserts are defined by low precipitation (under 250 mm/year), not by heat or sand. Antarctica receives almost no precipitation and covers ~14 million km², making it the largest desert on Earth. The Sahara is the largest hot desert.",
+        "incorrect": "Actually true. The technical definition of a desert is precipitation under 250 mm/year, not heat or sand. Antarctica fits and covers ~14 million km² — larger than the Sahara, which is the largest hot desert."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655442310",
+      "title": "Chemical Symbol for Gold",
+      "tags": [
+        "subject:chemistry"
+      ],
+      "points": 1.0,
+      "difficulty": 2.0,
+      "hint": "Many element symbols come from Latin names. Gold's Latin name is 'aurum'.",
+      "prompt": "The chemical symbol for gold is Au.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct — Au comes from the Latin 'aurum'. Other Latin-derived symbols you may know: Ag (silver, argentum), Fe (iron, ferrum), Pb (lead, plumbum).",
+        "incorrect": "Actually true. The symbol Au derives from the Latin name for gold, 'aurum'. Other elements with Latin-based symbols include Ag (silver), Fe (iron), and Na (sodium, from natrium)."
+      }
+    }
+  ]
+}

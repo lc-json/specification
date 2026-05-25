@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.1/unit.schema.json",
+  "title": "Unit Schema",
+  "description": "Unit within a course, containing lessons",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Local database identifier (auto-assigned if missing)",
+      "minimum": 0,
+      "default": 0
+    },
+    "globalId": {
+      "type": "string",
+      "description": "Stable RFC 4122 UUID identifying this unit across re-imports. Required by NORMATIVE §4.4: every Unit, Lesson, Item, and Question MUST carry a globalId.",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Unit title",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "description": "Unit description",
+      "default": ""
+    },
+    "tags": {
+      "type": "array",
+      "description": "Optional taxonomic tags for filtering, search, and gradebook grouping. Free-form strings; conventional namespaces use colons (e.g. 'psychology:social', 'stage:upper-secondary', 'qualification:ap-psychology'). Independent of any tags on inner lessons, items, or questions.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    },
+    "sequence": {
+      "type": "integer",
+      "description": "Display order within course (0-based)",
+      "minimum": 0,
+      "default": 0
+    },
+    "objectiveIds": {
+      "type": "array",
+      "description": "Objective IDs assigned to this unit (references course.objectives[].id)",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "lessons": {
+      "type": "array",
+      "description": "Array of Lesson objects",
+      "items": {
+        "$ref": "lesson.schema.json"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "globalId",
+    "title"
+  ]
+}

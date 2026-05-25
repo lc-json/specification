@@ -1,0 +1,25 @@
+{
+  "type": "ordering",
+  "globalId": "550e8400-e29b-41d4-a716-446655440016",
+  "title": "Word Order — Subject + Verb + Complement (CLIL Astronomy example)",
+  "tags": [
+    "grammar:word-order",
+    "level:A1",
+    "topic:science:astronomy"
+  ],
+  "points": 1.0,
+  "difficulty": 4.0,
+  "hint": "Start with 'The Earth' and think about what it does.",
+  "prompt": "Arrange the words to make a correct sentence.",
+  "sourceText": "The Earth goes round the sun.",
+  "items": [
+    "The Earth",
+    "goes",
+    "round",
+    "the sun"
+  ],
+  "feedback": {
+    "correct": "Correct! 'The Earth goes round the sun.' Standard English word order: Subject → Verb → Complement.",
+    "incorrect": "Start with 'The Earth' (the subject), then the verb ('goes'), then the rest of the sentence."
+  }
+}

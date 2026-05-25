@@ -1,0 +1,22 @@
+{
+  "type": "shortAnswer",
+  "globalId": "550e8400-e29b-41d4-a716-446655440007",
+  "title": "Solar System - Largest Planet",
+  "tags": [
+    "science:astronomy:solar-system",
+    "level:A2",
+    "fact-recall"
+  ],
+  "points": 1.0,
+  "difficulty": 2.0,
+  "hint": "This gas giant is the 5th planet from the Sun and is named after the king of the Roman gods.",
+  "prompt": "What is the largest planet in our solar system? (Type your answer in the text box)",
+  "acceptedAnswers": [
+    "Jupiter"
+  ],
+  "caseSensitive": false,
+  "feedback": {
+    "correct": "Correct! Jupiter is indeed the largest planet in our solar system. It's so massive that it contains more than twice the mass of all other planets combined. Jupiter is a gas giant with a diameter of about 143,000 km (11 times Earth's diameter).",
+    "incorrect": "The correct answer is Jupiter. It's the fifth planet from the Sun and by far the largest in our solar system. Jupiter is a gas giant - it has no solid surface and is mostly composed of hydrogen and helium."
+  }
+}

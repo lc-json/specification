@@ -1,0 +1,24 @@
+{
+  "type": "essay",
+  "globalId": "550e8400-e29b-41d4-a716-446655440008",
+  "title": "IELTS Task 2 - Social Media Impact Essay",
+  "tags": [
+    "writing:essay:argumentative",
+    "exam:ielts-task2",
+    "level:C1",
+    "skill:argumentation"
+  ],
+  "points": 20.0,
+  "difficulty": 8.0,
+  "hint": "Structure suggestion: Introduction (paraphrase + thesis) → Body 1 (positive impacts) → Body 2 (negative impacts) → Body 3 (your opinion) → Conclusion (summarize)",
+  "prompt": "Some people believe that social media has a mostly positive impact on society, while others argue it has caused more harm than good.\n\nDiscuss both views and give your own opinion.\n\nWrite at least 250 words.",
+  "expectedAnswer": "Social media has transformed modern communication, sparking debate about whether its influence is predominantly beneficial or harmful. While some celebrate its connectivity benefits, others raise concerns about its psychological and social consequences.\n\nSupporters of social media emphasize its role in connecting people across distances and democratizing information. Platforms like Facebook and Twitter enable families separated by geography to maintain relationships and allow citizens to access diverse news sources. During the Arab Spring, social media facilitated political organization and amplified voices that traditional media suppressed. Additionally, businesses leverage these platforms for marketing and customer engagement, creating economic opportunities.\n\nHowever, critics highlight significant drawbacks. Research links excessive social media use to increased anxiety, depression, and low self-esteem, particularly among adolescents exposed to unrealistic beauty standards and cyberbullying. The spread of misinformation and 'echo chambers' that reinforce existing beliefs threaten informed democratic discourse. Furthermore, data privacy violations and addictive design features exploit users' psychological vulnerabilities.\n\nIn my view, social media is a powerful tool whose impact depends largely on how individuals and societies choose to regulate and use it. While the connectivity benefits are undeniable, the psychological and societal risks require urgent attention through digital literacy education, platform accountability, and healthier usage habits.\n\n[Word count: 201 words]",
+  "expectedLines": 20,
+  "minWords": 250,
+  "maxWords": 300,
+  "rubricText": "## IELTS Task 2 Assessment Criteria\n\n### Task Response (25%)\n- **Band 7-9:** Addresses all parts of task, develops position with relevant ideas\n- **Band 5-6:** Addresses task but may lack balance or development\n- **Band 3-4:** Limited response, unclear position\n\n**Assessment:**\n- Did you discuss BOTH positive and negative views?\n- Did you give YOUR opinion clearly?\n- Are your ideas relevant and well-developed?\n- Did you provide specific examples?\n\n### Coherence & Cohesion (25%)\n- **Band 7-9:** Logical organization, clear progression, varied cohesive devices\n- **Band 5-6:** Some organization, limited range of cohesive devices\n- **Band 3-4:** Lacks coherence, basic linking\n\n**Assessment:**\n- Clear introduction with thesis statement?\n- Topic sentences for each paragraph?\n- Logical flow between ideas?\n- Appropriate linking words (however, furthermore, etc.)?\n\n### Lexical Resource (25%)\n- **Band 7-9:** Wide range of vocabulary, natural collocations, rare errors\n- **Band 5-6:** Adequate vocabulary, some inappropriate choices\n- **Band 3-4:** Limited vocabulary, frequent errors\n\n**Assessment:**\n- Variety of vocabulary (not repetitive)?\n- Academic/formal tone maintained?\n- Precise word choice?\n- Natural collocations?\n\n### Grammatical Range & Accuracy (25%)\n- **Band 7-9:** Wide range of structures, mostly error-free\n- **Band 5-6:** Mix of simple and complex sentences, some errors\n- **Band 3-4:** Limited structures, frequent errors\n\n**Assessment:**\n- Variety of sentence structures (simple, compound, complex)?\n- Correct tense usage?\n- Subject-verb agreement?\n- Appropriate punctuation?\n\n---\n\n**Minimum word count:** 250 words\n**Recommended:** 260-280 words\n**Time allowed:** 40 minutes",
+  "feedback": {
+    "correct": "Excellent essay! You've successfully addressed the task by discussing both perspectives, provided relevant examples, stated your opinion clearly, and maintained an appropriate academic tone throughout. Your organization and coherence are strong.",
+    "incorrect": "Review the IELTS Task 2 requirements. Ensure you: (1) Discuss BOTH views with examples, (2) Give YOUR opinion clearly, (3) Write at least 250 words, (4) Use formal language, (5) Organize into clear paragraphs with topic sentences."
+  }
+}

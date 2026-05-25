@@ -1,0 +1,22 @@
+{
+  "type": "trueFalseQuestion",
+  "globalId": "550e8400-e29b-41d4-a716-446655440002",
+  "title": "Boiling Point of Water",
+  "tags": [
+    "science:physics:states-of-matter",
+    "stage:lower-secondary",
+    "fact-recall"
+  ],
+  "points": 1.0,
+  "difficulty": 1.0,
+  "hint": "Think about the definition of the Celsius temperature scale. What two points define it?",
+  "prompt": "Water boils at 100°C (212°F) at sea level under standard atmospheric pressure.",
+  "correctAnswer": true,
+  "penalizeIncorrect": false,
+  "incorrectPenaltyPercent": 50.0,
+  "displayStyle": "TrueFalse",
+  "feedback": {
+    "correct": "Correct! At sea level with standard atmospheric pressure (1 atm), water boils at exactly 100°C (212°F). This is actually the definition of the Celsius scale - 0°C for freezing, 100°C for boiling.",
+    "incorrect": "Actually, this statement is true. Water boils at 100°C at sea level. Perhaps you were thinking of water at high altitudes, where it boils at lower temperatures due to reduced atmospheric pressure?"
+  }
+}

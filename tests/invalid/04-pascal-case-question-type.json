@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "PascalCase question discriminator — invalid per §4.2",
+  "language": "en",
+  "questions": [
+    {
+      "type": "TrueFalseQuestion",
+      "globalId": "33333333-3333-4333-8333-333333333333",
+      "title": "Discriminator casing test",
+      "tags": [],
+      "points": 1.0,
+      "difficulty": 1.0,
+      "prompt": "PascalCase discriminator. Conforming consumers MUST reject this per NORMATIVE §4.2.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Y",
+        "incorrect": "N"
+      }
+    }
+  ]
+}

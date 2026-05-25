@@ -1,0 +1,42 @@
+{
+  "type": "matching",
+  "globalId": "550e8400-e29b-41d4-a716-446655440015",
+  "title": "Roots of Democracy — Match the Thinker",
+  "tags": [
+    "politics:political-philosophy:democracy",
+    "philosophy:political-philosophy:democracy",
+    "qualification:a-level"
+  ],
+  "points": 8.0,
+  "difficulty": 6.5,
+  "hint": "Each statement reflects a single core idea — consent, the general will, separation of powers, or harm to others. Two of the statements describe positions that don't fit democratic theory.",
+  "prompt": "Match each thinker with the statement that best summarises their contribution to democratic theory.",
+  "distractors": [
+    "Government should be in the hands of those most fit to rule — wise philosopher-kings trained for the task — not the unwise multitude.",
+    "True political wisdom comes from a society's inherited traditions and institutions, not from abstract theories of natural rights or popular sovereignty."
+  ],
+  "allowPartialCredit": true,
+  "feedback": {
+    "correct": "Excellent! You've matched each thinker with their key contribution to democratic theory. Locke gives us consent and natural rights; Rousseau, the general will; Montesquieu, the separation of powers; Mill, the protection of individual liberty from the tyranny of the majority.",
+    "incorrect": "Review the matches. Locke (consent + natural rights), Rousseau (general will + popular sovereignty), Montesquieu (separation of powers), and Mill (liberty + the harm principle) each named a distinct mechanism that modern democracies still rest on. The two unmatched statements describe Plato's philosopher-kings (anti-democratic) and Burke's traditionalist conservatism (a critique of abstract democratic theory) — both important in political thought, but outside the canonical roots of democracy."
+  },
+  "matchingMode": "pairs",
+  "pairs": [
+    {
+      "item": "John Locke",
+      "match": "Government's authority comes from the consent of the governed; people retain natural rights to life, liberty, and property that no ruler can rightfully take away."
+    },
+    {
+      "item": "Jean-Jacques Rousseau",
+      "match": "Legitimate political authority arises from the 'general will' of the people. True freedom is found in obeying laws we have collectively made for ourselves."
+    },
+    {
+      "item": "Baron de Montesquieu",
+      "match": "Liberty is preserved by separating the powers of government — legislative, executive, and judicial — so that no one body holds absolute power."
+    },
+    {
+      "item": "John Stuart Mill",
+      "match": "Individual liberty must be protected even from the will of the majority. The only justification for limiting another's freedom is to prevent harm to others."
+    }
+  ]
+}
