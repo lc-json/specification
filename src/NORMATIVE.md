@@ -52,7 +52,7 @@ Every conforming LC-JSON document MUST contain at the root, as siblings (not nes
 | Field | Required? | Type | Value |
 |---|---|---|---|
 | `documentType` | MUST | string | `"course"` or `"questionSet"`. The artifact discriminator. |
-| `specVersion` | MUST | string | A spec version string matching the pattern `^[0-9]+\.[0-9]+(\.[0-9]+)?$`. |
+| `specVersion` | MUST | string | The LC-JSON contract version this document conforms to. Pattern enforced by the schemas; consumer/producer rules in §5.2 / §4.6. |
 | `$schema` | MUST (producer) / SHOULD-tolerate (consumer) | string | A URL identifying the schema for this document type at the spec version the producer conforms to (e.g., `https://lc-json.org/1.0-rc.1/<artifact>.schema.json` for an rc.1 producer; `https://lc-json.org/1.0/<artifact>.schema.json` for a 1.0-final producer). Consumers SHOULD accept documents that omit `$schema` (re-import scenarios from older or lenient producers), but MUST reject any other root-field omission. |
 
 A document missing `documentType` or `specVersion` is non-conforming. A producer that emits a document missing `$schema` is non-conforming with respect to that document; a consumer that rejects an otherwise-valid document on the basis of a missing `$schema` is overly strict and SHOULD instead infer the schema from `documentType` + `specVersion`.
@@ -134,9 +134,9 @@ A consumer MUST validate incoming documents against the published JSON Schemas f
 
 ### 5.2 Spec version handling
 
-A consumer MUST accept any `specVersion` value matching `^1\.[0-9]+(\.[0-9]+)?$`.
+A consumer MUST accept any `specVersion` value whose major version it implements (e.g., a 1.x consumer accepts `1.0`, `1.1`, `1.0.1`, …; the canonical pattern is enforced by `course.schema.json` / `question-set.schema.json`).
 
-A consumer MUST reject `specVersion` values whose major version exceeds 1 (`2.0`, `2.1`, `3.0`, …). The rejection SHOULD be a clear error indicating the unsupported spec version.
+A consumer MUST reject `specVersion` values whose major version exceeds what it implements (a 1.x consumer rejects `2.0`, `2.1`, `3.0`, …). The rejection SHOULD be a clear error indicating the unsupported spec version.
 
 A consumer MUST NOT silently downgrade or interpret unknown spec versions.
 

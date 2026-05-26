@@ -59,7 +59,7 @@ Twelve question types fully implemented and schema-validated:
 
 `simpleGapFill` · `trueFalseQuestion` · `multipleChoice` · `wordBankCloze` · `multiGapCloze` · `multipleChoiceCloze` · `shortAnswer` · `essay` · `sentenceTransformation` · `matching` · `ordering` · `placement`
 
-Seven additional graphic and upload-based types are reserved for a future minor version (targeted for 2027).
+Seven additional types are reserved for a future minor version (targeted for 2027).
 
 Five lesson item types: content, exercise, quiz, content-sequence, signpost.
 
