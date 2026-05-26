@@ -28,7 +28,6 @@
     "2": "Past simple 'saw' is needed because 'the last time' is a past time period."
   },
   "allOrNothing": false,
-  "prohibitExtraWordsBetweenChunks": true,
   "feedback": {
     "correct": "Excellent! You successfully transformed the sentence from the present perfect to the past simple.",
     "incorrect": "Remember: 'I haven't seen John for three weeks' → 'The last time I saw John was three weeks ago'. Present perfect with 'for' changes to past simple with 'ago'."

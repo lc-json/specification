@@ -1,5 +1,9 @@
 # Governance
 
+**Status:** Informative.
+**Spec version:** 1.0
+**Last updated:** 2026-05-26
+
 ## Stewardship
 
 LC-JSON (Learning Content JSON) is currently maintained by **Brent Miller**, the originator of the specification. The project operates under a benevolent-dictator model: substantive proposals are reviewed and accepted, modified, or rejected by the maintainer, with deliberations conducted publicly via GitHub Issues and Discussions on this repository.
@@ -20,7 +24,7 @@ Substantive proposals (anything beyond a typo or non-normative fix) are document
 
 ## Working group
 
-A formal working group will be considered when **at least two independent third-party implementations of LC-JSON exist and are in active use**. "Independent" means not built or maintained by the same organisation that originated the specification.
+A formal working group will be considered when **at least two independent third-party implementations of LC-JSON exist and are in active use**. "Independent" means not built or maintained by the same organization that originated the specification.
 
 Until that threshold is met, decisions remain with the maintainer. Forks are permitted under the Apache 2.0 license; community input is welcomed via Issues and Discussions, but accepted changes are at the maintainer's discretion.
 
@@ -30,7 +34,7 @@ Once the threshold is met, the maintainer will publish a transition plan: charte
 
 "Lesson Commons" is a trademark of Brent Miller and is **not asserted** over the LC-JSON specification, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation. Implementers may state conformance freely.
 
-The specification's name and canonical URL (`lc-json.org`) are not vendor-coupled by design. If stewardship of LC-JSON ever passes to a foundation, working group, or successor maintainer, the name and URL travel with the specification, not with any sponsoring organisation.
+The specification's name and canonical URL (`lc-json.org`) are not vendor-coupled by design. If stewardship of LC-JSON ever passes to a foundation, working group, or successor maintainer, the name and URL travel with the specification, not with any sponsoring organization.
 
 ## Contact
 

@@ -18,7 +18,7 @@ LC-JSON (Learning Content JSON) is a JSON-native format, schema set, and produce
 | [`schemas/`](schemas/) | JSON Schema files (Draft 7) for every artifact, item type, and question type |
 | [`examples/`](examples/) | Example documents — minimal and full courses, per-question fragments |
 | [`tests/`](tests/) | Conformance test corpus (valid and invalid cases per clause) |
-| [`tools/`](tools/) | Reference Python tools: validator and scaffolder |
+| [`tools/`](tools/) | Reference Python tools: validator and conformance corpus harness |
 | [`NORMATIVE.md`](src/NORMATIVE.md) | RFC 2119 conformance requirements (the authoritative source for implementers) |
 | [`question-types-reference.md`](src/question-types-reference.md) | Per-type property reference |
 | [`IMPLEMENTATIONS.md`](src/IMPLEMENTATIONS.md) | Directory of tools that produce, consume, or validate LC-JSON |

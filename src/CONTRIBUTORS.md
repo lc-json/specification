@@ -2,14 +2,11 @@
 
 LC-JSON (Learning Content JSON) was originated by **Brent Miller**, who holds all substantive decisions on scope, naming, licensing, trademark stance, and design.
 
-## AI-assistant contributions to authoring
+## AI-assistant contributions
 
-The specification text, schemas, conformance corpus, reference tools, and publication pipeline were drafted with substantial AI assistance across two distinct roles:
+The specification text, schemas, conformance corpus, reference tools, and publication pipeline were drafted with substantial AI assistance — Claude (Anthropic) as primary drafting and implementation assistant, and Codex (OpenAI) as auditor and editor across review passes.
 
-- **Claude Opus 4.7 (Anthropic)** — primary drafting and implementation assistant. Specification prose and structure, schema design, validator + corpus harness code, publish-pipeline scripts, conformance corpus.
-- **Codex by OpenAI (GPT-5.5)** — auditor and editor across multiple review passes. NORMATIVE.md and VALIDATION.md publication-readiness review, validation-tooling and publish-flow audit, drift detection between source and rendered output, terminology consistency, release-readiness feedback.
-
-The AI assistants contributed drafting, structure, audit feedback, and review. They held no substantive decisions; every normative claim, naming choice, and licensing/trademark stance is the originator's.
+All substantive decisions — scope, naming, design, licensing, and trademark stance, and every normative claim — are the originator's.
 
 Future contributors will be listed below as pull requests land.
 

@@ -2,7 +2,7 @@
 
 **Spec version:** 1.0
 **Status:** Normative
-**Last updated:** 2026-05-24 (TD-205: §5.1 carve-out for §6 fallback)
+**Last updated:** 2026-05-24
 
 This document states the requirements that conforming LC-JSON (Learning Content JSON) tools MUST satisfy. It is the authoritative source of truth for compliance; descriptive material elsewhere in the specification illustrates how to meet these requirements but does not relax them.
 
@@ -142,7 +142,7 @@ A consumer MUST NOT silently downgrade or interpret unknown spec versions.
 
 ### 5.3 Discriminator handling
 
-A consumer MUST recognise canonical camelCase question-type discriminators and canonical lowercase item-type discriminators as defined in §4.2. Non-canonical casings are non-conforming and MUST be rejected.
+A consumer MUST recognize canonical camelCase question-type discriminators and canonical lowercase item-type discriminators as defined in §4.2. Non-canonical casings are non-conforming and MUST be rejected.
 
 ### 5.4 Unknown fields
 
@@ -152,14 +152,14 @@ A consumer MUST NOT reject a document solely because it contains additional fiel
 
 A consumer MUST accept question types listed in `question-base.schema.json`'s `enum` even when no per-type schema is published for them. Full handling obligations — including round-trip preservation, learner-facing placeholder rendering, and grading semantics — are normative under §6 (Reserved and unknown types).
 
-### 5.6 Randomisation requirements for matching and placement
+### 5.6 Randomization requirements for matching and placement
 
 For `matching` and `placement` questions, two surfaces a consumer presents to a learner have no author-defined order:
 
 1. **The choice pool**, comprising every authored answer value (`pairs[].match` or `categories[].label` for matching; `placements[].item` for placement) plus any `distractors`. Source order would directly expose the correct-answer mapping (the N-th option being the correct answer for the N-th row or gap), defeating the question.
 2. **The row order in `matching` classification mode**, where each row is one item to be classified. Source order is grouped by category — items belonging to `categories[0]` first, then `categories[1]`, and so on — which directly exposes the answer (the first N rows all share the same category label).
 
-A consumer MUST present both surfaces to learners in randomised order. A consumer MUST NOT render either surface in source order. The randomisation algorithm and any seeding strategy are consumer-defined.
+A consumer MUST present both surfaces to learners in randomized order. A consumer MUST NOT render either surface in source order. The randomization algorithm and any seeding strategy are consumer-defined.
 
 These requirements do not apply to:
 
@@ -248,7 +248,7 @@ A consumer MUST NOT reject a document solely because it contains extension membe
 
 A consumer MUST NOT interpret an extension member outside its own namespace as having any defined meaning. A consumer MAY read and act on extension members within namespaces it understands.
 
-A consumer that imports, modifies, and re-exports a document SHOULD preserve extension members it does not understand, re-attaching each to the same object it arrived on (identified by `globalId` where the object carries one). A consumer that preserves all unrecognised extension members across a round trip is said to be *extension-preserving*; a consumer that cannot SHOULD document the loss.
+A consumer that imports, modifies, and re-exports a document SHOULD preserve extension members it does not understand, re-attaching each to the same object it arrived on (identified by `globalId` where the object carries one). A consumer that preserves all unrecognized extension members across a round trip is said to be *extension-preserving*; a consumer that cannot SHOULD document the loss.
 
 The SHOULD — rather than MUST — acknowledges that some consumers have fixed internal storage with nowhere to hold arbitrary foreign data. But preservation is what lets a tool use LC-JSON as a faithful transfer or backup format for its own tool-specific state: a document that round-trips through an extension-preserving consumer comes back whole, including data that consumer never understood.
 
@@ -332,11 +332,11 @@ A field, discriminator value, or shape may be deprecated in a minor version and 
 
 Deprecated fields MUST be marked with `"deprecated": true` in their schema definition and SHOULD include a `description` referencing their replacement.
 
-### 9.2 Producer behaviour for deprecated fields
+### 9.2 Producer behavior for deprecated fields
 
 A producer MUST NOT emit deprecated fields in new documents. A producer that re-emits previously-imported documents MAY preserve deprecated fields it received, but SHOULD prefer to emit only the canonical replacement.
 
-### 9.3 Consumer behaviour for deprecated fields
+### 9.3 Consumer behavior for deprecated fields
 
 A consumer MUST continue to accept deprecated fields for the lifetime of the major version that introduced the deprecation. Removal is permitted only at the next major version bump.
 
@@ -439,9 +439,9 @@ These obligations are part of base LC-JSON conformance; a consumer claiming "Con
 
 ### 12.2 The Accessibility Profile (opt-in)
 
-The accessibility profile defined in [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — alt-text requirements, video caption obligations for instructional content, keyboard alternatives for structured-task question types, non-colour feedback, language-aware rendering, accessible reserved-type placeholders, and validator severities — is bound by an opt-in claim (§10.2).
+The accessibility profile defined in [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — alt-text requirements, video caption obligations for instructional content, keyboard alternatives for structured-task question types, non-color feedback, language-aware rendering, accessible reserved-type placeholders, and validator severities — is bound by an opt-in claim (§10.2).
 
-- A consumer claiming the Accessibility Profile MUST satisfy the structured-task keyboard alternatives (`ACCESSIBILITY.md` §4), the non-colour-feedback obligations (§5), the language/`dir` rendering obligations (§6), and the reserved-type placeholder accessibility (§7).
+- A consumer claiming the Accessibility Profile MUST satisfy the structured-task keyboard alternatives (`ACCESSIBILITY.md` §4), the non-color-feedback obligations (§5), the language/`dir` rendering obligations (§6), and the reserved-type placeholder accessibility (§7).
 - A producer claiming the Accessibility Profile MUST emit the producer-side obligations across `ACCESSIBILITY.md` §§2–7 (alt text on `<img>`, `<track>` for instructional video carrying speech, root `language` matching delivery, etc.).
 - Tools that satisfy preservation (§12.1) but not delivery (§12.2) are conforming LC-JSON consumers but are NOT conforming Accessibility Profile consumers, and MUST NOT claim the latter.
 

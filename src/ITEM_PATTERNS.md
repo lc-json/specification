@@ -82,17 +82,15 @@ Pick the row that matches your intent. Or compose your own combination — the s
 
 The wire format describes what the fields *are*. It does **not** prescribe what a consumer *does* with them. Different consumers — even different modes of the same consumer — can interpret the same payload differently. Some examples:
 
-### Lesson Commons (Runner)
+### Consumer-policy patterns (illustrative)
 
-- **Open navigation mode:** Learner moves freely between items in any order. `passMarkPercent` is used for the score-display badge and for the gradebook-column threshold. It does not gate forward progress.
-- **Sequential navigation mode:** Learner moves in order. A graded item below `passMarkPercent` blocks forward progress until passed; ungraded items always allow forward progress regardless of score. So the "is this graded?" question is what determines whether a low score gates anything in sequential mode.
-- **Gradebook semantics:** Items where the learner has scored ≥ `passMarkPercent` (and the item is graded) are reported as **Completed** in the teacher's gradebook view. Whether "completed" maps to a letter grade is a separate gradebook configuration.
-
-### Other consumer models (illustrative)
-
+- **Open-navigation LMS:** Learner moves freely between items in any order. `passMarkPercent` is used for the score-display badge and for the gradebook-column threshold; it doesn't gate forward progress.
+- **Sequential-navigation LMS:** Learner moves in order. A graded item below `passMarkPercent` blocks forward progress until passed; ungraded items always allow forward progress regardless of score. The "is this graded?" question is what determines whether a low score gates anything.
 - **Mastery-routing LMS:** Scores below `passMarkPercent` route the learner to remediation content; scores above route to enrichment. Grading is recorded but doesn't block progress (the routing handles it).
-- **Reporting-only consumer:** Uses `passMarkPercent` purely for the gradebook column display. Doesn't affect navigation. Ungraded items don't appear in the gradebook at all.
-- **Strict gate consumer:** Gates forward progress on every item with a `passMarkPercent > 0`, regardless of `isGraded`. (This is more restrictive than the spec mandates, but it's a real pattern in some LMS.)
+- **Reporting-only consumer:** Uses `passMarkPercent` purely for the gradebook-column display. Doesn't affect navigation. Ungraded items don't appear in the gradebook at all.
+- **Strict-gate consumer:** Gates forward progress on every item with a `passMarkPercent > 0`, regardless of `isGraded`. (This is more restrictive than the spec mandates, but it's a real pattern in some LMS.)
+
+Many consumers also implement a common **gradebook-semantics** pattern: items where the learner has scored ≥ `passMarkPercent` (and the item is graded) are reported as **Completed** in the teacher's gradebook view. Whether "completed" maps to a letter grade is a separate gradebook configuration.
 
 The point is plurality. **Author intent is portable across consumers only insofar as the author composes it across multiple fields.** Setting `passMarkPercent: 0` alongside `isGraded: false` is the most permissive combination — virtually no consumer policy can construct a friction surface from "ungraded + no threshold."
 
@@ -100,7 +98,7 @@ The point is plurality. **Author intent is portable across consumers only insofa
 
 The same consumer-plurality principle governs the HTML safety profile's URL allowlist. `tel:` links are permitted in `<a href>` (per [`HTML_SAFETY.md`](HTML_SAFETY.md) §4.1), but whether the consumer makes them actionable is consumer-policy:
 
-- **Lesson Commons (Runner)** — gates `tel:` links via the `HtmlLinks:AllowTelLinks` configuration flag. Default is `false` (safe for school-aged audiences); operators enable it for corporate-training tenants. When the flag is `false`, the link's text remains visible but the `href` is neutralised so taps don't open the dialer.
+- **K–12 / school-aged-audience consumer:** gates `tel:` links behind a configuration flag, default off. When the flag is off, the link's text remains visible but the `href` is neutralized so taps don't open the dialer.
 - **Adult/corporate-training consumer:** typically enables `tel:` unconditionally — calling a sales contact or support line is a legitimate authoring affordance.
 - **Print/export consumer:** renders the phone number as plain text; no actionable link.
 - **Reporting-only consumer:** treats `tel:` no differently from `mailto:` — passes through verbatim.
@@ -109,7 +107,7 @@ The safety profile's domain validator emits a warning (not an error) for `tel:` 
 
 ### Authored-text line-break conventions
 
-Plain-text authored-text fields — `description`, `prompt`, `passage`, `hint`, `feedback.correct`, `feedback.incorrect`, etc. — carry literal newline characters as part of the field value (escaped as `\n` in JSON per RFC 8259). The spec is silent on how consumers should render those characters: a runtime might collapse all whitespace and treat the field as a single block, or honour line breaks, or wrap paragraphs in semantic block elements. The wire format is a string; what consumers do with embedded newlines is consumer policy.
+Plain-text authored-text fields — `description`, `prompt`, `passage`, `hint`, `feedback.correct`, `feedback.incorrect`, etc. — carry literal newline characters as part of the field value (escaped as `\n` in JSON per RFC 8259). The spec is silent on how consumers should render those characters: a runtime might collapse all whitespace and treat the field as a single block, or honor line breaks, or wrap paragraphs in semantic block elements. The wire format is a string; what consumers do with embedded newlines is consumer policy.
 
 Where consumers want portable rendering across the ecosystem, a useful convention is:
 
@@ -118,13 +116,13 @@ Where consumers want portable rendering across the ecosystem, a useful conventio
 
 Producers using this convention get aligned rendering across consumers that adopt it; producers ignoring it get whatever the consumer chooses.
 
-**Lesson Commons (Runner)** implements this convention as its reference behaviour: `\n\n` becomes `<p>` blocks, single `\n` becomes `<br>`, both with HTML-safe encoding of authored content. **Other consumer models** may legitimately:
+**Some consumers implement this convention** as: `\n\n` becomes `<p>` blocks, single `\n` becomes `<br>`, both with HTML-safe encoding of authored content. **Other consumer models** may legitimately:
 
 - Collapse all whitespace and render the field as a single inline block (typical of grid-cell renderers, screen-reader-first consumers).
-- Honour single `\n` as `<br>` but treat `\n\n` the same way (line-break-only convention).
+- Honor single `\n` as `<br>` but treat `\n\n` the same way (line-break-only convention).
 - Render the field through a Markdown processor that gives `\n\n` paragraph semantics plus richer features (lists, emphasis, etc.) — out of scope for this spec but a legitimate consumer choice.
 
-This convention applies only to plain-text authored fields. Trusted-HTML surfaces (`ContentItem.html`, `SignpostItem.customHtml`) carry HTML directly, sanitised per [`HTML_SAFETY.md`](HTML_SAFETY.md), and use the producer's chosen block elements (`<p>`, `<h2>`, `<blockquote>`, etc.) — they do not rely on newline-character conventions.
+This convention applies only to plain-text authored fields. Trusted-HTML surfaces (`ContentItem.html`, `SignpostItem.customHtml`) carry HTML directly, sanitized per [`HTML_SAFETY.md`](HTML_SAFETY.md), and use the producer's chosen block elements (`<p>`, `<h2>`, `<blockquote>`, etc.) — they do not rely on newline-character conventions.
 
 ---
 

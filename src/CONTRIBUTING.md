@@ -32,7 +32,7 @@ A short, focused issue is more useful than a long one. If you are not sure wheth
 
 ### What a good PR looks like
 
-- A clear PR title summarising the change.
+- A clear PR title summarizing the change.
 - A description tying the PR to an issue (if one exists) and explaining the rationale.
 - For schema or example changes: positive and negative test cases under [`tests/`](tests/), if applicable.
 - For new question types: a reference schema, an example file, an entry in [`question-types-reference.md`](question-types-reference.md), and at least one positive test case.
@@ -80,7 +80,7 @@ Out of scope for the specification repository:
 
 Substantive proposals are reviewed by the maintainer per [`GOVERNANCE.md`](GOVERNANCE.md). Acceptance, modification, or rejection is the maintainer's discretion at this stage; a working-group governance model will replace this when the criteria in `GOVERNANCE.md` are met.
 
-Decisions are made publicly via Issues and PRs. If a discussion is going long or complex, the maintainer may summarise the resolution in a `proposals/` RFC document for durable reference (the directory is added when the first such RFC lands).
+Decisions are made publicly via Issues and PRs. If a discussion is going long or complex, the maintainer may summarize the resolution in a `proposals/` RFC document for durable reference (the directory is added when the first such RFC lands).
 
 ## Thank you
 

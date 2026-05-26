@@ -31,7 +31,7 @@ Without a portable allowlist, every consumer would sanitize against its own subs
 - Consumers know what they MUST accept, what they MUST sanitize away, and where the line falls between "render-time stripping" and "reject the document."
 - Third-party implementers have a single reference for `<script>`, event handlers, `<iframe>`, `target="_blank"`, `data:` URLs, and the rest of the long tail.
 
-The profile is deliberately strict-enough-to-be-safe, lenient-enough-to-author. Decisions throughout favour producer flexibility (any class, an inline-style allowlist that covers real authoring patterns, `tel:` for adult/corporate audiences) while binding consumer sanitization tightly enough that no conforming consumer can be coerced into XSS by a conforming document.
+The profile is deliberately strict-enough-to-be-safe, lenient-enough-to-author. Decisions throughout favor producer flexibility (any class, an inline-style allowlist that covers real authoring patterns, `tel:` for adult/corporate audiences) while binding consumer sanitization tightly enough that no conforming consumer can be coerced into XSS by a conforming document.
 
 ---
 
@@ -81,9 +81,9 @@ The following attributes MAY appear on every element listed in §2.1–§2.3:
 
 ### 3.2 The `class` attribute
 
-The `class` attribute is permitted on all allowed elements. Values are author-defined; the spec does not constrain or interpret them. Consumers MUST preserve the `class` attribute across read/write cycles (§6.4 round-trip preservation in NORMATIVE applies). Consumers MAY style classes they recognise; consumers MUST ignore (without stripping) classes they do not recognise.
+The `class` attribute is permitted on all allowed elements. Values are author-defined; the spec does not constrain or interpret them. Consumers MUST preserve the `class` attribute across read/write cycles (§6.4 round-trip preservation in NORMATIVE applies). Consumers MAY style classes they recognize; consumers MUST ignore (without stripping) classes they do not recognize.
 
-This is intentional. Different consumers ship different stylesheets — `cg-img-md` matters to one Runner, `lc-callout` matters to another, generic Tailwind classes might appear in a third. The wire format does not arbitrate which class system wins; it preserves the author's intent and lets each consumer apply its own visual policy.
+This is intentional. Different consumers ship different stylesheets — `img-medium` matters to one consumer, `lc-callout` matters to another, generic Tailwind classes might appear in a third. The wire format does not arbitrate which class system wins; it preserves the author's intent and lets each consumer apply its own visual policy.
 
 ### 3.3 Per-element attribute table
 
@@ -138,7 +138,8 @@ The following attributes MUST NOT appear on any element. Consumers MUST strip th
 - All event handler attributes: any attribute matching `on*` (e.g., `onclick`, `onload`, `onmouseover`, `onerror`, `onfocus`, `onblur`).
 - `srcdoc` (on any element).
 - `formaction`, `formenctype`, `formmethod`, `formnovalidate`, `formtarget` (form submission attributes).
-- `data:` URI in any URL-bearing attribute except as permitted in §4.1.
+
+`data:` and other forbidden URL schemes are governed by §4.2; this section does not duplicate that rule.
 
 ---
 
@@ -152,7 +153,7 @@ For URL-bearing attributes (`href`, `src`, `poster`, `cite`, `<source>.src`, `<t
 |---|---|---|
 | `https:` | All URL-bearing attributes | Always allowed. |
 | `http:` | All URL-bearing attributes | Allowed but discouraged. Mixed-content rendering on HTTPS pages is consumer-defined; consumers SHOULD warn or upgrade. |
-| `mailto:` | `<a href>` only | Standard mail-link behaviour. |
+| `mailto:` | `<a href>` only | Standard mail-link behavior. |
 | `tel:` | `<a href>` only | See §7. Consumer policy varies by audience. |
 | Relative URLs | All URL-bearing attributes | Resolved against the consumer's content base for the document. Producers MAY use relative paths to reference media bundled alongside the LC-JSON file (e.g., `media/images/foo.jpg`). |
 
@@ -176,7 +177,7 @@ Consumers SHOULD validate URLs against [RFC 3986](https://www.rfc-editor.org/rfc
 
 A consumer MUST sanitize HTML from LC-JSON documents before rendering. The HTML in an LC-JSON document is untrusted input from the consumer's perspective, regardless of the document source.
 
-A producer's claim of LC-JSON conformance does NOT exempt the consumer from sanitization. Producers can be misconfigured, compromised, or simply buggy; consumers stand alone as the last line of defence.
+A producer's claim of LC-JSON conformance does NOT exempt the consumer from sanitization. Producers can be misconfigured, compromised, or simply buggy; consumers stand alone as the last line of defense.
 
 ### 5.1 Sanitization rules summary
 
@@ -220,7 +221,7 @@ When a consumer encounters an HTML element whose name is not in §2.1–§2.3 an
 - **SHOULD** log a warning (form is consumer-defined).
 - **MUST NOT** reject the document for unknown elements alone. Forward-compatibility for HTML extensions is preserved by graceful degradation, not by strict rejection.
 
-This mirrors NORMATIVE §6's handling of reserved/unknown question types: degrade gracefully, never fail-closed on names you don't recognise. The contract is symmetrical across both surfaces.
+This mirrors NORMATIVE §6's handling of reserved/unknown question types: degrade gracefully, never fail-closed on names you don't recognize. The contract is symmetrical across both surfaces.
 
 ### 6.3 Unknown-attribute handling
 
@@ -272,7 +273,7 @@ A reference validator (or any consumer's pre-render validation pass) SHOULD clas
 
 These violations indicate a security-critical XSS surface or a structural violation that no consumer can render safely:
 
-- Forbidden element from §2.4 (`<script>`, `<iframe>`, `<object>`, `<embed>`, `<form>`, `<input>`, `<button>`, `<style>`, `<link>`, `<meta>`, `<base>`, `<svg>`, `<math>`).
+- Any forbidden element listed in §2.4.
 - Any event handler attribute (`onclick`, `onload`, `onmouseover`, etc.).
 - Any URL with scheme `javascript:` or `vbscript:`.
 
@@ -327,7 +328,7 @@ A consumer that imports a document containing forbidden content under §8.1 MUST
 
 ```json
 {
-  "html": "<p>The diagram below shows the cycle:</p>\n<img src=\"media/cycle.png\" alt=\"Carbon cycle diagram\" class=\"cg-img-md\" />"
+  "html": "<p>The diagram below shows the cycle:</p>\n<img src=\"media/cycle.png\" alt=\"Carbon cycle diagram\" class=\"img-medium\" />"
 }
 ```
 
@@ -347,7 +348,7 @@ A consumer that imports a document containing forbidden content under §8.1 MUST
 }
 ```
 
-### 10.5 Link with target=_blank and rel
+### 10.5 Link with `target="_blank"` and `rel`
 
 ```json
 {

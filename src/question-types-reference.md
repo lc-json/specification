@@ -28,7 +28,7 @@ LC-JSON questions are tagged-union objects. Every question carries a `type` fiel
 - Every question carries a `globalId` in RFC 4122 UUID format.
 - See [`NORMATIVE.md`](NORMATIVE.md) for the full conformance requirements.
 
-**Supported Question Types (18 total):**
+**Supported Question Types (19 total):**
 
 **Phase 1 - Core Foundation:**
 1. `simpleGapFill` - Single gap with free text entry
@@ -93,7 +93,7 @@ All question types inherit these base properties:
 | `globalId` | string (UUID) | ✅ Yes | - | RFC 4122 UUID; stable across versions of the question. |
 | `title` | string | ❌ No | `""` | Short title for editorial/list views. |
 | `prompt` | string | ✅ Yes | `""` | Main question text/prompt. |
-| `tags` | string[] | ❌ No | `[]` | Tag array for categorisation. |
+| `tags` | string[] | ❌ No | `[]` | Tag array for categorization. |
 | `difficulty` | number | ❌ No | `5.0` | Estimated difficulty for the intended learners (0.0 = extremely easy, 10.0 = extremely difficult). |
 | `points` | number | ❌ No | `1.0` | Points awarded for a correct answer. |
 | `hint` | string | ❌ No | `null` | Optional hint shown to the learner. |
@@ -478,7 +478,7 @@ All question types inherit these base properties:
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `categories` | object[] | ✅ Yes | Each entry is one category: `{ "label": string, "items": string[] }`. `label` required, `minLength: 1`. `items` required, `minItems: 1` (an empty category is meaningless — list it as a `distractors[]` entry instead). Minimum 2 categories. Consumers MUST randomise the row order at render time per [NORMATIVE §5.6](NORMATIVE.md) — source order is grouped by category and would directly expose the answer. |
+| `categories` | object[] | ✅ Yes | Each entry is one category: `{ "label": string, "items": string[] }`. `label` required, `minLength: 1`. `items` required, `minItems: 1` (an empty category is meaningless — list it as a `distractors[]` entry instead). Minimum 2 categories. Consumers MUST randomize the row order at render time per [NORMATIVE §5.6](NORMATIVE.md) — source order is grouped by category and would directly expose the answer. |
 
 A document that mixes shapes (both `pairs` and `categories` present, or `matchingMode` omitted) fails validation.
 
@@ -629,7 +629,7 @@ When `scoringMode` is omitted, the recommended default is `"strict"` for `orderi
 
 - **Cambridge B2 First Part 6** — sentence-level "missing sentences" tasks where 6 short sentences must be placed back into a 6-gap article. Use `placementUnit: "sentence"`. See `examples/17a-sentence-placement.json`.
 - **Cambridge C1 Advanced Part 7** — paragraph-level reordering of a 6-gap essay. Use `placementUnit: "paragraph"`. See `examples/17b-paragraph-placement.json`.
-- **IELTS Matching Headings** — short headings labelled to sections of a passage. Use `placementUnit: "sectionLabel"`. The same shape covers analytical meta-labels (e.g., labelling each paragraph 'thesis', 'counter-argument', 'evidence') — both real headings and analytical labels share the wire format. See `examples/17c-section-label-placement.json`.
+- **IELTS Matching Headings** — short headings labeled to sections of a passage. Use `placementUnit: "sectionLabel"`. The same shape covers analytical meta-labels (e.g., labeling each paragraph 'thesis', 'counter-argument', 'evidence') — both real headings and analytical labels share the wire format. See `examples/17c-section-label-placement.json`.
 - **TOEFL Sentence Insertion** — a single missing sentence with multiple candidate positions; only one is correct. Author 4 `@@@N` markers in `passage` and a single `placements[]` entry whose `gap` is the correct position. The unanswered markers are decoy gaps. Use `placementUnit: "sentence"` and `allowPartialCredit: false` (single-gap → all-or-nothing). See `examples/17d-toefl-insertion-placement.json`.
 
 **Word-level placement** is covered by [`wordBankCloze`](#5-wordbankcloze) — placement does not include `"word"` in the `placementUnit` enum.
@@ -726,9 +726,7 @@ Per-gap scoring against the authored `placements[]`. With `allowPartialCredit: t
   "chunkFeedback": {
     "1": "Use 'LAST' + 'time'. The fixed phrase is 'the last time'.",
     "2": "Past simple 'saw' is needed here, not present perfect 'have seen'."
-  },
-  "prohibitExtraWordsBetweenChunks": true,
-  "allowedFillerWords": []
+  }
 }
 ```
 
@@ -743,8 +741,6 @@ Per-gap scoring against the authored `placements[]`. With `allowPartialCredit: t
 | `acceptedChunks` | object | ✅ Yes | `{}` | Dictionary: chunk index → array of accepted answers |
 | `chunkCaseSensitive` | object | ❌ No | `null` | Dictionary: chunk index → boolean (default: false) |
 | `chunkFeedback` | object | ❌ No | `null` | Dictionary: chunk index → feedback string |
-| `prohibitExtraWordsBetweenChunks` | boolean | ❌ No | `true` | Reject if extra words between chunks |
-| `allowedFillerWords` | string[] | ❌ No | `[]` | Words allowed between chunks (if prohibit=false) |
 
 ---
 
@@ -752,7 +748,7 @@ Per-gap scoring against the authored `placements[]`. With `allowPartialCredit: t
 
 The seven question types in this section are reserved in the `question-base.schema.json` discriminator enum but do not yet have per-type schemas; full implementation is targeted for 2027. Per [`NORMATIVE.md`](NORMATIVE.md) §6, conforming consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. Producers SHOULD NOT emit reserved types in cross-implementation distribution.
 
-### 12. Association
+### 13. Association
 
 **Description:** Group items into categories (Categorization).
 
@@ -776,7 +772,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 ---
 
-### 13. Hotspot
+### 14. Hotspot
 
 **Description:** Click regions on image (HotspotImage).
 
@@ -800,7 +796,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 ---
 
-### 14. GraphicGapMatch
+### 15. GraphicGapMatch
 
 **Description:** Visual arrangement (DragAndDrop).
 
@@ -824,7 +820,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 ---
 
-### 15. GraphicAssociate
+### 16. GraphicAssociate
 
 **Description:** Associate items with images.
 
@@ -848,7 +844,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 ---
 
-### 16. GraphicOrder
+### 17. GraphicOrder
 
 **Description:** Order items based on images.
 
@@ -872,7 +868,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 ---
 
-### 17. FileUpload
+### 18. FileUpload
 
 **Description:** Submit documents.
 
@@ -896,7 +892,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 ---
 
-### 18. MediaPromptedEssay
+### 19. MediaPromptedEssay
 
 **Description:** Record audio/video answer.
 
@@ -926,7 +922,7 @@ The seven question types in this section are reserved in the `question-base.sche
 - ✅ `"type"` value MUST match one of the supported types in canonical **camelCase**: `simpleGapFill`, `multipleChoice`, `trueFalseQuestion`, etc.
 - ❌ Non-conforming: `"type": "SimpleGapFill"` (pre-1.0 PascalCase). Conforming consumers MUST reject per `NORMATIVE.md` §5.3.
 - ❌ Non-conforming: `"type": "simplegapfill"` (wrong case). Conforming consumers MUST reject.
-- ❌ Invalid: `"type": "GapFill"` — not a recognised discriminator.
+- ❌ Invalid: `"type": "GapFill"` — not a recognized discriminator.
 
 ### Common Properties
 - ✅ `globalId` must be a valid RFC 4122 UUID; required per `NORMATIVE.md` §4.4.
@@ -1034,22 +1030,6 @@ The seven question types in this section are reserved in the `question-base.sche
   ]
 }
 ```
-
----
-
-## Generating JSON for AI Assistants
-
-When generating course JSON, AI assistants should:
-
-1. **Use canonical camelCase** for the `type` discriminator (`simpleGapFill`, not `SimpleGapFill` or `simplegapfill`).
-2. **Use camelCase** for all other property names.
-3. **Generate a fresh RFC 4122 UUID** for every entity's `globalId`.
-4. **Include all required properties** for the question type as listed in this document.
-5. **Validate gap counts**: numbered `@@@N` markers in the passage MUST match the keys in the answer dictionary, 1-based.
-6. **Use 1-based sequential numbering** for gaps and chunks (`"1"`, `"2"`, `"3"`, …).
-7. **Include meaningful tags** for categorisation (e.g., `"grammar:articles"`, `"level:B1"`, `"exam:fce"`).
-8. **Set realistic difficulty** on the 0.0–10.0 scale.
-9. **Validate the result** against the schemas (`schemas/`) before delivery.
 
 ---
 

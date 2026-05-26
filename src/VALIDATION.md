@@ -16,7 +16,7 @@ LC-JSON's validation surface is split across four enforcement sites:
 
 - **23 JSON Schemas** in [`schemas/`](schemas/) — declarative constraints (Draft 7) enforced by any conforming JSON Schema validator.
 - **[`NORMATIVE.md`](NORMATIVE.md)** — RFC 2119 prose obligations that may or may not be representable in JSON Schema.
-- **[`tools/validate_course.py`](../tools/validate_course.py)** (the reference validator, ~1820 lines) — domain checks that run after schema validation, plus consumer-friendly diagnostics.
+- **[`tools/validate_course.py`](../tools/validate_course.py)** (the reference validator) — domain checks that run after schema validation, plus consumer-friendly diagnostics.
 - **Companion normative documents and informative references** — [`HTML_SAFETY.md`](HTML_SAFETY.md) (normative) and [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (normative for tools claiming the Accessibility Profile; preservation obligations bind every consumer per [`NORMATIVE.md`](NORMATIVE.md) §12.1); per-type prose in [`question-types-reference.md`](question-types-reference.md) and authoring patterns in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) (both informative).
 
 A consumer that only runs schema validation will accept documents the spec considers invalid (e.g. an MCQ with no correct option, a `placement` whose `placements[].gap` points at a missing `@@@N` marker). A consumer that re-implements the reference validator from prose will miss rules. This catalog gives implementers one map of *"these are all the things a conforming consumer must check, and here's where each rule is enforced."*
@@ -45,9 +45,9 @@ Where a single rule is enforced at multiple tiers (e.g. schema + validator doubl
 
 ### 1.3 Strict mode and the lenient migration path
 
-The reference validator [`tools/validate_course.py`](../tools/validate_course.py) accepts a `--strict` flag. The default (lenient) mode emits a warning and falls through with reduced enforcement when it encounters two pre-1.0 document shapes: the wrapped envelope `{"course": {...}}` and the bare payload `{"units": [...]}` with no `documentType`. Neither shape is part of the published 1.0 contract; the lenient handling is a **Lesson-Commons-internal migration aid** that exists so the project's own authoring tool can ingest pre-1.0 internal content during the upgrade — it is not a published affordance third-party producers may rely on.
+The reference validator [`tools/validate_course.py`](../tools/validate_course.py) accepts a `--strict` flag. The default (lenient) mode emits a warning and falls through with reduced enforcement when it encounters two pre-1.0 document shapes: the wrapped envelope `{"course": {...}}` and the bare payload `{"units": [...]}` with no `documentType`. Neither shape is part of the published 1.0 contract; the lenient handling is a **maintainer-side migration aid** that allows pre-1.0 document shapes to be ingested during the upgrade — it is not a published affordance third-party producers may rely on.
 
-Under `--strict`, both shapes are fatal errors. The conformance corpus harness [`tools/run_corpus.py`](../tools/run_corpus.py) always invokes the validator with `--strict` (every fixture run goes through it; see line 33 of the harness); CI runs the harness on every PR; and per [`NORMATIVE.md`](NORMATIVE.md) §10.3 conformance claims under §10 are evaluated in `--strict` mode. **The published conformance contract is the `--strict` behavior** — third-party consumers and producers should treat the lenient path as a maintainer-side migration aid only.
+Under `--strict`, both shapes are fatal errors. The conformance corpus harness [`tools/run_corpus.py`](../tools/run_corpus.py) always invokes the validator with `--strict` (every fixture is run through the validator); CI runs the harness on every PR; and per [`NORMATIVE.md`](NORMATIVE.md) §10.3 conformance claims under §10 are evaluated in `--strict` mode. **The published conformance contract is the `--strict` behavior** — third-party consumers and producers should treat the lenient path as a maintainer-side migration aid only.
 
 Rows in the tables below that depend on this distinction explicitly say "ERROR under `--strict`; WARN otherwise"; everywhere else, the rule applies uniformly.
 
@@ -80,7 +80,7 @@ Required root fields ([`NORMATIVE.md`](NORMATIVE.md) §3.2). Both artifact types
 | `documentType` required at root | Schema-enforced | `course.schema.json: /required[*]="documentType"`, `question-set.schema.json: /required[*]="documentType"` | §3.2 |
 | `documentType` is `"course"` (course document) | Schema-enforced | `course.schema.json: /properties/documentType/const="course"` | §3.2, §4.2, §5.3 |
 | `documentType` is `"questionSet"` (question-set document) | Schema-enforced | `question-set.schema.json: /properties/documentType/const="questionSet"` | §3.2, §4.2, §5.3 |
-| Non-canonical `documentType` casing rejected (`"Course"`, `"questionset"`, `"question-set"`) | Schema-enforced (via `const`) | `course.schema.json` / `question-set.schema.json` `const`; `validate_course.py: dispatch_document_shape` provides casing-tolerant dispatch as a Lesson-Commons-internal migration aid ([§1.3](#13-strict-mode-and-the-lenient-migration-path)) — disabled under `--strict` | §4.2, §5.3 |
+| Non-canonical `documentType` casing rejected (`"Course"`, `"questionset"`, `"question-set"`) | Schema-enforced (via `const`) | `course.schema.json` / `question-set.schema.json` `const`; `validate_course.py: dispatch_document_shape` provides casing-tolerant dispatch as a maintainer-side migration aid ([§1.3](#13-strict-mode-and-the-lenient-migration-path)) — disabled under `--strict` | §4.2, §5.3 |
 | `specVersion` required at root | Schema-enforced | `course.schema.json: /required[*]="specVersion"`, `question-set.schema.json: /required[*]="specVersion"` | §3.2, §4.6 |
 | `specVersion` matches `^1\.[0-9]+(\.[0-9]+)?$` | Schema-enforced + Domain-validator-enforced (ERROR for `2.x`+) | `course.schema.json: /properties/specVersion/pattern`; `validate_course.py: check_spec_version` | §4.6, §5.2 |
 | `specVersion` MUST NOT carry an `-rc.N` suffix | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §4.6, §8.4 | §4.6 |
@@ -110,7 +110,7 @@ Course payload fields on a `documentType: "course"` document.
 | Pre-1.0 identity fields (`authorId`, `authorCourseId`) trigger a migration warning | Domain-validator-enforced (WARN) | `validate_course.py: validate_course_level` | (none — migration aid) |
 | Course `objectives[*].id` and `objectives[*].text` required | Schema-enforced | `course.schema.json: /properties/objectives/items/required` | (none) |
 | Course `objectives[*].difficultyBand` enum: `"Recall"`, `"Understand"`, `"Apply"`, `"Analyze"`, null | Schema-enforced | `course.schema.json: /properties/objectives/items/properties/difficultyBand/enum` | (none) |
-| `courseObjectiveIds[*]` reference `course.objectives[].id` | Domain-validator-enforced (WARN) | `validate_course.py: _collect_objective_id_violations` | (none — warning-tier integrity check; unresolved references break signpost auto-rendering) |
+| `courseObjectiveIds[*]` reference `course.objectives[].id` | Domain-validator-enforced (WARN) | `validate_course.py` (objective-reference integrity check) | (none — warning-tier integrity check; unresolved references break signpost auto-rendering) |
 | `estimatedDurationMinutes >= 0` | Schema-enforced | `course.schema.json: /properties/estimatedDurationMinutes/minimum` | (none) |
 | Course `tags[*]` are strings (Unit/Lesson/Item additionally enforce `minLength: 1`) | Schema-enforced | `course.schema.json: /properties/tags/items/type="string"`; `unit.schema.json` / `lesson.schema.json` / `item-base.schema.json: /properties/tags/items/minLength=1` | (none) |
 | `units[]` MUST be present at the root (course); is an array when present | Domain-validator-enforced (ERROR if missing); Schema-enforced (array type when present) | `validate_course.py: validate_course` ("Missing 'units' array at root level"); `course.schema.json: /properties/units/type="array"` (the schema's `default: []` would otherwise admit a missing field) | (none) |
@@ -128,7 +128,7 @@ Course payload fields on a `documentType: "course"` document.
 | `tags[*]` `minLength: 1` | Schema-enforced | `unit.schema.json: /properties/tags/items/minLength` | (none) |
 | `sequence >= 0` | Schema-enforced | `unit.schema.json: /properties/sequence/minimum` | (none — import uses array position, not `sequence`) |
 | `sequence` duplicates/gaps within siblings | Domain-validator-enforced (WARN, advisory) | `validate_course.py: validate_sequence_order` | (none) |
-| `objectiveIds[*]` reference `course.objectives[].id` | Domain-validator-enforced (WARN) | `validate_course.py: _collect_objective_id_violations` | (none) |
+| `objectiveIds[*]` reference `course.objectives[].id` | Domain-validator-enforced (WARN) | `validate_course.py` (objective-reference integrity check) | (none) |
 | `lessons[]` array (default `[]` schema-declared) | Schema-enforced (type) | `unit.schema.json: /properties/lessons` | (none) |
 
 ---
@@ -142,7 +142,7 @@ Course payload fields on a `documentType: "course"` document.
 | `items[]` is an array of `content`/`exercise`/`quiz`/`contentsequence`/`signpost` (`oneOf` dispatch) | Schema-enforced | `lesson.schema.json: /properties/items/items/oneOf` | (none) |
 | `items` missing or empty — informational | Domain-validator-enforced (WARN) | `validate_course.py: validate_lesson` ("empty lesson") | (none) |
 | `sequence` duplicates/gaps within siblings (lesson item ordering) | Domain-validator-enforced (WARN, advisory) | `validate_course.py: validate_sequence_order` | (none) |
-| `objectiveIds[*]` reference `course.objectives[].id` | Domain-validator-enforced (WARN) | `validate_course.py: _collect_objective_id_violations` | (none) |
+| `objectiveIds[*]` reference `course.objectives[].id` | Domain-validator-enforced (WARN) | `validate_course.py` (objective-reference integrity check) | (none) |
 
 ---
 
@@ -190,7 +190,7 @@ Properties inherited by every item type via `item-base.schema.json`.
 | `isGraded` boolean, default `true` (schema-declared) | Schema-enforced (type) | `quiz-item.schema.json: /allOf/1/properties/isGraded/default=true` | §4.3 |
 | `passMarkPercent` is a number `0 <= x <= 100`, default `70.0` (schema-declared) | Schema-enforced (type/range) | `quiz-item.schema.json: /allOf/1/properties/passMarkPercent` | (none — see [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §3) |
 | `points >= 0` | Schema-enforced | `quiz-item.schema.json: /allOf/1/properties/points/minimum` | (none) |
-| `item.points` vs `sum(question.points)` mismatch is intentional weighting | Domain-validator-enforced (NOTE) | `validate_course.py: _collect_weighted_points_notes` | (none) |
+| `item.points` vs `sum(question.points)` mismatch is intentional weighting | Domain-validator-enforced (NOTE) | `validate_course.py` (weighted-points NOTE collection) | (none) |
 
 ### 7.4 ContentSequenceItem
 
@@ -224,7 +224,7 @@ Properties inherited by every question via `question-base.schema.json`. Required
 | Rule | Tier | Source | NORMATIVE § |
 |---|---|---|---|
 | `type` required + enum (19 values: 12 implemented + 7 reserved) | Schema-enforced + Domain-validator-enforced | `question-base.schema.json: /required[*]="type"`, `/properties/type/enum`; `validate_course.py: validate_question` | §4.2, §5.3, §6.1 |
-| Non-canonical question-type casing (`MultipleChoice`, `simplegapfill`) rejected | Schema-enforced (via `enum`) + Domain-validator-enforced (ERROR for unknown discriminator) | `question-base.schema.json: /properties/type/enum`; `validate_course.py: _validate_questions_per_type` | §4.2, §5.3 |
+| Non-canonical question-type casing (`MultipleChoice`, `simplegapfill`) rejected | Schema-enforced (via `enum`) + Domain-validator-enforced (ERROR for unknown discriminator) | `question-base.schema.json: /properties/type/enum`; `validate_course.py` (per-type question dispatch) | §4.2, §5.3 |
 | `globalId` required + RFC 4122 UUID pattern (any version) | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `question-base.schema.json: /required[*]="globalId"`, `/properties/globalId/pattern`; `validate_course.py: validate_question` | §4.4 |
 | `prompt` required, `minLength: 1` | Schema-enforced + Domain-validator-enforced (WARN if missing) | `question-base.schema.json: /required[*]="prompt"`, `/properties/prompt/minLength`; `validate_course.py: validate_question` | (none) |
 | `points` is a non-negative number, MAY be null, default `1.0` (schema-declared) | Schema-enforced (type/range) + Domain-validator-enforced (WARN if missing) | `question-base.schema.json: /properties/points/{type,minimum,default}`; `validate_course.py: validate_question` | (none) |
@@ -258,6 +258,7 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | `correctAnswer` required, boolean | Schema-enforced + Domain-validator-enforced (ERROR if missing both v1 and v2 forms, ERROR if non-boolean, WARN on boolean-ish coercion) | `true-false-question.schema.json: /allOf/1/required`, `/properties/correctAnswer/type`; `validate_course.py: validate_true_false_question` | (none) |
 | Pre-1.0 TF shape (`options` / `optionsAndPoints`) deprecated | Domain-validator-enforced (WARN; multiple positive-points options WARN; zero positives WARN) | `validate_course.py: validate_true_false_question` | (none) |
 | `displayStyle` enum: `"TrueFalse"`, `"CorrectIncorrect"`, `"CheckmarkX"`, default `"TrueFalse"` (schema-declared) | Schema-enforced (enum) + Domain-validator-enforced (WARN if other) | `true-false-question.schema.json: /allOf/1/properties/displayStyle/enum`; `validate_course.py: validate_true_false_question` | (none) |
+| `penalizeIncorrect` boolean, default `false` (schema-declared) | Schema-enforced (type) | `true-false-question.schema.json: /allOf/1/properties/penalizeIncorrect` | (none) |
 | `incorrectPenaltyPercent` is `0..100`, default `50.0` (schema-declared) | Schema-enforced (type/range) + Domain-validator-enforced (WARN if out of range) | `true-false-question.schema.json: /allOf/1/properties/incorrectPenaltyPercent/{minimum,maximum}`; `validate_course.py: validate_true_false_question` | (none) |
 | `feedback.choiceFeedback` deprecated on TF | Domain-validator-enforced (WARN) | `validate_course.py: validate_true_false_question` | (none — TF v2 forbids the field; see [`question-types-reference.md`](question-types-reference.md)) |
 
@@ -270,7 +271,11 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | `optionsAndPoints` required, `{string: number}` map | Schema-enforced | `multiple-choice.schema.json: /allOf/1/required`, `/properties/optionsAndPoints` | (none) |
 | At least one `optionsAndPoints` value > 0 (an MCQ MUST have a correct answer) | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multiple_choice` | (none) |
 | `optionsAndPoints` keys cover every entry in `options` | Domain-validator-enforced (ERROR if missing; WARN if `optionsAndPoints` contains extras not in `options`) | `validate_course.py: validate_multiple_choice` | (none) |
-| `shuffleOptions` governs per-question option randomisation (per-question discretion) | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §5.6 (multipleChoice is explicitly exempt from the §5.6 randomisation MUST) | §5.6 |
+| `allowMultipleCorrect` boolean, default `false` (schema-declared) | Schema-enforced (type) | `multiple-choice.schema.json: /allOf/1/properties/allowMultipleCorrect` | (none) |
+| `allowPartialCredit` boolean, default `true` (schema-declared) | Schema-enforced (type) | `multiple-choice.schema.json: /allOf/1/properties/allowPartialCredit` | (none) |
+| `penalizeIncorrect` boolean, default `false` (schema-declared) | Schema-enforced (type) | `multiple-choice.schema.json: /allOf/1/properties/penalizeIncorrect` | (none) |
+| `showLetterLabels` boolean, default `false` (schema-declared) | Schema-enforced (type) | `multiple-choice.schema.json: /allOf/1/properties/showLetterLabels` | (none) |
+| `shuffleOptions` governs per-question option randomization (per-question discretion) | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §5.6 (multipleChoice is explicitly exempt from the §5.6 randomization MUST) | §5.6 |
 
 ### 9.4 wordBankCloze
 
@@ -280,8 +285,8 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | `passage` required, matches `@@@\d+`, `minLength: 4` | Schema-enforced | `word-bank-cloze.schema.json: /allOf/1/required`, `/properties/passage/{pattern,minLength}` | (none) |
 | `wordBank` required, `minItems: 1`, each `minLength: 1` | Schema-enforced | `word-bank-cloze.schema.json: /allOf/1/required`, `/properties/wordBank` | (none) |
 | `gapAcceptedAnswers` required, `{"^[0-9]+$": [string]}`, each gap `minItems: 1`, each accepted answer `minLength: 1` | Schema-enforced | `word-bank-cloze.schema.json: /allOf/1/required`, `/properties/gapAcceptedAnswers/patternProperties` | (none) |
-| `passage` `@@@N` marker set MUST equal `gapAcceptedAnswers` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_word_bank_cloze` → `_check_cloze_gap_consistency` | (none) |
-| `@@@N` marker numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_word_bank_cloze` → `_check_cloze_gap_consistency` | (none) |
+| `passage` `@@@N` marker set MUST equal `gapAcceptedAnswers` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_word_bank_cloze` (cloze gap-consistency check) | (none) |
+| `@@@N` marker numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_word_bank_cloze` (cloze gap-consistency check) | (none) |
 | `allowWordReuse` boolean, default `false` (schema-declared) | Schema-enforced (type) | `word-bank-cloze.schema.json: /allOf/1/properties/allowWordReuse` | (none) |
 | `bankPosition` enum: `"above"`, `"below"`, `"side"` | Schema-enforced | `word-bank-cloze.schema.json: /allOf/1/properties/bankPosition/enum` | (none) |
 | `gapCaseSensitive` / `gapFeedback` value types | Schema-enforced | `word-bank-cloze.schema.json: /allOf/1/properties/gapCaseSensitive`, `gapFeedback` | (none) |
@@ -295,8 +300,8 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | `gapAcceptedAnswers` required | Schema-enforced | `multi-gap-cloze.schema.json: /allOf/1/required` | (none) |
 | Each accepted answer MUST NOT contain `,` or `:` (scoring-engine wire format) | Schema-enforced + Domain-validator-enforced (ERROR) | `multi-gap-cloze.schema.json: /allOf/1/properties/gapAcceptedAnswers/patternProperties/.../items/not/pattern="[,:]"`; `validate_course.py: validate_multi_gap_cloze` | (none — wire-format consequence) |
 | Other punctuation in answers SHOULD be limited to apostrophes and hyphens | Domain-validator-enforced (WARN) | `validate_course.py: validate_multi_gap_cloze` | (none) |
-| `passage` `@@@N` marker set MUST equal `gapAcceptedAnswers` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multi_gap_cloze` → `_check_cloze_gap_consistency` | (none) |
-| `@@@N` marker numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_multi_gap_cloze` → `_check_cloze_gap_consistency` | (none) |
+| `passage` `@@@N` marker set MUST equal `gapAcceptedAnswers` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multi_gap_cloze` (cloze gap-consistency check) | (none) |
+| `@@@N` marker numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_multi_gap_cloze` (cloze gap-consistency check) | (none) |
 | `allowPartialCredit` boolean, default `true` (schema-declared) | Schema-enforced (type) | `multi-gap-cloze.schema.json: /allOf/1/properties/allowPartialCredit` | (none) |
 
 ### 9.6 multipleChoiceCloze
@@ -308,9 +313,9 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | Each gap's `gapOptions` has `minItems: 2` | Schema-enforced | `multiple-choice-cloze.schema.json: /allOf/1/properties/gapOptions/patternProperties/.../minItems` | (none) |
 | `correctAnswers[N]` is a non-negative integer | Schema-enforced | `multiple-choice-cloze.schema.json: /allOf/1/properties/correctAnswers/patternProperties/.../{type,minimum}` | (none) |
 | `correctAnswers[N]` index in bounds of `gapOptions[N]` | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multiple_choice_cloze` | (none) |
-| `passage` `@@@N` marker set MUST equal `gapOptions` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multiple_choice_cloze` → `_check_cloze_gap_consistency` | (none) |
+| `passage` `@@@N` marker set MUST equal `gapOptions` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multiple_choice_cloze` (cloze gap-consistency check) | (none) |
 | `gapOptions` key set MUST equal `correctAnswers` key set | Domain-validator-enforced (ERROR) | `validate_course.py: validate_multiple_choice_cloze` | (none) |
-| `@@@N` marker numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_multiple_choice_cloze` → `_check_cloze_gap_consistency` | (none) |
+| `@@@N` marker numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_multiple_choice_cloze` (cloze gap-consistency check) | (none) |
 | `shuffleOptions` boolean, default `false` (schema-declared) | Schema-enforced (type) | `multiple-choice-cloze.schema.json: /allOf/1/properties/shuffleOptions` | (none) |
 
 ### 9.7 shortAnswer
@@ -343,7 +348,6 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | Chunk numbers SHOULD be sequential starting at 1 | Domain-validator-enforced (WARN) | `validate_course.py: validate_sentence_transformation` | (none) |
 | `keyword` SHOULD be uppercase | Domain-validator-enforced (WARN) | `validate_course.py: validate_sentence_transformation` | (none) |
 | Deprecated PascalCase chunks/keyword fields (`AcceptedChunks`, `Keyword`, …) → camelCase | Domain-validator-enforced (WARN) | `validate_course.py: validate_sentence_transformation` (`deprecated_props` map) | (none) |
-| `prohibitExtraWordsBetweenChunks` boolean, default `true` (schema-declared) | Schema-enforced (type) | `sentence-transformation.schema.json: /allOf/1/properties/prohibitExtraWordsBetweenChunks` | (none) |
 | `allOrNothing` boolean, default `false` (schema-declared); `chunkCaseSensitive` / `chunkFeedback` typed maps | Schema-enforced (types) + Domain-validator-enforced (WARN if not boolean / not dict) | `sentence-transformation.schema.json`; `validate_course.py: validate_sentence_transformation` | (none) |
 
 ### 9.10 matching
@@ -360,8 +364,8 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | `classification` mode: `pairs` MUST NOT be present | Schema-enforced | `matching.schema.json: /allOf/1/else/not/required[*]="pairs"` | (none) |
 | `distractors[*]` non-empty strings | Schema-enforced | `matching.schema.json: /allOf/1/properties/distractors/items/minLength` | (none) |
 | `allowPartialCredit` boolean, default `true` (schema-declared) | Schema-enforced (type) | `matching.schema.json: /allOf/1/properties/allowPartialCredit` | (none) |
-| Consumers MUST randomise the choice pool (matches + distractors) | Advisory + runtime obligation | [`NORMATIVE.md`](NORMATIVE.md) §5.6 | §5.6 |
-| Consumers MUST randomise row order in `classification` mode | Advisory + runtime obligation | [`NORMATIVE.md`](NORMATIVE.md) §5.6 | §5.6 |
+| Consumers MUST randomize the choice pool (matches + distractors) | Advisory + runtime obligation | [`NORMATIVE.md`](NORMATIVE.md) §5.6 | §5.6 |
+| Consumers MUST randomize row order in `classification` mode | Advisory + runtime obligation | [`NORMATIVE.md`](NORMATIVE.md) §5.6 | §5.6 |
 
 ### 9.11 ordering
 
@@ -391,7 +395,7 @@ Properties enforced per question-type schema, plus per-type domain-validator rul
 | `placementUnit: "sectionLabel"` — marker SHOULD be at the start of a paragraph followed by a space | Domain-validator-enforced (WARN) | `validate_course.py: validate_placement` | (none) |
 | Extra `@@@N` markers without a `placements[]` entry are valid decoy gaps (TOEFL Sentence Insertion variant) | Advisory | `placement.schema.json: /allOf/1/properties/placements/description`, [`question-types-reference.md`](question-types-reference.md) §11 | (none) |
 | `distractors[*]` non-empty strings | Schema-enforced | `placement.schema.json: /allOf/1/properties/distractors/items/minLength` | (none) |
-| Consumers MUST randomise the choice pool (placements items + distractors) | Advisory + runtime obligation | [`NORMATIVE.md`](NORMATIVE.md) §5.6 | §5.6 |
+| Consumers MUST randomize the choice pool (placements items + distractors) | Advisory + runtime obligation | [`NORMATIVE.md`](NORMATIVE.md) §5.6 | §5.6 |
 
 ---
 
@@ -411,10 +415,10 @@ The 7 reserved question types — `association`, `hotspot`, `graphicGapMatch`, `
 | Consumer SHOULD disable navigation gating for unsupported questions | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §6.2 | §6.2 |
 | Producer SHOULD NOT emit reserved types in cross-implementation distribution | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §6.3 | §6.3 |
 | Producer SHOULD use the published reserved name exactly (`hotspot`, not `Hotspot`); SHOULD document tool-specific extensions in IMPLEMENTATIONS.md / README | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §6.5 | §6.5 |
-| **Producer**: emitting a discriminator value not listed in `question-base.schema.json`'s `enum` is non-conforming at 1.0 — the schema rejects it; the reference validator surfaces it with a friendlier message naming the allowed values | Schema-enforced + Domain-validator-enforced (ERROR) | `question-base.schema.json: /properties/type/enum`; `validate_course.py: _validate_questions_per_type` | §6.1 |
+| **Producer**: emitting a discriminator value not listed in `question-base.schema.json`'s `enum` is non-conforming at 1.0 — the schema rejects it; the reference validator surfaces it with a friendlier message naming the allowed values | Schema-enforced + Domain-validator-enforced (ERROR) | `question-base.schema.json: /properties/type/enum`; `validate_course.py` (per-type question dispatch) | §6.1 |
 | **Consumer** (1.0-only) reading a 1.x+ document with a type discriminator unknown to the consumer: apply the §6 fallback (preserve verbatim, treat earned points as 0, render placeholder, report to user) — do NOT reject the document | Advisory (runtime / forward-compat obligation, not document-validity) | [`NORMATIVE.md`](NORMATIVE.md) §6.1, §6.2, §6.4 | §6.1, §6.2 |
 
-The two rows above are not in conflict: the producer-validity row describes the 1.0 strict-validator behavior on a document whose `type` enum is exhausted at 1.0 (the schema and the reference validator agree it's a malformed 1.0 document). The consumer-import row describes the runtime obligation a 1.0-only consumer carries when it ingests a 1.x+ document whose newer `type` it does not recognise — there, NORMATIVE §6 binds the consumer to graceful fallback rather than rejection. A 1.0 consumer cannot validate a 1.x+ document under a 1.0 schema and therefore SHOULD NOT use schema validation as the ingest gate when reading future-minor content; consumer-side ingest is governed by §6, not by `question-base.schema.json`.
+The two rows above are not in conflict: the producer-validity row describes the 1.0 strict-validator behavior on a document whose `type` enum is exhausted at 1.0 (the schema and the reference validator agree it's a malformed 1.0 document). The consumer-import row describes the runtime obligation a 1.0-only consumer carries when it ingests a 1.x+ document whose newer `type` it does not recognize — there, NORMATIVE §6 binds the consumer to graceful fallback rather than rejection. A 1.0 consumer cannot validate a 1.x+ document under a 1.0 schema and therefore SHOULD NOT use schema validation as the ingest gate when reading future-minor content; consumer-side ingest is governed by §6, not by `question-base.schema.json`.
 
 ---
 
@@ -429,7 +433,7 @@ A `documentType: "questionSet"` document is a flat questions list with no course
 | `questions[]` required (may be empty) | Schema-enforced | `question-set.schema.json: /required[*]="questions"` | (none) |
 | `sourceQuestionSetId`, when present, matches RFC 4122 UUID pattern | Schema-enforced | `question-set.schema.json: /properties/sourceQuestionSetId/pattern` | (none) |
 | `version` matches `^[0-9]+(\.[0-9]+){0,2}$`, default `"1.0"` (schema-declared) | Schema-enforced (pattern) | `question-set.schema.json: /properties/version/pattern` | (none) |
-| Each `questions[*]` validates against its per-type schema (per-question dispatch) | Domain-validator-enforced (ERROR on schema failure or unknown discriminator) | `validate_course.py: _validate_questions_per_type`, `validate_question_set_flat` | §5.1, §5.3 |
+| Each `questions[*]` validates against its per-type schema (per-question dispatch) | Domain-validator-enforced (ERROR on schema failure or unknown discriminator) | `validate_course.py` (per-type question dispatch), `validate_question_set_flat` | §5.1, §5.3 |
 
 ---
 
@@ -481,18 +485,18 @@ Validator severity for accessibility issues at the rc.1 baseline ([`ACCESSIBILIT
 | Issue | Severity | Validator function |
 |---|---|---|
 | Missing `alt` on `<img>` | WARN | `validate_html_content` |
-| `<video>` without `<track kind="captions"\|"subtitles">` | WARN (rc.1 baseline; promotion to ERROR under the `--accessibility` flag is targeted for 1.0 final — TD-138 deepenings) | `validate_html_content` (post-pass scan for `<video>…</video>` blocks) |
+| `<video>` without `<track kind="captions"\|"subtitles">` | WARN (rc.1 baseline; promotion to ERROR under the `--accessibility` flag is targeted for 1.0 final) | `validate_html_content` (post-pass scan for `<video>…</video>` blocks) |
 | `<iframe>`, `<script>`, event handlers | ERROR | `validate_html_content` |
 | Missing `language` at document root | ERROR (schema-enforced) | `course.schema.json` / `question-set.schema.json` `required` |
 | Reserved-type question without `title` | NOTE | (advisory; not currently surfaced) |
 
-### 12.3 Randomisation requirements
+### 12.3 Randomization requirements
 
-[`NORMATIVE.md`](NORMATIVE.md) §5.6 binds two surfaces. These are *consumer rendering* obligations, not document-validity rules — a document is conforming whether or not consumers randomise it. Listed here so implementers know what they MUST do at render time:
+[`NORMATIVE.md`](NORMATIVE.md) §5.6 binds two surfaces. These are *consumer rendering* obligations, not document-validity rules — a document is conforming whether or not consumers randomize it. Listed here so implementers know what they MUST do at render time:
 
-- **Choice pool** for `matching` (pairs/classification) and `placement` MUST be presented in randomised order.
-- **Row order in `matching` classification mode** MUST be randomised.
-- The randomisation algorithm and any seeding strategy are consumer-defined.
+- **Choice pool** for `matching` (pairs/classification) and `placement` MUST be presented in randomized order.
+- **Row order in `matching` classification mode** MUST be randomized.
+- The randomization algorithm and any seeding strategy are consumer-defined.
 - Exemptions: `multipleChoice` (per-question `shuffleOptions` instead), `matching` pairs rows, `ordering` source tiles.
 
 ### 12.4 Extensions (`x-` members)
@@ -507,7 +511,7 @@ Extension rules from [`NORMATIVE.md`](NORMATIVE.md) §7. Round-trip preservation
 | Producer MUST NOT emit an extension under a namespace it does not own | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §7.2 | §7.2 |
 | Extensions are strictly additive — removing every `x-` member MUST leave a conforming document with equivalent learner-facing meaning | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §7.3 | §7.3 |
 | Consumer MUST NOT reject documents solely for `x-` members or interpret members outside its own namespace | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §7.4 | §7.4 |
-| Extension-preserving consumers SHOULD round-trip unrecognised `x-` members on the same object | Advisory (round-trip behavior) | [`NORMATIVE.md`](NORMATIVE.md) §7.4 | §7.4 |
+| Extension-preserving consumers SHOULD round-trip unrecognized `x-` members on the same object | Advisory (round-trip behavior) | [`NORMATIVE.md`](NORMATIVE.md) §7.4 | §7.4 |
 
 ### 12.5 Versioning and URL stability
 
@@ -543,12 +547,12 @@ Where the reference validator and a normative document disagree, the normative d
 
 ## 14. Forward-looking deepenings (1.0 final)
 
-The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 35/35 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture; see line 33).
+The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 36/36 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture).
 
 Three areas remain explicitly forward-looking for `1.0` final or beyond:
 
-- **`--accessibility` validator flag (TD-138 deepenings).** The `<video>` without `<track kind="captions"\|"subtitles">` check (§12.2) is WARN at the rc.1 baseline. The 1.0-final `--accessibility` flag promotes it (and related accessibility warnings) to ERROR so tooling that wants to fail-build on accessibility-profile claims can do so.
-- **Tag namespace conventions (TD-145).** Optional best-practice tag prefixes (`stage:`, `level:`, `exam:`, …) are described informally in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §1. No schema-level constraint, no validator check; left to convention for `1.0`. The referential-integrity half of TD-145 (objectiveIds) is closed at rc.1.
-- **Reserved-type per-type schemas (TD-149).** The 7 reserved question types (`hotspot`, `association`, etc.) validate against `question-base.schema.json` only in 1.0 (§10). First-class per-type schemas are targeted for the `1.1` minor.
+- **`--accessibility` validator flag.** The `<video>` without `<track kind="captions"\|"subtitles">` check (§12.2) is WARN at the rc.1 baseline. The 1.0-final `--accessibility` flag promotes it (and related accessibility warnings) to ERROR so tooling that wants to fail-build on accessibility-profile claims can do so.
+- **Tag namespace conventions.** Optional best-practice tag prefixes (`stage:`, `level:`, `exam:`, …) are described informally in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §1. No schema-level constraint, no validator check; left to convention for `1.0`. Referential-integrity validation on `objectiveIds` is closed at rc.1 (consumers MUST report unresolved IDs per the validator).
+- **Reserved-type per-type schemas.** The 7 reserved question types (`hotspot`, `association`, etc.) validate against `question-base.schema.json` only in 1.0 (§10). First-class per-type schemas are targeted for the `1.1` minor.
 
 Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by `1.1`) will surface as new rows in the per-type tables above or as new entries in this section. The published `/1.0-rc.1/` schema URLs remain immutable per [`NORMATIVE.md`](NORMATIVE.md) §8.3; any future closures land at `/1.0/` or a later version path.

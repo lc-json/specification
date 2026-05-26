@@ -19,8 +19,7 @@
       "acceptedChunks": {
         "1": ["last time I saw John"],
         "2": ["weeks"]
-      },
-      "prohibitExtraWordsBetweenChunks": true
+      }
     }
   ]
 }

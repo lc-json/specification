@@ -26,7 +26,7 @@ Schema URLs at every published version path — `lc-json.org/1.0-rc.1/` today, `
 - **[Specification overview](README-spec.html)** — what LC-JSON looks like, with worked examples.
 - **[NORMATIVE.md](NORMATIVE.html)** — the conformance requirements (RFC 2119 keywords, producer/consumer roles).
 - **[Question types reference](question-types-reference.html)** — per-type property reference for all 12 implemented question types.
-- **[Schemas](https://github.com/lc-json/specification/tree/main/schemas)** — Draft 7 JSON Schemas for every artifact and question type.
+- **[Schemas](https://github.com/lc-json/specification/tree/main/schemas)** — Draft-7 JSON Schemas for every artifact and question type.
 - **[Examples](https://github.com/lc-json/specification/tree/main/examples)** — minimal and full course examples; per-type fragments.
 
 ## For implementers
@@ -77,6 +77,6 @@ LC-JSON is licensed under the [Apache License, Version 2.0](https://www.apache.o
 
 **Version `1.0-rc.1` — public release candidate** (target: 2026-05-30). The wire format is stable and schema URLs at `lc-json.org/1.0-rc.1/` are immutable per `NORMATIVE.md` §8.3 — early adopters can build against `rc.1` with confidence. Each release candidate gets its own immutable URL path; the `/1.0/` URL is reserved for 1.0 final. Minor non-breaking refinements (additional conformance fixtures, the `ACCESSIBILITY.md` companion, validator `--strict` polish) may land before `1.0` final on 2026-06-30 — those would publish at `/1.0-rc.2/`, leaving `/1.0-rc.1/` frozen.
 
-The specification distils approximately 12 months of internal format iteration before public release. Earlier internal versions were not publicly available and are not part of the public version history.
+LC-JSON 1.0 is the format's first public release. Internal iteration prior to publication is not reflected in the version history.
 
 LC-JSON is maintained under a single-maintainer steward model; see [GOVERNANCE.md](GOVERNANCE.html) for the decision-making process and the criteria for transitioning to a working group.

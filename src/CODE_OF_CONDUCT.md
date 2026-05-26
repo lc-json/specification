@@ -18,7 +18,7 @@ In short:
 
 ## Reporting
 
-If you experience or witness behaviour that violates this Code of Conduct, please report it by opening a private GitHub message to the maintainer (Brent Miller, [@bantonym](https://github.com/bantonym)) or, if appropriate, filing a public issue.
+If you experience or witness behavior that violates this Code of Conduct, please report it by opening a private GitHub message to the maintainer (Brent Miller, [@bantonym](https://github.com/bantonym)) or, if appropriate, filing a public issue.
 
 Reports will be reviewed and acted upon. Confidentiality of reporters will be respected to the extent consistent with addressing the issue.
 

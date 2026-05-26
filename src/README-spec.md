@@ -1,6 +1,6 @@
 # LC-JSON Specification
 
-**Spec version:** 1.0
+**Spec version:** 1.0 (release candidate: rc.1)
 **Last updated:** 2026-05-23
 
 This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.
@@ -8,12 +8,12 @@ This directory contains the LC-JSON (Learning Content JSON) specification for st
 > **Implementing LC-JSON?** See [NORMATIVE.md](NORMATIVE.md) for the conformance requirements (RFC 2119 keywords, producer/consumer roles, versioning rules, URL stability promises). This README is descriptive; NORMATIVE.md is authoritative. For terminology, see [GLOSSARY.md](GLOSSARY.md).
 
 **Complete Coverage:**
-- ✅ Two artifact types (Course, QuestionSet) sharing a common flat root format
-- ✅ Course Hierarchy (Course → Units → Lessons → Items)
-- ✅ 5 Lesson Item Types (Content, Exercise, Quiz, ContentSequence, Signpost)
-- ✅ 19 Question Types (12 fully implemented + schema-validated; 7 reserved for a future minor version)
-- ✅ JSON Schemas (23) for validation — strictly enforced by the reference validator
-- ✅ Minimal + detailed examples (31 files, all schema-clean)
+- Two artifact types (Course, QuestionSet) sharing a common flat root format
+- Course Hierarchy (Course → Units → Lessons → Items)
+- 5 Lesson Item Types (Content, Exercise, Quiz, ContentSequence, Signpost)
+- 19 Question Types (12 fully implemented + schema-validated; 7 reserved for a future minor version)
+- JSON Schemas (23) for validation — strictly enforced by the reference validator
+- Minimal + detailed examples (31 files, all schema-clean)
 
 ---
 
@@ -44,7 +44,7 @@ LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing e
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.0/<artifact>.schema.json",
+  "$schema": "https://lc-json.org/1.0-rc.1/<artifact>.schema.json",
   "documentType": "course",      // or "questionSet"
   "specVersion": "1.0",
   "title": "...",
@@ -53,7 +53,8 @@ LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing e
 ```
 
 The `$schema` URL serves as a stable, versioned identifier and is used
-by IDEs (e.g., VS Code) for schema autocomplete. `specVersion` is
+by integrated development environments (IDEs such as VS Code) for schema
+autocomplete. `specVersion` is
 forward-compatible across the `1.x` series — conforming consumers MUST
 accept any `1.x` value and reject `2.x+` cleanly.
 
@@ -83,7 +84,7 @@ reject them.
 
 ---
 
-## 📂 Directory Structure
+## Directory Structure
 
 ```
 specification/
@@ -105,7 +106,7 @@ specification/
 │   ├── exercise-item.schema.json      # ExerciseItem type
 │   ├── quiz-item.schema.json          # QuizItem type
 │   ├── content-sequence-item.schema.json  # ContentSequenceItem type
-│   ├── signpost-item.schema.json      # SignpostItem type (ADR-010)
+│   ├── signpost-item.schema.json      # SignpostItem type (intro/summary navigation)
 │   ├── question-base.schema.json      # Base schema for all Questions
 │   ├── simple-gap-fill.schema.json    # SimpleGapFill validation
 │   ├── true-false-question.schema.json # TrueFalseQuestion validation
@@ -119,7 +120,7 @@ specification/
 │   ├── matching.schema.json           # Matching validation
 │   ├── ordering.schema.json           # Ordering validation
 │   └── placement.schema.json          # Placement validation
-└── examples/                          # Example JSON files (30 total)
+└── examples/                          # Example JSON files (31 total)
     ├── course-minimal.json            # Minimal Course example
     ├── course-legacy-wrapped.json     # Pre-1.0 wrapped-envelope reference (filename retained for stability)
     ├── question-set-minimal.json      # Minimal QuestionSet example
@@ -145,11 +146,11 @@ specification/
     └── sample-course-with-questions.json    # Full course example
 ```
 
-**Total:** 23 schemas (4 hierarchy [course, questionSet, unit, lesson] + 1 item-base + 5 item types + 1 question-base + 12 question types).
+**Total:** 23 schemas (4 [course, questionSet, unit, lesson] + 1 item-base + 5 item types + 1 question-base + 12 question types).
 
 ---
 
-## 🏗️ Course Hierarchy
+## Course Hierarchy
 
 A Course document has the following nested structure:
 
@@ -173,7 +174,7 @@ Course (top level)
 
 ---
 
-## 📦 5 Lesson Item Types
+## Lesson Item Types
 
 Every Lesson contains an `items` array with one or more of these 5 item types:
 
@@ -209,7 +210,7 @@ Every Lesson contains an `items` array with one or more of these 5 item types:
 
 ---
 
-## 📖 Documentation Files
+## Documentation Files
 
 ### 1. [question-types-reference.md](./question-types-reference.md)
 **Complete JSON Format Reference**
@@ -225,7 +226,6 @@ Every Lesson contains an `items` array with one or more of these 5 item types:
 - Creating new course JSON files
 - Understanding question type requirements
 - Troubleshooting import errors
-- Training AI assistants to generate course content
 
 ---
 
@@ -291,7 +291,7 @@ Ultra-minimal examples for quick consultation when creating courses:
 - **unit-minimal.json** - Minimal Unit within a course
 - **lesson-minimal.json** - Minimal Lesson within a unit
 
-Use these for atomic AI prompts requiring exact format (e.g., "create a unit on Travel + present perfect").
+Use these as exact-format references (e.g., a unit on Travel + present perfect).
 
 #### Item Type Examples (10-13) - **Item Structure Reference**
 Individual examples for each of the Lesson Item types:
@@ -316,11 +316,11 @@ Standalone JSON files for each implemented question type with **complete feedbac
 9. **09-sentence-transformation.json** - FCE Part 4 with chunk feedback
 
 **Features Demonstrated:**
-- ✅ Complete feedback bundle (correct, incorrect, choiceFeedback)
-- ✅ Strategic hints that guide without revealing answers
-- ✅ Multi-level tagging (grammar:articles:indefinite, exam:fce, level:B2)
-- ✅ Realistic educational content
-- ✅ Production-ready quality
+- Complete feedback bundle (correct, incorrect, choiceFeedback)
+- Strategic hints that guide without revealing answers
+- Multi-level tagging (grammar:articles:indefinite, exam:fce, level:B2)
+- Realistic educational content
+- Production-ready quality
 
 **Use these as templates** - they showcase all features including feedback mechanisms that are integral to effective course design.
 
@@ -340,7 +340,7 @@ Complete course JSON showing:
 
 ---
 
-## 🎯 Quick Start Guide
+## Quick Start Guide
 
 ### For Content Creators
 
@@ -370,28 +370,6 @@ Complete course JSON showing:
 
 ---
 
-### For AI Assistants
-
-**When generating course JSON:**
-
-1. **Read the reference documentation** at [`question-types-reference.md`](question-types-reference.md).
-
-2. **Key requirements:**
-   - ✅ Use camelCase for type discriminators (`"simpleGapFill"`, not `"SimpleGapFill"` or `"simplegapfill"`).
-   - ✅ Use camelCase for all property names.
-   - ✅ Gap count in `passage` must match answer arrays.
-   - ✅ Use sequential indices for gaps/chunks (1-based for gap dictionaries).
-   - ✅ Every entity needs a UUID `globalId`.
-
-3. **Use examples as templates** — copy structure from the per-type example files (`01-` through `16c-`), modify content while preserving structure, validate required properties are present.
-
-4. **Tag appropriately:**
-   ```json
-   "tags": ["grammar:articles", "level:B1", "exam:fce"]
-   ```
-
----
-
 ### For Developers
 
 **Validating LC-JSON in code:**
@@ -416,45 +394,46 @@ The reference Python validator (`tools/validate_course.py` in this repository) l
 
 ---
 
-## 📋 19 Question Types - Implementation Status
+## Question Types — Implementation Status
 
-| Phase | Question Type | Status | Schema | Individual Example | Use Case |
-|-------|--------------|--------|--------|-------------------|----------|
-| **Phase 1** | | | | | |
-| 1.1 | `simpleGapFill` | ✅ Implemented | ✅ | ✅ 01-simple-gap-fill.json | Single gap fill-in-the-blank |
-| 1.2 | `trueFalseQuestion` | ✅ Implemented | ✅ | ✅ 02-true-false-question.json | Binary choice (True/False, Yes/No) |
-| 1.3 | `multipleChoice` | ✅ Implemented | ✅ | ✅ 03-multiple-choice.json | Single or multiple selection MCQ |
-| **Phase 2** | | | | | |
-| 2.1 | `wordBankCloze` | ✅ Implemented | ✅ | ✅ 04-word-bank-cloze.json | Gap fill from word pool |
-| 2.2 | `multiGapCloze` | ✅ Implemented | ✅ | ✅ 05-multi-gap-cloze.json | Open cloze (FCE Reading Part 2) |
-| 2.3 | `multipleChoiceCloze` | ✅ Implemented | ✅ | ✅ 06-multiple-choice-cloze.json | Dropdown cloze (FCE Reading Part 1) |
-| **Phase 3** | | | | | |
-| 3.1 | `shortAnswer` | ✅ Implemented | ✅ | ✅ 07-short-answer.json | Free text short response |
-| 3.2 | `essay` | ✅ Implemented | ✅ | ✅ 08-essay.json | Long-form writing with rubric |
-| **Phase 4** | | | | | |
-| 4.1 | `sentenceTransformation` | ✅ Implemented | ✅ | ✅ 09-sentence-transformation.json | FCE Use of English Part 4 |
-| 4.2 | `matching` | ✅ Implemented | ✅ | ✅ 15-matching.json | Term-definition matching |
-| 4.3 | `ordering` | ✅ Implemented | ✅ | ✅ 16-ordering.json | Sequence/chronological ordering |
-| 4.4 | `placement` | ✅ Implemented | ✅ | ✅ 17a-sentence-placement.json | Place items into anchored gaps in a structured passage (sentence / paragraph / sectionLabel; supports decoy gaps for TOEFL Sentence Insertion) |
-| **Reserved (targeted for 2027)** | | | | | |
-| R.1 | `association` | 🔒 Reserved | ❌ | ❌ | Categorization/grouping |
-| R.2 | `hotspot` | 🔒 Reserved | ❌ | ❌ | Click regions on image |
-| R.3 | `graphicGapMatch` | 🔒 Reserved | ❌ | ❌ | Drag-and-drop on image |
-| R.4 | `graphicAssociate` | 🔒 Reserved | ❌ | ❌ | Match text with images |
-| R.5 | `graphicOrder` | 🔒 Reserved | ❌ | ❌ | Order images sequentially |
-| R.6 | `fileUpload` | 🔒 Reserved | ❌ | ❌ | Document submission |
-| R.7 | `mediaPromptedEssay` | 🔒 Reserved | ❌ | ❌ | Audio/video recording |
+**Implemented** (12 types, fully schema-validated as of 1.0-rc.1):
 
-**Legend:**
-- ✅ **Implemented** - Full DTO, mapper, per-type schema, and example complete
-- 🔒 **Reserved** - Declared in the discriminator enum for forward compat; no per-type schema or example yet (targeted for 2027)
-- ❌ **Not Available** - Pending implementation
+| Question Type | Example | Use Case |
+|---|---|---|
+| `simpleGapFill` | 01-simple-gap-fill.json | Single gap fill-in-the-blank |
+| `trueFalseQuestion` | 02-true-false-question.json | Binary choice (True/False, Yes/No) |
+| `multipleChoice` | 03-multiple-choice.json | Single or multiple selection MCQ |
+| `wordBankCloze` | 04-word-bank-cloze.json | Gap fill from word pool |
+| `multiGapCloze` | 05-multi-gap-cloze.json | Open cloze (FCE Reading Part 2) |
+| `multipleChoiceCloze` | 06-multiple-choice-cloze.json | Dropdown cloze (FCE Reading Part 1) |
+| `shortAnswer` | 07-short-answer.json | Free text short response |
+| `essay` | 08-essay.json | Long-form writing with rubric |
+| `sentenceTransformation` | 09-sentence-transformation.json | FCE Use of English Part 4 |
+| `matching` | 15-matching.json | Term-definition matching |
+| `ordering` | 16-ordering.json | Sequence/chronological ordering |
+| `placement` | 17a-sentence-placement.json | Place items into anchored gaps in a structured passage (sentence / paragraph / sectionLabel; supports decoy gaps for TOEFL Sentence Insertion) |
 
-**Summary:** 12 of 19 types fully implemented (63%) — the entire user-facing surface in 1.0. The 7 reserved types are targeted for 2027.
+**Reserved** (7 types declared in the discriminator enum for forward compatibility; per-type schemas and authoring/consumer support targeted for 2027):
+
+| Question Type | Use Case |
+|---|---|
+| `association` | Categorization/grouping |
+| `hotspot` | Click regions on image |
+| `graphicGapMatch` | Drag-and-drop on image |
+| `graphicAssociate` | Match text with images |
+| `graphicOrder` | Order images sequentially |
+| `fileUpload` | Document submission |
+| `mediaPromptedEssay` | Audio/video recording |
+
+**Status definitions:**
+- **Implemented** — per-type schema, example, and conformance fixtures present.
+- **Reserved** — declared in the `question-base.schema.json` discriminator enum for forward compatibility; no per-type schema or example ships yet.
+
+The 12 implemented types are the entire user-facing surface as of 1.0. The 7 reserved types are targeted for 2027.
 
 ---
 
-## 🔍 Common Validation Errors
+## Common Validation Errors
 
 ### Error: "Number of gaps doesn't match accepted answers"
 **Cause:** Mismatch between numbered `@@@N` markers in `passage` and entries in `gapAcceptedAnswers`.
@@ -474,7 +453,7 @@ The reference Python validator (`tools/validate_course.py` in this repository) l
 
 ---
 
-## 📚 Related Documentation
+## Related Documentation
 
 - [`NORMATIVE.md`](NORMATIVE.md) — RFC 2119 conformance requirements (the authoritative source for what implementations must do)
 - [`HTML_SAFETY.md`](HTML_SAFETY.md) — Normative HTML allowlist for `ContentItem.html` and `SignpostItem.customHtml` (elements, attributes, URL schemes, sanitization)
@@ -497,7 +476,7 @@ The reference Python validator (`tools/validate_course.py` in this repository) l
 - Two artifact types under a common flat root: `course` (hierarchical) and `questionSet` (flat).
 - 12 user-facing question types fully implemented and schema-validated; 7 graphic/upload types reserved for a 2027 minor version.
 - 23 JSON Schemas (Draft 7) covering every artifact, item type, and question type.
-- 31 example files; conformance test corpus under [`tests/`](tests/) (11 valid + 18 invalid = 29 cases).
+- 31 example files; conformance test corpus under [`tests/`](tests/) (12 valid + 24 invalid = 36 cases).
 - Reference validator (`tools/validate_course.py`) and conformance corpus harness (`tools/run_corpus.py`).
 - Apache 2.0 throughout. Release-candidate schemas are published as **immutable** at `https://lc-json.org/1.0-rc.1/*.schema.json`; the `https://lc-json.org/1.0/*.schema.json` URL space is reserved for the accepted final release.
 
@@ -507,11 +486,11 @@ The reference Python validator (`tools/validate_course.py` in this repository) l
 - Deepens [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (the rc.1 release) additively: per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures, with select producer obligations promoted into [`NORMATIVE.md`](NORMATIVE.md).
 - Any non-breaking refinements caught during the release-candidate cycle land here, or in subsequent immutable `/1.0-rc.N/` releases prior to final.
 
-> *LC-JSON 1.0 distils approximately 12 months of internal format iteration. Earlier internal versions were never publicly released and are not part of the public version history.*
+> *LC-JSON 1.0 is the format's first public release. Internal iteration prior to publication is not reflected in the version history.*
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 PRs welcome. To propose a new question type or modify an existing one, see [`Adding a new question type`](#for-developers) above. For non-trivial changes, open an issue first to discuss the proposal.
 
@@ -519,7 +498,7 @@ See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for acknowledgments.
 
 ---
 
-## 📧 Support
+## Support
 
 - **GitHub Issues:** open an issue on the spec repository.
 - **Conformance questions:** consult [`NORMATIVE.md`](NORMATIVE.md); it is the authoritative source for implementer requirements.

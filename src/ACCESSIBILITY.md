@@ -1,10 +1,10 @@
 # LC-JSON Accessibility Profile
 
 **Status:** Released for `1.0-rc.1`. Additive deepenings (per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader timing requirements, conformance fixtures) land in `1.0` final on 2026-06-30 — see §11. Obligations stated here are committed for `1.0` final and will not be retracted or contradicted.
-**Spec version:** 1.0
+**Spec version:** 1.0 (release candidate: rc.1)
 **Last updated:** 2026-05-23
 
-This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are to be interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174). RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see [`README.md`](README-spec.md) §"Wire Format" and `ADR-017`).
+This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are to be interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174). RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see [`README.md`](README-spec.md) §"Wire Format").
 
 ---
 
@@ -33,7 +33,7 @@ WCAG governs rendered user experiences; LC-JSON governs portability and metadata
 
 The technical accessibility target for educational and commercial delivery in the EU and US converges on **WCAG 2.1 Level AA**:
 
-- **EU — European Accessibility Act, Directive (EU) 2019/882** (applicable since 28 June 2025): points at the harmonised standard **EN 301 549**, which references WCAG 2.1 AA.
+- **EU — European Accessibility Act, Directive (EU) 2019/882** (applicable since 28 June 2025): points at the harmonized standard **EN 301 549**, which references WCAG 2.1 AA.
 - **EU — Web Accessibility Directive (EU) 2016/2102**: binds public-sector bodies (public universities, schools) to **EN 301 549 → WCAG 2.1 AA**.
 - **US — DOJ ADA Title II final rule** (April 2024): explicitly adopts **WCAG 2.1 AA** for state/local government, including public schools and universities, with compliance deadlines in **April 2026 / April 2027**.
 - **US — Section 508 / Section 504**: WCAG-based conformance for federal procurement and recipients of federal financial assistance.
@@ -121,7 +121,7 @@ Concretely:
 - `matching` (`pairs` mode) — Tab-to-item, Enter-to-select, Tab-to-match, Enter-to-pair (or equivalent two-step keyboard model) MUST work without a pointer. Native `<select>` per item is the simplest conforming pattern (see §4.2.2).
 - `matching` (`classification` mode) — Tab through the item pool, Enter-to-select an item, Tab-to-category, Enter-to-place. Many items can target the same category.
 - `ordering` — Up/Down (or Left/Right for `orderingUnit: "word"`) keys MUST move a focused tile within the sequence. The interaction model SHOULD be discoverable from focus state alone. See §4.2.1 for a recommended ARIA pattern.
-- `placement` — Tab through the distractor pool and the gap targets; Enter-to-select an item, Tab-to-gap, Enter-to-place. The interaction MUST work without a pointer regardless of `placementUnit` mode. A labelled `<select>` per gap is the simplest conforming pattern.
+- `placement` — Tab through the distractor pool and the gap targets; Enter-to-select an item, Tab-to-gap, Enter-to-place. The interaction MUST work without a pointer regardless of `placementUnit` mode. A labeled `<select>` per gap is the simplest conforming pattern.
 - `wordBankCloze`, `multiGapCloze` — Bank-token selection and gap-placement MUST be reachable by keyboard. `multipleChoiceCloze`'s `<select>` rendering is inherently keyboard-accessible and is the RECOMMENDED fallback pattern when richer drag-and-drop interactions cannot be made keyboard-equivalent.
 
 Focus indicators on interactive elements MUST be visible (WCAG **2.4.7 Focus Visible**) and SHOULD meet 3:1 contrast against adjacent backgrounds (WCAG **1.4.11 Non-text Contrast**).
@@ -150,9 +150,9 @@ An alternative satisfying the same obligations is the **WAI-ARIA Authoring Pract
 
 The simplest conforming pattern is **native form controls**:
 
-- **`matching` (`pairs`)** — one `<select>` per item, options drawn from `match` values + `distractors` (shuffled per §5.6 of [`NORMATIVE.md`](NORMATIVE.md)). Each `<select>` is labelled with the item text via a visible `<label>` or `aria-labelledby`.
+- **`matching` (`pairs`)** — one `<select>` per item, options drawn from `match` values + `distractors` (shuffled per §5.6 of [`NORMATIVE.md`](NORMATIVE.md)). Each `<select>` is labeled with the item text via a visible `<label>` or `aria-labelledby`.
 - **`matching` (`classification`)** — one `<select>` per item, options drawn from the category labels.
-- **`placement`** — one `<select>` per `@@@N` gap, options drawn from `placements[].item` values + `distractors`. Each `<select>` is labelled with surrounding-passage context or a gap label.
+- **`placement`** — one `<select>` per `@@@N` gap, options drawn from `placements[].item` values + `distractors`. Each `<select>` is labeled with surrounding-passage context or a gap label.
 
 Native `<select>` is inherently keyboard-accessible, satisfies 2.5.3 by carrying its visible label as its accessible name, and avoids the ARIA-listbox complexity of §4.2.1. Richer drag-and-drop renderings are permitted but MUST ship the keyboard and single-pointer alternatives per §4.1.
 
@@ -168,14 +168,14 @@ Producers MAY include hint text guiding learners who use keyboard or assistive t
 
 ---
 
-## 5. Feedback: not by colour alone — WCAG 1.4.1, 4.1.3
+## 5. Feedback: not by color alone — WCAG 1.4.1, 4.1.3
 
 Question types that emit feedback ([`question-types-reference.md`](question-types-reference.md), Common Properties — `feedback`, `choiceFeedback`) carry textual content. Consumers MUST render this textual feedback in addition to any visual indicators of correctness (green/red highlighting, check/cross icons).
 
-A consumer MUST NOT convey correctness solely through colour or icon. Conformant rendering provides at minimum:
+A consumer MUST NOT convey correctness solely through color or icon. Conformant rendering provides at minimum:
 
 - An accessible textual indicator ("Correct", "Incorrect", or the producer-supplied feedback string) — WCAG **1.4.1 Use of Color**.
-- A non-colour visual indicator (icon, position, label) for sighted users with colour-vision differences.
+- A non-color visual indicator (icon, position, label) for sighted users with color-vision differences.
 - An assistive-technology-readable announcement when feedback updates dynamically — WCAG **4.1.3 Status Messages**.
 
 This binds **consumer rendering**. The wire format already carries the textual indicators; the obligation is to render them.
@@ -206,9 +206,9 @@ Producers MUST set the root `language` to the document's primary delivery langua
 
 ### 6.2 Consumer obligations
 
-A consumer MUST honour the document-level `language` field when setting the rendering surface's `lang` attribute. For web consumers, this means setting `<html lang>` from the document `language` rather than hardcoding a single locale. This satisfies WCAG **3.1.1 Language of Page**.
+A consumer MUST honor the document-level `language` field when setting the rendering surface's `lang` attribute. For web consumers, this means setting `<html lang>` from the document `language` rather than hardcoding a single locale. This satisfies WCAG **3.1.1 Language of Page**.
 
-A consumer MUST honour the `dir` attribute on HTML-bearing elements when rendering RTL content; failure to do so produces unintelligible bidirectional text. For RTL document languages (`ar`, `he`, `fa`, `ur`), a web consumer SHOULD additionally emit `<html dir="rtl">` so the browser's bidirectional algorithm is engaged for the whole rendering surface.
+A consumer MUST honor the `dir` attribute on HTML-bearing elements when rendering RTL content; failure to do so produces unintelligible bidirectional text. For RTL document languages (`ar`, `he`, `fa`, `ur`), a web consumer SHOULD additionally emit `<html dir="rtl">` so the browser's bidirectional algorithm is engaged for the whole rendering surface.
 
 A consumer MUST NOT strip `lang` or `dir` attributes during sanitization. Both attributes are explicitly allowed on every element class in [`HTML_SAFETY.md`](HTML_SAFETY.md) §3.1.
 
@@ -232,7 +232,7 @@ A consumer MUST NOT silently skip the placeholder for assistive-technology users
 
 A conforming placeholder SHOULD use:
 
-- `role="region"` — surfaces the placeholder as a labelled landmark, distinguishable from form controls.
+- `role="region"` — surfaces the placeholder as a labeled landmark, distinguishable from form controls.
 - `aria-label` carrying the question's `title`, the unsupported `type` discriminator, and an indication that the renderer can't display this type. Recommended template: *"Unsupported question: `<title>`. This question type (`<type>`) can't be displayed by this viewer."*
 - A visible visual treatment that signals "informational, not interactive" (e.g. a warning or info alert styling).
 - No interactive children (`<input>`, `<button>`, `<select>`) — the placeholder is announced as a region, not a form control.
@@ -250,7 +250,7 @@ The reference validator surfaces accessibility issues at the following severitie
 | Missing `alt` on `<img>` | warning | 1.1.1 | [`HTML_SAFETY.md`](HTML_SAFETY.md) §8.2; §2 above |
 | `<video>` without `<track kind="captions">` or `kind="subtitles"` | informational note | 1.2.2 | §3.1 |
 | `<iframe>`, `<script>`, event handlers (inaccessible regardless) | error | 4.1.2 (would-be) | [`HTML_SAFETY.md`](HTML_SAFETY.md) §8.1 |
-| Missing `lang` at document root | error (schema-enforced) | 3.1.1 | §6.1 |
+| Missing `language` at document root | error (schema-enforced) | 3.1.1 | §6.1 |
 | Reserved-type question without a `title` | informational note (recommended for placeholder) | 1.3.1, 4.1.2 | §7 |
 
 > *1.0 final will deepen this with: an `--accessibility` validator flag (analogous to `--strict`) for tooling that wants to fail-build on warnings, additional severity entries for the reserved-type placeholder surface, and conformance fixtures exercising accessibility-related warnings/errors.*
@@ -269,13 +269,13 @@ The table below indexes which sections of this document cover which Success Crit
 | 1.2.3 Audio Desc. or Media Alt. | A | Description track or transcript | §3 |
 | 1.2.5 Audio Description (Prerecorded) | AA | `<track kind="descriptions">` | §3 |
 | 1.3.1 Info and Relationships | A | ARIA roles/labels, structured-task semantics, placeholder landmark | §4, §7 |
-| 1.4.1 Use of Color | A | Textual + non-colour correctness cues | §5 |
+| 1.4.1 Use of Color | A | Textual + non-color correctness cues | §5 |
 | 1.4.2 Audio Control | A | No autoplay | §3.2 |
 | 1.4.11 Non-text Contrast | AA | Focus indicator contrast | §4.1 |
 | 2.1.1 Keyboard | A | Keyboard alternatives for structured tasks | §4 |
 | 2.4.7 Focus Visible | AA | Visible focus indicators | §4.1 |
 | 2.5.1 Pointer Gestures | A | Single-pointer alternatives | §4 |
-| 2.5.2 Pointer Cancellation | A | Activation on up-event | §4 (consumer behaviour) |
+| 2.5.2 Pointer Cancellation | A | Activation on up-event | §4 (consumer behavior) |
 | 2.5.3 Label in Name | A | Accessible name contains visible label | §4.2 |
 | **2.5.7 Dragging Movements** | **A (2.2 — designed-in)** | Single-pointer alternative for every drag | §4 |
 | **2.5.8 Target Size (Minimum)** | **AA (2.2 — designed-in)** | ≥ 24×24 px interactive targets | §1.5 |
@@ -290,7 +290,7 @@ Criteria not listed (e.g. 1.3.2, 2.4.1, 3.2.2, 3.3.x) are properties of a delive
 
 ## 10. Cross-references
 
-- [`NORMATIVE.md`](NORMATIVE.md) — RFC 2119 conformance requirements; `language` field requirement; reserved-type round-trip; randomisation requirements (§5.6).
+- [`NORMATIVE.md`](NORMATIVE.md) — RFC 2119 conformance requirements; `language` field requirement; reserved-type round-trip; randomization requirements (§5.6).
 - [`HTML_SAFETY.md`](HTML_SAFETY.md) — `<img alt>`, `<track>`, `lang`, `dir`, validator severity.
 - [`question-types-reference.md`](question-types-reference.md) — per-type feedback fields and structured-task definitions.
 - [`GLOSSARY.md`](GLOSSARY.md) — terminology.
@@ -298,7 +298,7 @@ Criteria not listed (e.g. 1.3.2, 2.4.1, 3.2.2, 3.3.x) are properties of a delive
 - **WCAG 2.1 Quick Reference (filterable SC list)** — <https://www.w3.org/WAI/WCAG21/quickref/>
 - **WAI-ARIA Authoring Practices Guide (APG)** — <https://www.w3.org/WAI/ARIA/apg/> — pattern recommendations (listbox, grab/drop, status messages).
 - **ATAG 2.0** — <https://www.w3.org/TR/ATAG20/> — authoring-tool obligations referenced in §1.3.
-- **EN 301 549** — <https://www.etsi.org/deliver/etsi_en/301500_301599/301549/> — EU harmonised standard pointing at WCAG 2.1 AA.
+- **EN 301 549** — <https://www.etsi.org/deliver/etsi_en/301500_301599/301549/> — EU harmonized standard pointing at WCAG 2.1 AA.
 
 ---
 
@@ -315,7 +315,7 @@ Planned `1.0` final additions (2026-06-30):
 - **`--accessibility` validator flag** — analogous to `--strict`; promotes accessibility-profile warnings (missing `alt`, missing `<track>` on speech-bearing video) to errors for tooling that wants to fail-build on accessibility issues.
 - **Conformance fixtures for accessibility** — expanded fixture coverage beyond the rc.1 baseline (a round-trip preservation fixture and a missing-language invalid fixture ship in rc.1; the 1.0-final additions exercise the `--accessibility` flag's warning-to-error promotion).
 - **Reserved-type accessibility metadata schema** — guidance for emitting accessibility metadata on `hotspot`, `graphicGapMatch`, and the other graphic types when their per-type schemas land (post-1.0).
-- **Multilingual accessibility metadata shape** — design for localized alt text / transcripts / accessible-name fields per locale (intersect with TD-139 localization model). Not in 1.0; flagged as a known forward direction.
-- **BCP 47 vs ISO 639-1 reconciliation** — locale-tag normalisation for `language` / `supportLanguage` / inline `lang` (intersect with TD-139).
+- **Multilingual accessibility metadata shape** — design for localized alt text / transcripts / accessible-name fields per locale. Not in 1.0; flagged as a known forward direction.
+- **BCP 47 vs ISO 639-1 reconciliation** — locale-tag normalization for `language` / `supportLanguage` / inline `lang`.
 
 Implementers building against `1.0-rc.1` can rely on the obligations stated above. The `1.0` final release lands on **2026-06-30**.
