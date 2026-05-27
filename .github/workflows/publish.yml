@@ -46,7 +46,7 @@ jobs:
   build-and-deploy:
     needs: conformance
     # Only deploy on push to main; PRs run the build for verification only.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
