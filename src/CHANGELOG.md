@@ -4,6 +4,13 @@ All notable changes to the LC-JSON (Learning Content JSON) specification are doc
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to the versioning policy described in [`NORMATIVE.md`](NORMATIVE.md) §8.
 
+## [1.0-rc.1 doc revisions] — 2026-05-27
+
+Doc-only follow-up revisions to the rc.1 publication. No schema or wire-format changes; the rc.1 contract at `/1.0-rc.1/` is unchanged.
+
+### Added
+- **GOVERNANCE.md: canonical sources identified.** New paragraph in the Trademark and naming section names `github.com/lc-json/specification` and `lc-json.org` as the canonical sources for the LC-JSON specification, distinguishing them from forks and mirrors (which remain permitted under Apache 2.0 but should be named as derivative works rather than as "LC-JSON" without qualification). README-public.md trademark paragraph extended with a one-line pointer.
+
 ## [1.0-rc.1 doc revisions] — 2026-05-26
 
 Doc-only follow-up revisions to the rc.1 publication. No schema or wire-format changes; the rc.1 contract at `/1.0-rc.1/` is unchanged.

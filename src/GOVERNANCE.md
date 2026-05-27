@@ -34,6 +34,8 @@ Once the threshold is met, the maintainer will publish a transition plan: charte
 
 "Lesson Commons" is a trademark of Brent Miller and is **not asserted** over the LC-JSON specification, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation. Implementers may state conformance freely.
 
+The canonical sources for the LC-JSON specification are this repository — [`github.com/lc-json/specification`](https://github.com/lc-json/specification) — and the published site at [`lc-json.org`](https://lc-json.org). Forks and mirrors are permitted under the Apache 2.0 license, but only the URLs above carry the canonical specification text. A forked or mirrored copy that materially differs from these sources is a derivative work and should be named accordingly — not "LC-JSON" without qualification.
+
 The specification's name and canonical URL (`lc-json.org`) are not vendor-coupled by design. If stewardship of LC-JSON ever passes to a foundation, working group, or successor maintainer, the name and URL travel with the specification, not with any sponsoring organization.
 
 ## Contact
