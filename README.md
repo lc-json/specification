@@ -67,7 +67,7 @@ The specification distils approximately 12 months of internal format iteration. 
 
 LC-JSON is licensed under the [Apache License, Version 2.0](LICENSE). The specification text, schemas, examples, conformance tests, and reference tools are all covered. Implementers may build conforming tools without further permission.
 
-"Lesson Commons" is a trademark of Brent Miller and is not asserted over LC-JSON, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation.
+"Lesson Commons" is a trademark of Brent Miller and is not asserted over LC-JSON, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation. The canonical sources for the specification are this repository and the published site at [`lc-json.org`](https://lc-json.org); see [`GOVERNANCE.md`](src/GOVERNANCE.md) for the full naming and forking posture.
 
 ## Contact
 
