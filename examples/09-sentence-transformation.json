@@ -11,7 +11,7 @@
   "points": 2.0,
   "difficulty": 8.0,
   "hint": "Think about time expressions go with the present perfect and past simple verb tenses.",
-  "prompt": "Complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between TWO and FIVE words, including the word given.",
+  "prompt": "",
   "promptSentence": "I haven't seen John for three weeks.",
   "keyword": "LAST",
   "targetSentence": "The @@@ was three weeks ago.",

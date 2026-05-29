@@ -98,7 +98,7 @@ See [validator](#validator) under Core concepts above.
 
 ### globalId
 
-An RFC 4122 UUID assigned to every Unit, Lesson, Item, and Question. `globalId` identifies an entity across re-imports, enabling consumers to match unchanged content against existing records and detect modifications. Required per NORMATIVE.md §4.4.
+An RFC 4122 UUID (any version; shape-only validation against the 8-4-4-4-12 hex pattern) assigned to every Unit, Lesson, Item, and Question. `globalId` identifies an entity across re-imports, enabling consumers to match unchanged content against existing records and detect modifications. Required per NORMATIVE.md §4.4.
 
 ### sourceCourseId
 
@@ -110,7 +110,7 @@ A required root field declaring which contract version of LC-JSON the document c
 
 ### `$schema`
 
-A required root field carrying the canonical URL of the JSON Schema for the document's artifact type at the specific publication the producer targets. A 1.0-rc.1 Course document carries `"$schema": "https://lc-json.org/1.0-rc.1/course.schema.json"`; a 1.0-final Course document carries `"$schema": "https://lc-json.org/1.0/course.schema.json"`. URLs at any published path — released versions and release candidates alike — are immutable for the lifetime of the spec (§8.3).
+A required root field carrying the canonical URL of the JSON Schema for the document's artifact type at the specific publication the producer targets. A 1.0-rc.2 Course document carries `"$schema": "https://lc-json.org/1.0-rc.2/course.schema.json"`; a 1.0-final Course document carries `"$schema": "https://lc-json.org/1.0/course.schema.json"`. URLs at any published path — released versions and release candidates alike — are immutable for the lifetime of the spec (§8.3).
 
 ### implemented question type
 

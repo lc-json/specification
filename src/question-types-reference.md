@@ -25,7 +25,7 @@ LC-JSON questions are tagged-union objects. Every question carries a `type` fiel
 **Key requirements:**
 - The `type` discriminator value uses canonical **camelCase** (`simpleGapFill`, `multipleChoice`, …). Conforming consumers MUST reject non-canonical casings (`NORMATIVE.md` §5.3).
 - All property names use camelCase.
-- Every question carries a `globalId` in RFC 4122 UUID format.
+- Every question carries a `globalId` in RFC 4122 UUID form (any version; shape-only validation against the 8-4-4-4-12 hex pattern).
 - See [`NORMATIVE.md`](NORMATIVE.md) for the full conformance requirements.
 
 **Supported Question Types (19 total):**
@@ -70,7 +70,7 @@ All question types inherit these base properties:
   "type": "simpleGapFill",
   "globalId": "550e8400-e29b-41d4-a716-446655440000",
   "title": "Question title",
-  "prompt": "Question text here",
+  "prompt": "",
   "tags": ["tag1", "tag2"],
   "difficulty": 5.0,
   "points": 1.0,
@@ -90,9 +90,9 @@ All question types inherit these base properties:
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `type` | string | ✅ Yes | - | Question type discriminator. Canonical camelCase form. |
-| `globalId` | string (UUID) | ✅ Yes | - | RFC 4122 UUID; stable across versions of the question. |
+| `globalId` | string (UUID) | ✅ Yes | - | RFC 4122 UUID (any version; shape-only validation); stable across versions of the question. |
 | `title` | string | ❌ No | `""` | Short title for editorial/list views. |
-| `prompt` | string | ✅ Yes | `""` | Main question text/prompt. |
+| `prompt` | string | ✅ Yes | `""` | Main question text. Required for every type; **may be empty** (`""`). Authoritative for the real-content types (true/false, multiple choice, short answer, essay), where it *is* the question. Non-authoritative for the symbolic types, whose structured fields carry the meaning — there it MAY be empty or MAY carry a brief producer-derived readable summary (see the symbolic-type note below). |
 | `tags` | string[] | ❌ No | `[]` | Tag array for categorization. |
 | `difficulty` | number | ❌ No | `5.0` | Estimated difficulty for the intended learners (0.0 = extremely easy, 10.0 = extremely difficult). |
 | `points` | number | ❌ No | `1.0` | Points awarded for a correct answer. |
@@ -117,7 +117,7 @@ All question types inherit these base properties:
 {
   "type": "simpleGapFill",
   "globalId": "550e8400-e29b-41d4-a716-446655440001",
-  "prompt": "Complete the sentence",
+  "prompt": "",
   "title": "Capital of France",
   "tags": ["geography", "level:A1"],
   "difficulty": 2.0,
@@ -239,7 +239,7 @@ All question types inherit these base properties:
 {
   "type": "wordBankCloze",
   "globalId": "550e8400-e29b-41d4-a716-446655440004",
-  "prompt": "Complete the passage using words from the word bank",
+  "prompt": "",
   "title": "Word Bank Exercise",
   "tags": ["grammar:articles", "level:B1"],
   "difficulty": 5.0,
@@ -292,7 +292,7 @@ All question types inherit these base properties:
 {
   "type": "multiGapCloze",
   "globalId": "550e8400-e29b-41d4-a716-446655440005",
-  "prompt": "Complete the passage by filling in the blanks",
+  "prompt": "",
   "title": "Open Cloze Exercise",
   "tags": ["grammar:prepositions", "exam:fce", "level:B2"],
   "difficulty": 6.0,
@@ -339,7 +339,7 @@ All question types inherit these base properties:
 {
   "type": "multipleChoiceCloze",
   "globalId": "550e8400-e29b-41d4-a716-446655440006",
-  "prompt": "Choose the correct word for each gap",
+  "prompt": "",
   "title": "Multiple Choice Cloze",
   "tags": ["vocabulary", "exam:fce", "level:B2"],
   "difficulty": 7.0,
@@ -492,7 +492,7 @@ A document that mixes shapes (both `pairs` and `categories` present, or `matchin
   "tags": ["politics:enlightenment", "philosophy:political"],
   "points": 8.0,
   "difficulty": 5.0,
-  "prompt": "Match each Enlightenment thinker with the idea most closely associated with them.",
+  "prompt": "",
   "matchingMode": "pairs",
   "pairs": [
     { "item": "John Locke",         "match": "Government derives its authority from the consent of the governed." },
@@ -519,7 +519,7 @@ A document that mixes shapes (both `pairs` and `categories` present, or `matchin
   "tags": ["grammar:tenses:past-simple", "grammar:tenses:present-perfect", "level:B1"],
   "points": 6.0,
   "difficulty": 4.0,
-  "prompt": "Drag each time expression into the tense it most often goes with.",
+  "prompt": "",
   "matchingMode": "classification",
   "categories": [
     { "label": "past simple",     "items": ["a year ago", "yesterday", "in May 2019"] },
@@ -571,7 +571,7 @@ Per-row scoring. In `pairs` mode, each row is one item↔match comparison. In `c
 {
   "type": "ordering",
   "globalId": "550e8400-e29b-41d4-a716-446655440010",
-  "prompt": "Put the words in order to make a correct sentence.",
+  "prompt": "",
   "title": "Word Order",
   "sourceText": "She went shopping yesterday.",
   "items": ["She", "went", "shopping", "yesterday"],
@@ -589,7 +589,7 @@ Per-row scoring. In `pairs` mode, each row is one item↔match comparison. In `c
 {
   "type": "ordering",
   "globalId": "550e8400-e29b-41d4-a716-446655441620",
-  "prompt": "Arrange these stages of aerobic cellular respiration in the order they occur.",
+  "prompt": "",
   "title": "Cellular Respiration — Order the Stages",
   "sourceText": "Glucose enters the cell and is split into two pyruvate molecules… (full passage)",
   "items": [
@@ -634,7 +634,9 @@ When `scoringMode` is omitted, the recommended default is `"strict"` for `orderi
 
 **Word-level placement** is covered by [`wordBankCloze`](#5-wordbankcloze) — placement does not include `"word"` in the `placementUnit` enum.
 
-**Framing instructions** for the exercise (e.g., *"Place these sentences in the gaps where they best fit. Some markers are decoys."*) belong on the parent `exerciseItem.instructions` (or `quizItem.instructions`) field, **not** on the question's `prompt`. Consumers typically render the parent item's `instructions` once at the top of the exercise — above all its questions — so per-question framing would be redundant. This convention applies symmetrically to all eight symbolic question types (gap-fill family, sentence transformation, matching, ordering, placement).
+**Symbolic-type `prompt` convention.** On the eight symbolic question types (the gap-fill family, sentence transformation, matching, ordering, placement) the structured fields carry the question's meaning, so `prompt` is **non-authoritative**. It remains required but **MAY be empty** (`""`); equally, a producer MAY populate it with a brief human-readable summary derived from the question's content — a readable preview, not authored framing. See `examples/01b-simple-gap-fill-readable-prompt.json`, which shows `"I saw ___ elephant at the zoo yesterday."` as one valid form, with `""` (as in `examples/01-simple-gap-fill.json`) equally valid. Consumers MUST NOT rely on a symbolic `prompt`'s content for scoring, rendering, equality, or deduplication.
+
+**Framing instructions** for the exercise (e.g., *"Place these sentences in the gaps where they best fit. Some markers are decoys."*) belong on the parent `exerciseItem.instructions` (or `quizItem.instructions`) field, not duplicated into each question's `prompt`. Consumers typically render the parent item's `instructions` once at the top of the exercise — above all its questions — so per-question framing would be redundant. This applies symmetrically to all eight symbolic question types.
 
 #### Properties
 
@@ -710,7 +712,7 @@ Per-gap scoring against the authored `placements[]`. With `allowPartialCredit: t
 {
   "type": "sentenceTransformation",
   "globalId": "550e8400-e29b-41d4-a716-446655440018",
-  "prompt": "Complete the second sentence so it has a similar meaning to the first, using the word given. Do not change the word given. Use between 2-5 words.",
+  "prompt": "",
   "title": "Key Word Transformation",
   "tags": ["grammar", "exam:fce", "level:B2"],
   "difficulty": 8.0,
@@ -925,7 +927,7 @@ The seven question types in this section are reserved in the `question-base.sche
 - ❌ Invalid: `"type": "GapFill"` — not a recognized discriminator.
 
 ### Common Properties
-- ✅ `globalId` must be a valid RFC 4122 UUID; required per `NORMATIVE.md` §4.4.
+- ✅ `globalId` must be a valid RFC 4122 UUID (any version; shape-only validation against the 8-4-4-4-12 hex pattern); required per `NORMATIVE.md` §4.4.
 - ✅ `difficulty` must be 0.0 to 10.0.
 - ✅ `points` must be a non-negative number (minimum `0.0`); MAY be `null` to inherit a consumer-default scoring weight. Use `0` for ungraded questions; positive values for graded.
 - ✅ `tags` must be array of strings (can be empty; per the empty-default-strip rule in spec examples, omit when empty).
@@ -979,7 +981,7 @@ The seven question types in this section are reserved in the `question-base.sche
     {
       "type": "simpleGapFill",
       "globalId": "550e8400-e29b-41d4-a716-446655440101",
-      "prompt": "Complete the sentence",
+      "prompt": "",
       "title": "Articles",
       "tags": ["grammar:articles"],
       "difficulty": 3.0,
@@ -1044,4 +1046,6 @@ The seven question types in this section are reserved in the `question-base.sche
 ---
 
 **Version history:**
-- 1.0 (2026-04-29) — initial public release.
+- 1.0-rc.1 (2026-05-25) — initial release candidate; internal, never publicly announced.
+- 1.0-rc.2 (2026-05-30) — first publicly announced release candidate; `prompt`-field correction.
+- 1.0 (target 2026-06-30) — final release.

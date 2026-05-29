@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "$schema": "https://lc-json.org/1.0-rc.2/course.schema.json",
   "documentType": "course",
   "specVersion": "1.0",
   "sourceCourseId": "550e8400-e29b-41d4-a716-446655441299",

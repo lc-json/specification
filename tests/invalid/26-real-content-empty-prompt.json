@@ -1,0 +1,17 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.2/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Real-content question with empty prompt",
+  "language": "en",
+  "questions": [
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "26262626-2626-4626-8626-262626262626",
+      "points": 1.0,
+      "prompt": "",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse"
+    }
+  ]
+}

@@ -104,7 +104,7 @@ Course payload fields on a `documentType: "course"` document.
 | Rule | Tier | Source | NORMATIVE § |
 |---|---|---|---|
 | `title` required, `minLength: 1` | Schema-enforced + Domain-validator-enforced | `course.schema.json: /properties/title`, `/required[*]="title"`; `validate_course.py: validate_course_level` | §3.2 |
-| `sourceCourseId`, when present, matches RFC 4122 UUID pattern | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `course.schema.json: /properties/sourceCourseId/pattern`; `validate_course.py: validate_course_level` | §4.4 |
+| `sourceCourseId`, when present, matches the RFC 4122 UUID pattern (any version; shape-only validation) | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `course.schema.json: /properties/sourceCourseId/pattern`; `validate_course.py: validate_course_level` | §4.4 |
 | `sourceCourseId` SHOULD be emitted for re-importable or version-tracked courses | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §4.4 | §4.4 |
 | `version`, when present, matches `^[0-9]+(\.[0-9]+){0,2}$` (1–3 numeric segments) | Schema-enforced + Domain-validator-enforced (WARN) | `course.schema.json: /properties/version/pattern`; `validate_course.py: validate_course_level` | §4.4 |
 | Pre-1.0 identity fields (`authorId`, `authorCourseId`) trigger a migration warning | Domain-validator-enforced (WARN) | `validate_course.py: validate_course_level` | (none — migration aid) |
@@ -122,7 +122,7 @@ Course payload fields on a `documentType: "course"` document.
 | Rule | Tier | Source | NORMATIVE § |
 |---|---|---|---|
 | `globalId` required | Schema-enforced + Domain-validator-enforced | `unit.schema.json: /required[*]="globalId"`; `validate_course.py: validate_unit` | §4.4 |
-| `globalId` matches RFC 4122 UUID pattern (any version) | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `unit.schema.json: /properties/globalId/pattern`; `validate_course.py: validate_unit` (via `is_valid_uuid`) | §4.4 |
+| `globalId` matches the RFC 4122 UUID pattern (any version; shape-only validation) | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `unit.schema.json: /properties/globalId/pattern`; `validate_course.py: validate_unit` (via `is_valid_uuid`) | §4.4 |
 | `title` required, `minLength: 1` | Schema-enforced + Domain-validator-enforced | `unit.schema.json: /properties/title`, `/required[*]="title"`; `validate_course.py: validate_unit` | (none) |
 | `description` defaults to `""` | Schema-declared (annotation; not enforced — see [§13](#13-conformance-note)) | `unit.schema.json: /properties/description/default` | (none) |
 | `tags[*]` `minLength: 1` | Schema-enforced | `unit.schema.json: /properties/tags/items/minLength` | (none) |
@@ -137,7 +137,7 @@ Course payload fields on a `documentType: "course"` document.
 
 | Rule | Tier | Source | NORMATIVE § |
 |---|---|---|---|
-| `globalId` required + RFC 4122 UUID pattern | Schema-enforced + Domain-validator-enforced (WARN) | `lesson.schema.json: /required`, `/properties/globalId/pattern`; `validate_course.py: validate_lesson` | §4.4 |
+| `globalId` required + RFC 4122 UUID pattern (any version; shape-only validation) | Schema-enforced + Domain-validator-enforced (WARN) | `lesson.schema.json: /required`, `/properties/globalId/pattern`; `validate_course.py: validate_lesson` | §4.4 |
 | `title` required, `minLength: 1` | Schema-enforced + Domain-validator-enforced | `lesson.schema.json`; `validate_course.py: validate_lesson` | (none) |
 | `items[]` is an array of `content`/`exercise`/`quiz`/`contentsequence`/`signpost` (`oneOf` dispatch) | Schema-enforced | `lesson.schema.json: /properties/items/items/oneOf` | (none) |
 | `items` missing or empty — informational | Domain-validator-enforced (WARN) | `validate_course.py: validate_lesson` ("empty lesson") | (none) |
@@ -154,7 +154,7 @@ Properties inherited by every item type via `item-base.schema.json`.
 |---|---|---|---|
 | `type` required, enum: `content`, `exercise`, `quiz`, `contentsequence`, `signpost` | Schema-enforced + Domain-validator-enforced | `item-base.schema.json: /properties/type/enum`, `/required`; `validate_course.py: validate_item` | §4.2, §5.3 |
 | Non-canonical item-type casing (`Content`, `ExerciseItem`) rejected | Schema-enforced (via `enum`/`const`) + Domain-validator-enforced (WARN; tolerated via `normalize_item_type`) | `item-base.schema.json`; `validate_course.py: validate_item` | §4.2, §5.3 |
-| `globalId` required + RFC 4122 UUID pattern | Schema-enforced + Domain-validator-enforced (WARN) | `item-base.schema.json: /required`, `/properties/globalId/pattern`; `validate_course.py: validate_item` | §4.4 |
+| `globalId` required + RFC 4122 UUID pattern (any version; shape-only validation) | Schema-enforced + Domain-validator-enforced (WARN) | `item-base.schema.json: /required`, `/properties/globalId/pattern`; `validate_course.py: validate_item` | §4.4 |
 | `title` required, `minLength: 1` | Schema-enforced + Domain-validator-enforced (WARN if missing) | `item-base.schema.json`; `validate_course.py: validate_item` | (none) |
 | `tags[*]` `minLength: 1` | Schema-enforced | `item-base.schema.json: /properties/tags/items/minLength` | (none) |
 | `suggestedTime >= 0` | Schema-enforced | `item-base.schema.json: /properties/suggestedTime/minimum` | (none) |
@@ -225,8 +225,8 @@ Properties inherited by every question via `question-base.schema.json`. Required
 |---|---|---|---|
 | `type` required + enum (19 values: 12 implemented + 7 reserved) | Schema-enforced + Domain-validator-enforced | `question-base.schema.json: /required[*]="type"`, `/properties/type/enum`; `validate_course.py: validate_question` | §4.2, §5.3, §6.1 |
 | Non-canonical question-type casing (`MultipleChoice`, `simplegapfill`) rejected | Schema-enforced (via `enum`) + Domain-validator-enforced (ERROR for unknown discriminator) | `question-base.schema.json: /properties/type/enum`; `validate_course.py` (per-type question dispatch) | §4.2, §5.3 |
-| `globalId` required + RFC 4122 UUID pattern (any version) | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `question-base.schema.json: /required[*]="globalId"`, `/properties/globalId/pattern`; `validate_course.py: validate_question` | §4.4 |
-| `prompt` required, `minLength: 1` | Schema-enforced + Domain-validator-enforced (WARN if missing) | `question-base.schema.json: /required[*]="prompt"`, `/properties/prompt/minLength`; `validate_course.py: validate_question` | (none) |
+| `globalId` required + RFC 4122 UUID pattern (any version; shape-only validation) | Schema-enforced + Domain-validator-enforced (WARN if non-UUID) | `question-base.schema.json: /required[*]="globalId"`, `/properties/globalId/pattern`; `validate_course.py: validate_question` | §4.4 |
+| `prompt` required, `minLength: 0` (may be empty); empty/whitespace `prompt` is an **ERROR** for the 4 real-content types (`trueFalseQuestion`, `multipleChoice`, `shortAnswer`, `essay`), valid (empty) for the 8 symbolic types, and unconstrained for the 7 reserved types (deferred to v1.1) | Schema-enforced (`required`, `minLength: 0`) + Domain-validator-enforced (ERROR on real-content empty; WARN if missing) | `question-base.schema.json: /required[*]="prompt"`, `/properties/prompt/minLength`; `validate_course.py: validate_question` | (none) |
 | `points` is a non-negative number, MAY be null, default `1.0` (schema-declared) | Schema-enforced (type/range) + Domain-validator-enforced (WARN if missing) | `question-base.schema.json: /properties/points/{type,minimum,default}`; `validate_course.py: validate_question` | (none) |
 | `difficulty` is a number `0.0 <= x <= 10.0`, default `5.0` (schema-declared) | Schema-enforced (type/range) | `question-base.schema.json: /properties/difficulty/{minimum,maximum,default}` | (none — author estimate; see [`question-types-reference.md`](question-types-reference.md) Common Properties) |
 | `tags[*]` strings | Schema-enforced | `question-base.schema.json: /properties/tags/items/type` | (none) |
@@ -431,7 +431,7 @@ A `documentType: "questionSet"` document is a flat questions list with no course
 | `title` required, `minLength: 1` | Schema-enforced | `question-set.schema.json: /required[*]="title"`, `/properties/title/minLength` | §3.2 |
 | `language` required at root | Schema-enforced | `question-set.schema.json: /required[*]="language"` | §12.1 |
 | `questions[]` required (may be empty) | Schema-enforced | `question-set.schema.json: /required[*]="questions"` | (none) |
-| `sourceQuestionSetId`, when present, matches RFC 4122 UUID pattern | Schema-enforced | `question-set.schema.json: /properties/sourceQuestionSetId/pattern` | (none) |
+| `sourceQuestionSetId`, when present, matches the RFC 4122 UUID pattern (any version; shape-only validation) | Schema-enforced | `question-set.schema.json: /properties/sourceQuestionSetId/pattern` | (none) |
 | `version` matches `^[0-9]+(\.[0-9]+){0,2}$`, default `"1.0"` (schema-declared) | Schema-enforced (pattern) | `question-set.schema.json: /properties/version/pattern` | (none) |
 | Each `questions[*]` validates against its per-type schema (per-question dispatch) | Domain-validator-enforced (ERROR on schema failure or unknown discriminator) | `validate_course.py` (per-type question dispatch), `validate_question_set_flat` | §5.1, §5.3 |
 
@@ -480,12 +480,12 @@ Round-trip preservation (base conformance, [`NORMATIVE.md`](NORMATIVE.md) §12.1
 
 Opt-in Accessibility Profile delivery obligations (binding only when claimed): see [`ACCESSIBILITY.md`](ACCESSIBILITY.md) §§2–8. Not duplicated here.
 
-Validator severity for accessibility issues at the rc.1 baseline ([`ACCESSIBILITY.md`](ACCESSIBILITY.md) §8):
+Validator severity for accessibility issues at the current baseline ([`ACCESSIBILITY.md`](ACCESSIBILITY.md) §8):
 
 | Issue | Severity | Validator function |
 |---|---|---|
 | Missing `alt` on `<img>` | WARN | `validate_html_content` |
-| `<video>` without `<track kind="captions"\|"subtitles">` | WARN (rc.1 baseline; promotion to ERROR under the `--accessibility` flag is targeted for 1.0 final) | `validate_html_content` (post-pass scan for `<video>…</video>` blocks) |
+| `<video>` without `<track kind="captions"\|"subtitles">` | WARN (current baseline; promotion to ERROR under the `--accessibility` flag is targeted for 1.0 final) | `validate_html_content` (post-pass scan for `<video>…</video>` blocks) |
 | `<iframe>`, `<script>`, event handlers | ERROR | `validate_html_content` |
 | Missing `language` at document root | ERROR (schema-enforced) | `course.schema.json` / `question-set.schema.json` `required` |
 | Reserved-type question without `title` | NOTE | (advisory; not currently surfaced) |
@@ -547,12 +547,12 @@ Where the reference validator and a normative document disagree, the normative d
 
 ## 14. Forward-looking deepenings (1.0 final)
 
-The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 36/36 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture).
+The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 38/38 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture; the 36 fixtures at the time of that rc.1 pass plus the two `prompt`-correction fixtures added in rc.2).
 
 Three areas remain explicitly forward-looking for `1.0` final or beyond:
 
-- **`--accessibility` validator flag.** The `<video>` without `<track kind="captions"\|"subtitles">` check (§12.2) is WARN at the rc.1 baseline. The 1.0-final `--accessibility` flag promotes it (and related accessibility warnings) to ERROR so tooling that wants to fail-build on accessibility-profile claims can do so.
+- **`--accessibility` validator flag.** The `<video>` without `<track kind="captions"\|"subtitles">` check (§12.2) is WARN at the current baseline. The 1.0-final `--accessibility` flag promotes it (and related accessibility warnings) to ERROR so tooling that wants to fail-build on accessibility-profile claims can do so.
 - **Tag namespace conventions.** Optional best-practice tag prefixes (`stage:`, `level:`, `exam:`, …) are described informally in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §1. No schema-level constraint, no validator check; left to convention for `1.0`. Referential-integrity validation on `objectiveIds` is closed at rc.1 (consumers MUST report unresolved IDs per the validator).
 - **Reserved-type per-type schemas.** The 7 reserved question types (`hotspot`, `association`, etc.) validate against `question-base.schema.json` only in 1.0 (§10). First-class per-type schemas are targeted for the `1.1` minor.
 
-Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by `1.1`) will surface as new rows in the per-type tables above or as new entries in this section. The published `/1.0-rc.1/` schema URLs remain immutable per [`NORMATIVE.md`](NORMATIVE.md) §8.3; any future closures land at `/1.0/` or a later version path.
+Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by `1.1`) will surface as new rows in the per-type tables above or as new entries in this section. The published `/1.0-rc.2/` schema URLs remain immutable per [`NORMATIVE.md`](NORMATIVE.md) §8.3; any future closures land at `/1.0/` or a later version path.

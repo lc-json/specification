@@ -1,6 +1,6 @@
 # LC-JSON Specification
 
-**Spec version:** 1.0 (release candidate: rc.1)
+**Spec version:** 1.0 (release candidate: rc.2)
 **Last updated:** 2026-05-23
 
 This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.
@@ -13,7 +13,7 @@ This directory contains the LC-JSON (Learning Content JSON) specification for st
 - 5 Lesson Item Types (Content, Exercise, Quiz, ContentSequence, Signpost)
 - 19 Question Types (12 fully implemented + schema-validated; 7 reserved for a future minor version)
 - JSON Schemas (23) for validation — strictly enforced by the reference validator
-- Minimal + detailed examples (31 files, all schema-clean)
+- Minimal + detailed examples (32 files, all schema-clean)
 
 ---
 
@@ -44,7 +44,7 @@ LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing e
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.0-rc.1/<artifact>.schema.json",
+  "$schema": "https://lc-json.org/1.0-rc.2/<artifact>.schema.json",
   "documentType": "course",      // or "questionSet"
   "specVersion": "1.0",
   "title": "...",
@@ -119,10 +119,9 @@ specification/
 │   ├── sentence-transformation.schema.json  # SentenceTransformation validation
 │   ├── matching.schema.json           # Matching validation
 │   ├── ordering.schema.json           # Ordering validation
-│   └── placement.schema.json          # Placement validation
-└── examples/                          # Example JSON files (31 total)
+│   └── placement.schema.json          # Placement type validation
+└── examples/                          # Example JSON files (32 total)
     ├── course-minimal.json            # Minimal Course example
-    ├── course-legacy-wrapped.json     # Pre-1.0 wrapped-envelope reference (filename retained for stability)
     ├── question-set-minimal.json      # Minimal QuestionSet example
     ├── question-set-10-true-false.json # Richer QuestionSet showcase
     ├── unit-minimal.json              # Minimal Unit example
@@ -260,6 +259,7 @@ JSON Schema files for automated validation using tools like `ajv`, `jsonschema`,
 - `sentence-transformation.schema.json` - SentenceTransformation type validation
 - `matching.schema.json` - Matching type validation
 - `ordering.schema.json` - Ordering type validation
+- `placement.schema.json` - Placement type validation
 
 **Strict enforcement:** the reference validator (`validate_course.py`) runs every document through these schemas as a primary pass via the `jsonschema` package (≥4.18, modern `referencing` Registry API). Per-question type-specific dispatch keys off the `type` discriminator. Install dependencies with `pip install -r tools/requirements.txt`.
 
@@ -396,7 +396,7 @@ The reference Python validator (`tools/validate_course.py` in this repository) l
 
 ## Question Types — Implementation Status
 
-**Implemented** (12 types, fully schema-validated as of 1.0-rc.1):
+**Implemented** (12 types, fully schema-validated as of 1.0-rc.2):
 
 | Question Type | Example | Use Case |
 |---|---|---|
@@ -444,7 +444,7 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 **Fix:** Use camelCase: `"simpleGapFill"`, not `"SimpleGapFill"` or `"simplegapfill"`. Per [`NORMATIVE.md`](NORMATIVE.md) §5.3, conforming consumers MUST reject non-canonical casings.
 
 ### Error: "globalId does not match UUID pattern"
-**Cause:** `globalId` is missing or not in RFC 4122 UUID form.
+**Cause:** `globalId` is missing or not in RFC 4122 UUID form (any version; shape-only validation against the 8-4-4-4-12 hex pattern).
 **Fix:** Generate a UUID for every Unit, Lesson, Item, and Question. Use any standard UUID library; v4 is recommended.
 
 ### Error: "Unsupported specVersion '2.0'"
@@ -471,19 +471,24 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 
 ## Version History
 
-### v1.0-rc.1 (target: 2026-05-30) — initial public release candidate
+### v1.0-rc.2 (target: 2026-05-30) — initial public release candidate
 
 - Two artifact types under a common flat root: `course` (hierarchical) and `questionSet` (flat).
 - 12 user-facing question types fully implemented and schema-validated; 7 graphic/upload types reserved for a 2027 minor version.
 - 23 JSON Schemas (Draft 7) covering every artifact, item type, and question type.
-- 31 example files; conformance test corpus under [`tests/`](tests/) (12 valid + 24 invalid = 36 cases).
+- 32 example files; conformance test corpus under [`tests/`](tests/) (13 valid + 25 invalid = 38 cases).
 - Reference validator (`tools/validate_course.py`) and conformance corpus harness (`tools/run_corpus.py`).
-- Apache 2.0 throughout. Release-candidate schemas are published as **immutable** at `https://lc-json.org/1.0-rc.1/*.schema.json`; the `https://lc-json.org/1.0/*.schema.json` URL space is reserved for the accepted final release.
+- **`prompt` field correction (the rc.1 → rc.2 change):** `prompt` remains required but `minLength` is `0`, so an empty string `""` is valid. `prompt` is defined as **non-authoritative** for the eight symbolic question types (gap-fill family, sentence transformation, matching, ordering, placement), whose structured fields carry the question's meaning; for those types it MAY be empty or MAY carry a brief producer-derived readable summary. A reference-validator domain rule still flags an empty `prompt` on the four real-content types (true/false, multiple choice, short answer, essay), where it *is* the question. Backwards-compatible widening — every rc.1-valid document remains valid under rc.2.
+- Apache 2.0 throughout. Release-candidate schemas are published as **immutable** at `https://lc-json.org/1.0-rc.2/*.schema.json`; the `https://lc-json.org/1.0/*.schema.json` URL space is reserved for the accepted final release.
+
+### v1.0-rc.1 — internal release candidate (superseded, never announced)
+
+- Frozen and served at `https://lc-json.org/1.0-rc.1/*.schema.json` for transparency, but never publicly announced; rc.2 is the first announced prerelease. The only substantive difference is the backwards-compatible `prompt` `minLength` `1` → `0` correction above; the `/1.0-rc.1/` schema URLs remain immutable and any document valid under rc.1 is valid under rc.2.
 
 ### v1.0 (planned: 2026-06-30) — accepted final release
 
 - Will publish schemas as immutable at `https://lc-json.org/1.0/*.schema.json`.
-- Deepens [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (the rc.1 release) additively: per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures, with select producer obligations promoted into [`NORMATIVE.md`](NORMATIVE.md).
+- Deepens [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (the rc.2 release) additively: per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures, with select producer obligations promoted into [`NORMATIVE.md`](NORMATIVE.md).
 - Any non-breaking refinements caught during the release-candidate cycle land here, or in subsequent immutable `/1.0-rc.N/` releases prior to final.
 
 > *LC-JSON 1.0 is the format's first public release. Internal iteration prior to publication is not reflected in the version history.*
@@ -505,4 +510,4 @@ See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for acknowledgments.
 
 ---
 
-**LC-JSON Specification v1.0-rc.1**
+**LC-JSON Specification v1.0-rc.2**

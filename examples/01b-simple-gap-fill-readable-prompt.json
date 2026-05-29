@@ -1,0 +1,23 @@
+{
+  "type": "simpleGapFill",
+  "globalId": "550e8400-e29b-41d4-a716-44665544001b",
+  "title": "Articles - Indefinite Article (illustrative readable prompt)",
+  "tags": [
+    "grammar:articles:indefinite",
+    "level:A1",
+    "skill:accuracy"
+  ],
+  "points": 1.0,
+  "difficulty": 2.0,
+  "hint": "Say the word 'elephant' aloud. Does it start with a vowel sound or a consonant sound?",
+  "prompt": "I saw ___ elephant at the zoo yesterday.",
+  "sentence": "I saw @@@ elephant at the zoo yesterday.",
+  "acceptedAnswers": [
+    "an"
+  ],
+  "caseSensitive": false,
+  "feedback": {
+    "correct": "Excellent! 'An' is correct because 'elephant' starts with a vowel sound.",
+    "incorrect": "Not quite. 'Elephant' starts with a vowel sound, so we use 'an' (not 'a')."
+  }
+}

@@ -10,7 +10,7 @@
   "points": 6.0,
   "difficulty": 4.0,
   "hint": "If the time expression points to a finished moment in the past, it goes with past simple. If it links the past to now, it goes with present perfect.",
-  "prompt": "Drag each time expression into the tense it most often goes with.",
+  "prompt": "",
   "matchingMode": "classification",
   "categories": [
     {

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.2/simple-gap-fill.schema.json",
+  "title": "SimpleGapFill Question Schema",
+  "description": "Single gap with free text entry and multiple acceptable answers",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "simpleGapFill"
+        },
+        "sentence": {
+          "type": "string",
+          "description": "Sentence with @@@ marking gap position",
+          "pattern": "@@@",
+          "minLength": 4
+        },
+        "acceptedAnswers": {
+          "type": "array",
+          "description": "List of acceptable answers",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Whether answer matching is case-sensitive",
+          "default": false
+        }
+      },
+      "required": [
+        "sentence",
+        "acceptedAnswers"
+      ]
+    }
+  ]
+}

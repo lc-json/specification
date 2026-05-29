@@ -65,8 +65,8 @@ import argparse
 #
 # We load every *.schema.json file from LC.JSON/specification/schemas/ into
 # a Registry once at startup. Each schema is registered under both its bare
-# filename and its declared canonical $id (`lc-json.org/1.0-rc.1/` for the
-# current rc.1 publication; `lc-json.org/1.0/` once 1.0 final ships) so
+# filename and its declared canonical $id (`lc-json.org/1.0-rc.2/` for the
+# current rc.2 publication; `lc-json.org/1.0/` once 1.0 final ships) so
 # $ref resolution works whether a schema $refs a peer by filename or by
 # absolute URL.
 #
@@ -77,6 +77,14 @@ import argparse
 
 _HERE = Path(__file__).resolve().parent
 
+# The publication this validator ships with. The bundled reference validator
+# tracks a single publication (the development head, currently 1.0-rc.2); it is
+# NOT a dual-version validator — a document pins its version via $schema, and an
+# rc.1 document is validated with the rc.1-tagged validator. Bump this when
+# cutting the next publication (e.g. "1.0" at final). Drives both the public-repo
+# schema-dir selection and the canonical $id registered for $ref resolution.
+_CURRENT_PUBLICATION = "1.0-rc.2"
+
 
 def _detect_schemas_dir():
     """Resolve the schemas directory for the current layout.
@@ -84,17 +92,22 @@ def _detect_schemas_dir():
     Lesson Commons monorepo (source):  LC.JSON/tools/ → ../specification/schemas/
     Public spec repo (published):      tools/         → ../schemas/<X.Y(-rc.N)>/
 
-    Tries the source-layout path first, falls back to scanning the public-repo
-    layout for any versioned schema directory containing course.schema.json.
+    Tries the source-layout path first. In the public-repo layout, multiple
+    immutable versioned dirs may coexist (e.g. a frozen schemas/1.0-rc.1/
+    alongside schemas/1.0-rc.2/), so this MUST load the dir for THIS validator's
+    own publication (_CURRENT_PUBLICATION) — never whichever sorts first, which
+    would validate one publication's documents against another's schemas.
     """
     dev_path = _HERE.parent / "specification" / "schemas"
     if dev_path.is_dir():
         return dev_path
     pub_schemas_root = _HERE.parent / "schemas"
     if pub_schemas_root.is_dir():
-        # Public-repo layout: schemas/<version>/. Typical deployment has
-        # exactly one version dir; iterate and return the first that actually
-        # contains the schemas.
+        # Prefer this validator's own publication.
+        preferred = pub_schemas_root / _CURRENT_PUBLICATION
+        if (preferred / "course.schema.json").exists():
+            return preferred
+        # Fallback: a single-version deployment published under a different name.
         for candidate in sorted(pub_schemas_root.iterdir()):
             if candidate.is_dir() and (candidate / "course.schema.json").exists():
                 return candidate
@@ -163,7 +176,7 @@ def _load_schema_registry():
 
         resource = DRAFT7.create_resource(contents)
         declared_id = contents.get("$id", "") or ""
-        canonical = f"https://lc-json.org/1.0-rc.1/{fname}"
+        canonical = f"https://lc-json.org/{_CURRENT_PUBLICATION}/{fname}"
 
         # De-dup so we don't register the same URI twice with the same resource.
         for uri in {fname, declared_id, canonical}:
@@ -1222,6 +1235,23 @@ def validate_question(question, item_ref, question_index, verbose=False):
     # and the legacy PascalCase form so pre-TD-108 exports keep getting checked.
     qt_lower = (question_type or "").lower()
 
+    # rc.2 domain rule (TD-212): the schema now allows an empty `prompt` (minLength 0),
+    # so emptiness must be caught here where it is a genuine error. For the four
+    # REAL-CONTENT types the prompt *is* the question, so an empty/whitespace prompt
+    # is an authoring error. The eight symbolic types carry their meaning in structured
+    # fields — an empty prompt is valid there. The seven reserved types get no rule
+    # (deferred to v1.1, when they gain per-type schemas). minLength stays in the JSON
+    # Schema; this rule only covers the real-content emptiness the schema can no longer
+    # see. See docs/architecture/decisions/2026-05-29_LC-JSON_prompt_field_decision.md.
+    REAL_CONTENT_TYPES = {'truefalsequestion', 'multiplechoice', 'shortanswer', 'essay'}
+    if qt_lower in REAL_CONTENT_TYPES:
+        prompt_val = question.get('prompt')
+        if isinstance(prompt_val, str) and prompt_val.strip() == "":
+            errors.append(
+                f"{question_ref}: '{question_type}' has an empty 'prompt' — "
+                f"for this question type the prompt is the question and MUST be non-empty"
+            )
+
     if qt_lower == 'sentencetransformation':
         st_errors, st_warnings = validate_sentence_transformation(question, question_ref, verbose)
         errors.extend(st_errors)
@@ -1337,7 +1367,7 @@ def _check_cloze_gap_consistency(passage, dict_keys, question_ref, dict_field_na
 
 
 def validate_placement(question, question_ref, verbose=False):
-    """Domain rules for placement questions (LC-JSON 1.0-rc.1).
+    """Domain rules for placement questions (LC-JSON 1.0-rc.2).
 
     Hard errors:
       - Every placements[].gap MUST reference a @@@N marker present in passage.
@@ -1669,9 +1699,7 @@ def validate_sentence_transformation(question, question_ref, verbose=False):
         'AcceptedChunks': 'acceptedChunks',
         'AllOrNothing': 'allOrNothing',
         'ChunkCaseSensitive': 'chunkCaseSensitive',
-        'ChunkFeedback': 'chunkFeedback',
-        'ProhibitExtraWordsBetweenChunks': 'prohibitExtraWordsBetweenChunks',
-        'AllowedFillerWords': 'allowedFillerWords'
+        'ChunkFeedback': 'chunkFeedback'
     }
 
     for old_prop, new_prop in deprecated_props.items():

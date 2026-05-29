@@ -9,7 +9,7 @@
   "points": 8.0,
   "difficulty": 7.0,
   "hint": "Gap 1: 'so/such/very/too' - which works with 'adjective + that'? Gap 2: Which verb collocates with 'movie'? Gap 3: Which verb means 'to prepare popcorn'? Gap 4: Phrasal verb for 'continue watching'.",
-  "prompt": "For questions 1-4, choose the correct word for each gap from the dropdown options.",
+  "prompt": "",
   "passage": "The weather was @@@1 cold that we decided to stay indoors. We @@@2 a movie and @@@3 some popcorn. The film was so interesting that we @@@4 watching until midnight.",
   "gapOptions": {
     "1": [

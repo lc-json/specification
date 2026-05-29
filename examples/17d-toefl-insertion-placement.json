@@ -9,7 +9,7 @@
   ],
   "points": 2.0,
   "difficulty": 6.0,
-  "prompt": "Look at the four squares (@@@1 @@@2 @@@3 @@@4) in the passage. Where does this sentence best fit? «That step is what links the energy of sunlight to the chemistry of every meal we eat.»",
+  "prompt": "",
   "placementUnit": "sentence",
   "passage": "Photosynthesis is the process by which plants, algae, and certain bacteria convert sunlight, water, and carbon dioxide into sugars. @@@1 The reaction takes place mostly in the chloroplasts of leaf cells, where green pigments called chlorophylls absorb light in the red and blue parts of the spectrum and reflect green — which is why most plant tissue looks the colour it does. @@@2 The captured light energy is then used to split water molecules, releasing oxygen as a by-product and freeing electrons that the cell can put to work. @@@3 Those electrons drive a chain of reactions whose final result is the assembly of carbon dioxide into glucose, the simple sugar that the rest of the organism — and, ultimately, the rest of the food chain — depends on. @@@4 Without that final step, the captured sunlight would simply dissipate as heat, and the elaborate machinery of pigments and electron carriers would be biologically useless.",
   "placements": [

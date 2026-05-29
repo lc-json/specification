@@ -4,6 +4,31 @@ All notable changes to the LC-JSON (Learning Content JSON) specification are doc
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to the versioning policy described in [`NORMATIVE.md`](NORMATIVE.md) §8.
 
+## [1.0-rc.2] — 2026-05-30
+
+First formally announced public release candidate. Corrects the `prompt`-field definition from the (never-announced) internal `1.0-rc.1` candidate. Backwards-compatible widening: every `1.0-rc.1`-valid document remains valid under `1.0-rc.2`. Published at immutable `/1.0-rc.2/` URLs; `/1.0-rc.1/` stays served and frozen.
+
+### Changed
+- **`prompt`: `minLength` `1` → `0`; defined as non-authoritative for the symbolic question types.** Required on every question. Authoritative for `trueFalseQuestion`, `multipleChoice`, `shortAnswer`, and `essay`. Non-authoritative for the symbolic types (gap-fill family, `sentenceTransformation`, `matching`, `ordering`, `placement`): MAY be empty or carry a producer-derived summary; consumers MUST NOT rely on its content for scoring, rendering, equality, or deduplication. Affected: `question-base.schema.json`, `question-types-reference.md`, eight symbolic examples; new `examples/01b-simple-gap-fill-readable-prompt.json`. Object shape unchanged.
+
+### Added
+- **Real-content empty-prompt domain rule.** `validate_course.py` flags empty/whitespace `prompt` on `trueFalseQuestion`, `multipleChoice`, `shortAnswer`, and `essay` as an ERROR. Symbolic types pass; reserved types unconstrained (deferred to `v1.1`). Fixtures: `tests/valid/13-symbolic-empty-prompt.json`, `tests/invalid/26-real-content-empty-prompt.json`. Corpus: 38/38.
+- **`GOVERNANCE.md`: masterdoc principle + Release Candidate Policy.** Single-living-source model: published releases are immutable versioned artifacts; the git tag is the historical source for prior versions. RC policy: RC releases MAY introduce backwards-compatible corrections and clarify language; MUST NOT silently modify previously published artifacts; v1.0 final establishes the stable contract.
+
+### Documentation
+- **NORMATIVE §5 (Consumer Conformance): preamble + forward-compatibility worked example.** Preamble at top of §5: schema validation is necessary but not sufficient; cross-references §5.3–§5.6, §6, §10.3. New informative subsection at end of §5 ("Forward compatibility: three look-alike situations") covers three JSON-layer cases governed by different consumer obligations: unknown top-level field (§5.4), extension-namespaced field (§7), unknown `type` discriminator value (§5.1 Exception + §6 fallback). Cites §6.1's "reserved and unknown types are handled identically."
+- **NORMATIVE §5 case 3: design-choice note on points handling for unsupported types.** Earned `0`; possible points stay in the item total; item maximum is consumer-independent. Open question logged in the rc.2 release notes' "Areas still under discussion."
+- **`tests/README.md`: Behavioral conformance (informative) section.** Three-step round-trip self-test recipe (load → re-emit → diff) for the existing fixtures tagged in `manifest.json` as demonstrating §6.4, §7, and §12.1 preservation obligations. No new fixtures or runner.
+- **Scope clarification.** Release notes intro, `src/index.md`, and `README-public.md` now state that LC-JSON is a content-layer format complementary to LTI, OneRoster, xAPI, and SCORM, with a pointer to `RATIONALE.md`'s Scope and Limits.
+- **`README.md`: count + listing corrections.** Example count `31` → `32`; removed the directory-tree reference to non-existent `examples/course-legacy-wrapped.json`; added `placement.schema.json` to the Question Type Schemas list.
+- **`tests/manifest.json`: two stale § references.** `valid/01-course-minimal.json` `§4.4 camelCase property naming` → `§4.5`. `valid/06-html-with-video-track.json` `§10` → `§11` (HTML Safety Profile). Sweep confirms no further stale NORMATIVE § refs in the manifest.
+- **Accessibility severity alignment.** `ACCESSIBILITY.md` §8 listed video-without-`<track>` as "informational note"; `VALIDATION.md` §12.2 and `validate_course.py` enforce it as `WARN`. `ACCESSIBILITY.md` is now aligned to `WARN`.
+- **"rc.1 baseline" wording → "current baseline (established in rc.1)".** Affected: `ACCESSIBILITY.md` §8 heading, §11 heading, §11 inline; `VALIDATION.md` §12.2 + §14. The accessibility severity policy is unchanged; only the labelling is brought into the current package's framing.
+- **UUID prose: "RFC 4122 UUID" → "RFC 4122 UUID (any version; shape-only validation)".** Brings prose into line with the schema regex (which checks shape only, not version/variant bits). Affected: `GLOSSARY.md` (globalId entry), `README.md` (Common Validation Errors), `VALIDATION.md` (six catalog rows across §4, §5, §6, §7, §8, §10), `question-types-reference.md` (intro requirement, Common Properties table, Validation Rules). `NORMATIVE.md` §4.4 already carried "(any version)" and is unchanged. Open question for v1.0 (whether to enforce strict v4/variant) logged in the rc.2 release notes' "Areas still under discussion."
+
+### Note
+- `1.0-rc.1` was never publicly announced; `1.0-rc.2` is the first announced prerelease. The `/1.0-rc.1/` schema set remains served and byte-frozen at its immutable URL.
+
 ## [1.0-rc.1 doc revisions] — 2026-05-27
 
 Doc-only follow-up revisions to the rc.1 publication. No schema or wire-format changes; the rc.1 contract at `/1.0-rc.1/` is unchanged.

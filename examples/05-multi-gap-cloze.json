@@ -11,7 +11,7 @@
   "points": 8.0,
   "difficulty": 6.0,
   "hint": "Gap 1: direction/location preposition. Gap 2: surface preposition. Gap 3: proximity preposition. Gap 4: time phrase article. Gap 5: phrasal verb preposition.",
-  "prompt": "Complete the passage by filling in the blanks with ONE word only. No word bank is provided.",
+  "prompt": "",
   "passage": "She walked @@@1 the park and sat @@@2 a bench @@@3 the lake. After @@@4 while, she took @@@5 her book and started reading. The peaceful atmosphere @@@6 the park helped her relax @@@7 a stressful day @@@8 work.",
   "gapAcceptedAnswers": {
     "1": [

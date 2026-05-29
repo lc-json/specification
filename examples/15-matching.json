@@ -10,7 +10,7 @@
   "points": 8.0,
   "difficulty": 6.5,
   "hint": "Each statement reflects a single core idea — consent, the general will, separation of powers, or harm to others. Two of the statements describe positions that don't fit democratic theory.",
-  "prompt": "Match each thinker with the statement that best summarises their contribution to democratic theory.",
+  "prompt": "",
   "distractors": [
     "Government should be in the hands of those most fit to rule — wise philosopher-kings trained for the task — not the unwise multitude.",
     "True political wisdom comes from a society's inherited traditions and institutions, not from abstract theories of natural rights or popular sovereignty."

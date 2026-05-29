@@ -21,6 +21,22 @@ A conforming consumer self-tests against the corpus as follows:
 
 A **producer** does not validate the corpus directly. Instead, a producer's emitted output is fed through any conforming consumer (its own or a third party's) and MUST pass validation. The corpus is for consumer/validator self-test.
 
+## Behavioral conformance (informative)
+
+The required self-test above (validate `valid/` cases as passing, `invalid/` cases as failing) verifies *document validity*. Some normative obligations are *behavioral* — they concern what a conforming consumer does WITH the data after import — and cannot be tested by validation alone:
+
+- **§6.4 Round-trip preservation** for reserved and unknown question types (`type` values not in the consumer's implemented enum).
+- **§7 Extension preservation** for `x-`-namespaced fields the consumer does not recognize.
+- **§12.1 Accessibility-preservation floor** for `alt`, `<track>`, `lang`/`dir`, and `x-`-namespaced accessibility metadata.
+
+Several fixtures in this corpus are tagged in `manifest.json` as demonstrating these behaviors (look for `"§6.4"`, `"§12.1"`, or "preservation" / "round-trip" in `demonstrates`). A consumer MAY exercise them as a behavioral self-test:
+
+1. Load the fixture.
+2. Re-emit the document via the consumer's export path.
+3. Diff the input and output for the byte-level preservation the cited clause requires (reserved-type question objects, `x-`-namespaced fields, accessibility metadata).
+
+Formal behavioral conformance fixtures and a reference round-trip runner are an open direction for future versions, subject to implementer feedback.
+
 ## Manifest schema
 
 `manifest.json` enumerates every test file:

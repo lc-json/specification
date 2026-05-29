@@ -10,7 +10,7 @@
   "points": 4.0,
   "difficulty": 6.0,
   "hint": "Follow the carbon: where is the glucose first broken down, where is it fully oxidised, and where is most of the ATP actually made?",
-  "prompt": "Arrange these stages of aerobic cellular respiration in the order they occur for one molecule of glucose.",
+  "prompt": "",
   "sourceText": "Glucose enters the cell and is split into two pyruvate molecules in the cytoplasm during glycolysis, releasing a small amount of ATP. Each pyruvate is then transported into the mitochondrion and converted to acetyl-CoA, releasing carbon dioxide as a by-product. Acetyl-CoA enters the Krebs cycle, where it is fully oxidised to carbon dioxide and electrons are captured by NAD+ and FAD. The electrons pass along the electron transport chain in the inner mitochondrial membrane, pumping protons outward to build a gradient. Finally, protons flow back through ATP synthase, driving the bulk synthesis of ATP, while oxygen accepts the spent electrons and forms water.",
   "items": [
     "Glucose enters the cell and is split into two pyruvate molecules in the cytoplasm during glycolysis, releasing a small amount of ATP.",

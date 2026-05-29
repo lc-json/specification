@@ -10,7 +10,7 @@
   "points": 1.0,
   "difficulty": 4.0,
   "hint": "Start with 'The Earth' and think about what it does.",
-  "prompt": "Arrange the words to make a correct sentence.",
+  "prompt": "",
   "sourceText": "The Earth goes round the sun.",
   "items": [
     "The Earth",

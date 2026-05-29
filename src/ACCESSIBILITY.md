@@ -1,7 +1,7 @@
 # LC-JSON Accessibility Profile
 
-**Status:** Released for `1.0-rc.1`. Additive deepenings (per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader timing requirements, conformance fixtures) land in `1.0` final on 2026-06-30 — see §11. Obligations stated here are committed for `1.0` final and will not be retracted or contradicted.
-**Spec version:** 1.0 (release candidate: rc.1)
+**Status:** Released for `1.0-rc.2`. Additive deepenings (per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader timing requirements, conformance fixtures) land in `1.0` final on 2026-06-30 — see §11. Obligations stated here are committed for `1.0` final and will not be retracted or contradicted.
+**Spec version:** 1.0 (release candidate: rc.2)
 **Last updated:** 2026-05-23
 
 This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are to be interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174). RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see [`README.md`](README-spec.md) §"Wire Format").
@@ -198,7 +198,7 @@ The `language` field requirement is also tied to **EN 301 549 5.4** (Closed func
 
 ### 6.1 Producer obligations
 
-Every Course or QuestionSet carries a `language` field (ISO 639-1) at the document root. Producers MUST set `language` to the primary delivery language. When the document carries content in a secondary language (typically the learner's L1 for `[L1:]` translation tags), producers SHOULD also set `supportLanguage`.
+Every Course or QuestionSet carries a `language` field (ISO 639-1) at the document root. Producers MUST set `language` to the primary delivery language. When the document carries content in a secondary language (typically the learner's L1 for `[L1:]` translation/support tags), producers SHOULD also set `supportLanguage`.
 
 Within HTML-bearing fields, producers MAY use the `lang` attribute to mark spans of content in a different language than the document default (per [`HTML_SAFETY.md`](HTML_SAFETY.md) §3.1). Producers SHOULD use `lang` for any in-line foreign-language quotation or term — this satisfies WCAG **3.1.2 Language of Parts**.
 
@@ -241,14 +241,14 @@ A conforming placeholder SHOULD use:
 
 ---
 
-## 8. Validator severity (rc.1 baseline)
+## 8. Validator severity (current baseline, established in rc.1)
 
 The reference validator surfaces accessibility issues at the following severities. WCAG SC references are cross-references — accessibility violations in producer output are content-validation issues, not just renderer concerns.
 
 | Issue | Severity | WCAG SC | Cross-reference |
 |---|---|---|---|
 | Missing `alt` on `<img>` | warning | 1.1.1 | [`HTML_SAFETY.md`](HTML_SAFETY.md) §8.2; §2 above |
-| `<video>` without `<track kind="captions">` or `kind="subtitles"` | informational note | 1.2.2 | §3.1 |
+| `<video>` without `<track kind="captions">` or `kind="subtitles"` | warning | 1.2.2 | §3.1 |
 | `<iframe>`, `<script>`, event handlers (inaccessible regardless) | error | 4.1.2 (would-be) | [`HTML_SAFETY.md`](HTML_SAFETY.md) §8.1 |
 | Missing `language` at document root | error (schema-enforced) | 3.1.1 | §6.1 |
 | Reserved-type question without a `title` | informational note (recommended for placeholder) | 1.3.1, 4.1.2 | §7 |
@@ -302,9 +302,9 @@ Criteria not listed (e.g. 1.3.2, 2.4.1, 3.2.2, 3.3.x) are properties of a delive
 
 ---
 
-## 11. From this rc.1 baseline to 1.0 final
+## 11. From the current baseline to 1.0 final
 
-This document is the `1.0-rc.1` accessibility profile. The obligations stated here are committed for `1.0` final and will not be retracted or contradicted; the `1.0` final deepenings are **additive** and shaped by feedback during the rc.1 period.
+This document is the `1.0-rc.2` accessibility profile. The obligations stated here are committed for `1.0` final and will not be retracted or contradicted; the `1.0` final deepenings are **additive** and shaped by feedback during the rc.2 period.
 
 Planned `1.0` final additions (2026-06-30):
 
@@ -313,9 +313,9 @@ Planned `1.0` final additions (2026-06-30):
 - **Screen-reader timing requirements** — announcement timing for auto-grading flows (§5).
 - **Producer obligations promoted into NORMATIVE.md** — currently some producer obligations are stated SHOULD here; in `1.0` final, select obligations (alt-text presence on informative images, captions on instructional speech-bearing video) become MUST in `NORMATIVE.md` rather than in this advisory profile.
 - **`--accessibility` validator flag** — analogous to `--strict`; promotes accessibility-profile warnings (missing `alt`, missing `<track>` on speech-bearing video) to errors for tooling that wants to fail-build on accessibility issues.
-- **Conformance fixtures for accessibility** — expanded fixture coverage beyond the rc.1 baseline (a round-trip preservation fixture and a missing-language invalid fixture ship in rc.1; the 1.0-final additions exercise the `--accessibility` flag's warning-to-error promotion).
+- **Conformance fixtures for accessibility** — expanded fixture coverage beyond the current baseline (a round-trip preservation fixture and a missing-language invalid fixture are part of the current baseline, established in rc.1; the 1.0-final additions exercise the `--accessibility` flag's warning-to-error promotion).
 - **Reserved-type accessibility metadata schema** — guidance for emitting accessibility metadata on `hotspot`, `graphicGapMatch`, and the other graphic types when their per-type schemas land (post-1.0).
 - **Multilingual accessibility metadata shape** — design for localized alt text / transcripts / accessible-name fields per locale. Not in 1.0; flagged as a known forward direction.
 - **BCP 47 vs ISO 639-1 reconciliation** — locale-tag normalization for `language` / `supportLanguage` / inline `lang`.
 
-Implementers building against `1.0-rc.1` can rely on the obligations stated above. The `1.0` final release lands on **2026-06-30**.
+Implementers building against `1.0-rc.2` can rely on the obligations stated above. The `1.0` final release lands on **2026-06-30**.

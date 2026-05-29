@@ -5,7 +5,7 @@
     {
       "file": "valid/01-course-minimal.json",
       "schema": "course.schema.json",
-      "demonstrates": ["§3.2 root fields", "§3.3 course artifact", "§4.4 camelCase property naming"]
+      "demonstrates": ["§3.2 root fields", "§3.3 course artifact", "§4.5 camelCase property naming"]
     },
     {
       "file": "valid/02-question-set-minimal.json",
@@ -30,7 +30,7 @@
     {
       "file": "valid/06-html-with-video-track.json",
       "schema": "course.schema.json",
-      "demonstrates": ["§10 + HTML_SAFETY.md §7 — <video> with captions <track>, conforming media handling (controls, poster, preload, no autoplay/loop)"]
+      "demonstrates": ["§11 + HTML_SAFETY.md §7 — <video> with captions <track>, conforming media handling (controls, poster, preload, no autoplay/loop)"]
     },
     {
       "file": "valid/07-placement-sentence.json",
@@ -61,6 +61,11 @@
       "file": "valid/12-accessibility-round-trip.json",
       "schema": "course.schema.json",
       "demonstrates": ["NORMATIVE §12.1 — base-conformance accessibility-preservation floor: `alt` on `<img>`, `<track>` on `<video>`, `lang`/`dir` on HTML spans, document-root `language`/`supportLanguage`, and `x-`-namespaced accessibility metadata on a reserved-type question MUST all round-trip through any conforming consumer"]
+    },
+    {
+      "file": "valid/13-symbolic-empty-prompt.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": ["TD-212 / rc.2 — `prompt` is non-authoritative for symbolic types: a simpleGapFill with `prompt: \"\"` is valid (minLength 0), meaning carried by the structured `sentence`/`acceptedAnswers` fields"]
     }
   ],
   "invalid": [
@@ -81,12 +86,12 @@
     },
     {
       "file": "invalid/05-non-uuid-global-id.json",
-      "violatedClause": "§4.3",
+      "violatedClause": "§4.4",
       "violation": "Question globalId is not a valid RFC 4122 UUID"
     },
     {
       "file": "invalid/06-pascal-case-property.json",
-      "violatedClause": "§4.4",
+      "violatedClause": "§4.5",
       "violation": "Property name emitted in PascalCase ('Title') instead of canonical camelCase ('title')"
     },
     {
@@ -183,6 +188,11 @@
       "file": "invalid/25-sentence-transformation-multiple-markers.json",
       "violatedClause": "VALIDATION.md §9.9 — sentenceTransformation domain rule (validate_course.py: validate_sentence_transformation)",
       "violation": "SentenceTransformation `targetSentence` contains two `@@@` markers ('The @@@ was three @@@ ago.'). The convention is exactly one `@@@` regardless of `acceptedChunks` count — chunks are sequential answer pieces typed at that single position, not separate gaps. Multiple markers are ambiguous (which chunk goes where?) and are rejected with an ERROR."
+    },
+    {
+      "file": "invalid/26-real-content-empty-prompt.json",
+      "violatedClause": "VALIDATION.md (question-base prompt rule) — real-content empty-prompt domain rule (validate_course.py: validate_question)",
+      "violation": "trueFalseQuestion with `prompt: \"\"`. The schema permits an empty prompt (minLength 0), but for the four real-content types (trueFalseQuestion, multipleChoice, shortAnswer, essay) the prompt IS the question, so an empty prompt is an authoring error caught by the validator's domain pass with an ERROR. (The same empty prompt on a symbolic type — see valid/13 — is valid.)"
     }
   ]
 }

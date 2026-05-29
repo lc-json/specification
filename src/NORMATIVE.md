@@ -53,7 +53,7 @@ Every conforming LC-JSON document MUST contain at the root, as siblings (not nes
 |---|---|---|---|
 | `documentType` | MUST | string | `"course"` or `"questionSet"`. The artifact discriminator. |
 | `specVersion` | MUST | string | The LC-JSON contract version this document conforms to. Pattern enforced by the schemas; consumer/producer rules in §5.2 / §4.6. |
-| `$schema` | MUST (producer) / SHOULD-tolerate (consumer) | string | A URL identifying the schema for this document type at the spec version the producer conforms to (e.g., `https://lc-json.org/1.0-rc.1/<artifact>.schema.json` for an rc.1 producer; `https://lc-json.org/1.0/<artifact>.schema.json` for a 1.0-final producer). Consumers SHOULD accept documents that omit `$schema` (re-import scenarios from older or lenient producers), but MUST reject any other root-field omission. |
+| `$schema` | MUST (producer) / SHOULD-tolerate (consumer) | string | A URL identifying the schema for this document type at the spec version the producer conforms to (e.g., `https://lc-json.org/1.0-rc.2/<artifact>.schema.json` for an rc.2 producer; `https://lc-json.org/1.0/<artifact>.schema.json` for a 1.0-final producer). Consumers SHOULD accept documents that omit `$schema` (re-import scenarios from older or lenient producers), but MUST reject any other root-field omission. |
 
 A document missing `documentType` or `specVersion` is non-conforming. A producer that emits a document missing `$schema` is non-conforming with respect to that document; a consumer that rejects an otherwise-valid document on the basis of a missing `$schema` is overly strict and SHOULD instead infer the schema from `documentType` + `specVersion`.
 
@@ -108,11 +108,11 @@ A producer MUST emit all property names in camelCase. PascalCase, snake_case, an
 
 A producer MUST emit `specVersion` matching the spec version it implements. For producers conforming to this document, `specVersion` MUST begin with `"1."` (e.g., `"1.0"`, `"1.0.1"`).
 
-`specVersion` carries the contract version regardless of which publication the producer targets. The specific publication — release candidate or final release — is identified by the `$schema` URL (§4.7). A producer conforming to 1.0-rc.1 emits `specVersion: "1.0"` together with `$schema: "https://lc-json.org/1.0-rc.1/course.schema.json"`; a producer conforming to 1.0 final emits the same `specVersion` value together with `$schema: "https://lc-json.org/1.0/course.schema.json"`. `specVersion` does not include release-candidate suffixes — `"1.0-rc.1"` is not a conforming `specVersion` value.
+`specVersion` carries the contract version regardless of which publication the producer targets. The specific publication — release candidate or final release — is identified by the `$schema` URL (§4.7). A producer conforming to 1.0-rc.2 emits `specVersion: "1.0"` together with `$schema: "https://lc-json.org/1.0-rc.2/course.schema.json"`; a producer conforming to 1.0 final emits the same `specVersion` value together with `$schema: "https://lc-json.org/1.0/course.schema.json"`. `specVersion` does not include release-candidate suffixes — `"1.0-rc.2"` is not a conforming `specVersion` value.
 
 ### 4.7 Schema URL
 
-A producer MUST emit a `$schema` URL pointing at the canonical published schema for its `documentType` **at the spec version the producer conforms to**. For example: a producer conforming to LC-JSON 1.0-rc.1 emits `https://lc-json.org/1.0-rc.1/course.schema.json` for courses and `https://lc-json.org/1.0-rc.1/question-set.schema.json` for question sets; a producer conforming to 1.0 final emits `https://lc-json.org/1.0/course.schema.json`. A producer that emits a non-canonical URL or omits the field is non-conforming.
+A producer MUST emit a `$schema` URL pointing at the canonical published schema for its `documentType` **at the spec version the producer conforms to**. For example: a producer conforming to LC-JSON 1.0-rc.2 emits `https://lc-json.org/1.0-rc.2/course.schema.json` for courses and `https://lc-json.org/1.0-rc.2/question-set.schema.json` for question sets; a producer conforming to 1.0 final emits `https://lc-json.org/1.0/course.schema.json`. A producer that emits a non-canonical URL or omits the field is non-conforming.
 
 The strict producer / lenient consumer split (§3.2 above) is deliberate: emitting `$schema` makes documents self-describing for IDEs, schema dispatch, and ad-hoc validation; tolerating its absence on import preserves portability across older or otherwise-non-conforming producers without hard-failing re-imports.
 
@@ -125,6 +125,8 @@ A producer SHOULD validate every emitted document against the published JSON Sch
 ## 5. Consumer Conformance
 
 A *consumer* is any tool that ingests LC-JSON documents from an external source.
+
+**Consumer conformance requires more than schema validation.** Schema validation (§5.1) is necessary but not sufficient: a conformant consumer ALSO satisfies the discriminator-handling rule (§5.3), the unknown-fields rule (§5.4), the reserved-enum-values rule (§5.5), the randomization requirements (§5.6), and — where reserved or unknown question types appear — the round-trip preservation obligations in §6. A generic JSON Schema validator alone does not implement these; consumers MUST implement the relevant §5.x and §6 obligations to claim conformance (see §10.3). See the worked example at the end of this section.
 
 ### 5.1 Strict validation
 
@@ -166,6 +168,18 @@ These requirements do not apply to:
 - `multipleChoice` and other single-question choice lists, where authors may deliberately position the correct option and the question schema's own `shuffleOptions` field governs shuffle policy per question.
 - The order of pair rows in `matching` pairs mode, where each item has its own distinct match value and source row order does not directly expose the answer.
 - The order of items in `ordering` source-tile pools, where the question's structural design requires the tile pool to be presented in non-source order regardless.
+
+### Forward compatibility: three look-alike situations (informative)
+
+A 1.0-conformant consumer reading a 1.x document may encounter three superficially-similar cases at the JSON layer, each governed by a *different* consumer obligation. A generic JSON Schema validator handles none of them automatically.
+
+1. **An unknown top-level field on a question.** Example: `"explanationVideoUrl": "..."` appears on a `multipleChoice` question. Under §5.4 (Unknown fields), the consumer MUST NOT reject the document; it ignores or preserves the field at its discretion.
+
+2. **An extension-namespaced field.** Example: `"x-somecompany-difficultyBand": "B2"` appears on the same question. Under §7 (Extensions), the consumer MUST NOT reject for it and SHOULD preserve it verbatim across read/write cycles.
+
+3. **An unknown `type` discriminator value.** Example: a question carries `"type": "novelCodingTask"` — a value the consumer's implemented `question-base.schema.json` enum does not include. Per §6.1, *reserved* and *unknown* types are handled identically: it does not matter whether `novelCodingTask` is destined for a future minor version, is a vendor-specific extension type, or will never be standardized at all. Under §5.1 (Strict validation, Exception) and §6.2 (Consumer obligations), the consumer applies the §6 fallback to that question (preserve verbatim, treat earned points as `0`, render a placeholder naming the type, report to user) and validates the rest of the document. Note that earned points are set to `0`, but the question's **possible** points still count toward the item's total — the item's maximum is consumer-independent by design, so a learner who completes the item in a fuller consumer can earn all the points the producer declared while a learner in a more limited consumer earns whatever subset they can; both report grades against the same denominator. Under §6.4 (Round-trip preservation), if the consumer re-exports the document, the `novelCodingTask` question is preserved byte-equivalent.
+
+These three cases look similar at the JSON layer but are not interchangeable. Implementers using a generic JSON Schema validator (`jsonschema` for Python, Ajv for JavaScript, etc.) MUST add the §5.x and §6 fallback logic above the base validation call — particularly for case 3, where a generic validator would reject the whole document on the unknown `"novelCodingTask"` enum value, but §5.1's Exception is what permits the rest of the document to validate while §6 governs the unknown-type question.
 
 ---
 
@@ -305,11 +319,11 @@ This guarantee enables conforming documents to embed `$schema` URLs that remain 
 
 A document is validated against the schemas at the URL given in its `$schema` field — that URL is the document's **canonical schema location** and the binding target for conformance. The `specVersion` field declares the spec version the document targets; the `$schema` URL identifies the specific schema publication (release or release candidate) it was authored against. Both MUST be present (§3.2) and MUST agree on the targeted version (§4.6, §4.7): a document declaring `specVersion: "1.0"` MUST point `$schema` at either `/1.0/` (the final release, once published) or a `/1.0-rc.N/` candidate path; a document declaring `specVersion: "1.1"` MUST point `$schema` at `/1.1/` or a `/1.1-rc.N/` candidate path.
 
-**Reminder (§4.6):** `specVersion` never carries an `-rc.N` suffix. Every document targeting the 1.0 contract — whether authored against an rc.N candidate or 1.0 final — declares `specVersion: "1.0"`. The specific publication is identified by `$schema`. For example, a document authored during the rc.1 phase looks like:
+**Reminder (§4.6):** `specVersion` never carries an `-rc.N` suffix. Every document targeting the 1.0 contract — whether authored against an rc.N candidate or 1.0 final — declares `specVersion: "1.0"`. The specific publication is identified by `$schema`. For example, a document authored during the rc.2 phase looks like:
 
 ```json
 {
-  "$schema":     "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "$schema":     "https://lc-json.org/1.0-rc.2/course.schema.json",
   "documentType": "course",
   "specVersion":  "1.0",
   ...

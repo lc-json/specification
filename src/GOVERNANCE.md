@@ -2,7 +2,7 @@
 
 **Status:** Informative.
 **Spec version:** 1.0
-**Last updated:** 2026-05-26
+**Last updated:** 2026-05-29
 
 ## Stewardship
 
@@ -21,6 +21,21 @@ This is a single-maintainer steward model. It is appropriate for a specification
 | Process or governance change | Open an issue. Substantial changes will be discussed publicly before being adopted. |
 
 Substantive proposals (anything beyond a typo or non-normative fix) are documented in `proposals/` (added when the first such RFC lands) as one-page RFCs with a clear status line: `draft`, `accepted`, or `rejected`.
+
+## Versioning and the living specification
+
+The LC-JSON repository maintains a **single living specification source**. Published releases create **immutable versioned artifacts** — the per-version schema URLs (`lc-json.org/<version>/<name>.schema.json`). Backward compatibility and behavioral changes are documented through **versioned schema URLs, release notes, and the changelog**.
+
+There is no separate, independently maintained prose source for a prior published version: the **git tag is the historical source**. The living specification (this repository's working tree) advances to the current version; prior versions persist as (a) their immutable published schema URLs and (b) git tags and commits. For example, the schemas at `/1.0-rc.1/` stay served and frozen, but the repository's working schemas have moved on to `/1.0-rc.2/`; to read the spec exactly as rc.1 published it, read the rc.1 git tag, not the current working tree.
+
+## Release Candidate Policy
+
+- RC releases MAY introduce backwards-compatible corrections.
+- RC releases MAY clarify specification language.
+- RC releases MUST NOT silently modify previously published artifacts — each RC publishes at its own immutable URL path (`/1.0-rc.1/`, `/1.0-rc.2/`, …).
+- Final v1.0 establishes the stable contract.
+
+The rc.1 → rc.2 `prompt`-field correction is exactly this kind of sanctioned change: a backwards-compatible correction (`minLength: 1 → 0`) and a language clarification (defining `prompt` as non-authoritative for symbolic types), published at a new immutable `/1.0-rc.2/` path while `/1.0-rc.1/` stays frozen.
 
 ## Working group
 

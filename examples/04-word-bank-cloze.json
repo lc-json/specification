@@ -11,7 +11,7 @@
   "points": 6.0,
   "difficulty": 5.0,
   "hint": "First mention of something usually takes 'a' or 'an'. When you mention it again, use 'the'. Specific or unique things always take 'the'.",
-  "prompt": "Complete the passage using words from the word bank. Each word can be used only once.",
+  "prompt": "",
   "passage": "Yesterday, I went to @@@1 park near my house. In @@@2 park, I saw @@@3 old man sitting on @@@4 bench. @@@5 man was feeding @@@6 birds with bread crumbs.",
   "wordBank": [
     "a",

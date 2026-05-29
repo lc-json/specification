@@ -10,7 +10,7 @@
   "points": 1.0,
   "difficulty": 2.0,
   "hint": "Say the word 'elephant' aloud. Does it start with a vowel sound or a consonant sound?",
-  "prompt": "Complete the sentence using the correct article.",
+  "prompt": "",
   "sentence": "I saw @@@ elephant at the zoo yesterday.",
   "acceptedAnswers": [
     "an"

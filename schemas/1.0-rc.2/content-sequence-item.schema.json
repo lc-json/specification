@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.2/content-sequence-item.schema.json",
+  "title": "ContentSequenceItem Schema",
+  "description": "Grouped content items with responsive layout options (auto/split/vertical). Future: tabs for multiple activities with one content item.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "item-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "contentsequence"
+        },
+        "contentItemId": {
+          "type": "string",
+          "format": "uuid",
+          "description": "GlobalId of the associated ContentItem containing the grouped content"
+        },
+        "layout": {
+          "type": "string",
+          "description": "Layout mode for displaying content and related exercises",
+          "enum": [
+            "Auto",
+            "Split",
+            "Vertical"
+          ],
+          "default": "Auto"
+        },
+        "relatedItemIds": {
+          "type": "array",
+          "description": "Array of globalIds for related exercise/quiz items displayed alongside the content",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "default": []
+        }
+      },
+      "required": [
+        "contentItemId"
+      ]
+    }
+  ]
+}

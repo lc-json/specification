@@ -7,7 +7,7 @@ name: Build and deploy spec site
 #
 # Pages serves https://lc-json.org from the gh-pages branch.
 # Schemas resolve at https://lc-json.org/<version>/<file>.schema.json
-# (currently /1.0-rc.1/ for the rc.1 publication; /1.0/ once 1.0 final ships).
+# (/1.0-rc.2/ is the current publication; /1.0-rc.1/ stays served and frozen; /1.0/ once 1.0 final ships).
 
 on:
   push:
@@ -61,13 +61,15 @@ jobs:
         run: mdbook build
 
       # Copy schemas into the published output so they resolve at
-      # lc-json.org/1.0-rc.1/*.schema.json (the URL embedded in every
-      # conforming rc.1 JSON file's $schema field). The /1.0/ URL
-      # path is reserved for 1.0 final per NORMATIVE.md §8.3.
+      # lc-json.org/<version>/*.schema.json (the URL embedded in every
+      # conforming JSON file's $schema field). rc.2 is the current masterdoc;
+      # rc.1 stays served and frozen alongside it. The /1.0/ URL path is
+      # reserved for 1.0 final per NORMATIVE.md §8.3.
       - name: Copy schemas to book output
         run: |
-          mkdir -p book/1.0-rc.1
+          mkdir -p book/1.0-rc.1 book/1.0-rc.2
           cp -v schemas/1.0-rc.1/*.schema.json book/1.0-rc.1/
+          cp -v schemas/1.0-rc.2/*.schema.json book/1.0-rc.2/
 
       # Copy examples, tests, and tools so they're browseable at
       # lc-json.org/<path>/. Documents in src/ link to these.
@@ -83,11 +85,13 @@ jobs:
       # Verify the schemas are reachable at the canonical paths.
       - name: Verify schema URL paths
         run: |
-          test -f book/1.0-rc.1/course.schema.json || (echo "ERROR: course.schema.json missing from book/1.0-rc.1/" && exit 1)
-          test -f book/1.0-rc.1/question-set.schema.json || (echo "ERROR: question-set.schema.json missing from book/1.0-rc.1/" && exit 1)
-          schema_count=$(ls book/1.0-rc.1/*.schema.json | wc -l)
-          echo "Schemas at /1.0-rc.1/: $schema_count files"
-          test "$schema_count" -ge 23 || (echo "ERROR: expected ≥23 schemas, got $schema_count" && exit 1)
+          for v in 1.0-rc.1 1.0-rc.2; do
+            test -f book/$v/course.schema.json || (echo "ERROR: course.schema.json missing from book/$v/" && exit 1)
+            test -f book/$v/question-set.schema.json || (echo "ERROR: question-set.schema.json missing from book/$v/" && exit 1)
+            schema_count=$(ls book/$v/*.schema.json | wc -l)
+            echo "Schemas at /$v/: $schema_count files"
+            test "$schema_count" -eq 23 || (echo "ERROR: expected exactly 23 schemas at /$v/, got $schema_count" && exit 1)
+          done
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4

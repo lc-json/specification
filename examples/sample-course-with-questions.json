@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.0-rc.1/course.schema.json",
+  "$schema": "https://lc-json.org/1.0-rc.2/course.schema.json",
   "documentType": "course",
   "specVersion": "1.0",
   "sourceCourseId": "550e8400-e29b-41d4-a716-446655444100",
@@ -639,7 +639,7 @@
                   "points": 4.0,
                   "difficulty": 5.0,
                   "hint": "Two of the methods on the right are decoys — they don't match anything on the left.",
-                  "prompt": "Match each situation on the left with the note-taking method most likely to fit it on the right. Two of the methods are decoys.",
+                  "prompt": "",
                   "distractors": [
                     "Verbatim transcription — write down every word the speaker says, then re-read it later without further processing",
                     "Highlighter-only — mark passages in three colours during reading and rely on the highlights as your record"
