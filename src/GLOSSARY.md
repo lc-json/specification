@@ -118,7 +118,7 @@ A question type that has a published per-type JSON Schema in the current spec ve
 
 ### reserved question type
 
-A `type` discriminator value listed in [`question-base.schema.json`](schemas/question-base.schema.json)'s discriminator enum that does **not** yet have a published per-type schema. The 1.0 reserved types are `association`, `hotspot`, `graphicGapMatch`, `graphicAssociate`, `graphicOrder`, `fileUpload`, and `mediaPromptedEssay`. Consumers MUST preserve reserved-type questions verbatim across read/write cycles (§6.4).
+A `type` discriminator value listed in [`question-base.schema.json`](schemas/question-base.schema.json)'s discriminator enum that does **not** yet have a published per-type schema. The 1.0 reserved types are `association`, `hotspot`, `graphicGapMatch`, `graphicAssociate`, `graphicOrder`, `fileUpload`, and `mediaPromptedEssay`. Consumers MUST preserve reserved-type questions in full across read/write cycles — every field, value, and nested structure (§6.4; semantic preservation, key order is producer-discretion per §6.2).
 
 ### unknown question type
 

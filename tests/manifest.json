@@ -25,7 +25,7 @@
     {
       "file": "valid/05-reserved-type-with-extensions.json",
       "schema": "question-set.schema.json",
-      "demonstrates": ["§6.4 round-trip preservation — reserved type with tool-specific extension fields (imageUrl, regions, correctRegionId) MUST be preserved verbatim across consumer read/write cycles"]
+      "demonstrates": ["§6.4 round-trip preservation — reserved type with tool-specific extension fields (imageUrl, regions, correctRegionId) MUST be preserved in full across consumer read/write cycles (semantic preservation; key order is producer-discretion per §6.2)"]
     },
     {
       "file": "valid/06-html-with-video-track.json",

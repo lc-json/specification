@@ -218,7 +218,7 @@ A consumer MUST NOT strip `lang` or `dir` attributes during sanitization. Both a
 
 ## 7. Reserved and unknown question types: placeholder accessibility — WCAG 1.3.1, 4.1.2
 
-Per [`NORMATIVE.md`](NORMATIVE.md) §6, consumers MUST preserve reserved/unknown question types verbatim and SHOULD render a non-interactive placeholder for them.
+Per [`NORMATIVE.md`](NORMATIVE.md) §6, consumers MUST preserve reserved/unknown question types in full (every field, value, and nested structure) and SHOULD render a non-interactive placeholder for them.
 
 The placeholder MUST be accessible:
 

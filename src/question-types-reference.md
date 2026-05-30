@@ -171,9 +171,12 @@ All question types inherit these base properties:
 | `penalizeIncorrect` | boolean | ❌ No | `false` | Whether to apply a point penalty for a wrong answer. Independent of item type and `isGraded` — author's choice. Common: `false` when you want learners to try without risk; `true` when guessing should cost something. |
 | `incorrectPenaltyPercent` | number | ❌ No | `50.0` | Penalty percentage (0-100). 0%=no penalty, 50%=partial, 100%=full penalty. |
 
-**Import Normalization:** On import, accepts any boolean-ish value for `correctAnswer`:
+**Import normalization (pre-1.0 lenient migration affordance — NOT conforming behavior).** Some authoring tools historically emitted non-boolean `correctAnswer` values for True/False questions. A consumer MAY accept and normalize the following on read, **purely as a migration aid for ingesting pre-1.0 documents**:
+
 - `true`, `"true"`, `"True"`, `"correct"`, `"tick"`, `"✓"`, `1` → normalized to `true`
 - `false`, `"false"`, `"False"`, `"incorrect"`, `"cross"`, `"✗"`, `0` → normalized to `false`
+
+**Conforming behavior under LC-JSON 1.0 is unambiguous:** the schema requires `correctAnswer` to be a JSON boolean (`true` / `false`). Conforming producers MUST emit it as a boolean. Conforming consumers in strict mode MUST reject non-boolean values per [`NORMATIVE.md`](NORMATIVE.md) §5.1 — the reference validator's `--strict` mode (which `tools/run_corpus.py` invokes on every fixture) does so. Tools relying on the normalization above should treat it as a transitional ingestion aid that does not survive into a `--strict`-conforming document on re-export.
 
 **Note:** For True/False/Not Mentioned questions (3 options), use MultipleChoice instead.
 
@@ -748,7 +751,7 @@ Per-gap scoring against the authored `placements[]`. With `allowPartialCredit: t
 
 ## Reserved Types
 
-The seven question types in this section are reserved in the `question-base.schema.json` discriminator enum but do not yet have per-type schemas; full implementation is targeted for 2027. Per [`NORMATIVE.md`](NORMATIVE.md) §6, conforming consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. Producers SHOULD NOT emit reserved types in cross-implementation distribution.
+The seven question types in this section are reserved in the `question-base.schema.json` discriminator enum but do not yet have per-type schemas; full implementation is targeted for 2027. Per [`NORMATIVE.md`](NORMATIVE.md) §6, conforming consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. Producers SHOULD NOT emit reserved types in cross-implementation distribution.
 
 ### 13. Association
 
@@ -756,7 +759,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Classify items, group by category.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {
@@ -780,7 +783,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Image-based identification, anatomy diagrams.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {
@@ -804,7 +807,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Drag-and-drop activities, visual matching.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {
@@ -828,7 +831,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Match text with images.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {
@@ -852,7 +855,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Sequence images, visual ordering.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {
@@ -876,7 +879,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Assignment submission, file uploads.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {
@@ -900,7 +903,7 @@ The seven question types in this section are reserved in the `question-base.sche
 
 **Use Case:** Speaking tasks, oral presentations.
 
-**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them verbatim across read/write cycles, MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
+**Status:** 🔒 Reserved (per `NORMATIVE.md` §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the `question-base` fields any reserved-type instance must carry.
 
 ```json
 {

@@ -298,7 +298,7 @@ Errors fail the build. Warnings notify the author but don't break interop. The l
 
 ## 9. Round-trip preservation
 
-NORMATIVE §6.4 requires consumers to preserve reserved-type questions verbatim across read/write cycles. The same principle applies to HTML content with one important softening: a consumer that re-exports an LC-JSON document MAY emit the *sanitized* HTML rather than the input HTML, provided that:
+NORMATIVE §6.4 requires consumers to preserve every member of reserved-type questions across read/write cycles (semantic preservation; key order is producer-discretion per §6.2). The same principle applies to HTML content with one important softening: a consumer that re-exports an LC-JSON document MAY emit the *sanitized* HTML rather than the input HTML, provided that:
 
 - No allowed elements, attributes, or CSS properties (per §2 and §3) are lost.
 - Element classes (per §3.2) are preserved verbatim.
