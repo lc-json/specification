@@ -496,9 +496,9 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 
 ### v1.0 (planned: 2026-06-30) — accepted final release
 
-- Will publish schemas as immutable at `https://lc-json.org/1.0/*.schema.json`.
-- Deepens [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (the rc.2 release) additively: per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures, with select producer obligations promoted into [`NORMATIVE.md`](NORMATIVE.md).
-- Any non-breaking refinements caught during the release-candidate cycle land here, or in subsequent immutable `/1.0-rc.N/` releases prior to final.
+- Publishes the rc.3 schema set unchanged at immutable `https://lc-json.org/1.0/*.schema.json` — a pure URL rebase of rc.3 with **zero wire/content delta** (only the version pointer, the `$id`/`$schema` URL strings, and doc version labels change).
+- Further accessibility deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures) are **post-1.0, additive, and informative or opt-in** — they do not change the 1.0 base contract (see [`ACCESSIBILITY.md`](ACCESSIBILITY.md) §11).
+- Any non-breaking refinement that *does* warrant a wire change before final lands in a further immutable `/1.0-rc.N/` candidate first, not in 1.0 itself.
 
 > *LC-JSON's public history begins with the 1.0 release-candidate line — `1.0-rc.2` (2026-05-30) was its first publicly announced release. Internal iteration before the candidate line is not reflected in the version history.*
 
