@@ -1,0 +1,16 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: question missing globalId",
+  "language": "en",
+  "questions": [
+    {
+      "type": "shortAnswer",
+      "title": "No stable identity",
+      "points": 1.0,
+      "prompt": "What is the capital of France?",
+      "acceptedAnswers": ["Paris"]
+    }
+  ]
+}

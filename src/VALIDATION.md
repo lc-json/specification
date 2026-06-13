@@ -85,8 +85,8 @@ Required root fields ([`NORMATIVE.md`](NORMATIVE.md) §3.2). Both artifact types
 | `specVersion` matches `^1\.[0-9]+(\.[0-9]+)?$` | Schema-enforced + Domain-validator-enforced (ERROR for `2.x`+) | `course.schema.json: /properties/specVersion/pattern`; `validate_course.py: check_spec_version` | §4.6, §5.2 |
 | `specVersion` MUST NOT carry an `-rc.N` suffix | Advisory | [`NORMATIVE.md`](NORMATIVE.md) §4.6, §8.4 | §4.6 |
 | `language` required at root | Schema-enforced | `course.schema.json: /required[*]="language"`, `question-set.schema.json: /required[*]="language"` | §12.1 |
-| `language` SHOULD be a 2-letter ISO 639-1 code (course) | Advisory | `course.schema.json: /properties/language/description` (no `pattern`) | §12.1, [`ACCESSIBILITY.md`](ACCESSIBILITY.md) §6.1 |
-| `supportLanguage` is a 2-letter ISO 639-1 code (or omitted/null) | Domain-validator-enforced (WARN; schema typed only) | `validate_course.py: validate_course_level` (course path) and `validate_question_set_flat` (question-set path) | §12.1 |
+| `language` is a plausible BCP 47 tag (bare ISO 639-1, or with region/script subtag) | Domain-validator-enforced (WARN; schema typed only, no `pattern`) | `validate_course.py: validate_course_level` (course path) and `validate_question_set_flat` (question-set path), via `_is_plausible_language_tag` | §13, [`LOCALIZATION.md`](LOCALIZATION.md) §3 |
+| `supportLanguage` is a plausible BCP 47 tag (or omitted/null) | Domain-validator-enforced (WARN; schema typed only) | `validate_course.py: validate_course_level` (course path) and `validate_question_set_flat` (question-set path), via `_is_plausible_language_tag` | §13, [`LOCALIZATION.md`](LOCALIZATION.md) §3 |
 | Pre-1.0 wrapped envelope `{"course": {...}}` rejected (published contract; lenient migration aid in default mode) | Domain-validator-enforced (ERROR under `--strict`; WARN otherwise — see [§1.3](#13-strict-mode-and-the-lenient-migration-path)) | `validate_course.py: validate_course` (`--strict` branch) | §3.2, §4.1 |
 | Pre-1.0 bare payload `{"units": [...]}` rejected (published contract; lenient migration aid in default mode) | Domain-validator-enforced (ERROR under `--strict`; WARN otherwise — see [§1.3](#13-strict-mode-and-the-lenient-migration-path)) | `validate_course.py: validate_course` (`--strict` branch) | §3.2, §4.1 |
 | Property names are camelCase | Advisory (consumer-side import is lenient via `JsonNormalizer`-style helpers) | [`NORMATIVE.md`](NORMATIVE.md) §4.5 | §4.5 |
@@ -525,6 +525,14 @@ Extension rules from [`NORMATIVE.md`](NORMATIVE.md) §7. Round-trip preservation
 
 Reiteration of [§3](#3-root-document), [§7](#7-item-level--common), [§8](#8-question-level--common): conforming consumers MUST reject non-canonical casings on `documentType`, item `type`, and question `type` ([`NORMATIVE.md`](NORMATIVE.md) §4.2, §5.3). The schemas enforce these via `const` / `enum`. The reference validator additionally provides lenient migration paths (PascalCase → camelCase warnings, casing-tolerant `documentType` dispatch) that are disabled under `--strict`.
 
+### 12.7 globalId uniqueness
+
+| Rule | Tier | Source | NORMATIVE § |
+|---|---|---|---|
+| `globalId` values unique across all entities in a document (Units, Lessons, Items, Questions share one namespace; comparison case-insensitive) | Domain-validator-enforced (ERROR) | `validate_course.py: _collect_duplicate_global_id_errors` (course and questionSet paths) | §4.4 |
+
+JSON Schema cannot express cross-entity uniqueness across nesting levels, so this rule is domain-validator-only. Reference fields that *point at* a `globalId` (`contentItemId`, `relatedItemIds`) are references, not declarations, and are exempt. Conformance fixture: `tests/invalid/40-duplicate-global-id.json`.
+
 ---
 
 ## 13. Conformance note
@@ -547,7 +555,7 @@ Where the reference validator and a normative document disagree, the normative d
 
 ## 14. Forward-looking deepenings (1.0 final)
 
-The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 38/38 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture; the 36 fixtures at the time of that rc.1 pass plus the two `prompt`-correction fixtures added in rc.2).
+The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 64/64 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture; the 36 fixtures at the time of that rc.1 pass, plus the two `prompt`-correction fixtures added in rc.2, plus the per-type / referential-integrity / grading-matrix / globalId-uniqueness expansion added in rc.3).
 
 Three areas remain explicitly forward-looking for `1.0` final or beyond:
 
@@ -555,4 +563,4 @@ Three areas remain explicitly forward-looking for `1.0` final or beyond:
 - **Tag namespace conventions.** Optional best-practice tag prefixes (`stage:`, `level:`, `exam:`, …) are described informally in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §1. No schema-level constraint, no validator check; left to convention for `1.0`. Referential-integrity validation on `objectiveIds` is closed at rc.1 (consumers MUST report unresolved IDs per the validator).
 - **Reserved-type per-type schemas.** The 7 reserved question types (`hotspot`, `association`, etc.) validate against `question-base.schema.json` only in 1.0 (§10). First-class per-type schemas are targeted for the `1.1` minor.
 
-Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by `1.1`) will surface as new rows in the per-type tables above or as new entries in this section. The published `/1.0-rc.2/` schema URLs remain immutable per [`NORMATIVE.md`](NORMATIVE.md) §8.3; any future closures land at `/1.0/` or a later version path.
+Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by `1.1`) will surface as new rows in the per-type tables above or as new entries in this section. The published `/1.0-rc.2/` and `/1.0-rc.3/` schema URLs remain immutable per [`NORMATIVE.md`](NORMATIVE.md) §8.3; any future closures land at `/1.0/` or a later version path.

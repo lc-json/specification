@@ -20,7 +20,7 @@ Tools that emit LC-JSON documents.
 
 Tools that ingest LC-JSON documents.
 
-- **Lesson Commons** — Imports LC-JSON 1.0. <https://lessoncommons.com>
+- **Lesson Commons** — Imports LC-JSON 1.0. Extension-preserving consumer per NORMATIVE §7 (unknown `x-*` members round-trip through a load/save cycle), §6.4 (reserved-type questions preserve their type-specific bodies), and §12.1 (accessibility-preservation floor). <https://lessoncommons.com>
 
 ## Reference tools
 

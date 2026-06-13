@@ -66,6 +66,66 @@
       "file": "valid/13-symbolic-empty-prompt.json",
       "schema": "question-set.schema.json",
       "demonstrates": ["TD-212 / rc.2 — `prompt` is non-authoritative for symbolic types: a simpleGapFill with `prompt: \"\"` is valid (minLength 0), meaning carried by the structured `sentence`/`acceptedAnswers` fields"]
+    },
+    {
+      "file": "valid/14-simple-gap-fill.json",
+      "schema": "simple-gap-fill.schema.json",
+      "demonstrates": ["simple-gap-fill.schema.json — per-type valid case: single @@@ marker in `sentence`, non-empty `acceptedAnswers`"]
+    },
+    {
+      "file": "valid/15-multiple-choice.json",
+      "schema": "multiple-choice.schema.json",
+      "demonstrates": ["multiple-choice.schema.json — per-type valid case: `options` fully covered by `optionsAndPoints` with exactly one positive-points entry (VALIDATION.md §9.3)"]
+    },
+    {
+      "file": "valid/16-word-bank-cloze.json",
+      "schema": "word-bank-cloze.schema.json",
+      "demonstrates": ["word-bank-cloze.schema.json — per-type valid case: @@@N marker set equals `gapAcceptedAnswers` key set (VALIDATION.md §9.4 / KG-1), word bank includes a distractor"]
+    },
+    {
+      "file": "valid/17-multi-gap-cloze.json",
+      "schema": "multi-gap-cloze.schema.json",
+      "demonstrates": ["multi-gap-cloze.schema.json — per-type valid case: free-text gaps, multiple accepted answers per gap, no commas/colons in answers (VALIDATION.md §9.5)"]
+    },
+    {
+      "file": "valid/18-multiple-choice-cloze.json",
+      "schema": "multiple-choice-cloze.schema.json",
+      "demonstrates": ["multiple-choice-cloze.schema.json — per-type valid case: `gapOptions` and `correctAnswers` key sets equal the @@@N marker set, indices in bounds (VALIDATION.md §9.6 / KG-5)"]
+    },
+    {
+      "file": "valid/19-short-answer.json",
+      "schema": "short-answer.schema.json",
+      "demonstrates": ["short-answer.schema.json — per-type valid case: non-empty `acceptedAnswers`, first entry canonical"]
+    },
+    {
+      "file": "valid/20-essay.json",
+      "schema": "essay.schema.json",
+      "demonstrates": ["essay.schema.json — per-type valid case: `expectedAnswer` model answer present, maxWords >= minWords (VALIDATION.md §9.8)"]
+    },
+    {
+      "file": "valid/21-sentence-transformation.json",
+      "schema": "sentence-transformation.schema.json",
+      "demonstrates": ["sentence-transformation.schema.json — per-type valid case: exactly one @@@ in `targetSentence`, sequential 1-based `acceptedChunks` keys, uppercase `keyword` (VALIDATION.md §9.9)"]
+    },
+    {
+      "file": "valid/22-matching-pairs.json",
+      "schema": "matching.schema.json",
+      "demonstrates": ["matching.schema.json — pairs sub-shape: matchingMode:'pairs' with `pairs[]` (and no `categories[]`), distractor in the match pool (NORMATIVE §5.6 randomization applies on render)"]
+    },
+    {
+      "file": "valid/23-matching-classification.json",
+      "schema": "matching.schema.json",
+      "demonstrates": ["matching.schema.json — classification sub-shape: matchingMode:'classification' with `categories[]` (and no `pairs[]`), many-to-one item-into-category"]
+    },
+    {
+      "file": "valid/24-ordering-kendall.json",
+      "schema": "ordering.schema.json",
+      "demonstrates": ["ordering.schema.json — per-type valid case: orderingUnit:'sentence' with scoringMode:'kendall' partial credit (TD-163)"]
+    },
+    {
+      "file": "valid/25-grading-combination-matrix.json",
+      "schema": "course.schema.json",
+      "demonstrates": ["exercise-item.schema.json + quiz-item.schema.json — grading combination matrix: all four graded/ungraded × exercise/quiz combinations are valid (`isGraded` is policy, item type is structure — see ITEM_PATTERNS.md)", "VALIDATION.md §4 / KG-6 — objectives pool with resolvable courseObjectiveIds/objectiveIds references"]
     }
   ],
   "invalid": [
@@ -193,6 +253,76 @@
       "file": "invalid/26-real-content-empty-prompt.json",
       "violatedClause": "VALIDATION.md (question-base prompt rule) — real-content empty-prompt domain rule (validate_course.py: validate_question)",
       "violation": "trueFalseQuestion with `prompt: \"\"`. The schema permits an empty prompt (minLength 0), but for the four real-content types (trueFalseQuestion, multipleChoice, shortAnswer, essay) the prompt IS the question, so an empty prompt is an authoring error caught by the validator's domain pass with an ERROR. (The same empty prompt on a symbolic type — see valid/13 — is valid.)"
+    },
+    {
+      "file": "invalid/27-true-false-non-boolean-answer.json",
+      "violatedClause": "true-false-question.schema.json (correctAnswer.type: boolean)",
+      "violation": "trueFalseQuestion `correctAnswer` is the string 'absolutely' rather than a JSON boolean. `correctAnswer` is the single source of truth for scoring and MUST be a boolean."
+    },
+    {
+      "file": "invalid/28-simple-gap-fill-no-marker.json",
+      "violatedClause": "simple-gap-fill.schema.json (sentence.pattern: @@@)",
+      "violation": "simpleGapFill `sentence` contains no `@@@` gap marker, so there is no gap for the learner to fill. The schema requires the marker via the `@@@` pattern."
+    },
+    {
+      "file": "invalid/29-simple-gap-fill-missing-accepted-answers.json",
+      "violatedClause": "simple-gap-fill.schema.json (required: acceptedAnswers)",
+      "violation": "simpleGapFill is missing the required `acceptedAnswers` array — without it no submission can be scored."
+    },
+    {
+      "file": "invalid/30-multi-gap-cloze-comma-in-answer.json",
+      "violatedClause": "VALIDATION.md §9.5 — multiGapCloze domain rule (validate_course.py: validate_multi_gap_cloze)",
+      "violation": "multiGapCloze accepted answer 'bread, butter and jam' contains a comma. Some consuming applications encode multi-gap submissions as 'gap:answer,gap:answer' on the wire, so commas or colons inside an answer can be silently truncated during scoring — a learner typing the exact accepted answer would be marked wrong. ERROR-tier."
+    },
+    {
+      "file": "invalid/31-short-answer-missing-accepted-answers.json",
+      "violatedClause": "short-answer.schema.json (required: acceptedAnswers)",
+      "violation": "shortAnswer is missing the required `acceptedAnswers` array — without it no submission can be scored."
+    },
+    {
+      "file": "invalid/32-essay-missing-expected-answer.json",
+      "violatedClause": "essay.schema.json (required: expectedAnswer)",
+      "violation": "essay is missing the required `expectedAnswer` (model answer / sample response) field."
+    },
+    {
+      "file": "invalid/33-matching-pairs-missing-pairs.json",
+      "violatedClause": "matching.schema.json (if matchingMode:'pairs' then required: pairs)",
+      "violation": "matching with matchingMode:'pairs' but no `pairs[]` array. The matchingMode discriminator selects the required sub-shape: 'pairs' requires `pairs[]`, 'classification' requires `categories[]`."
+    },
+    {
+      "file": "invalid/34-matching-mode-shape-collision.json",
+      "violatedClause": "matching.schema.json (then.not.required: categories)",
+      "violation": "matching carries BOTH `pairs[]` and `categories[]`. The two sub-shapes are mutually exclusive — a document carrying both is ambiguous about which one scores, and the schema's conditional `not` clauses reject the collision."
+    },
+    {
+      "file": "invalid/35-ordering-single-item.json",
+      "violatedClause": "ordering.schema.json (items.minItems: 2)",
+      "violation": "ordering `items` has a single tile; with fewer than two tiles there is no ordering task. minItems is 2."
+    },
+    {
+      "file": "invalid/36-ordering-bad-scoring-mode.json",
+      "violatedClause": "ordering.schema.json (scoringMode.enum)",
+      "violation": "ordering `scoringMode` is 'lenient', outside the enum — only 'strict' (exact-order, all-or-nothing) and 'kendall' (Kendall tau partial credit) are defined."
+    },
+    {
+      "file": "invalid/37-content-sequence-orphan-related-id.json",
+      "violatedClause": "VALIDATION.md §7.4 — ContentSequence referential-integrity domain rule (validate_course.py: validate_item)",
+      "violation": "ContentSequence `relatedItemIds` references a globalId that does not exist in the lesson. Every relatedItemId MUST resolve to an exercise/quiz item declared earlier in the same lesson; orphan references are an ERROR. (Note: objectiveIds referential integrity — KG-6 — is deliberately WARN-tier and therefore exercised by valid/25, not by an invalid fixture.)"
+    },
+    {
+      "file": "invalid/38-word-bank-cloze-empty-word-bank.json",
+      "violatedClause": "word-bank-cloze.schema.json (wordBank.minItems: 1)",
+      "violation": "wordBankCloze `wordBank` is an empty array — the learner has no words to choose from. minItems is 1."
+    },
+    {
+      "file": "invalid/39-question-missing-global-id.json",
+      "violatedClause": "§4.4 + question-base.schema.json (required: globalId)",
+      "violation": "Question is missing the required `globalId` field — every Unit/Lesson/Item/Question MUST carry a globalId for stable identity across re-imports. Complements invalid/12 (unit-level) at the question level."
+    },
+    {
+      "file": "invalid/40-duplicate-global-id.json",
+      "violatedClause": "§4.4 — globalId uniqueness domain rule (validate_course.py: _collect_duplicate_global_id_errors)",
+      "violation": "Two questions in different items carry the same globalId (case-varied: ...000d vs ...000D). Within a single document, globalId values MUST be unique across all entities; comparison is case-insensitive. A consumer keyed on globalId cannot tell the entities apart, so re-import matching breaks."
     }
   ]
 }

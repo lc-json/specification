@@ -1,0 +1,27 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Ordering (sentence unit, kendall scoring) — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "ordering",
+      "globalId": "24242424-1111-4111-8111-000000000001",
+      "title": "Making a cup of tea",
+      "points": 4.0,
+      "difficulty": 3.0,
+      "prompt": "",
+      "sourceText": "Boil the kettle. Warm the pot. Add the tea leaves. Pour the water and let it steep.",
+      "items": [
+        "Boil the kettle.",
+        "Warm the pot.",
+        "Add the tea leaves.",
+        "Pour the water and let it steep."
+      ],
+      "orderingUnit": "sentence",
+      "scoringMode": "kendall",
+      "allowPartialCredit": true
+    }
+  ]
+}

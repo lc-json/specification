@@ -1,0 +1,20 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: ordering scoringMode outside the enum",
+  "language": "en",
+  "questions": [
+    {
+      "type": "ordering",
+      "globalId": "36363636-0000-4000-8000-000000000001",
+      "title": "Unknown scoring policy",
+      "points": 4.0,
+      "prompt": "",
+      "sourceText": "Boil the kettle. Warm the pot. Add the tea leaves.",
+      "items": ["Boil the kettle.", "Warm the pot.", "Add the tea leaves."],
+      "orderingUnit": "sentence",
+      "scoringMode": "lenient"
+    }
+  ]
+}

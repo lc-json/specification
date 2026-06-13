@@ -1,7 +1,7 @@
 # LC-JSON Specification
 
-**Spec version:** 1.0 (release candidate: rc.2)
-**Last updated:** 2026-05-23
+**Spec version:** 1.0 (release candidate: rc.3)
+**Last updated:** 2026-06-13
 
 This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.
 
@@ -44,7 +44,7 @@ LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing e
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.0-rc.2/<artifact>.schema.json",
+  "$schema": "https://lc-json.org/1.0-rc.3/<artifact>.schema.json",
   "documentType": "course",      // or "questionSet"
   "specVersion": "1.0",
   "title": "...",
@@ -92,6 +92,7 @@ specification/
 ├── NORMATIVE.md                       # RFC 2119 conformance requirements (authoritative)
 ├── HTML_SAFETY.md                     # Normative HTML allowlist + sanitization profile
 ├── ACCESSIBILITY.md                   # Producer/consumer accessibility profile
+├── LOCALIZATION.md                    # Language model: language / lang / supportLanguage; BCP 47; pronunciation
 ├── VALIDATION.md                      # Rule catalog — schema / validator / advisory tiers
 ├── ITEM_PATTERNS.md                   # Informative authoring guide
 ├── question-types-reference.md        # Complete reference for all 19 question types
@@ -396,7 +397,7 @@ The reference Python validator (`tools/validate_course.py` in this repository) l
 
 ## Question Types — Implementation Status
 
-**Implemented** (12 types, fully schema-validated as of 1.0-rc.2):
+**Implemented** (12 types, fully schema-validated as of 1.0-rc.3):
 
 | Question Type | Example | Use Case |
 |---|---|---|
@@ -471,7 +472,15 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 
 ## Version History
 
-### v1.0-rc.2 (target: 2026-05-30) — initial public release candidate
+### v1.0-rc.3 (target: 2026-06-13) — second public release candidate
+
+- Adds [`LOCALIZATION.md`](LOCALIZATION.md): the language model (`language` / `lang` / `supportLanguage`), the single-language-per-document boundary, BCP 47 tags, and screen-reader pronunciation expectations. Bound by new [`NORMATIVE.md`](NORMATIVE.md) §13.
+- Adds a positioning page ([`RATIONALE.md`](RATIONALE.md)) explaining where LC-JSON sits among adjacent standards.
+- Conformance corpus expanded to 64 cases (per-type valid + invalid coverage, grading matrix, globalId-uniqueness).
+- **Schema change requiring a new immutable path:** the prototype-era `allowedFillerWords` and `prohibitExtraWordsBetweenChunks` fields are dropped from `sentence-transformation.schema.json`. Because `/1.0-rc.2/` is immutable, this lands at `/1.0-rc.3/`. Backwards-compatible — every rc.2-valid document remains valid under rc.3 (the removed fields were optional and are ignored on import).
+- Schemas published as **immutable** at `https://lc-json.org/1.0-rc.3/*.schema.json`; `/1.0-rc.1/` and `/1.0-rc.2/` stay served and frozen; the `https://lc-json.org/1.0/*.schema.json` URL space is reserved for the accepted final release.
+
+### v1.0-rc.2 (2026-05-30) — first publicly announced release candidate
 
 - Two artifact types under a common flat root: `course` (hierarchical) and `questionSet` (flat).
 - 12 user-facing question types fully implemented and schema-validated; 7 graphic/upload types reserved for a 2027 minor version.
@@ -491,7 +500,7 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 - Deepens [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (the rc.2 release) additively: per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures, with select producer obligations promoted into [`NORMATIVE.md`](NORMATIVE.md).
 - Any non-breaking refinements caught during the release-candidate cycle land here, or in subsequent immutable `/1.0-rc.N/` releases prior to final.
 
-> *LC-JSON 1.0 is the format's first public release. Internal iteration prior to publication is not reflected in the version history.*
+> *LC-JSON's public history begins with the 1.0 release-candidate line — `1.0-rc.2` (2026-05-30) was its first publicly announced release. Internal iteration before the candidate line is not reflected in the version history.*
 
 ---
 
@@ -510,4 +519,4 @@ See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for acknowledgments.
 
 ---
 
-**LC-JSON Specification v1.0-rc.2**
+**LC-JSON Specification v1.0-rc.3**

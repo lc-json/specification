@@ -1,0 +1,104 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.0",
+  "title": "Grading Combination Matrix",
+  "language": "en",
+  "objectives": [
+    { "id": "obj-0001", "text": "Distinguish graded from ungraded practice", "difficultyBand": "Understand" }
+  ],
+  "courseObjectiveIds": ["obj-0001"],
+  "units": [
+    {
+      "globalId": "25252525-1111-4111-8111-000000000001",
+      "title": "Unit 1: Item-type x grading policy",
+      "sequence": 1,
+      "objectiveIds": ["obj-0001"],
+      "lessons": [
+        {
+          "globalId": "25252525-1111-4111-8111-000000000002",
+          "title": "Lesson 1.1: All four combinations",
+          "sequence": 1,
+          "items": [
+            {
+              "type": "exercise",
+              "globalId": "25252525-1111-4111-8111-000000000003",
+              "title": "Graded exercise",
+              "sequence": 1,
+              "instructions": "Graded homework: this score counts toward your grade.",
+              "isGraded": true,
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "25252525-1111-4111-8111-000000000004",
+                  "title": "Graded exercise question",
+                  "points": 1.0,
+                  "prompt": "An exercise MAY contribute to the gradebook when isGraded is true.",
+                  "correctAnswer": true,
+                  "feedback": { "correct": "Yes.", "incorrect": "It may — that is the point of the flag." }
+                }
+              ]
+            },
+            {
+              "type": "exercise",
+              "globalId": "25252525-1111-4111-8111-000000000005",
+              "title": "Ungraded exercise",
+              "sequence": 2,
+              "instructions": "Practice freely — this one does not affect your grade.",
+              "isGraded": false,
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "25252525-1111-4111-8111-000000000006",
+                  "title": "Ungraded exercise question",
+                  "points": 1.0,
+                  "prompt": "Ungraded exercises are the default per the exercise-item schema.",
+                  "correctAnswer": true,
+                  "feedback": { "correct": "Correct.", "incorrect": "isGraded defaults to false on exercises." }
+                }
+              ]
+            },
+            {
+              "type": "quiz",
+              "globalId": "25252525-1111-4111-8111-000000000007",
+              "title": "Graded quiz",
+              "sequence": 3,
+              "instructions": "End-of-lesson assessment.",
+              "isGraded": true,
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "25252525-1111-4111-8111-000000000008",
+                  "title": "Graded quiz question",
+                  "points": 1.0,
+                  "prompt": "Quizzes are graded by default per the quiz-item schema.",
+                  "correctAnswer": true,
+                  "feedback": { "correct": "Right.", "incorrect": "isGraded defaults to true on quizzes." }
+                }
+              ]
+            },
+            {
+              "type": "quiz",
+              "globalId": "25252525-1111-4111-8111-000000000009",
+              "title": "Ungraded quiz (diagnostic pre-test)",
+              "sequence": 4,
+              "instructions": "Diagnostic pre-test: see where you stand before the unit begins.",
+              "isGraded": false,
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "25252525-1111-4111-8111-000000000010",
+                  "title": "Ungraded quiz question",
+                  "points": 1.0,
+                  "prompt": "A quiz with isGraded false is a valid combination (e.g. a diagnostic pre-test).",
+                  "correctAnswer": true,
+                  "feedback": { "correct": "Yes — grading is policy, item type is structure.", "incorrect": "It is valid — grading is policy, item type is structure." }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

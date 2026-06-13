@@ -83,7 +83,7 @@ _HERE = Path(__file__).resolve().parent
 # rc.1 document is validated with the rc.1-tagged validator. Bump this when
 # cutting the next publication (e.g. "1.0" at final). Drives both the public-repo
 # schema-dir selection and the canonical $id registered for $ref resolution.
-_CURRENT_PUBLICATION = "1.0-rc.2"
+_CURRENT_PUBLICATION = "1.0-rc.3"
 
 
 def _detect_schemas_dir():
@@ -368,8 +368,78 @@ def _collect_objective_id_violations(course):
     return warnings
 
 
+def _collect_duplicate_global_id_errors(entities):
+    """TD-206 / NORMATIVE §4.4: globalId values MUST be unique across all
+    entities in a document.
+
+    `entities` is an iterable of (ref, globalId) pairs — one per Unit, Lesson,
+    Item, and Question that declares a globalId. Reference fields that *point
+    at* a globalId (contentItemId, relatedItemIds) are not declarations and
+    must not be passed in.
+
+    Returns ERROR-tier strings, one per duplicated value, listing every
+    entity that carries it. A document with two entities sharing a globalId
+    breaks re-import matching: a consumer keyed on globalId cannot tell the
+    entities apart, so updates can land on the wrong record.
+    """
+    seen = {}
+    for ref, gid in entities:
+        if not isinstance(gid, str) or not gid:
+            continue  # missing/typed-wrong globalIds surface via schema + per-level checks
+        seen.setdefault(gid.lower(), []).append(ref)
+
+    errors = []
+    for gid, refs in seen.items():
+        if len(refs) > 1:
+            errors.append(
+                f"Duplicate globalId '{gid}' declared by {len(refs)} entities: "
+                + "; ".join(refs)
+                + ". NORMATIVE §4.4: globalId values MUST be unique across all "
+                  "entities in a document."
+            )
+    return errors
+
+
+def _walk_global_id_declarations(course):
+    """Yield (ref, globalId) for every Unit, Lesson, Item, and Question in a
+    course document. Companion walker for _collect_duplicate_global_id_errors."""
+    for u_idx, unit in enumerate(course.get('units') or []):
+        if not isinstance(unit, dict):
+            continue
+        unit_ref = f"Unit {u_idx} ({unit.get('title', 'Untitled')})"
+        yield unit_ref, unit.get('globalId')
+        for l_idx, lesson in enumerate(unit.get('lessons') or []):
+            if not isinstance(lesson, dict):
+                continue
+            lesson_ref = f"{unit_ref} > Lesson {l_idx} ({lesson.get('title', 'Untitled')})"
+            yield lesson_ref, lesson.get('globalId')
+            for i_idx, item in enumerate(lesson.get('items') or []):
+                if not isinstance(item, dict):
+                    continue
+                item_ref = f"{lesson_ref} > Item {i_idx} ({item.get('type')}: {item.get('title', 'Untitled')})"
+                yield item_ref, item.get('globalId')
+                for q_idx, question in enumerate(item.get('questions') or []):
+                    if not isinstance(question, dict):
+                        continue
+                    yield f"{item_ref} > Q{q_idx + 1} ({question.get('type')})", question.get('globalId')
+
+
 # UUID v4 regex pattern
 UUID_PATTERN = re.compile(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$', re.IGNORECASE)
+
+# BCP 47 plausibility pattern (LOCALIZATION.md §3): a 2-3 letter primary subtag,
+# an optional 4-letter script subtag, and an optional region subtag (2 letters or
+# 3 digits). This is a WARN-tier sanity check, NOT full BCP 47 registry validation
+# — it accepts en, es, fr, ar, pt-BR, es-MX, en-GB, zh-Hant, es-419 and rejects
+# obvious junk ("english", "e", "en_US" with underscore, "123").
+LANGUAGE_TAG_PATTERN = re.compile(
+    r'^[A-Za-z]{2,3}(-[A-Za-z]{4})?(-([A-Za-z]{2}|[0-9]{3}))?$'
+)
+
+
+def _is_plausible_language_tag(value):
+    """True if value is a plausibly well-formed BCP 47 language tag (subset check)."""
+    return isinstance(value, str) and LANGUAGE_TAG_PATTERN.match(value) is not None
 
 BOOLEANISH_TRUE = {"true", "1", "correct", "yes", "tick"}
 BOOLEANISH_FALSE = {"false", "0", "incorrect", "no", "cross"}
@@ -866,15 +936,22 @@ def validate_question_set_flat(doc, verbose=False):
     all_errors.extend(sv_errors)
     all_warnings.extend(sv_warnings)
 
-    # supportLanguage WARN — should be a 2-letter ISO 639-1 code (or omitted).
-    # Mirrors the course-level check in validate_course_level so the QuestionSet
-    # path doesn't silently accept malformed locale codes.
+    # language / supportLanguage WARN — should be a plausible BCP 47 tag
+    # (LOCALIZATION.md §3). Mirrors the course-level checks in
+    # validate_course_level so the QuestionSet path doesn't silently accept
+    # malformed locale codes.
+    lang = doc.get('language')
+    if lang is not None and not _is_plausible_language_tag(lang):
+        all_warnings.append(
+            f"Question Set: 'language' should be a BCP 47 tag — bare ISO 639-1 "
+            f"(e.g. 'en') or with a region/script subtag (e.g. 'pt-BR'): '{lang}'"
+        )
     support_lang = doc.get('supportLanguage')
-    if support_lang is not None:
-        if not isinstance(support_lang, str) or len(support_lang) != 2 or not support_lang.isalpha():
-            all_warnings.append(
-                f"Question Set: 'supportLanguage' should be a 2-letter ISO 639-1 code: '{support_lang}'"
-            )
+    if support_lang is not None and not _is_plausible_language_tag(support_lang):
+        all_warnings.append(
+            f"Question Set: 'supportLanguage' should be a BCP 47 tag — bare ISO 639-1 "
+            f"(e.g. 'es') or with a region/script subtag (e.g. 'es-MX'): '{support_lang}'"
+        )
 
     # Domain-rule pass: per-question domain checks (HTML allowlist,
     # gap-marker counts, ST chunk numbering, etc.).
@@ -883,6 +960,13 @@ def validate_question_set_flat(doc, verbose=False):
         errors, warnings = validate_question(question, qs_ref, q_index, verbose)
         all_errors.extend(errors)
         all_warnings.extend(warnings)
+
+    # TD-206 / NORMATIVE §4.4: document-wide globalId uniqueness (ERROR-tier).
+    all_errors.extend(_collect_duplicate_global_id_errors(
+        (f"{qs_ref} > Q{idx + 1} ({q.get('type')})", q.get('globalId'))
+        for idx, q in enumerate(questions)
+        if isinstance(q, dict)
+    ))
 
     # Print summary
     print(f"\nValidation complete:")
@@ -1895,6 +1979,19 @@ def validate_course_level(course, verbose=False):
             f"Migrate by renaming the field; values can be preserved as-is."
         )
 
+    # TD-091: course author credits are the `authors` array. A singular
+    # `author` at the course root is not a course field (it belongs to the
+    # questionSet artifact) — tolerated as an unknown field per NORMATIVE
+    # §5.4 but discarded by conforming consumers, so flag it: the producer
+    # probably meant `authors`.
+    if course.get('author') is not None:
+        warnings.append(
+            "Course: 'author' (singular) is not a course field — course author "
+            "credits use the 'authors' array (the singular form belongs to the "
+            "questionSet artifact). Consumers will ignore this value; put the "
+            "credit in 'authors' and drop the field."
+        )
+
     # Check version (optional but recommended when sourceCourseId is present).
     # Pattern accepts an optional pre-release suffix to match the schema and
     # the dual-track versioning scheme (e.g., '0.9.44-Beta'). Schema runs the
@@ -1908,11 +2005,20 @@ def validate_course_level(course, verbose=False):
         if verbose:
             print(f"  version: {version}")
 
-    # Check supportLanguage (optional, must be valid ISO 639-1 if present)
+    # Check language / supportLanguage (BCP 47 plausibility — LOCALIZATION.md §3).
+    lang = course.get('language')
+    if lang is not None and not _is_plausible_language_tag(lang):
+        warnings.append(
+            f"Course: 'language' should be a BCP 47 tag — bare ISO 639-1 (e.g. 'en') "
+            f"or with a region/script subtag (e.g. 'pt-BR'): '{lang}'"
+        )
     support_lang = course.get('supportLanguage')
     if support_lang is not None:
-        if not isinstance(support_lang, str) or len(support_lang) != 2 or not support_lang.isalpha():
-            warnings.append(f"Course: 'supportLanguage' should be a 2-letter ISO 639-1 code: '{support_lang}'")
+        if not _is_plausible_language_tag(support_lang):
+            warnings.append(
+                f"Course: 'supportLanguage' should be a BCP 47 tag — bare ISO 639-1 "
+                f"(e.g. 'es') or with a region/script subtag (e.g. 'es-MX'): '{support_lang}'"
+            )
         elif verbose:
             print(f"  supportLanguage: {support_lang}")
 
@@ -2170,6 +2276,11 @@ def validate_course(course_path, verbose=False, strict=False):
     # Warning-tier — unresolved references don't block import but break
     # signpost auto-rendering of objectives.
     all_warnings.extend(_collect_objective_id_violations(course))
+
+    # TD-206 / NORMATIVE §4.4: document-wide globalId uniqueness (ERROR-tier).
+    all_errors.extend(
+        _collect_duplicate_global_id_errors(_walk_global_id_declarations(course))
+    )
 
     # Print results
     print(f"\nValidation complete:")

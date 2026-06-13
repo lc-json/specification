@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.3/placement.schema.json",
+  "title": "Placement Question Schema",
+  "description": "Place items into anchored gaps in a structured passage. Each placement entry pairs a gap-marker number with the item that belongs in it. Distractors are extra items with no correct gap; passage gap-markers without a corresponding placement entry are decoy positions (TOEFL Sentence Insertion variant).",
+  "type": "object",
+  "allOf": [
+    { "$ref": "question-base.schema.json" },
+    {
+      "properties": {
+        "type": { "const": "placement" },
+        "placementUnit": {
+          "type": "string",
+          "description": "Display granularity hint and marker-placement convention. 'sentence' — markers appear inline within prose; the renderer shows an inline drop slot at each marker. 'paragraph' — each marker is the entire content of its paragraph (surrounded by blank lines or at start/end of the passage); the renderer shows a block-level drop slot between paragraphs. 'sectionLabel' — each marker appears at the start of a paragraph (followed by the section's content); the renderer attaches a label slot to that paragraph's leading edge. The 'sectionLabel' value covers both real headings (IELTS Matching Headings) and analytical meta-labels (e.g., labelling each paragraph 'thesis', 'counter-argument'). Consumers MAY render uniformly regardless. Word-level placement is covered by wordBankCloze.",
+          "enum": ["sentence", "paragraph", "sectionLabel"],
+          "default": "sentence"
+        },
+        "passage": {
+          "type": "string",
+          "description": "Structured text with @@@1, @@@2, ... gap markers (1-based, sequential where possible). Marker-placement convention varies by placementUnit; see that field's description.",
+          "minLength": 1,
+          "pattern": "@@@\\d+"
+        },
+        "placements": {
+          "type": "array",
+          "description": "Each entry pairs a gap-marker number with the item that belongs in it. Order is author-free; each entry is self-describing via its `gap` field. The number of placements need not equal the number of @@@N markers in the passage — extra unanswered markers are valid as decoy positions (TOEFL Sentence Insertion variant).",
+          "items": {
+            "type": "object",
+            "properties": {
+              "gap": {
+                "type": "integer",
+                "description": "1-based gap-marker number, matching a @@@N marker in the passage.",
+                "minimum": 1
+              },
+              "item": {
+                "type": "string",
+                "description": "The content that belongs in the named gap.",
+                "minLength": 1
+              }
+            },
+            "required": ["gap", "item"],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "distractors": {
+          "type": "array",
+          "description": "Extra items with no correct gap (decoy items). Optional. Distinct from decoy gaps — see the `placements` description. The choice pool a consumer presents in each gap dropdown is the union of `placements[].item` values and these distractors; consumers MUST randomise the order of that pool when rendering — see NORMATIVE §5.6.",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "allowPartialCredit": {
+          "type": "boolean",
+          "description": "Award partial credit per correct gap instead of all-or-nothing.",
+          "default": true
+        }
+      },
+      "required": ["placementUnit", "passage", "placements"]
+    }
+  ]
+}

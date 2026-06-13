@@ -1,0 +1,18 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: simpleGapFill sentence without an @@@ gap marker",
+  "language": "en",
+  "questions": [
+    {
+      "type": "simpleGapFill",
+      "globalId": "28282828-0000-4000-8000-000000000001",
+      "title": "No gap to fill",
+      "points": 1.0,
+      "prompt": "",
+      "sentence": "She has lived in Mumbai for the last ten years.",
+      "acceptedAnswers": ["the"]
+    }
+  ]
+}

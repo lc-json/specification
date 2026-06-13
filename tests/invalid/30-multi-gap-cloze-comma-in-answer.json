@@ -1,0 +1,20 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: multiGapCloze accepted answer containing a comma",
+  "language": "en",
+  "questions": [
+    {
+      "type": "multiGapCloze",
+      "globalId": "30303030-0000-4000-8000-000000000001",
+      "title": "Comma breaks the submission wire format",
+      "points": 1.0,
+      "prompt": "",
+      "passage": "For breakfast she had @@@1 with tea.",
+      "gapAcceptedAnswers": {
+        "1": ["bread, butter and jam"]
+      }
+    }
+  ]
+}

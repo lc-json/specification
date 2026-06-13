@@ -7,7 +7,7 @@ name: Build and deploy spec site
 #
 # Pages serves https://lc-json.org from the gh-pages branch.
 # Schemas resolve at https://lc-json.org/<version>/<file>.schema.json
-# (/1.0-rc.2/ is the current publication; /1.0-rc.1/ stays served and frozen; /1.0/ once 1.0 final ships).
+# (/1.0-rc.3/ is the current publication; /1.0-rc.1/ and /1.0-rc.2/ stay served and frozen; /1.0/ once 1.0 final ships).
 
 on:
   push:
@@ -62,14 +62,15 @@ jobs:
 
       # Copy schemas into the published output so they resolve at
       # lc-json.org/<version>/*.schema.json (the URL embedded in every
-      # conforming JSON file's $schema field). rc.2 is the current masterdoc;
-      # rc.1 stays served and frozen alongside it. The /1.0/ URL path is
+      # conforming JSON file's $schema field). rc.3 is the current masterdoc;
+      # rc.1 and rc.2 stay served and frozen alongside it. The /1.0/ URL path is
       # reserved for 1.0 final per NORMATIVE.md §8.3.
       - name: Copy schemas to book output
         run: |
-          mkdir -p book/1.0-rc.1 book/1.0-rc.2
+          mkdir -p book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
           cp -v schemas/1.0-rc.1/*.schema.json book/1.0-rc.1/
           cp -v schemas/1.0-rc.2/*.schema.json book/1.0-rc.2/
+          cp -v schemas/1.0-rc.3/*.schema.json book/1.0-rc.3/
 
       # Copy examples, tests, and tools so they're browseable at
       # lc-json.org/<path>/. Documents in src/ link to these.
@@ -85,7 +86,7 @@ jobs:
       # Verify the schemas are reachable at the canonical paths.
       - name: Verify schema URL paths
         run: |
-          for v in 1.0-rc.1 1.0-rc.2; do
+          for v in 1.0-rc.1 1.0-rc.2 1.0-rc.3; do
             test -f book/$v/course.schema.json || (echo "ERROR: course.schema.json missing from book/$v/" && exit 1)
             test -f book/$v/question-set.schema.json || (echo "ERROR: question-set.schema.json missing from book/$v/" && exit 1)
             schema_count=$(ls book/$v/*.schema.json | wc -l)

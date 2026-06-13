@@ -1,0 +1,18 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: trueFalseQuestion with non-boolean correctAnswer",
+  "language": "en",
+  "questions": [
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "27272727-0000-4000-8000-000000000001",
+      "title": "Non-boolean answer",
+      "points": 1.0,
+      "prompt": "Water boils at 100 degrees Celsius at sea level.",
+      "correctAnswer": "absolutely",
+      "feedback": { "correct": "Yes.", "incorrect": "It does." }
+    }
+  ]
+}

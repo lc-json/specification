@@ -1,0 +1,25 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: matching carries both pairs[] and categories[]",
+  "language": "en",
+  "questions": [
+    {
+      "type": "matching",
+      "globalId": "34343434-0000-4000-8000-000000000001",
+      "title": "Both sub-shapes at once",
+      "points": 2.0,
+      "prompt": "",
+      "matchingMode": "pairs",
+      "pairs": [
+        { "item": "yesterday", "match": "past simple" },
+        { "item": "since 2020", "match": "present perfect" }
+      ],
+      "categories": [
+        { "label": "past simple", "items": ["yesterday"] },
+        { "label": "present perfect", "items": ["since 2020"] }
+      ]
+    }
+  ]
+}

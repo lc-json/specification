@@ -1,0 +1,18 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: essay missing expectedAnswer",
+  "language": "en",
+  "questions": [
+    {
+      "type": "essay",
+      "globalId": "32323232-0000-4000-8000-000000000001",
+      "title": "Essay with no model answer",
+      "points": 10.0,
+      "prompt": "Write 200 words about a journey you remember well.",
+      "minWords": 150,
+      "maxWords": 250
+    }
+  ]
+}

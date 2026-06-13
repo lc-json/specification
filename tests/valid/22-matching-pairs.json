@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Matching (pairs mode) — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "matching",
+      "globalId": "22222222-1111-4111-8111-000000000001",
+      "title": "Thinkers and their ideas",
+      "points": 2.0,
+      "difficulty": 5.0,
+      "prompt": "",
+      "matchingMode": "pairs",
+      "pairs": [
+        { "item": "John Locke", "match": "Government's authority comes from the consent of the governed." },
+        { "item": "Jean-Jacques Rousseau", "match": "Legitimate authority arises from the general will of the people." }
+      ],
+      "distractors": ["The state should own the means of production."],
+      "allowPartialCredit": true
+    }
+  ]
+}

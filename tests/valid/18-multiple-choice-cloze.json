@@ -1,0 +1,26 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "MultipleChoiceCloze — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "multipleChoiceCloze",
+      "globalId": "18181818-0000-4000-8000-000000000001",
+      "title": "Dropdown per gap (FCE Part 1 style)",
+      "points": 2.0,
+      "difficulty": 5.0,
+      "prompt": "",
+      "passage": "It was @@@1 cold that we stayed inside and @@@2 the afternoon reading.",
+      "gapOptions": {
+        "1": ["so", "such", "very", "too"],
+        "2": ["spent", "passed", "used", "took"]
+      },
+      "correctAnswers": {
+        "1": 0,
+        "2": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "Invalid: simpleGapFill missing acceptedAnswers",
+  "language": "en",
+  "questions": [
+    {
+      "type": "simpleGapFill",
+      "globalId": "29292929-0000-4000-8000-000000000001",
+      "title": "Gap with no accepted answers",
+      "points": 1.0,
+      "prompt": "",
+      "sentence": "She has lived in Mumbai for @@@ last ten years."
+    }
+  ]
+}

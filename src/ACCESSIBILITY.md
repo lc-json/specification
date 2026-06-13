@@ -1,10 +1,10 @@
 # LC-JSON Accessibility Profile
 
-**Status:** Released for `1.0-rc.2`. Additive deepenings (per-criterion normative cross-reference table, expanded ARIA patterns, screen-reader timing requirements, conformance fixtures) land in `1.0` final on 2026-06-30 — see §11. Obligations stated here are committed for `1.0` final and will not be retracted or contradicted.
-**Spec version:** 1.0 (release candidate: rc.2)
-**Last updated:** 2026-05-23
+**Status:** Released for `1.0-rc.3`, and the stable accessibility contract: the obligations stated here carry into `1.0` final (2026-06-30) unchanged — `1.0` is a pure rebase of rc.3. Further deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader timing guidance, `--accessibility` validator flag + fixtures) are **post-1.0, additive, and informative or opt-in** — none change the base-vs-Profile contract; see §11. Obligations stated here will not be retracted or contradicted.
+**Spec version:** 1.0 (release candidate: rc.3)
+**Last updated:** 2026-06-13
 
-This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are to be interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174). RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see [`README.md`](README-spec.md) §"Wire Format").
+This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are to be interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174). RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see [`README.md`](README-spec.md) §"Wire Format"). This two-layer split — wire-format affordances versus the duties of the consumer that ultimately delivers the content — is the organizing principle of this document.
 
 ---
 
@@ -73,7 +73,9 @@ Other WCAG 2.2 additions are out of the 2.1 claim baseline. **4.1.1 Parsing** is
 
 ### 2.1 Producer obligations
 
-A producer MUST emit an `alt` attribute on every `<img>` element in HTML-bearing fields ([`HTML_SAFETY.md`](HTML_SAFETY.md) §3.3).
+When **claiming Accessibility Profile conformance**, a producer **MUST** emit an `alt` attribute on every `<img>` element in HTML-bearing fields ([`HTML_SAFETY.md`](HTML_SAFETY.md) §3.3). This satisfies WCAG **1.1.1 Non-text Content** at Level A.
+
+Outside an Accessibility Profile claim, authoring `alt` is **not** a base-conformance requirement: a producer that omits `alt` is still a conforming LC-JSON producer (the reference validator emits a non-blocking `WARN` per [`HTML_SAFETY.md`](HTML_SAFETY.md) §8.2). What base conformance *does* require is preservation — a consumer MUST NOT strip an `alt` that is present (`NORMATIVE.md` §12.1). The distinction is deliberate: a small producer is never blocked for an `alt`-less image, but accessibility information, once authored, is never silently dropped.
 
 - For **informative** images (diagrams, screenshots, photographs that carry meaning), `alt` MUST be a meaningful textual description.
 - For **decorative** images (visual flourishes, spacers, redundant illustrations of adjacent text), `alt=""` (empty string) is RECOMMENDED. An empty `alt` is a positive signal to assistive technology that the image carries no content; it is not a missing attribute.
@@ -96,7 +98,12 @@ For **prerecorded instructional video that contains speech or meaningful audio**
 
 For all other `<video>` content (decorative, non-speech, ambient), producers SHOULD emit a `<track kind="captions">` or `<track kind="subtitles">` element where the content carries any information the learner is expected to receive ([`HTML_SAFETY.md`](HTML_SAFETY.md) §7.5).
 
-For pre-recorded video/audio that carries instructional content, producers SHOULD additionally provide a transcript — either as adjacent `ContentItem.html` prose or as a linked resource — so learners who cannot use captions still receive the information.
+When claiming Accessibility Profile conformance, producers **MUST** provide a **transcript** for prerecorded instructional content that carries speech — either as adjacent `ContentItem.html` prose or as a linked resource:
+
+- For **audio-only** instructional content (e.g. a `<audio>` listening passage), the transcript is the text alternative required by WCAG **1.2.1 Audio-only (Prerecorded)** at Level A.
+- For **instructional video**, the transcript is required *in addition to* the captions above; it satisfies WCAG **1.2.3 (media alternative)** and serves learners who cannot use synchronized captions (deafblind users on a braille display, users who need to read at their own pace).
+
+Outside an Accessibility Profile claim, a transcript is RECOMMENDED but not required — base conformance never compels a small producer to author one. As with `alt` (§2.1), the base floor is preservation, not production: a transcript or `<track>` already present MUST round-trip (`NORMATIVE.md` §12.1).
 
 `<track kind="descriptions">` (audio descriptions of visual-only information) is RECOMMENDED for video where visual content is essential to the pedagogy and not redundantly narrated. This pairs with WCAG **1.2.5 Audio Description (Prerecorded)** at AA.
 
@@ -198,7 +205,7 @@ The `language` field requirement is also tied to **EN 301 549 5.4** (Closed func
 
 ### 6.1 Producer obligations
 
-Every Course or QuestionSet carries a `language` field (ISO 639-1) at the document root. Producers MUST set `language` to the primary delivery language. When the document carries content in a secondary language (typically the learner's L1 for `[L1:]` translation/support tags), producers SHOULD also set `supportLanguage`.
+Every Course or QuestionSet carries a `language` field (a BCP 47 tag, commonly a bare ISO 639-1 code; see [`LOCALIZATION.md`](LOCALIZATION.md) §3) at the document root. Producers MUST set `language` to the primary delivery language. When the document carries content in a secondary language (typically the learner's L1 for `[L1:]` translation/support tags), producers SHOULD also set `supportLanguage`.
 
 Within HTML-bearing fields, producers MAY use the `lang` attribute to mark spans of content in a different language than the document default (per [`HTML_SAFETY.md`](HTML_SAFETY.md) §3.1). Producers SHOULD use `lang` for any in-line foreign-language quotation or term — this satisfies WCAG **3.1.2 Language of Parts**.
 
@@ -212,7 +219,11 @@ A consumer MUST honor the `dir` attribute on HTML-bearing elements when renderin
 
 A consumer MUST NOT strip `lang` or `dir` attributes during sanitization. Both attributes are explicitly allowed on every element class in [`HTML_SAFETY.md`](HTML_SAFETY.md) §3.1.
 
-> *1.0 final will deepen this with: BCP 47 vs ISO 639-1 reconciliation, localization-model decisions (field-level translation, fallback strategy via `supportLanguage`), and explicit RTL rendering tests in the conformance corpus.*
+### 6.3 Screen-reader pronunciation — what `lang` can and cannot promise (informative)
+
+Emitting `lang` on a foreign-language span is **necessary but not sufficient** for that span to be *pronounced* correctly by a screen reader. `lang` is an instruction; whether it is acted on depends on the end user's environment, which the format and the consumer cannot control: the reader must support automatic language switching and have it enabled (support varies — screen readers such as NVDA and JAWS switch reliably, Windows Narrator's automatic switching is comparatively limited, VoiceOver sits in between), and the matching voice must be installed (a reader with only an English voice reads a correct `lang="es"` span in English, mispronouncing it). The producer/consumer duty is therefore to emit and preserve `lang`/`dir` faithfully; correct pronunciation is completed by the user's assistive technology. This does not make `lang` optional — without it no reader can switch at all. See [`LOCALIZATION.md`](LOCALIZATION.md) §7 for the fuller discussion.
+
+> *The localization model promised here — the distinct roles of `language` / `lang` / `supportLanguage`, BCP 47 language-tag rules, the single-document-per-language boundary, and the pronunciation-expectations framing above — is specified in [`LOCALIZATION.md`](LOCALIZATION.md). What remains for a later iteration: explicit RTL rendering tests in the conformance corpus.*
 
 ---
 
@@ -302,20 +313,20 @@ Criteria not listed (e.g. 1.3.2, 2.4.1, 3.2.2, 3.3.x) are properties of a delive
 
 ---
 
-## 11. From the current baseline to 1.0 final
+## 11. From rc.3 to 1.0 final and beyond
 
-This document is the `1.0-rc.2` accessibility profile. The obligations stated here are committed for `1.0` final and will not be retracted or contradicted; the `1.0` final deepenings are **additive** and shaped by feedback during the rc.2 period.
+This document is the `1.0-rc.3` accessibility profile, and its obligations are the **stable accessibility contract**: the base-conformance preservation floor ([`NORMATIVE.md`](NORMATIVE.md) §12.1) and the opt-in Accessibility Profile authoring MUSTs (§12.2 — `alt`, captions, transcripts) are settled as of rc.3 and carry into `1.0` final unchanged. **`1.0` final is a pure rebase of rc.3** — it adds no new obligations and tightens nothing.
 
-Planned `1.0` final additions (2026-06-30):
+The deepenings below are **post-1.0, additive, and either informative or opt-in**: none change the base-vs-Profile contract above, none gate `1.0`. They are listed so implementers can see the intended direction.
 
-- **Per-criterion normative cross-reference table** — promote select rows of §9 from informative cross-reference to normative obligation. Currently §9 cross-references WCAG SCs for orientation; in `1.0` final, specific producer/consumer obligations become MUST-level under their SC where the wire format alone determines conformance.
-- **Expanded ARIA patterns** — patterns for `matching` `classification` mode, richer screen-reader announcement requirements for partial-credit feedback (§4), per-language placeholder text examples (§7).
-- **Screen-reader timing requirements** — announcement timing for auto-grading flows (§5).
-- **Producer obligations promoted into NORMATIVE.md** — currently some producer obligations are stated SHOULD here; in `1.0` final, select obligations (alt-text presence on informative images, captions on instructional speech-bearing video) become MUST in `NORMATIVE.md` rather than in this advisory profile.
-- **`--accessibility` validator flag** — analogous to `--strict`; promotes accessibility-profile warnings (missing `alt`, missing `<track>` on speech-bearing video) to errors for tooling that wants to fail-build on accessibility issues.
-- **Conformance fixtures for accessibility** — expanded fixture coverage beyond the current baseline (a round-trip preservation fixture and a missing-language invalid fixture are part of the current baseline, established in rc.1; the 1.0-final additions exercise the `--accessibility` flag's warning-to-error promotion).
-- **Reserved-type accessibility metadata schema** — guidance for emitting accessibility metadata on `hotspot`, `graphicGapMatch`, and the other graphic types when their per-type schemas land (post-1.0).
-- **Multilingual accessibility metadata shape** — design for localized alt text / transcripts / accessible-name fields per locale. Not in 1.0; flagged as a known forward direction.
-- **BCP 47 vs ISO 639-1 reconciliation** — locale-tag normalization for `language` / `supportLanguage` / inline `lang`.
+- **Per-criterion cross-reference table** — a presentation of §9 mapping each WCAG SC to the obligation already stated in §§2–7. Clarity, not new obligation.
+- **Expanded ARIA patterns** — patterns for `matching` `classification` mode, richer announcement guidance for partial-credit feedback (§4), per-language placeholder text examples (§7). Informative.
+- **Screen-reader timing guidance** — announcement timing for auto-grading flows (§5). Informative.
+- **`--accessibility` validator flag** — analogous to `--strict`; opt-in tooling that promotes accessibility warnings (missing `alt`, missing `<track>` on speech-bearing video) to errors for teams that want to fail-build on them. Opt-in; changes no document's conformance.
+- **Conformance fixtures for accessibility** — an `a11y/` corpus suite exercising the `--accessibility` flag, beyond the round-trip and missing-language fixtures already in the baseline.
+- **Reserved-type accessibility metadata schema** — guidance for emitting accessibility metadata on `hotspot`, `graphicGapMatch`, and the other graphic types when their per-type schemas land (tied to the 1.1 promotion of the reserved types).
+- **Multilingual accessibility metadata shape** — localized alt text / transcripts / accessible-name fields per locale; bounded by the single-language-per-document decision in [`LOCALIZATION.md`](LOCALIZATION.md) §2.4.
 
-Implementers building against `1.0-rc.2` can rely on the obligations stated above. The `1.0` final release lands on **2026-06-30**.
+> **Resolved in rc.3 (no longer pending):** the authoring obligations for `alt`, captions, and transcripts were settled as **Accessibility Profile** MUSTs (§12.2), deliberately *not* promoted into base `NORMATIVE.md` — base conformance stays preservation-only so a small or non-institutional producer is never blocked. The BCP 47 / ISO 639-1 language-tag reconciliation also shipped in rc.3 (see [`LOCALIZATION.md`](LOCALIZATION.md) §3).
+
+Implementers building against `1.0-rc.3` can rely on the obligations stated above; `1.0` final (2026-06-30) carries them unchanged.

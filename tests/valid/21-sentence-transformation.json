@@ -1,0 +1,26 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "SentenceTransformation — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "sentenceTransformation",
+      "globalId": "21212121-0000-4000-8000-000000000001",
+      "title": "Reported speech",
+      "points": 2.0,
+      "difficulty": 6.0,
+      "prompt": "",
+      "promptSentence": "\"I can't come to the party because I have to revise,\" Melissa said to Jane.",
+      "keyword": "TOLD",
+      "targetSentence": "Melissa @@@ come to the party because she had to revise.",
+      "allOrNothing": false,
+      "acceptedChunks": {
+        "1": ["told Jane"],
+        "2": ["she could not", "she couldn't"]
+      },
+      "hint": "Reported speech (statements)"
+    }
+  ]
+}

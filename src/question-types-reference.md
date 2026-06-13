@@ -1051,4 +1051,5 @@ The seven question types in this section are reserved in the `question-base.sche
 **Version history:**
 - 1.0-rc.1 (2026-05-25) — initial release candidate; internal, never publicly announced.
 - 1.0-rc.2 (2026-05-30) — first publicly announced release candidate; `prompt`-field correction.
+- 1.0-rc.3 (2026-06-13) — localization model, corpus expansion; `sentenceTransformation` schema drops two prototype-era fields.
 - 1.0 (target 2026-06-30) — final release.

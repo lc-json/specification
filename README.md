@@ -7,9 +7,9 @@ LC-JSON (Learning Content JSON) is a JSON-native format, schema set, and produce
 LC-JSON is a content-layer format — complementary to, not competing with, established LMS interop standards (LTI, OneRoster, xAPI, SCORM). See [the Rationale page](src/RATIONALE.md) for the full landscape and what LC-JSON is **not**.
 
 - **Specification site:** <https://lc-json.org>
-- **Schemas (1.0-rc.2):** <https://lc-json.org/1.0-rc.2/> *(the `/1.0/` URL path is reserved for 1.0 final per NORMATIVE.md §8.3; the superseded `/1.0-rc.1/` set remains served and frozen)*
+- **Schemas (1.0-rc.3):** <https://lc-json.org/1.0-rc.3/> *(the `/1.0/` URL path is reserved for 1.0 final per NORMATIVE.md §8.3; the superseded `/1.0-rc.1/` and `/1.0-rc.2/` sets remain served and frozen)*
 - **License:** [Apache 2.0](LICENSE)
-- **Current version:** `1.0-rc.2` (release candidate; `1.0` final targeted 2026-06-30)
+- **Current version:** `1.0-rc.3` (release candidate; `1.0` final targeted 2026-06-30)
 
 ## What's in this repository
 
@@ -43,11 +43,11 @@ python tools/validate_course.py --course-path my-course.json
 
 The schemas resolve at stable, versioned URLs:
 
-- `https://lc-json.org/1.0-rc.2/course.schema.json`
-- `https://lc-json.org/1.0-rc.2/question-set.schema.json`
-- `https://lc-json.org/1.0-rc.2/<type>.schema.json` (and 19 other type-specific schemas)
+- `https://lc-json.org/1.0-rc.3/course.schema.json`
+- `https://lc-json.org/1.0-rc.3/question-set.schema.json`
+- `https://lc-json.org/1.0-rc.3/<schema-name>.schema.json` (23 schema files in total)
 
-VS Code, JetBrains IDEs, and any JSON Schema validator can fetch these URLs for autocomplete and validation. The `1.0/` URL path is stable per [`NORMATIVE.md`](src/NORMATIVE.md) §8.3.
+VS Code, JetBrains IDEs, and any JSON Schema validator can fetch these URLs for autocomplete and validation. The `1.0-rc.3/` URL path is stable now; the `1.0/` path becomes stable once 1.0 final is published (per [`NORMATIVE.md`](src/NORMATIVE.md) §8.3).
 
 **See an example document:**
 
@@ -61,7 +61,7 @@ A tool may claim conformance to LC-JSON 1.0 as a *producer*, *consumer*, or unqu
 
 ## Project status
 
-LC-JSON `1.0-rc.2` is the public release candidate (target: 2026-05-30) and the first formally announced prerelease. It is stable enough to build against — schema URLs at `lc-json.org/1.0-rc.2/` are immutable per `NORMATIVE.md` §8.3 (each release candidate gets its own immutable URL path; `/1.0/` is reserved for 1.0 final). rc.2 supersedes an earlier internal candidate, `1.0-rc.1`, which was never publicly announced; its `/1.0-rc.1/` schema set remains served and frozen. The only substantive rc.1 → rc.2 change is a backwards-compatible `prompt` correction — empty strings are permitted where no author-supplied prompt is required — so every rc.1-valid document stays valid under rc.2. Minor non-breaking refinements (additional conformance fixtures, validator `--strict` polish) may land before `1.0` final on 2026-06-30 at a later `/1.0-rc.N/` path.
+LC-JSON `1.0-rc.3` is the current public release candidate (2026-06-13). It is stable enough to build against — schema URLs at `lc-json.org/1.0-rc.3/` are immutable per `NORMATIVE.md` §8.3 (each release candidate gets its own immutable URL path; `/1.0/` is reserved for 1.0 final, targeted 2026-06-30). rc.3 supersedes two earlier candidates — the internal `1.0-rc.1` (never publicly announced) and the announced `1.0-rc.2` — whose `/1.0-rc.1/` and `/1.0-rc.2/` schema sets remain served and frozen. rc.3 adds the localization model and an expanded conformance corpus, and removes two prototype-era `sentenceTransformation` fields from the schema (the change that required a new immutable path). It is backwards-compatible: every rc.2-valid document remains valid under rc.3. The transition to `1.0` final is planned as a pure URL rebase of rc.3 with no content change. Feedback is welcome through **2026-06-27**; `1.0` final ships **2026-06-30** as that rebase, barring substantive feedback (the date was announced with rc.1 on 2026-05-30 and has not moved).
 
 The specification distils approximately 12 months of internal format iteration. Earlier internal versions were never publicly released and are not part of the public version history.
 

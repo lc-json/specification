@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.3/essay.schema.json",
+  "title": "Essay Question Schema",
+  "description": "Long-form text response with optional word limits and grading rubric",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "essay"
+        },
+        "expectedAnswer": {
+          "type": "string",
+          "description": "Model answer / sample response",
+          "default": ""
+        },
+        "expectedLines": {
+          "type": "integer",
+          "description": "Suggested number of lines in text area (0 = auto)",
+          "minimum": 0,
+          "default": 0
+        },
+        "minWords": {
+          "type": "integer",
+          "description": "Minimum word count (0 = no limit)",
+          "minimum": 0,
+          "default": 0
+        },
+        "maxWords": {
+          "type": "integer",
+          "description": "Maximum word count (0 = no limit)",
+          "minimum": 0,
+          "default": 0
+        },
+        "rubricText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Markdown-formatted grading rubric",
+          "default": null
+        }
+      },
+      "required": [
+        "expectedAnswer"
+      ]
+    }
+  ]
+}

@@ -2,11 +2,11 @@
 
 **Status:** Informative.
 **Spec version:** 1.0
-**Last updated:** 2026-05-23
+**Last updated:** 2026-06-13
 
 This glossary defines the terms LC-JSON (Learning Content JSON) uses throughout the specification. It is informative — definitive normative meaning lives in [`NORMATIVE.md`](NORMATIVE.md) — but implementers should treat the entries below as the project's working vocabulary.
 
-Terms are organized in four groups: **core concepts**, **artifact and hierarchy**, **conformance**, and **identity, versioning, and extensions**.
+Terms are organized in five groups: **core concepts**, **artifact and hierarchy**, **conformance**, **language and localization**, and **identity, versioning, and extensions**.
 
 ---
 
@@ -94,6 +94,28 @@ See [validator](#validator) under Core concepts above.
 
 ---
 
+## Language and localization
+
+See [`LOCALIZATION.md`](LOCALIZATION.md) for the full model.
+
+### delivery language
+
+The single primary language a document is authored and delivered in, declared in the root `language` field. LC-JSON 1.x is single-language-per-document: a document has exactly one delivery language, and multiple languages are delivered as multiple documents.
+
+### language of parts
+
+A run of HTML content in a language different from the delivery language, marked with the `lang` attribute (and `dir` where script direction differs). This is the WCAG 3.1.2 mechanism; it concerns correct rendering and pronunciation, not translation.
+
+### support language
+
+The learner's first language (L1), declared in the optional root `supportLanguage` field, for a document whose delivery language is a second language being taught. It signals that L1 support (glosses, hints) is appropriate; how a consumer surfaces that support is consumer-defined.
+
+### language tag
+
+A [BCP 47](https://www.rfc-editor.org/info/bcp47) tag identifying a language, used by `language`, `supportLanguage`, and HTML `lang`. Commonly a bare ISO 639-1 primary subtag (`en`, `es`); region and script subtags (`pt-BR`, `zh-Hant`) are permitted, and a consumer may act on only the primary subtag.
+
+---
+
 ## Identity, versioning, and extensions
 
 ### globalId
@@ -110,7 +132,7 @@ A required root field declaring which contract version of LC-JSON the document c
 
 ### `$schema`
 
-A required root field carrying the canonical URL of the JSON Schema for the document's artifact type at the specific publication the producer targets. A 1.0-rc.2 Course document carries `"$schema": "https://lc-json.org/1.0-rc.2/course.schema.json"`; a 1.0-final Course document carries `"$schema": "https://lc-json.org/1.0/course.schema.json"`. URLs at any published path — released versions and release candidates alike — are immutable for the lifetime of the spec (§8.3).
+A required root field carrying the canonical URL of the JSON Schema for the document's artifact type at the specific publication the producer targets. A 1.0-rc.3 Course document carries `"$schema": "https://lc-json.org/1.0-rc.3/course.schema.json"`; a 1.0-final Course document carries `"$schema": "https://lc-json.org/1.0/course.schema.json"`. URLs at any published path — released versions and release candidates alike — are immutable for the lifetime of the spec (§8.3).
 
 ### implemented question type
 

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.3/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.0",
+  "title": "SimpleGapFill — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "simpleGapFill",
+      "globalId": "14141414-0000-4000-8000-000000000001",
+      "title": "Definite article",
+      "points": 1.0,
+      "difficulty": 2.0,
+      "prompt": "",
+      "sentence": "She has lived in Mumbai for @@@ last ten years.",
+      "acceptedAnswers": ["the"],
+      "caseSensitive": false,
+      "feedback": {
+        "correct": "Well done.",
+        "incorrect": "A specific period of time takes the definite article."
+      }
+    }
+  ]
+}
