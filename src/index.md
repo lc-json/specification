@@ -19,7 +19,7 @@ Course content in LC-JSON is independent of the tool that authored it. Schools, 
 Every LC-JSON document validates against published JSON Schemas. Authoring errors are caught before delivery, not after a learner gets stuck.
 
 **Build with confidence.**
-Schema URLs at every published version path — `lc-json.org/1.0-rc.3/` today, `lc-json.org/1.0/` once 1.0 final ships, and any future minor or major release — are immutable. A document that validates today will validate forever. Forward-compatible additions land at new URL paths; existing files keep working.
+Schema URLs at every published version path — `lc-json.org/1.0/`, the frozen `lc-json.org/1.0-rc.N/` candidate paths, and any future minor or major release — are immutable. A document that validates today will validate forever. Forward-compatible additions land at new URL paths; existing files keep working.
 
 ---
 
@@ -77,7 +77,7 @@ LC-JSON is licensed under the [Apache License, Version 2.0](https://www.apache.o
 
 ## Project status
 
-**Version `1.0-rc.3` — public release candidate** (2026-06-13). The wire format is stable and schema URLs at `lc-json.org/1.0-rc.3/` are immutable per `NORMATIVE.md` §8.3 — early adopters can build against `rc.3` with confidence. Each release candidate gets its own immutable URL path; the `/1.0/` URL is reserved for 1.0 final (targeted 2026-06-30). rc.3 supersedes two earlier candidates — internal `1.0-rc.1` and announced `1.0-rc.2` — whose `/1.0-rc.1/` and `/1.0-rc.2/` schema sets stay served and frozen. rc.3 adds the localization model and an expanded conformance corpus, and removes two prototype-era `sentenceTransformation` fields from the schema (the change requiring a new immutable path). It is backwards-compatible — every rc.2-valid document remains valid under rc.3 — and the move to `1.0` final is planned as a pure URL rebase with no content change. Feedback is welcome through **2026-06-27**; `1.0` final is planned for **2026-06-30** as that rebase, barring substantive feedback — the date announced with rc.2 on 2026-05-30 and unchanged since.
+**Version `1.0` — accepted final release** (2026-06-30). The wire format is stable and schema URLs at `lc-json.org/1.0/` are immutable per `NORMATIVE.md` §8.3. `1.0` is a pure URL rebase of `1.0-rc.3` with no wire/content delta: the rc.3 schema set is republished unchanged at the final path, with only `$id`/`$schema` URL strings and document version labels updated. Every `1.0-rc.3`-valid document is valid under `1.0` with no migration or re-export. The earlier release-candidate paths — `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` — stay served and frozen.
 
 LC-JSON's public history begins with the 1.0 release-candidate line — `1.0-rc.2` (2026-05-30) was its first publicly announced release. Internal iteration before the candidate line is not reflected in the version history.
 

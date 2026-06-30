@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0/ordering.schema.json",
+  "title": "Ordering Question Schema",
+  "description": "Arrange tiles into the correct order. items[i] is the correct tile at position i; distractors are extra tiles that should not be placed.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "ordering"
+        },
+        "sourceText": {
+          "type": "string",
+          "description": "The original sentence or passage shown for context (the correct ordering when items are joined).",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "description": "Tiles in their correct order. items[i] is the correct tile at position i.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2
+        },
+        "distractors": {
+          "type": "array",
+          "description": "Extra tiles that should not be placed (decoys). Optional.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "scoringMode": {
+          "type": "string",
+          "enum": ["strict", "kendall"],
+          "description": "Scoring policy hint. 'strict' = exact-order match (all-or-nothing); 'kendall' = partial credit via Kendall tau distance over the learner's permutation. If omitted, consumers SHOULD default to 'strict' for orderingUnit: 'word' (where pairwise inversions don't have pedagogical meaning — a sentence either reads correctly or it doesn't) and 'kendall' for orderingUnit: 'sentence' or 'paragraph' (where partial credit reflects partial understanding of the discourse structure). Consumers that don't support partial credit MAY collapse 'kendall' to 'strict'."
+        },
+        "orderingUnit": {
+          "type": "string",
+          "description": "Display granularity hint for each tile relative to the source text. 'word' typically renders as inline tokens (sentence unscrambling); 'sentence' and 'paragraph' typically render as stacked card blocks (process-narrative reordering, essay-paragraph reordering). Consumers MAY render uniformly regardless; the field is advisory, not normative.",
+          "enum": ["word", "sentence", "paragraph"],
+          "default": "word"
+        }
+      },
+      "required": ["sourceText", "items"]
+    }
+  ]
+}

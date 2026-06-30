@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.0-rc.3/course.schema.json",
+  "$schema": "https://lc-json.org/1.0/course.schema.json",
   "documentType": "course",
   "specVersion": "1.0",
   "title": "Invalid: two entities share a globalId",

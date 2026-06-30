@@ -4,6 +4,14 @@ All notable changes to the LC-JSON (Learning Content JSON) specification are doc
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to the versioning policy described in [`NORMATIVE.md`](NORMATIVE.md) §8.
 
+## [1.0] — 2026-06-30
+
+First final release. Pure URL rebase of `1.0-rc.3` with zero wire/content delta: the rc.3 schema set is republished unchanged at immutable `https://lc-json.org/1.0/*.schema.json`. Only the `$id`/`$schema` URL strings and document version labels change — no schema shape, field, or constraint changes. Every `1.0-rc.3`-valid document is valid under `1.0` with no migration or re-export. The `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` candidate schema sets stay served and frozen.
+
+### Changed
+- Schema `$id` and example/fixture `$schema` URLs rebased `/1.0-rc.3/` → `/1.0/` (23 schemas, examples, conformance corpus). No shape change.
+- Document version labels updated `1.0-rc.3` → `1.0`.
+
 ## [1.0-rc.3] — 2026-06-13
 
 Second publicly announced release candidate. Adds the localization model (`LOCALIZATION.md`) and a conformance-corpus expansion; removes two prototype-era `sentenceTransformation` fields from the schema (the change that requires a new immutable path — `/1.0-rc.2/` cannot be mutated). Backwards-compatible with `1.0-rc.2`: every rc.2-valid document remains valid under rc.3. Published at immutable `/1.0-rc.3/` URLs; `/1.0-rc.1/` and `/1.0-rc.2/` stay served and frozen.

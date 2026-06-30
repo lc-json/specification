@@ -1,7 +1,7 @@
 # LC-JSON Specification
 
-**Spec version:** 1.0 (release candidate: rc.3)
-**Last updated:** 2026-06-13
+**Spec version:** 1.0
+**Last updated:** 2026-06-30
 
 This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.
 
@@ -44,7 +44,7 @@ LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing e
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.0-rc.3/<artifact>.schema.json",
+  "$schema": "https://lc-json.org/1.0/<artifact>.schema.json",
   "documentType": "course",      // or "questionSet"
   "specVersion": "1.0",
   "title": "...",
@@ -472,7 +472,7 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 
 ## Version History
 
-### v1.0-rc.3 (target: 2026-06-13) — second public release candidate
+### v1.0-rc.3 (2026-06-13) — second public release candidate
 
 - Adds [`LOCALIZATION.md`](LOCALIZATION.md): the language model (`language` / `lang` / `supportLanguage`), the single-language-per-document boundary, BCP 47 tags, and screen-reader pronunciation expectations. Bound by new [`NORMATIVE.md`](NORMATIVE.md) §13.
 - Adds a positioning page ([`RATIONALE.md`](RATIONALE.md)) explaining where LC-JSON sits among adjacent standards.
@@ -494,11 +494,11 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 
 - Frozen and served at `https://lc-json.org/1.0-rc.1/*.schema.json` for transparency, but never publicly announced; rc.2 is the first announced prerelease. The only substantive difference is the backwards-compatible `prompt` `minLength` `1` → `0` correction above; the `/1.0-rc.1/` schema URLs remain immutable and any document valid under rc.1 is valid under rc.2.
 
-### v1.0 (planned: 2026-06-30) — accepted final release
+### v1.0 (2026-06-30) — accepted final release
 
 - Publishes the rc.3 schema set unchanged at immutable `https://lc-json.org/1.0/*.schema.json` — a pure URL rebase of rc.3 with **zero wire/content delta** (only the version pointer, the `$id`/`$schema` URL strings, and doc version labels change).
 - Further accessibility deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures) are **post-1.0, additive, and informative or opt-in** — they do not change the 1.0 base contract (see [`ACCESSIBILITY.md`](ACCESSIBILITY.md) §11).
-- Any non-breaking refinement that *does* warrant a wire change before final lands in a further immutable `/1.0-rc.N/` candidate first, not in 1.0 itself.
+- Any future non-breaking wire refinement lands in a new immutable minor-version path, not by mutating `1.0`.
 
 > *LC-JSON's public history begins with the 1.0 release-candidate line — `1.0-rc.2` (2026-05-30) was its first publicly announced release. Internal iteration before the candidate line is not reflected in the version history.*
 
@@ -519,4 +519,4 @@ See [`CONTRIBUTORS.md`](CONTRIBUTORS.md) for acknowledgments.
 
 ---
 
-**LC-JSON Specification v1.0-rc.3**
+**LC-JSON Specification v1.0**

@@ -1,7 +1,7 @@
 # LC-JSON Rationale and Positioning
 
 **Status:** Informative  
-**Spec version context:** LC-JSON 1.0-rc.3  
+**Spec version context:** LC-JSON 1.0  
 **Audience:** teachers, curriculum designers, institutional reviewers, educational software developers, and implementers evaluating LC-JSON for adoption.
 
 This document is **informative**, not normative. It explains the design rationale and positioning behind LC-JSON. Conformance requirements remain in [`NORMATIVE.md`](NORMATIVE.md).

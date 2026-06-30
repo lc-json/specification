@@ -1,8 +1,8 @@
 # LC-JSON Accessibility Profile
 
-**Status:** Released for `1.0-rc.3`, and the stable accessibility contract: the obligations stated here carry into `1.0` final (2026-06-30) unchanged — `1.0` is a pure rebase of rc.3. Further deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader timing guidance, `--accessibility` validator flag + fixtures) are **post-1.0, additive, and informative or opt-in** — none change the base-vs-Profile contract; see §11. Obligations stated here will not be retracted or contradicted.
-**Spec version:** 1.0 (release candidate: rc.3)
-**Last updated:** 2026-06-13
+**Status:** Released for `1.0`. This is the stable accessibility contract carried forward unchanged from `1.0-rc.3`; `1.0` is a pure rebase of rc.3. Further deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader timing guidance, `--accessibility` validator flag + fixtures) are **post-1.0, additive, and informative or opt-in** — none change the base-vs-Profile contract; see §11. Obligations stated here will not be retracted or contradicted.
+**Spec version:** 1.0
+**Last updated:** 2026-06-30
 
 This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are to be interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174). RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see [`README.md`](README-spec.md) §"Wire Format"). This two-layer split — wire-format affordances versus the duties of the consumer that ultimately delivers the content — is the organizing principle of this document.
 
@@ -80,7 +80,7 @@ Outside an Accessibility Profile claim, authoring `alt` is **not** a base-confor
 - For **informative** images (diagrams, screenshots, photographs that carry meaning), `alt` MUST be a meaningful textual description.
 - For **decorative** images (visual flourishes, spacers, redundant illustrations of adjacent text), `alt=""` (empty string) is RECOMMENDED. An empty `alt` is a positive signal to assistive technology that the image carries no content; it is not a missing attribute.
 
-Question types that carry image references in tool-specific extension fields (e.g. reserved-type `hotspot`, `graphicGapMatch`) SHOULD include an alt-text-equivalent property when those types are promoted to first-class schemas (1.0 final, see §11).
+Question types that carry image references in tool-specific extension fields (e.g. reserved-type `hotspot`, `graphicGapMatch`) SHOULD include an alt-text-equivalent property when those types are promoted to first-class schemas (see §11).
 
 ### 2.2 Consumer obligations
 
@@ -171,7 +171,7 @@ Native `<select>` is inherently keyboard-accessible, satisfies 2.5.3 by carrying
 
 Producers MAY include hint text guiding learners who use keyboard or assistive technology, as `hint` strings on the question or as adjacent `ContentItem.html` prose. The wire format does not currently carry interaction-specific accessibility hints; this is intentional (consumer-defined affordance), but producers SHOULD assume diverse interaction modalities when authoring.
 
-> *1.0 final will deepen this with: an `aria-grabbed`/`aria-dropeffect` deprecation note, modern `aria-activedescendant` patterns as an alternative to per-tile `tabindex`, focus-management requirements during placement, and screen-reader announcement timing requirements for partial-credit feedback.*
+> *A post-1.0 accessibility guidance update may deepen this with: an `aria-grabbed`/`aria-dropeffect` deprecation note, modern `aria-activedescendant` patterns as an alternative to per-tile `tabindex`, focus-management requirements during placement, and screen-reader announcement timing requirements for partial-credit feedback.*
 
 ---
 
@@ -248,7 +248,7 @@ A conforming placeholder SHOULD use:
 - A visible visual treatment that signals "informational, not interactive" (e.g. a warning or info alert styling).
 - No interactive children (`<input>`, `<button>`, `<select>`) — the placeholder is announced as a region, not a form control.
 
-> *1.0 final will deepen this with: example placeholder text in multiple languages and producer guidance for emitting accessibility metadata on tool-specific extensions to reserved types.*
+> *A post-1.0 accessibility guidance update may deepen this with: example placeholder text in multiple languages and producer guidance for emitting accessibility metadata on tool-specific extensions to reserved types.*
 
 ---
 
@@ -264,7 +264,7 @@ The reference validator surfaces accessibility issues at the following severitie
 | Missing `language` at document root | error (schema-enforced) | 3.1.1 | §6.1 |
 | Reserved-type question without a `title` | informational note (recommended for placeholder) | 1.3.1, 4.1.2 | §7 |
 
-> *1.0 final will deepen this with: an `--accessibility` validator flag (analogous to `--strict`) for tooling that wants to fail-build on warnings, additional severity entries for the reserved-type placeholder surface, and conformance fixtures exercising accessibility-related warnings/errors.*
+> *A post-1.0 accessibility tooling update may deepen this with: an `--accessibility` validator flag (analogous to `--strict`) for tooling that wants to fail-build on warnings, additional severity entries for the reserved-type placeholder surface, and conformance fixtures exercising accessibility-related warnings/errors.*
 
 ---
 
@@ -313,9 +313,9 @@ Criteria not listed (e.g. 1.3.2, 2.4.1, 3.2.2, 3.3.x) are properties of a delive
 
 ---
 
-## 11. From rc.3 to 1.0 final and beyond
+## 11. From 1.0 onward
 
-This document is the `1.0-rc.3` accessibility profile, and its obligations are the **stable accessibility contract**: the base-conformance preservation floor ([`NORMATIVE.md`](NORMATIVE.md) §12.1) and the opt-in Accessibility Profile authoring MUSTs (§12.2 — `alt`, captions, transcripts) are settled as of rc.3 and carry into `1.0` final unchanged. **`1.0` final is a pure rebase of rc.3** — it adds no new obligations and tightens nothing.
+This document is the `1.0` accessibility profile. Its obligations are the **stable accessibility contract**: the base-conformance preservation floor ([`NORMATIVE.md`](NORMATIVE.md) §12.1) and the opt-in Accessibility Profile authoring MUSTs (§12.2 — `alt`, captions, transcripts) were settled as of rc.3 and carry into `1.0` unchanged. **`1.0` is a pure rebase of rc.3** — it adds no new obligations and tightens nothing.
 
 The deepenings below are **post-1.0, additive, and either informative or opt-in**: none change the base-vs-Profile contract above, none gate `1.0`. They are listed so implementers can see the intended direction.
 
@@ -329,4 +329,4 @@ The deepenings below are **post-1.0, additive, and either informative or opt-in*
 
 > **Resolved in rc.3 (no longer pending):** the authoring obligations for `alt`, captions, and transcripts were settled as **Accessibility Profile** MUSTs (§12.2), deliberately *not* promoted into base `NORMATIVE.md` — base conformance stays preservation-only so a small or non-institutional producer is never blocked. The BCP 47 / ISO 639-1 language-tag reconciliation also shipped in rc.3 (see [`LOCALIZATION.md`](LOCALIZATION.md) §3).
 
-Implementers building against `1.0-rc.3` can rely on the obligations stated above; `1.0` final (2026-06-30) carries them unchanged.
+Implementers building against `1.0` can rely on the obligations stated above. Implementers already built against `1.0-rc.3` have the same accessibility obligations under `1.0`.

@@ -1,8 +1,8 @@
 # LC-JSON Localization and Language Model
 
-**Status:** New in `1.0-rc.3`. Clarification document for the `1.0` contract; codifies the language model that has been implicit since `1.0-rc.1`; introduces no breaking change. The `language` root field and `lang`/`dir` annotation behave exactly as they did in rc.1/rc.2 — this document states the model explicitly and sets expectations.
-**Spec version:** 1.0 (release candidate: rc.3)
-**Last updated:** 2026-06-13
+**Status:** Part of the `1.0` contract. First introduced in `1.0-rc.3`; codifies the language model that has been implicit since `1.0-rc.1`; introduces no breaking change. The `language` root field and `lang`/`dir` annotation behave exactly as they did in rc.1/rc.2 — this document states the model explicitly and sets expectations.
+**Spec version:** 1.0
+**Last updated:** 2026-06-30
 
 This document defines how LC-JSON represents natural language: what the `language` and `supportLanguage` fields mean, how `lang`/`dir` annotate individual spans, which language-tag forms are accepted, and — importantly for implementers — what the format can and cannot promise about pronunciation in assistive technology. The keywords **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT**, **MAY**, and **RECOMMENDED** are interpreted as in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174).
 
