@@ -62,12 +62,12 @@ jobs:
 
       # Copy schemas into the published output so they resolve at
       # lc-json.org/<version>/*.schema.json (the URL embedded in every
-      # conforming JSON file's $schema field). rc.3 is the current masterdoc;
-      # rc.1 and rc.2 stay served and frozen alongside it. The /1.0/ URL path is
-      # reserved for 1.0 final per NORMATIVE.md §8.3.
+      # conforming JSON file's $schema field). 1.0 is the current release;
+      # rc.1/rc.2/rc.3 stay served and frozen alongside it per NORMATIVE.md §8.3.
       - name: Copy schemas to book output
         run: |
-          mkdir -p book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
+          mkdir -p book/1.0 book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
+          cp -v schemas/1.0/*.schema.json book/1.0/
           cp -v schemas/1.0-rc.1/*.schema.json book/1.0-rc.1/
           cp -v schemas/1.0-rc.2/*.schema.json book/1.0-rc.2/
           cp -v schemas/1.0-rc.3/*.schema.json book/1.0-rc.3/
@@ -86,7 +86,7 @@ jobs:
       # Verify the schemas are reachable at the canonical paths.
       - name: Verify schema URL paths
         run: |
-          for v in 1.0-rc.1 1.0-rc.2 1.0-rc.3; do
+          for v in 1.0 1.0-rc.1 1.0-rc.2 1.0-rc.3; do
             test -f book/$v/course.schema.json || (echo "ERROR: course.schema.json missing from book/$v/" && exit 1)
             test -f book/$v/question-set.schema.json || (echo "ERROR: question-set.schema.json missing from book/$v/" && exit 1)
             schema_count=$(ls book/$v/*.schema.json | wc -l)
