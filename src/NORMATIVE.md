@@ -1,8 +1,8 @@
 # LC-JSON Specification — Normative Requirements
 
-**Spec version:** 1.0
-**Status:** Normative
-**Last updated:** 2026-05-24
+**Spec version:** 1.1
+**Status:** Normative (release candidate — published at /1.1-rc.1/)
+**Last updated:** 2026-07-22
 
 This document states the requirements that conforming LC-JSON (Learning Content JSON) tools MUST satisfy. It is the authoritative source of truth for compliance; descriptive material elsewhere in the specification illustrates how to meet these requirements but does not relax them.
 
@@ -10,14 +10,16 @@ This document states the requirements that conforming LC-JSON (Learning Content 
 
 ## 1. Scope
 
-This document specifies the requirements for tools that produce, consume, or validate LC-JSON 1.0 documents. It defines:
+This document specifies the requirements for tools that produce, consume, or validate LC-JSON 1.1 documents. It defines:
 
-- The canonical wire format for the two artifact types (Course, QuestionSet).
+- The canonical wire format for the five artifact types (Course, QuestionSet, Glossary, SubjectCollection, CurriculumPack).
 - Two conformance roles — *producer* and *consumer* — and what each MUST do.
 - Versioning rules and URL stability guarantees.
 - Conformance-claim language (how a tool may state it conforms).
 
 This document does not prescribe implementation strategies, programming languages, or runtime architecture. Any tool meeting the requirements below conforms, regardless of how it is built.
+
+LC-JSON 1.1 is a purely additive minor version over 1.0 (§8.2): every conforming 1.0 document is a conforming 1.1 document with unchanged meaning. The additions are the three new artifact types (§3.3) — two vocabulary/arrangement types and the glossary content type — the member-identity and self-containment rules that make them portable (§3.4, §4.9–§4.11, §5.7), and the optional course-root additions: three publication-metadata fields and the `glossaryRefs` attachment arrays (Appendix A).
 
 ---
 
@@ -51,20 +53,51 @@ Every conforming LC-JSON document MUST contain at the root, as siblings (not nes
 
 | Field | Required? | Type | Value |
 |---|---|---|---|
-| `documentType` | MUST | string | `"course"` or `"questionSet"`. The artifact discriminator. |
+| `documentType` | MUST | string | `"course"`, `"questionSet"`, `"glossary"`, `"subjectCollection"`, or `"curriculumPack"`. The artifact discriminator. |
 | `specVersion` | MUST | string | The LC-JSON contract version this document conforms to. Pattern enforced by the schemas; consumer/producer rules in §5.2 / §4.6. |
-| `$schema` | MUST (producer) / SHOULD-tolerate (consumer) | string | A URL identifying the schema for this document type at the spec version the producer conforms to (e.g., `https://lc-json.org/1.0-rc.3/<artifact>.schema.json` for an rc.3 producer; `https://lc-json.org/1.0/<artifact>.schema.json` for a 1.0-final producer). Consumers SHOULD accept documents that omit `$schema` (re-import scenarios from older or lenient producers), but MUST reject any other root-field omission. |
+| `$schema` | MUST (producer) / SHOULD-tolerate (consumer) | string | A URL identifying the schema for this document type at the spec version the producer conforms to (e.g., `https://lc-json.org/1.1-rc.1/<artifact>.schema.json` for a 1.1-rc.1 producer; `https://lc-json.org/1.0/<artifact>.schema.json` for a 1.0-final producer). Consumers SHOULD accept documents that omit `$schema` (re-import scenarios from older or lenient producers), but MUST reject any other root-field omission. |
 
 A document missing `documentType` or `specVersion` is non-conforming. A producer that emits a document missing `$schema` is non-conforming with respect to that document; a consumer that rejects an otherwise-valid document on the basis of a missing `$schema` is overly strict and SHOULD instead infer the schema from `documentType` + `specVersion`.
 
 ### 3.3 Artifact types
 
-Spec version 1.0 defines exactly two artifact types:
+Spec version 1.1 defines exactly five artifact types:
 
 - **Course** (`documentType: "course"`) — hierarchical learning content (Course → Units → Lessons → Items → Questions). Validated by `course.schema.json`.
 - **QuestionSet** (`documentType: "questionSet"`) — flat list of questions without a course/unit/lesson scaffold. Validated by `question-set.schema.json`.
+- **Glossary** (`documentType: "glossary"`) — a flat list of **terms** with immutable member ids: pronunciation, translations, examples, inflected forms. Content-adjacent learning material a student studies — not vocabulary *about* content (contrast SubjectCollection). Validated by `glossary.schema.json`. See [`glossary-reference.md`](glossary-reference.md).
+- **SubjectCollection** (`documentType: "subjectCollection"`) — a reusable classification **vocabulary**: tags and learning objectives for a structured `(subject, level, audience, purpose, jurisdiction)` scope. Validated by `subject-collection.schema.json`. See [`subject-collection-reference.md`](subject-collection-reference.md).
+- **CurriculumPack** (`documentType: "curriculumPack"`) — an **arrangement**: sequence, pacing, and checkpoints referencing a SubjectCollection plus content documents. Validated by `curriculum-pack.schema.json`. See [`curriculum-pack-reference.md`](curriculum-pack-reference.md).
+
+Course, QuestionSet, and Glossary are *content* documents; SubjectCollection is a *vocabulary* document; CurriculumPack is an *arrangement* document. The vocabulary/arrangement types never carry learner-facing content items or questions — they classify and organize content documents. A glossary carries learner-facing study material (its terms) but never items or questions.
 
 A producer MUST emit exactly one of these artifact types per document. Mixing artifact types within a single document is non-conforming.
+
+### 3.3.1 Conformance rules by artifact type (normative)
+
+A conforming document MUST satisfy the rules for its artifact type. For Course and QuestionSet those rules are stated in §4–§6, in §12 (accessibility preservation), and in the JSON Schemas. For the artifact types introduced in 1.1 the rules are, in addition to §3.4 (member identity), §4.9 (self-containment), §4.10 (alignment claims), and §4.11 (publication metadata):
+
+- **SubjectCollection** — the structural, member-identity, closure, and alignment-claim rules identified **SC-1 … SC-14**.
+- **CurriculumPack** — the step-shape, pacing, checkpoint, taught-before-used, term-capacity, dependency-direction, bill-of-materials, coverage, and bundle-closure rules identified **CP-1 … CP-17**.
+- **Glossary** — the structural, gloss, and declared-translation-inventory rules identified **GL-1 … GL-11**.
+- **Course (1.1 deepenings)** — the specVersion↔`$schema` agreement rule **RD-1**, and the objective-pool and glossary-attachment rules identified **CO-1 … CO-5**.
+
+**These rule families are normative requirements of this specification.** [`VALIDATION.md`](VALIDATION.md) §15–§19 enumerates each rule, cites its source, and tags its enforcement tier (*schema-enforced*, *domain-validator-enforced*, or *advisory*); each rule's severity (ERROR / WARN / NOTE) is as tagged there. The three reference documents — [`subject-collection-reference.md`](subject-collection-reference.md), [`curriculum-pack-reference.md`](curriculum-pack-reference.md), and [`glossary-reference.md`](glossary-reference.md) — are **informative**: they explain and illustrate these rules but do not add to or relax them. Where a reference document differs from this document, the JSON Schemas, or the VALIDATION.md catalog, this document and the schemas govern.
+
+### 3.4 Member identity (vocabulary and glossary documents)
+
+A SubjectCollection's entries — `tags[]` and `objectives[]` — and a Glossary's `entries[]` are the owning document's **members**. Members are identified by portable, stable ids, and those ids are the unit of interoperability across documents, tools, and time:
+
+- Every member MUST carry an `id` that is **immutable for the life of the member**. Renaming a tag, re-wording an objective, re-parenting a tag, or moving a member between display categories are content revisions of the owning document (a new document `version`), never id changes.
+- **Display text is never identity.** `slug`, `name`, and `label` are mutable presentation and lookup fields; no conforming tool may key member identity on them.
+- For **SubjectCollection members** (tags and objectives), a member `id` encountered in another document **identifies the same member**. Two documents that both carry tag id `X` are both referring to one shared concept — this is what makes classification comparable across independently-authored content (see §5.7 for the consumer obligations this creates). **Glossary entry identity is narrower — see the glossary bullet below.**
+- A document's `globalId` is likewise portable and immutable: consumers MUST preserve it verbatim on import and MUST NOT re-mint it.
+
+The membership model is deliberately asymmetric between the two member kinds:
+
+- A **tag** may be a member of any number of SubjectCollections. A document listing a tag asserts *membership*, not exclusive ownership.
+- An **objective** has exactly one owning document (its wording is scope-specific). Other documents may *reference* and *carry copies of* an objective (§4.9), but only the owner revises its wording.
+- A **glossary entry** is single-owner, like an objective, and its identity is **document-scoped**: the identifying key is the pair `(glossary globalId, entry id)`, and entry ids are required to be unique only within their owning glossary. An entry id encountered in a *different* glossary is a different entry — the cross-document same-id-same-member rule above applies to collection members only. Entries are not carried into other documents in 1.1 — a course references a whole glossary (`glossaryRefs`), never individual entries — so entry ids exist for re-import reconciliation (§5.7): the same entry id in a later version of *the same glossary* (same `globalId`) is the same entry, updated in place, never duplicated or re-minted.
 
 ---
 
@@ -82,7 +115,7 @@ A producer MUST emit the `type` discriminator on questions in canonical camelCas
 
 A producer MUST emit the `type` discriminator on items in canonical lowercase form: `"content"`, `"exercise"`, `"quiz"`, `"contentsequence"`, `"signpost"`.
 
-A producer MUST emit `documentType` in canonical lowercase camelCase form: `"course"` or `"questionSet"`.
+A producer MUST emit `documentType` in canonical camelCase form: `"course"`, `"questionSet"`, `"glossary"`, `"subjectCollection"`, or `"curriculumPack"`.
 
 ### 4.3 Item-type semantics
 
@@ -98,9 +131,23 @@ A producer MUST emit `globalId` values as RFC 4122 UUIDs (any version) where the
 
 Within a single document, `globalId` values MUST be unique across all entities (Units, Lessons, Items, and Questions share one namespace). A document in which two entities carry the same `globalId` does not conform: a consumer keyed on `globalId` cannot tell the entities apart, so re-import matching breaks and updates can land on the wrong record. `globalId` comparison is case-insensitive (the hexadecimal digits of a UUID carry no case significance).
 
-A producer SHOULD emit a `sourceCourseId` at the course root for any course that may be re-imported or version-tracked. `sourceCourseId` is the stable course-identity field — the same `sourceCourseId` across versions of a course identifies them as the same logical course, enabling consumers to detect re-imports and apply update semantics rather than treating each upload as a fresh course. `sourceCourseId` is generated by the source authoring system; it does not identify a human author.
+A producer SHOULD emit a `sourceCourseId` at the course root for any course that may be re-imported or version-tracked. `sourceCourseId` is the stable course-identity field — the same `sourceCourseId` across versions of a course identifies them as the same logical course, enabling consumers to detect re-imports and apply update semantics rather than treating each upload as a fresh course. `sourceCourseId` is generated by the source authoring system; it does not identify a human author. A QuestionSet carries the analogous `sourceQuestionSetId` at its root, with the same source-side semantics.
 
-> **Forward-direction note (informative, not normative for 1.0):** Future versions of LC-JSON may introduce a complementary `coursePlatformId` field for platform-assigned course identifiers, enabling round-trip flows where a teacher exports from a platform and re-imports to an authoring tool with the platform's identity preserved. Implementations should not rely on this field's absence in 1.0 documents being permanent.
+Vocabulary- and glossary-document identifiers follow §3.4: a producer MUST emit an `id` on every SubjectCollection member and every Glossary entry, and MUST NOT re-mint an id when regenerating or revising a document (the member persists; the document's `version` changes). Member ids are opaque strings; RFC 4122 UUIDs are RECOMMENDED. Document identity for both types is the root `globalId` (an opaque string chosen by the original publisher; stable, human-readable slugs and UUIDs are both conventional) together with `version`.
+
+**Document identity by artifact type.** The **portable document identity** — the value another document uses when it references this one — depends on the document's `documentType`:
+
+| `documentType` | Portable document identity |
+|---|---|
+| `course` | `sourceCourseId` |
+| `questionSet` | `sourceQuestionSetId` |
+| `subjectCollection` | `globalId` |
+| `glossary` | `globalId` |
+| `curriculumPack` | `globalId` |
+
+Course and QuestionSet identity is source-side (`sourceCourseId` / `sourceQuestionSetId`); the three 1.1 artifact types carry a publisher-chosen root `globalId`. A Curriculum Pack references content by the value above for the referenced document's `type`, carried in the reference's `id` field (§3 of [`curriculum-pack-reference.md`](curriculum-pack-reference.md); step-level binding in §4.3). Because a producer only SHOULD emit `sourceCourseId` / `sourceQuestionSetId`, **a Curriculum Pack producer MUST NOT emit a `contentRef` to a Course or QuestionSet that does not carry the identifier its `type` resolves against** — like the §4.9 closure rules, this is a producer-emission requirement: a conforming validator reports a pack that references an id-less course as an error, but a Course is never obliged to carry `sourceCourseId` merely to exist standalone. SubjectCollection and Glossary always carry a root `globalId`, so a reference to one always resolves. The identity-by-type table above defines how each artifact type is identified **when it is referenced**; it does not itself make every type a `contentRef` target. A Curriculum Pack's `contentRefs` bind **content documents only** — Course, QuestionSet, or Glossary — and a pack **MUST NOT** reference another Curriculum Pack: an arrangement is not embeddable content, and 1.1 does not define pack-in-pack nesting (SubjectCollections are referenced through `collectionRefs`, not `contentRefs`). The `contentRefs[].type` vocabulary is **closed for producers**: a producer MUST emit one of `course`, `questionSet`, or `glossary`, and MUST NOT emit `curriculumPack` or any other value. Like the alignment-claim vocabulary (§4.10, §5.5), it binds producers only and is deliberately left schema-open (§5.8): a consumer that meets a `contentRefs[].type` it does not recognize MUST NOT reject the document — it treats the reference as unresolvable and preserves it across read/write cycles. Consumers MUST NOT conflate a source-side id with a platform-assigned identifier (see the forward-direction note below): a `contentRef` resolves against source-side identity, never against a platform id.
+
+> **Forward-direction note (informative, not normative for 1.0):** Future versions of LC-JSON may introduce a complementary `coursePlatformId` field for platform-assigned course identifiers, enabling round-trip flows where a teacher exports from a platform and re-imports to an authoring tool with the platform's identity preserved. Implementations should not rely on this field's absence in 1.0 documents being permanent. A platform-assigned identifier is deployment-scoped and is **not** the identity a Curriculum Pack `contentRef` resolves against (which is always the source-side `sourceCourseId` / `sourceQuestionSetId`), so introducing it does not change pack reference resolution.
 
 ### 4.5 Property naming
 
@@ -108,13 +155,13 @@ A producer MUST emit all property names in camelCase. PascalCase, snake_case, an
 
 ### 4.6 Spec version
 
-A producer MUST emit `specVersion` matching the spec version it implements. For producers conforming to this document, `specVersion` MUST begin with `"1."` (e.g., `"1.0"`, `"1.0.1"`).
+A producer MUST emit `specVersion` matching the spec version it implements. For producers conforming to this document, `specVersion` MUST begin with `"1."` (e.g., `"1.0"`, `"1.1"`, `"1.1.1"`).
 
-`specVersion` carries the contract version regardless of which publication the producer targets. The specific publication — release candidate or final release — is identified by the `$schema` URL (§4.7). A producer conforming to 1.0-rc.3 emits `specVersion: "1.0"` together with `$schema: "https://lc-json.org/1.0-rc.3/course.schema.json"`; a producer conforming to 1.0 final emits the same `specVersion` value together with `$schema: "https://lc-json.org/1.0/course.schema.json"`. `specVersion` does not include release-candidate suffixes — `"1.0-rc.3"` is not a conforming `specVersion` value.
+`specVersion` carries the contract version regardless of which publication the producer targets. The specific publication — release candidate or final release — is identified by the `$schema` URL (§4.7). A producer conforming to 1.1-rc.1 emits `specVersion: "1.1"` together with `$schema: "https://lc-json.org/1.1-rc.1/course.schema.json"`; a producer conforming to a later 1.1 final release emits the same `specVersion` value together with that release's `$schema` URL (the `/1.1/` path, which is reserved and is not populated until the 1.1 final release ships — see §8.3). `specVersion` does not include release-candidate suffixes — `"1.1-rc.1"` is not a conforming `specVersion` value.
 
 ### 4.7 Schema URL
 
-A producer MUST emit a `$schema` URL pointing at the canonical published schema for its `documentType` **at the spec version the producer conforms to**. For example: a producer conforming to LC-JSON 1.0-rc.3 emits `https://lc-json.org/1.0-rc.3/course.schema.json` for courses and `https://lc-json.org/1.0-rc.3/question-set.schema.json` for question sets; a producer conforming to 1.0 final emits `https://lc-json.org/1.0/course.schema.json`. A producer that emits a non-canonical URL or omits the field is non-conforming.
+A producer MUST emit a `$schema` URL pointing at the canonical published schema for its `documentType` **at the spec version the producer conforms to**. For example: a producer conforming to LC-JSON 1.1-rc.1 emits `https://lc-json.org/1.1-rc.1/course.schema.json` for courses and `https://lc-json.org/1.1-rc.1/subject-collection.schema.json` for subject collections; a producer conforming to 1.0 final emits `https://lc-json.org/1.0/course.schema.json`. A producer that emits a non-canonical URL or omits the field is non-conforming.
 
 The strict producer / lenient consumer split (§3.2 above) is deliberate: emitting `$schema` makes documents self-describing for IDEs, schema dispatch, and ad-hoc validation; tolerating its absence on import preserves portability across older or otherwise-non-conforming producers without hard-failing re-imports.
 
@@ -122,19 +169,53 @@ The strict producer / lenient consumer split (§3.2 above) is deliberate: emitti
 
 A producer SHOULD validate every emitted document against the published JSON Schemas before delivery. A producer that emits an invalid document is non-conforming with respect to that document.
 
+### 4.9 Self-containment of vocabulary references (closure and carried copies)
+
+**SubjectCollection closure.** A conforming SubjectCollection document is self-contained:
+
+- `categories[]` MUST include every category referenced by any `tags[].categoryId`. Categories are shared display buckets, not identity; consumers merge them by category id.
+- Every `objectives[].tagIds` entry MUST resolve to a member of the document's own `tags[]`.
+- Every `tags[].parentId` MUST be the member id of another tag in the document (parents are member ids, never slugs).
+- The `parentId` relation MUST be **acyclic**: no tag may be its own parent, and no sequence of `parentId` links may return to a tag already visited along that sequence. Because each tag has at most one parent, an acyclic relation is a forest — every tag reaches a root in finitely many steps. A document containing a `parentId` cycle of any length is non-conforming, and a consumer walking the hierarchy is entitled to assume termination.
+
+A producer MUST NOT emit a SubjectCollection whose members link outside the document. A document that violates closure is non-conforming.
+
+**Carried copies in content documents.** A course document may assign objectives that originate in a SubjectCollection (its `courseObjectiveIds` / `objectiveIds` arrays reference them). A producer emitting such a course MUST embed a copy of every referenced objective in the course's `objectives[]` pool — **with the member id preserved verbatim** — so the document remains self-contained. Such an embedded copy is a *carried copy*: it travels for portability and does not transfer ownership or revise the member's wording (§5.7 governs what a consumer does with it). A course document **declaring `specVersion` 1.1 or later** whose objective-id references do not all resolve within its own `objectives[]` pool is non-conforming. Documents declaring `specVersion` 1.0 retain their 1.0 meaning unchanged: unresolved objective references were an advisory (warning-tier) condition in 1.0 and remain so for 1.0 documents — this rule tightens only what 1.1 producers emit, which is what keeps 1.1 additive under §8.2.
+
+The same pattern applies at document scale for glossaries: a producer emitting a course whose `glossaryRefs` reference glossaries it holds SHOULD embed a carried copy of each referenced glossary document — whole, with `globalId` and entry member ids preserved verbatim — in the course's root `glossaries[]` pool, so a single course file is self-contained. The obligation is SHOULD, not MUST: a glossary ref that resolves to no carried copy is legal (a *dangling ref* — consumers surface it and never fail the import; see §4.9 and [`glossary-reference.md`](glossary-reference.md) §4), because the course's learner-facing content is complete without its glossary panel, which is not true of assigned objectives.
+
+### 4.10 Alignment claims
+
+A SubjectCollection may assert typed alignments to external frameworks and registries via `externalAlignments[]`. Each entry carries `{claim, scheme, id, label}`:
+
+- `claim` MUST be one of the 1.1 claim types: `"references"`, `"alignedTo"`, or `"covers"`. The values `"assesses"` and `"verifiedBy"` are **reserved** for a future version; a 1.1 producer MUST NOT emit them. This vocabulary binds **producers only** and is deliberately not closed in the schema: a consumer never rejects a document over a claim value it does not recognize (§5.5) — the schema leaves `claim` open precisely so the §5.1 schema-validation obligation and the §5.5 preservation obligation cannot collide.
+- `scheme` and `id` MUST both be present and non-empty: `scheme` names the external namespace (e.g., a standards body, a national curriculum register, an official catalog), and `id` is the identifier **within that namespace**. `label` is optional display text.
+
+External registries are referenced, never re-implemented: an alignment entry points at an external identifier; it does not embed or restate the external framework's content. A consumer MUST NOT reject a document for carrying an alignment whose `scheme` it does not recognize, and MUST preserve alignment entries across read/write cycles; interpretation of any given scheme is consumer-defined.
+
+### 4.11 Publication metadata
+
+The distributable artifact types — Course, SubjectCollection, CurriculumPack, and Glossary — carry publication metadata as optional top-level fields: `license`, `canonicalUrl`, and `derivedFrom[]` (alongside the type's existing `authors`/`version` fields). QuestionSet is excluded by role: it is a lightweight referencable resource, not a distribution-governed one. A glossary shares QuestionSet's *structural* lightness (flat root, referencable) but is distribution-governed: glossaries are shareable, remixable artifacts, which is precisely what the publication fields exist for.
+
+- A producer SHOULD populate `license` on any document intended for distribution beyond its authoring environment. The value `"unspecified"` is appropriate only for private drafts.
+- `derivedFrom[]` entries (`{globalId, version}`) record provenance: the document(s) this one was revised or remixed from. A producer creating a new document by modifying an existing one SHOULD record the source there.
+- A producer MUST NOT encode commerce data (price, entitlement, buyer identity) in publication metadata or anywhere else in an LC-JSON document.
+
 ---
 
 ## 5. Consumer Conformance
 
 A *consumer* is any tool that ingests LC-JSON documents from an external source.
 
-**Consumer conformance requires more than schema validation.** Schema validation (§5.1) is necessary but not sufficient: a conformant consumer ALSO satisfies the discriminator-handling rule (§5.3), the unknown-fields rule (§5.4), the reserved-enum-values rule (§5.5), the randomization requirements (§5.6), and — where reserved or unknown question types appear — the round-trip preservation obligations in §6. A generic JSON Schema validator alone does not implement these; consumers MUST implement the relevant §5.x and §6 obligations to claim conformance (see §10.3). See the worked example at the end of this section.
+**Consumer conformance requires more than schema validation.** Schema validation (§5.1) is necessary but not sufficient: a conformant consumer ALSO satisfies the discriminator-handling rule (§5.3), the unknown-fields rule (§5.4), the reserved-enum-values rule (§5.5), the randomization requirements (§5.6), the member-identity rules where vocabulary members appear (§5.7), and — where reserved or unknown question types appear — the round-trip preservation obligations in §6. A generic JSON Schema validator alone does not implement these; consumers MUST implement the relevant §5.x and §6 obligations to claim conformance (see §10.3). See the worked example at the end of this section.
 
 ### 5.1 Strict validation
 
 A consumer MUST validate incoming documents against the published JSON Schemas for the declared `documentType` and reject documents that fail schema validation.
 
 **Exception (§6 fallback for unknown types).** Schema-validation failures whose only cause is one or more `type` discriminator values not present in the consumer's implemented `question-base.schema.json` enum do not trigger §5.1 rejection. The consumer applies the §6 fallback to those questions (preserve verbatim, treat earned points as `0`, render placeholder, report to user) and validates the rest of the document under §5.1. All other schema-validation failures — missing required fields, type mismatches, pattern violations on known fields, `additionalProperties` violations on closed objects, etc. — still trigger rejection. This carve-out is what makes §5.2's "accept any 1.x `specVersion`" rule operable: a 1.0-only consumer reading a 1.x+ document with a future-minor question type satisfies both §5.1 and §6 by following this path.
+
+**Unimplemented artifact types.** A consumer is not required to implement every artifact type. A consumer that does not implement a document's declared `documentType` MUST reject that document cleanly, naming the unsupported type — it MUST NOT attempt a partial or coerced interpretation. Conformance claims are scoped per artifact type (§10.1).
 
 ### 5.2 Spec version handling
 
@@ -156,6 +237,8 @@ A consumer MUST NOT reject a document solely because it contains additional fiel
 
 A consumer MUST accept question types listed in `question-base.schema.json`'s `enum` even when no per-type schema is published for them. Full handling obligations — including round-trip preservation, learner-facing placeholder rendering, and grading semantics — are normative under §6 (Reserved and unknown types).
 
+The same forward-compatible posture applies to alignment-claim values (§4.10): a consumer encountering an `externalAlignments[].claim` value outside the 1.1 set MUST NOT reject the document, MUST NOT interpret the claim, and MUST preserve the entry verbatim across read/write cycles.
+
 ### 5.6 Randomization requirements for matching and placement
 
 For `matching` and `placement` questions, two surfaces a consumer presents to a learner have no author-defined order:
@@ -170,6 +253,33 @@ These requirements do not apply to:
 - `multipleChoice` and other single-question choice lists, where authors may deliberately position the correct option and the question schema's own `shuffleOptions` field governs shuffle policy per question.
 - The order of pair rows in `matching` pairs mode, where each item has its own distinct match value and source row order does not directly expose the answer.
 - The order of items in `ordering` source-tile pools, where the question's structural design requires the tile pool to be presented in non-source order regardless.
+
+### 5.7 Member-identity handling
+
+When a consumer that maintains a persistent store of vocabulary members ingests a document carrying members (a SubjectCollection, or a course with carried copies per §4.9), the member ids govern reconciliation:
+
+- **An incoming member id the consumer already holds identifies the same member.** The consumer MUST NOT create a duplicate member for it.
+- **Tags — record membership.** When a SubjectCollection lists a tag the consumer already holds, the consumer records the tag's membership in that collection. It MUST NOT duplicate the tag, and MUST NOT transfer or revoke the tag's other memberships.
+- **Objectives — link, never overwrite.** When a document carries an objective the consumer already holds, the consumer links to its existing member. It MUST NOT modify the existing member's wording, difficulty, or tag links from the incoming copy **unless the incoming document is the member's owning document** (a revision of the owning SubjectCollection, or a re-import of the course that owns the objective). Carried copies (§4.9) are read-only with respect to the member they duplicate.
+- **Ownership is determinable only as far as the wire permits — 1.1 carries no owner/provenance marker.** An objective listed in a SubjectCollection's `objectives[]` is owned by that collection (§3.4: collections own their objectives), and a consumer MAY treat that as an authoritative ownership claim. A course's `objectives[]` pool is deliberately ambiguous — it holds the course's own objectives and carried copies without distinction, and nothing on the wire says which — so **a consumer cannot determine from a course document alone whether that course owns a given objective id or merely carries a copy of one owned elsewhere.** Because of that, a consumer MUST NOT overwrite one document's wording for an objective id with another's on the basis of an inferred course ownership (**link-never-overwrite**): it reconciles by id, keeps the ingested wordings, and SHOULD surface a divergence between two sources for the same id rather than silently picking one, offering a **fork** (a new member id) as the keep-mine path. When a SubjectCollection listing an id is ingested, the collection's wording MAY be treated as authoritative for that id from then on; absent any collection claim, an id seen only in course pools has no determinable owner and is treated as shared-by-reference. Two SubjectCollections both listing the same objective id is a document-set conflict the consumer SHOULD surface — the model gives objectives exactly one owner. A per-copy provenance marker on carried copies, which would let a consumer resolve course-level ownership deterministically, is reserved for a future minor version (alongside the reserved course→collection reference); until it exists, the obligations above are the whole of what a 1.1 consumer is required to do.
+- **Absent members are created verbatim.** A member id the consumer does not hold is created from the incoming copy with its id preserved — never re-minted — so that a later document carrying the same id reconciles to it.
+- **Glossary entries reconcile like objectives.** When a consumer re-ingests a glossary it already holds (same document `globalId`), entry ids govern the update: an entry id already held is the same entry (update in place, never duplicate); an absent id is created verbatim; ids are never re-minted. A glossary entry's `firstMention` naming a lesson the consumer does not hold is treated as absent; a consumer that regenerates lesson `globalId`s on import MUST remap `firstMention` on glossaries imported alongside.
+- **Identity-less members are rejected; closure is a producer-validity rule.** The §4.9 closure rules and §3.4 identity rule are **producer-emission requirements**: a producer MUST NOT emit a violating SubjectCollection, and such a document is non-conforming (a conforming validator reports it as an error). On the **consumer** side the two rules differ in strictness, mirroring the strict-producer / lenient-consumer split of §3.2 and §5.1:
+  - A consumer MUST reject a SubjectCollection whose members lack ids — identity is non-optional (§3.4) and there is nothing to reconcile against.
+  - A consumer SHOULD reject a SubjectCollection that violates the §4.9 closure rules, reporting the specific violations; a lenient consumer MAY instead ingest it with the violations surfaced (for example, treating an unresolved `categoryId` as an uncategorized tag). Closure is what a *producer* must guarantee; a consumer is not obliged to fail an otherwise-usable document over it.
+- **Display collisions never override identity.** If an incoming member's `slug` (or other display/lookup field) collides with a *different* member the consumer already holds, the consumer resolves the collision on the display field (e.g., by qualifying the incoming slug) — it MUST NOT merge the two members or reassign the id.
+
+A consumer with no persistent member store (e.g., a single-document validator or converter) satisfies §5.7 vacuously, but MUST still preserve member ids verbatim across any read/write cycle.
+
+### 5.8 Consumer validation order (informative)
+
+The §5.x obligations compose into one algorithm; implementers who follow it satisfy the strict-validation and forward-compatibility rules simultaneously:
+
+1. Parse the JSON. A parse failure is fatal.
+2. Dispatch the schema from `documentType` + the `$schema` URL (inferring from `documentType` + `specVersion` when `$schema` is absent, per §3.2). An unimplemented `documentType` is rejected cleanly, naming the type (§5.1).
+3. Validate against the schema. A failure whose **only** cause is one or more unknown question-`type` discriminators routes those questions to the §6 fallback and the rest of the document continues (§5.1, Exception). **Every other schema failure is import-fatal.** Note what does *not* fail schema validation by design: unknown fields on open objects (§5.4 — LC-JSON objects are open unless §7.1 names them closed), and vocabulary values the spec deliberately leaves schema-open because their vocabularies bind producers only (alignment `claim`, pack `contentRefs[].type`).
+4. Apply the domain rules cataloged in `VALIDATION.md` at their stated tiers — ERROR-tier domain failures reject; WARN/NOTE-tier are surfaced, never fatal.
+5. Ignore-or-preserve unknown fields (§5.4) and extension members (§7.4); reconcile members (§5.7); apply the §6 obligations to any fallback questions.
 
 ### Forward compatibility: three look-alike situations (informative)
 
@@ -232,6 +342,8 @@ To make a reserved-type question maximally compatible with future first-class im
 
 This subsection is informative — producers that do not follow it still produce valid LC-JSON. But the future first-class schemas are likelier to land cleanly if 1.0 producers stay within the spirit.
 
+> **Note (1.1):** this version promotes no reserved question types to first-class schemas; the 1.0 reserved-type list is unchanged in 1.1.
+
 ---
 
 ## 7. Extensions
@@ -242,7 +354,7 @@ LC-JSON is deliberately small. Tools frequently need to attach data that is mean
 
 An *extension member* is an object member whose key begins with the prefix `x-` followed by a vendor or tool namespace, for example `x-acme-reviewState` or `x-acme.lineage`.
 
-Extension members MAY appear on the document root and on any Course, Unit, Lesson, Item, or Question object. They MUST NOT be added to objects whose schema declares `additionalProperties: false` (in 1.0, the `matching` pair/category entries and `placement` entries), because those objects are closed by contract and would fail validation.
+Extension members MAY appear on the document root and on any Course, Unit, Lesson, Item, or Question object, and — in vocabulary, arrangement, and glossary documents — on any category, tag, objective, alignment, reference, or glossary entry. They MUST NOT be added to objects whose schema declares `additionalProperties: false` (in 1.0, the `matching` pair/category entries and `placement` entries), because those objects are closed by contract and would fail validation.
 
 The `x-` prefix is reserved exclusively for extensions. A producer MUST NOT introduce a non-extension field whose name begins with `x-`.
 
@@ -305,6 +417,8 @@ Examples of additive changes:
 - Removing a property from an object's `required` list (the field becomes optional).
 - Adding an entirely new artifact type with its own `documentType` value.
 
+LC-JSON 1.1 is additive by this definition: its changes are three new artifact types, new optional properties on the course document (publication metadata at the root; `glossaryRefs` at course/unit/lesson), and new enum values. Every conforming 1.0 document validates unchanged under the 1.1 schemas with unchanged meaning.
+
 ### 8.3 URL stability
 
 Schemas published at any published version path — released versions and release candidates alike — MUST remain available at that URL with byte-identical content (modulo whitespace) for the lifetime of the specification. Specifically:
@@ -321,22 +435,22 @@ This guarantee enables conforming documents to embed `$schema` URLs that remain 
 
 A document is validated against the schemas at the URL given in its `$schema` field — that URL is the document's **canonical schema location** and the binding target for conformance. The `specVersion` field declares the spec version the document targets; the `$schema` URL identifies the specific schema publication (release or release candidate) it was authored against. Both MUST be present (§3.2) and MUST agree on the targeted version (§4.6, §4.7): a document declaring `specVersion: "1.0"` MUST point `$schema` at either `/1.0/` (the final release, once published) or a `/1.0-rc.N/` candidate path; a document declaring `specVersion: "1.1"` MUST point `$schema` at `/1.1/` or a `/1.1-rc.N/` candidate path.
 
-**Reminder (§4.6):** `specVersion` never carries an `-rc.N` suffix. Every document targeting the 1.0 contract — whether authored against an rc.N candidate or 1.0 final — declares `specVersion: "1.0"`. The specific publication is identified by `$schema`. For example, a document authored during the rc.3 phase looks like:
+**Reminder (§4.6):** `specVersion` never carries an `-rc.N` suffix. Every document targeting the 1.1 contract — whether authored against an rc.N candidate or 1.1 final — declares `specVersion: "1.1"`. The specific publication is identified by `$schema`. For example, a document authored during the 1.1-rc.1 phase looks like:
 
 ```json
 {
-  "$schema":     "https://lc-json.org/1.0-rc.3/course.schema.json",
-  "documentType": "course",
-  "specVersion":  "1.0",
+  "$schema":     "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+  "documentType": "subjectCollection",
+  "specVersion":  "1.1",
   ...
 }
 ```
 
 It follows that:
 
-- A document declaring `specVersion: "1.0"` with `$schema` pointing at `/1.0/` MUST validate against the schemas published at `/1.0/`. This is the post-1.0-final scenario; `/1.0/` is reserved until 1.0 ships (§8.3).
-- A document declaring `specVersion: "1.0"` with `$schema` pointing at `/1.0-rc.N/` MUST validate against the schemas published at `/1.0-rc.N/` and is not required to validate against `/1.0/`. This is the current rc-cycle case. The rc.N → final transition is an explicit publisher choice (see §8.1, §8.3) — a re-export against the new `$schema` URL — not an automatic upgrade.
-- A document declaring `specVersion: "1.1"` SHOULD validate against the schemas at its declared `$schema` URL and SHOULD also validate against `/1.0/` schemas for fields that are unchanged between minor versions.
+- A document declaring `specVersion: "1.0"` with `$schema` pointing at `/1.0/` MUST validate against the schemas published at `/1.0/`. The 1.0 final release has shipped; `/1.0/` is populated and frozen (§8.3).
+- A document declaring `specVersion: "1.0"` with `$schema` pointing at `/1.0-rc.N/` MUST validate against the schemas published at `/1.0-rc.N/` and is not required to validate against `/1.0/`. The rc.N → final transition is an explicit publisher choice (see §8.1, §8.3) — a re-export against the new `$schema` URL — not an automatic upgrade.
+- A document declaring `specVersion: "1.1"` MUST validate against the schemas at its declared `$schema` URL. Backward compatibility runs the other way and is defined by consumer obligation, not by cross-schema validation: a 1.1 consumer MUST continue to accept any valid 1.0 document (1.1 adds artifact types and optional fields; it removes nothing a 1.0 document relies on). "Validate a 1.1 document against 1.0 schemas" is not defined — the 1.1 artifact types have no 1.0 schema, and additive fields would fail a strict 1.0 schema.
 
 ---
 
@@ -356,29 +470,31 @@ A producer MUST NOT emit deprecated fields in new documents. A producer that re-
 
 A consumer MUST continue to accept deprecated fields for the lifetime of the major version that introduced the deprecation. Removal is permitted only at the next major version bump.
 
-### 9.4 Currently deprecated items (1.0)
+### 9.4 Currently deprecated items
 
-No items are deprecated in 1.0. The specification ships clean.
+No items are deprecated in 1.0 or 1.1. The specification ships clean.
 
 ---
 
 ## 10. Conformance Claims
 
-### 10.1 Base LC-JSON 1.0 conformance
+### 10.1 Base LC-JSON conformance
 
-A tool MAY claim conformance to LC-JSON 1.0 as follows:
+A tool MAY claim conformance to LC-JSON 1.1 as follows:
 
-- **"Conforms to LC-JSON 1.0 as a producer"** — the tool emits documents satisfying §4.
-- **"Conforms to LC-JSON 1.0 as a consumer"** — the tool ingests documents satisfying §5, §6, §7, and the accessibility-preservation obligations of §12.1.
-- **"Conforms to LC-JSON 1.0"** without qualification — the tool implements both producer and consumer conformance.
+- **"Conforms to LC-JSON 1.1 as a producer"** — the tool emits documents satisfying §4.
+- **"Conforms to LC-JSON 1.1 as a consumer"** — the tool ingests documents satisfying §5, §6, §7, and the accessibility-preservation obligations of §12.1.
+- **"Conforms to LC-JSON 1.1"** without qualification — the tool implements both producer and consumer conformance.
 
-### 10.2 LC-JSON 1.0 Accessibility Profile conformance (opt-in)
+Conformance is scoped to the artifact types the tool implements. A tool that implements only Course and QuestionSet MAY claim LC-JSON 1.1 conformance **for those artifact types** — provided it satisfies every applicable requirement, including §5.1's clean rejection of documentTypes it does not implement and §5.2's acceptance of 1.x `specVersion` values on the types it does. A claim SHOULD name its artifact-type scope when it is narrower than the full set (e.g., *"Conforms to LC-JSON 1.1 as a consumer (course, questionSet)"*). A claim without a scope qualifier asserts all five artifact types.
+
+### 10.2 LC-JSON Accessibility Profile conformance (opt-in)
 
 A tool that additionally satisfies the obligations in [`ACCESSIBILITY.md`](ACCESSIBILITY.md) MAY claim:
 
-- **"Conforms to the LC-JSON 1.0 Accessibility Profile as a producer"** — the tool emits documents satisfying §4 plus the producer-side obligations in `ACCESSIBILITY.md` §§2–7.
-- **"Conforms to the LC-JSON 1.0 Accessibility Profile as a consumer"** — the tool ingests and renders documents satisfying §5/§6/§7/§12.1 plus the consumer-side MUST-level obligations in `ACCESSIBILITY.md` §§2–8.
-- **"Conforms to the LC-JSON 1.0 Accessibility Profile"** without qualification — both producer and consumer.
+- **"Conforms to the LC-JSON 1.1 Accessibility Profile as a producer"** — the tool emits documents satisfying §4 plus the producer-side obligations in `ACCESSIBILITY.md` §§2–7.
+- **"Conforms to the LC-JSON 1.1 Accessibility Profile as a consumer"** — the tool ingests and renders documents satisfying §5/§6/§7/§12.1 plus the consumer-side MUST-level obligations in `ACCESSIBILITY.md` §§2–8.
+- **"Conforms to the LC-JSON 1.1 Accessibility Profile"** without qualification — both producer and consumer.
 
 A consumer claiming the Accessibility Profile MUST satisfy all MUST-level items in `ACCESSIBILITY.md` §§2–8 for its role; partial satisfaction is misclaim. See §12 for the profile's binding text.
 
@@ -396,21 +512,21 @@ Three rules guard against the predictable misclaims:
 
 Implementers may use the following short forms for marketing pages, badges, READMEs, and footers. They are advisory — formal claims live in §10.1 and §10.2.
 
-**Tier 1 — Base LC-JSON 1.0 conformance**
+**Tier 1 — Base LC-JSON 1.1 conformance**
 
 | Form | Wording |
 |---|---|
-| Badge | **LC-JSON 1.0 Compatible** |
-| Sentence | *"Reads and writes LC-JSON 1.0 — the open Learning Content JSON specification at lc-json.org."* |
-| Formal | *"Conforms to LC-JSON 1.0 as a producer / consumer / producer and consumer."* |
+| Badge | **LC-JSON 1.1 Compatible** |
+| Sentence | *"Reads and writes LC-JSON 1.1 — the open Learning Content JSON specification at lc-json.org."* |
+| Formal | *"Conforms to LC-JSON 1.1 as a producer / consumer / producer and consumer."* |
 
-**Tier 2 — LC-JSON 1.0 Accessibility Profile**
+**Tier 2 — LC-JSON 1.1 Accessibility Profile**
 
 | Form | Wording |
 |---|---|
-| Badge | **LC-JSON 1.0 Accessibility Profile** |
-| Sentence | *"Delivers LC-JSON 1.0 content with accessible rendering — keyboard navigation, screen-reader support, captions, language-aware text direction. Conforms to the LC-JSON 1.0 Accessibility Profile."* |
-| Formal | *"Conforms to the LC-JSON 1.0 Accessibility Profile as a producer / consumer / producer and consumer."* |
+| Badge | **LC-JSON 1.1 Accessibility Profile** |
+| Sentence | *"Delivers LC-JSON 1.1 content with accessible rendering — keyboard navigation, screen-reader support, captions, language-aware text direction. Conforms to the LC-JSON 1.1 Accessibility Profile."* |
+| Formal | *"Conforms to the LC-JSON 1.1 Accessibility Profile as a producer / consumer / producer and consumer."* |
 
 Role qualifiers (`(producer)` / `(consumer)`) SHOULD accompany the badge or sentence when the implementation supports only one role, so readers do not infer capabilities the tool does not provide.
 
@@ -424,13 +540,13 @@ Trademark rights in "LC-JSON" and "Learning Content JSON" are not asserted again
 
 ## 11. HTML Safety Profile
 
-LC-JSON 1.0 permits HTML in two fields: `ContentItem.html` and `SignpostItem.customHtml`. The complete normative HTML safety profile — allowed elements, allowed attributes, URL-scheme allowlist, sanitization obligation, link normalization, media handling, and unknown-element handling — is specified in [`HTML_SAFETY.md`](HTML_SAFETY.md).
+LC-JSON permits HTML in two fields: `ContentItem.html` and `SignpostItem.customHtml`. The complete normative HTML safety profile — allowed elements, allowed attributes, URL-scheme allowlist, sanitization obligation, link normalization, media handling, and unknown-element handling — is specified in [`HTML_SAFETY.md`](HTML_SAFETY.md). SubjectCollection, CurriculumPack, and Glossary documents carry no HTML-bearing fields; their text fields (`name`, `description`, objective `text`, glossary `definition`, translation values, …) are plain text, and a consumer SHOULD render them as such.
 
 A producer that emits HTML in any HTML-bearing field MUST emit only constructs permitted by `HTML_SAFETY.md` §2 (elements), §3 (attributes), and §4 (URL schemes).
 
 A consumer that renders HTML from any HTML-bearing field MUST sanitize the HTML against `HTML_SAFETY.md` §5 before rendering, MUST normalize `<a target="_blank">` to include `rel="noopener noreferrer"` per §6.1, and MUST strip-while-preserving-text any unknown element per §6.2. A consumer MUST reject any document containing forbidden constructs listed under §8.1 (`<script>`, event handlers, `javascript:`/`vbscript:` URLs, etc.).
 
-`HTML_SAFETY.md` is normative and forms part of LC-JSON 1.0. The split into a separate document reflects its length, not its status.
+`HTML_SAFETY.md` is normative and forms part of LC-JSON 1.1. The split into a separate document reflects its length, not its status.
 
 ---
 
@@ -451,7 +567,7 @@ A conforming consumer that re-emits a document MUST NOT degrade its accessibilit
 - Reserved-type questions MUST round-trip with any accessibility metadata they carry, per §6.4.
 - Extension-preserving consumers (§7.4) SHOULD round-trip `x-`-namespaced extension members that carry accessibility data.
 
-These obligations are part of base LC-JSON conformance; a consumer claiming "Conforms to LC-JSON 1.0 as a consumer" satisfies them. The HTML safety profile (§11 / [`HTML_SAFETY.md`](HTML_SAFETY.md)) explicitly allows `alt`, `<track>`, `lang`, and `dir` on every applicable element class to make this preservation possible.
+These obligations are part of base LC-JSON conformance; a consumer claiming "Conforms to LC-JSON 1.1 as a consumer" satisfies them. The HTML safety profile (§11 / [`HTML_SAFETY.md`](HTML_SAFETY.md)) explicitly allows `alt`, `<track>`, `lang`, and `dir` on every applicable element class to make this preservation possible.
 
 Base conformance is **preservation only**: it never requires a producer to *author* accessibility content (alt text, captions, transcripts). A small or non-institutional producer is therefore never non-conforming for omitting them — the reference validator surfaces omissions as non-blocking warnings. The obligation to *author* accessibility content is part of the opt-in Accessibility Profile (§12.2). The two-layer split is intentional: accessibility information is never silently stripped or ignored on read/write (base), while the heavier "the content must actually be accessible" bar is opt-in for the products — typically institutional, or those with legal or marketing accessibility commitments — that need it.
 
@@ -469,7 +585,7 @@ WCAG governs rendered user experiences; LC-JSON governs portability and metadata
 
 A tool MUST NOT claim WCAG 2.1 AA conformance by virtue of LC-JSON Accessibility Profile conformance alone. LC-JSON does not certify WCAG conformance.
 
-`ACCESSIBILITY.md` is normative for tools claiming the Accessibility Profile and forms part of LC-JSON 1.0 in that capacity. The split into a separate document reflects the opt-in scope, not a lesser status.
+`ACCESSIBILITY.md` is normative for tools claiming the Accessibility Profile and forms part of LC-JSON 1.1 in that capacity. The split into a separate document reflects the opt-in scope, not a lesser status.
 
 ---
 
@@ -486,13 +602,36 @@ Binding requirements (restated here; full detail in `LOCALIZATION.md`):
 
 `LOCALIZATION.md` is normative for the obligations it states and informative for the pronunciation-expectations discussion. Where it and this document disagree, this document wins.
 
+The root-`language` producer MUST above (and the §12.1 round-trip obligations on `language`/`supportLanguage`) bind **per document type, for the types that define those fields**: Course, QuestionSet, and Glossary. SubjectCollection and CurriculumPack documents do not carry a root `language` field in 1.1 — omitting it there is not a conformance failure: a vocabulary's member wording is authored in one language as a matter of practice, but the classification it expresses is language-neutral, and the structured `scope` (subject/level/audience/purpose/jurisdiction) is the discovery surface. A future version may add an optional `language` field to the vocabulary types if implementer experience shows the need; producers wanting to record wording language today may use an extension member (§7).
+
+Glossary documents are single-language like courses: the required root `language` names the language of terms, definitions, and examples. Per-entry translation maps (`translations`, `definitionTranslations`, example translations) are **content** — data about the term — not field-level document localization, so they do not breach the single-language rule; the optional root `translationLanguages` array declares their exact language inventory as a checkable claim. Glossaries carry **no** `supportLanguage`: the which-translation-to-display preference belongs to the delivery context (the attached course's `supportLanguage`, or the consumer's knowledge of the user's L1), not to the portable artifact. See [`glossary-reference.md`](glossary-reference.md) §1.
+
 ---
 
 ## 14. Validation surface
 
-The requirements in this document are enforced across three sites: the 23 JSON Schemas under [`schemas/`](schemas/), the reference validator [`tools/validate_course.py`](../tools/validate_course.py), and the per-document prose in the companion normative documents ([`HTML_SAFETY.md`](HTML_SAFETY.md), [`ACCESSIBILITY.md`](ACCESSIBILITY.md), [`LOCALIZATION.md`](LOCALIZATION.md)). [`VALIDATION.md`](VALIDATION.md) catalogs every documented rule and tags it with its enforcement tier — *schema-enforced*, *domain-validator-enforced*, or *advisory* — and identifies the forward-looking deepenings scheduled for `1.0` final. Implementers building consumers, validators, or producer round-trip tests should consult `VALIDATION.md` for the one-map view of what to check.
+The requirements in this document are enforced across three sites: the 27 JSON Schemas under [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas) in the published tree (23 from 1.0, plus `subject-collection.schema.json`, `curriculum-pack.schema.json`, `glossary.schema.json`, and the shared `publication-fields.schema.json`), the reference validators (the course validator, the vocabulary-document validator covering the §4.9 closure rules and §3.4 identity rules, the Curriculum Pack validator covering the CP-1 … CP-17 step, pacing, checkpoint, coverage, and bundle-closure rules, and the glossary validator covering the gloss rule and translation-inventory rules), and the per-document prose in the companion normative documents ([`HTML_SAFETY.md`](HTML_SAFETY.md), [`ACCESSIBILITY.md`](ACCESSIBILITY.md), [`LOCALIZATION.md`](LOCALIZATION.md)). [`VALIDATION.md`](VALIDATION.md) catalogs every documented rule and tags it with its enforcement tier — *schema-enforced*, *domain-validator-enforced*, or *advisory*. Implementers building consumers, validators, or producer round-trip tests should consult `VALIDATION.md` for the one-map view of what to check.
 
-`VALIDATION.md` is informative and additive — it introduces no requirements beyond those already stated in this document, in the schemas, or in the companion normative documents. Where it and any of those sources disagree, those sources win.
+`VALIDATION.md` is a catalog: it enumerates and tiers the rules whose normative force comes from this document (including the §3.3.1 artifact-type rule families it incorporates), from the schemas, and from the companion normative documents. It introduces no requirements of its own beyond those sources. Where its wording and any of those sources disagree, those sources win.
+
+The four reference validators named above are **non-authoritative reference implementations**. Only this document (including the rule families it incorporates at §3.3.1), the companion normative documents, and the JSON Schemas' constraints are authoritative. A validator's behavior — in any mode, including `--strict` — never defines the conformance contract: where a validator diverges from these sources, the validator is defective and the sources govern.
+
+The three artifact-type reference documents (`subject-collection-reference.md`, `curriculum-pack-reference.md`, `glossary-reference.md`) are **informative** — they explain and illustrate the rules incorporated by §3.3.1 but are not themselves authoritative (§3.3.1).
+
+Schema `description` strings sometimes restate normative requirements (including RFC 2119 keywords) for implementer convenience at the point of use. Those restatements are not independently binding: this document and the JSON Schemas are authoritative, and where a schema description's wording diverges from this document, this document wins; where the schema's *constraints* apply, they bind as stated in §5.1. The schema's *constraints* (types, patterns, `required`, enums) are binding as stated in §5.1.
+
+---
+
+## 14a. Security and privacy considerations (informative)
+
+LC-JSON documents are content, and 1.1 widens what they can carry: external URLs (`canonicalUrl`, `officialSourceURI`-style alignment ids, glossary `audioUrl`/`imageUrl`), whole embedded documents (pack bundles, the course `glossaries[]` pool), globally portable identifiers, and preserved unknown fields. Implementers should hold four postures:
+
+- **URLs are references, never instructions.** A consumer SHOULD NOT dereference document-carried URLs automatically without a policy the deploying institution controls (allowlists, user gesture, or no fetching at all). `canonicalUrl` and alignment ids are provenance to *display*, not endpoints to call; media URLs are resolved subject to the consumer's own content policy. Nothing in LC-JSON conformance requires network access.
+- **Embedded documents are untrusted input.** A bundle's `embedded` block and a course's `glossaries[]` pool are imports like any other: validate each embedded document under its own rules before use, and apply the full `HTML_SAFETY.md` sanitization to any HTML-bearing field regardless of how the document arrived.
+- **Portable artifacts carry no person data.** LC-JSON documents describe learning content, never learners: no learner identities, progress, grades, or contact data belong in any field of a portable artifact (grading *policy* fields like `passMarkPercent` are content; grade *records* are not). §4.11 already excludes commerce data; the same posture applies to personal data. `authors` is public display credit a contributor chose to assert.
+- **Extensions inherit the same duty.** `x-` members are preserved verbatim across tools and jurisdictions (§7.4); a producer SHOULD NOT place personal data or secrets in extension members, precisely because faithful consumers will carry them everywhere the document goes.
+
+This section is informative: it creates no new conformance requirements, but implementers claiming conformance should expect deployers to ask these questions.
 
 ---
 
@@ -509,6 +648,24 @@ The requirements in this document are enforced across three sites: the 23 JSON S
 - LC-JSON localization and language model: [`LOCALIZATION.md`](LOCALIZATION.md)
 - LC-JSON validation surface (informative): [`VALIDATION.md`](VALIDATION.md)
 - LC-JSON glossary (informative): [`GLOSSARY.md`](GLOSSARY.md)
-- LC-JSON schemas: [`schemas/`](schemas/)
-- LC-JSON examples: [`examples/`](examples/)
+- LC-JSON schemas: [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas)
+- LC-JSON examples: [`examples/`](https://github.com/lc-json/specification/tree/main/examples)
 - LC-JSON conformance test corpus: [`tests/`](tests/)
+- LC-JSON glossary reference: [`glossary-reference.md`](glossary-reference.md)
+- LC-JSON subject-collection reference: [`subject-collection-reference.md`](subject-collection-reference.md)
+- LC-JSON curriculum-pack reference: [`curriculum-pack-reference.md`](curriculum-pack-reference.md)
+
+---
+
+## Appendix A — Changes from 1.0 (informative)
+
+LC-JSON 1.1 is additive per §8.2. The complete change list:
+
+1. **Three new artifact types.** `subjectCollection` (vocabulary: tags + learning objectives with structured scope), `curriculumPack` (arrangement: sequence/pacing/checkpoints referencing a collection plus content), and `glossary` (content: a flat term list with pronunciation, translations, examples). New schemas `subject-collection.schema.json`, `curriculum-pack.schema.json`, and `glossary.schema.json`; `documentType` gains the three values (§3.2, §3.3, §4.2).
+2. **Member identity and membership.** New §3.4 (immutable member ids; display is never identity; the same **collection-member** id in another document is the same member, while glossary entry identity is document-scoped as `(glossary globalId, entry id)`; tags many-membership, objectives and glossary entries single-owner), §4.9 (collection closure + carried copies in course documents), and §5.7 (consumer reconciliation: no duplication, membership recording for tags, link-never-overwrite for objectives, ownership resolution from ingested claims, entry reconciliation on glossary re-import, verbatim creation of absent members, identity-less rejection, display-collision handling).
+3. **Alignment claims.** New §4.10: `externalAlignments[]` with claim types `references` / `alignedTo` / `covers`; `assesses` and `verifiedBy` reserved; forward-compatible consumer handling in §5.5.
+4. **Publication metadata.** New §4.11: optional `license`, `canonicalUrl`, and `derivedFrom[]` on the distributable types (Course, SubjectCollection, CurriculumPack, Glossary), added to the course root as plain optional top-level fields (composition via the shared [`publication-fields.schema.json`](https://lc-json.org/1.1-rc.1/publication-fields.schema.json)). QuestionSet excluded by role. Commerce data stays out of LC-JSON.
+5. **Glossary attachment.** Optional `glossaryRefs` arrays on the course root, units, and lessons — plain glossary `globalId` strings whose *placement* encodes scope (nearest attachment wins; junctions stop at Lesson) — plus an optional root `glossaries[]` pool carrying a whole-document copy of each referenced glossary, identity verbatim, for single-file self-containment (§4.9). A ref that resolves to no pool copy and no held document is legal and consumer-surfaced, never an import failure (see [`glossary-reference.md`](glossary-reference.md) §4 and [`course.schema.json`](https://lc-json.org/1.1-rc.1/course.schema.json)).
+6. **Unimplemented-artifact-type handling.** §5.1 addition: clean rejection naming the unsupported type; §10.1 addition: conformance claims scoped per artifact type.
+7. **Extension surface.** §7.1 extended to the vocabulary/arrangement/glossary objects.
+8. **No other changes.** Question types (implemented and reserved), item types, HTML safety, the Accessibility Profile, and the localization model are unchanged from 1.0. Course/QuestionSet `tags` remain free wire strings — the opaque member ids of collections do not replace them; an optional member-id reference alongside the string arrays is reserved for future coordination.

@@ -7,7 +7,7 @@ name: Build and deploy spec site
 #
 # Pages serves https://lc-json.org from the gh-pages branch.
 # Schemas resolve at https://lc-json.org/<version>/<file>.schema.json
-# (/1.0-rc.3/ is the current publication; /1.0-rc.1/ and /1.0-rc.2/ stay served and frozen; /1.0/ once 1.0 final ships).
+# (/1.1-rc.1/ is the current publication; /1.0/ and /1.0-rc.1..3/ stay served and frozen; /1.1/ once 1.1 final ships).
 
 on:
   push:
@@ -26,7 +26,7 @@ concurrency:
 jobs:
   conformance:
     # Runs the LC-JSON conformance corpus on every push and PR. The site
-    # build job depends on this so a corpus regression blocks deployment.
+    # build job depends on this, so a corpus failure blocks deployment.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,7 +41,35 @@ jobs:
         run: pip install -r tools/requirements.txt
 
       - name: Run conformance corpus (strict)
-        run: python tools/run_corpus.py
+        # The validators use a three-state exit contract: 0 = conforming,
+        # 1 = a real conformance failure, 3 = validation unavailable /
+        # indeterminate (a dependency or schema set is missing, so nothing was
+        # actually checked). Both non-zero codes fail this job — an unverified
+        # corpus must never deploy — but they are DIFFERENT problems and get
+        # different messages. Reporting a missing dependency as "a corpus
+        # regression" sends whoever is on the other end hunting for a spec bug
+        # that does not exist.
+        run: |
+          set +e
+          python tools/run_corpus.py
+          rc=$?
+          set -e
+          if [ "$rc" -eq 0 ]; then
+            exit 0
+          elif [ "$rc" -eq 3 ]; then
+            echo "::error title=Conformance corpus could not run::The corpus exited 3 \
+          (validation unavailable). Nothing was checked, so this is NOT a corpus \
+          regression — the spec may be perfectly fine. Something in the environment is \
+          missing: most likely the 'jsonschema' dependency failed to install, or a \
+          publication's schema set is absent from the tree. Fix the environment and \
+          re-run."
+            exit 1
+          else
+            echo "::error title=Conformance corpus failed::The corpus exited $rc — one or \
+          more fixtures did not behave as tests/manifest.json declares. This IS a \
+          conformance regression; see the per-fixture output above."
+            exit "$rc"
+          fi
 
   build-and-deploy:
     needs: conformance
@@ -62,15 +90,28 @@ jobs:
 
       # Copy schemas into the published output so they resolve at
       # lc-json.org/<version>/*.schema.json (the URL embedded in every
-      # conforming JSON file's $schema field). 1.0 is the current release;
-      # rc.1/rc.2/rc.3 stay served and frozen alongside it per NORMATIVE.md §8.3.
+      # conforming JSON file's $schema field). 1.1-rc.1 is the current
+      # publication; 1.0 and its rc.1/rc.2/rc.3 snapshots stay served and frozen
+      # alongside it per NORMATIVE.md §8.3.
       - name: Copy schemas to book output
         run: |
-          mkdir -p book/1.0 book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
+          mkdir -p book/1.1-rc.1 book/1.0 book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
+          cp -v schemas/1.1-rc.1/*.schema.json book/1.1-rc.1/
           cp -v schemas/1.0/*.schema.json book/1.0/
           cp -v schemas/1.0-rc.1/*.schema.json book/1.0-rc.1/
           cp -v schemas/1.0-rc.2/*.schema.json book/1.0-rc.2/
           cp -v schemas/1.0-rc.3/*.schema.json book/1.0-rc.3/
+          # No `book/schemas/` alias. Spec chapters used to link to a relative
+          # `schemas/<name>.schema.json`, and this alias was added so those links
+          # resolved on the flattened site. It only ever half-worked: the same links
+          # still resolved to a nonexistent `src/schemas/*` when read on GitHub. Worse,
+          # the alias was a MUTABLE URL sitting next to a specification whose central
+          # schema promise is immutable versioned URLs (NORMATIVE.md §8.3), so a reader
+          # could cite `/schemas/foo` and get a different publication after the next
+          # release. Schema links are now rewritten to their absolute versioned URL at
+          # publication time by `copy_spec_doc()` in scripts/deploy/publish-spec.sh,
+          # which fixes site and GitHub navigation together and keeps every published
+          # link immutable. Do not reintroduce this alias.
 
       # Copy examples, tests, and tools so they're browseable at
       # lc-json.org/<path>/. Documents in src/ link to these.
@@ -86,12 +127,17 @@ jobs:
       # Verify the schemas are reachable at the canonical paths.
       - name: Verify schema URL paths
         run: |
-          for v in 1.0 1.0-rc.1 1.0-rc.2 1.0-rc.3; do
+          # "<version>:<expected schema count>" — the count is per-publication:
+          # the 1.0 series ships 23; 1.1 adds glossary, subject-collection,
+          # curriculum-pack, and publication-fields for 27.
+          for entry in 1.1-rc.1:27 1.0:23 1.0-rc.1:23 1.0-rc.2:23 1.0-rc.3:23; do
+            v="${entry%:*}"
+            expected="${entry#*:}"
             test -f book/$v/course.schema.json || (echo "ERROR: course.schema.json missing from book/$v/" && exit 1)
             test -f book/$v/question-set.schema.json || (echo "ERROR: question-set.schema.json missing from book/$v/" && exit 1)
             schema_count=$(ls book/$v/*.schema.json | wc -l)
             echo "Schemas at /$v/: $schema_count files"
-            test "$schema_count" -eq 23 || (echo "ERROR: expected exactly 23 schemas at /$v/, got $schema_count" && exit 1)
+            test "$schema_count" -eq "$expected" || (echo "ERROR: expected exactly $expected schemas at /$v/, got $schema_count" && exit 1)
           done
 
       - name: Deploy to gh-pages

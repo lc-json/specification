@@ -1,7 +1,7 @@
 {
-  "$schema": "https://lc-json.org/1.0/question-set.schema.json",
+  "$schema": "https://lc-json.org/1.1-rc.1/question-set.schema.json",
   "documentType": "questionSet",
-  "specVersion": "1.0",
+  "specVersion": "1.1",
   "title": "Placement — sectionLabel-mode conformance fixture",
   "language": "en",
   "questions": [

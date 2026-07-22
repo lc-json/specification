@@ -1,12 +1,16 @@
 # LC-JSON Validation Surface
 
-**Status:** Informative reference. The authoritative rules live in [`NORMATIVE.md`](NORMATIVE.md), the JSON Schemas under [`schemas/`](schemas/), and the reference validator [`tools/validate_course.py`](../tools/validate_course.py). This document catalogs them in one place.
-**Spec version:** 1.0
-**Last updated:** 2026-05-24
+**Status:** Informative reference. The authoritative rules live in [`NORMATIVE.md`](NORMATIVE.md) — including the artifact-type rule families it incorporates at §3.3.1 — in the companion normative documents ([`HTML_SAFETY.md`](HTML_SAFETY.md), [`ACCESSIBILITY.md`](ACCESSIBILITY.md), [`LOCALIZATION.md`](LOCALIZATION.md)), and in the constraints of the JSON Schemas under [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas). This document catalogs them in one place.
 
-This document maps every documented validation rule in LC-JSON (Learning Content JSON) 1.0 to the place where it is enforced. The audience is implementers building consumers, validators, or producer round-trip tests — the same audience as [`NORMATIVE.md`](NORMATIVE.md).
+The four reference validators — [`tools/validate_course.py`](../tools/validate_course.py), [`tools/lc_collection.py`](../tools/lc_collection.py), [`tools/lc_pack.py`](../tools/lc_pack.py), and [`tools/lc_glossary.py`](../tools/lc_glossary.py) — are **non-authoritative reference implementations**. They implement the contract; they do not define it. Where a validator's behavior and a normative source disagree, the normative source wins and the validator is a defect to be fixed.
+**Spec version:** 1.1
+**Last updated:** 2026-07-22
 
-The catalog is **additive and descriptive**: it introduces no new normative rules. The inventory pass that built this catalog (2026-05-24) surfaced eight documented-but-unenforced rules; all eight were closed in the same rc.1-polish session by extending [`tools/validate_course.py`](../tools/validate_course.py) (no schema changes). See [§14 Forward-looking deepenings](#14-forward-looking-deepenings-10-final) for what's still scheduled for `1.0` final.
+This document maps every documented validation rule in LC-JSON (Learning Content JSON) 1.1 to the place where it is enforced. The audience is implementers building consumers, validators, or producer round-trip tests — the same audience as [`NORMATIVE.md`](NORMATIVE.md).
+
+The catalog is **additive and descriptive**: it introduces no new normative rules. The inventory pass that built this catalog (2026-05-24) surfaced eight documented-but-unenforced rules; all eight were closed in the same rc.1-polish session by extending [`tools/validate_course.py`](../tools/validate_course.py) (no schema changes). See [§14 Forward-looking deepenings](#14-forward-looking-deepenings-10-final) for the deepenings cataloged during the 1.0 cycle (1.0 has since shipped; the still-open items carry forward).
+
+**Rules for the 1.1 artifact types are cataloged in [§15](#15-subject-collection-sc) (Subject Collection, `SC-*`), [§16](#16-curriculum-pack-cp) (Curriculum Pack, `CP-*`), and [§17](#17-glossary-gl) (Glossary, `GL-*`); [§18](#18-11-deepenings-root-and-course-rd-co) catalogs the 1.1 deepenings to the root document (`RD-*`) and to courses (`CO-*`).** These four rule families are **normative requirements** — [`NORMATIVE.md`](NORMATIVE.md) §3.3.1 incorporates SC-\*, CP-\*, GL-\*, RD-1, and CO-\* as conformance rules for their artifact types; the sections below enumerate each rule, cite its source, and tag its enforcement tier. (This catalog adds nothing to those rules; it is the one-map view of them.) The rule ids are load-bearing — the reference validators cite them — so they cannot silently drift. §15–§18 follow §14 rather than sitting beside §3–§11 to keep the 1.0 section numbers (and their anchors) stable.
 
 ---
 
@@ -14,7 +18,7 @@ The catalog is **additive and descriptive**: it introduces no new normative rule
 
 LC-JSON's validation surface is split across four enforcement sites:
 
-- **23 JSON Schemas** in [`schemas/`](schemas/) — declarative constraints (Draft 7) enforced by any conforming JSON Schema validator.
+- **27 JSON Schemas** in [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas) — declarative constraints (Draft 7) enforced by any conforming JSON Schema validator.
 - **[`NORMATIVE.md`](NORMATIVE.md)** — RFC 2119 prose obligations that may or may not be representable in JSON Schema.
 - **[`tools/validate_course.py`](../tools/validate_course.py)** (the reference validator) — domain checks that run after schema validation, plus consumer-friendly diagnostics.
 - **Companion normative documents and informative references** — [`HTML_SAFETY.md`](HTML_SAFETY.md) (normative) and [`ACCESSIBILITY.md`](ACCESSIBILITY.md) (normative for tools claiming the Accessibility Profile; preservation obligations bind every consumer per [`NORMATIVE.md`](NORMATIVE.md) §12.1); per-type prose in [`question-types-reference.md`](question-types-reference.md) and authoring patterns in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) (both informative).
@@ -27,7 +31,7 @@ The rule tables below tag each rule with one tier:
 
 | Tier | Meaning | Citation format |
 |---|---|---|
-| **Schema-enforced** | Expressed in one of the JSON Schemas under [`schemas/`](schemas/). Any Draft-7 validator catches violations. | `schemas/<file>.schema.json: <json-pointer>` |
+| **Schema-enforced** | Expressed in one of the JSON Schemas under [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas). Any Draft-7 validator catches violations. | `schemas/<file>.schema.json: <json-pointer>` |
 | **Domain-validator-enforced** | Not (or not cleanly) expressible in JSON Schema; the reference validator [`tools/validate_course.py`](../tools/validate_course.py) checks it. Conforming consumers MUST replicate these checks to round-trip and grade correctly. | `validate_course.py: <function-name>` + NORMATIVE § where cited |
 | **Advisory** | Described in prose ([`NORMATIVE.md`](NORMATIVE.md), [`README.md`](README-spec.md), [`question-types-reference.md`](question-types-reference.md), [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md)) but not mechanically enforced anywhere. SHOULD/MAY rules, naming conventions, behaviors the spec hints at but lets consumers vary. Listed so implementers know what they are choosing. | Document and section |
 
@@ -47,7 +51,7 @@ Where a single rule is enforced at multiple tiers (e.g. schema + validator doubl
 
 The reference validator [`tools/validate_course.py`](../tools/validate_course.py) accepts a `--strict` flag. The default (lenient) mode emits a warning and falls through with reduced enforcement when it encounters two pre-1.0 document shapes: the wrapped envelope `{"course": {...}}` and the bare payload `{"units": [...]}` with no `documentType`. Neither shape is part of the published 1.0 contract; the lenient handling is a **maintainer-side migration aid** that allows pre-1.0 document shapes to be ingested during the upgrade — it is not a published affordance third-party producers may rely on.
 
-Under `--strict`, both shapes are fatal errors. The conformance corpus harness [`tools/run_corpus.py`](../tools/run_corpus.py) always invokes the validator with `--strict` (every fixture is run through the validator); CI runs the harness on every PR; and per [`NORMATIVE.md`](NORMATIVE.md) §10.3 conformance claims under §10 are evaluated in `--strict` mode. **The published conformance contract is the `--strict` behavior** — third-party consumers and producers should treat the lenient path as a maintainer-side migration aid only.
+Under `--strict`, both shapes are fatal errors. The conformance corpus harness [`tools/run_corpus.py`](../tools/run_corpus.py) always invokes the validator with `--strict` (every fixture is run through the validator); CI runs the harness on every PR; and per [`NORMATIVE.md`](NORMATIVE.md) §10.3 conformance claims under §10 are evaluated in `--strict` mode. Third-party consumers and producers should treat the lenient path as a maintainer-side migration aid only. `--strict` is the mode in which the reference validator attempts to implement the published contract in full; the contract itself is stated in [`NORMATIVE.md`](NORMATIVE.md), the companion normative documents, and the schema constraints — not by the validator's behavior.
 
 Rows in the tables below that depend on this distinction explicitly say "ERROR under `--strict`; WARN otherwise"; everywhere else, the rule applies uniformly.
 
@@ -57,10 +61,13 @@ Rows in the tables below that depend on this distinction explicitly say "ERROR u
 
 | What | Where |
 |---|---|
-| JSON Schemas | [`schemas/*.schema.json`](schemas/) — 23 files |
-| Reference validator | [`tools/validate_course.py`](../tools/validate_course.py) |
+| JSON Schemas | [`schemas/*.schema.json`](https://github.com/lc-json/specification/tree/main/schemas) — 27 files |
+| Reference validator (course, questionSet) | [`tools/validate_course.py`](../tools/validate_course.py) |
 | Conformance language (RFC 2119 MUSTs/SHOULDs/MAYs) | [`NORMATIVE.md`](NORMATIVE.md) |
 | Per-type property reference | [`question-types-reference.md`](question-types-reference.md) |
+| Subject Collection property reference | [`subject-collection-reference.md`](subject-collection-reference.md) |
+| Curriculum Pack property reference | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) |
+| Glossary property reference | [`glossary-reference.md`](glossary-reference.md) |
 | HTML safety profile (elements, attributes, URL schemes, sanitization) | [`HTML_SAFETY.md`](HTML_SAFETY.md) |
 | Accessibility profile (preservation + opt-in delivery claim) | [`ACCESSIBILITY.md`](ACCESSIBILITY.md) |
 | Item authoring patterns (consumer-policy plurality) | [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) |
@@ -537,11 +544,18 @@ JSON Schema cannot express cross-entity uniqueness across nesting levels, so thi
 
 ## 13. Conformance note
 
-The catalog tiers describe what `validate_course.py --strict` enforces today; the published conformance contract is the `--strict` behavior ([§1.3](#13-strict-mode-and-the-lenient-migration-path)).
+The catalog tiers describe what the reference validators enforce today under `--strict` ([§1.3](#13-strict-mode-and-the-lenient-migration-path)). A gap between that behavior and the normative sources is a validator defect, not a relaxation of the contract.
 
 **Producers** MUST emit documents that satisfy every **Schema-enforced** rule and every **Domain-validator-enforced (ERROR)** rule. **Producers** SHOULD additionally honor `Domain-validator-enforced (WARN)` rules; the validator's warnings flag suspect-but-not-rejected content that authors typically want to fix.
 
-**Consumers** MUST reject documents that fail any **Schema-enforced** or **Domain-validator-enforced (ERROR)** rule, with one explicit exception: where a row distinguishes producer-emission from consumer-import (the `$schema` rows in [§3](#3-root-document) are the canonical example), the consumer-side row applies. This matches [`NORMATIVE.md`](NORMATIVE.md) §3.2's strict-producer / lenient-consumer split — a producer that omits `$schema` is non-conforming with respect to that document, but a consumer that rejects an otherwise-valid document on the basis of a missing `$schema` is overly strict. **Domain-validator-enforced (WARN)** rules describe sanitization, accessibility, or migration-aid behavior — consumers SHOULD surface them but are not required to reject on their basis. **NOTE-tier** rows are informational only.
+**Consumers** MUST reject documents that fail any **Schema-enforced** or **Domain-validator-enforced (ERROR)** rule, with explicit exceptions where a rule distinguishes producer-emission from consumer-import. This matches [`NORMATIVE.md`](NORMATIVE.md) §3.2's strict-producer / lenient-consumer split — a producer that omits `$schema` is non-conforming with respect to that document, but a consumer that rejects an otherwise-valid document on the basis of a missing `$schema` is overly strict. The producer-emission-vs-consumer-import rules are:
+
+- The `$schema` rows in [§3](#3-root-document) — the canonical example: MUST emit, SHOULD tolerate absence.
+- The SubjectCollection **closure** rules SC-6, SC-7, SC-8 (§15) — a producer MUST NOT emit a violating document (ERROR), but a consumer SHOULD (not MUST) reject one, and MAY instead ingest it with the violations surfaced ([`NORMATIVE.md`](NORMATIVE.md) §5.7).
+- The alignment-claim vocabulary rule SC-10 (§15) is **producer-tier only**, and its consumer side is *not* a weakened rejection — it is the opposite. A producer MUST NOT emit a claim outside the 1.1 vocabulary (ERROR). A consumer encountering a claim value outside that set MUST NOT reject the document, MUST NOT interpret the claim, and MUST preserve the entry verbatim across read/write cycles ([`NORMATIVE.md`](NORMATIVE.md) §4.10, §5.5). Consumers therefore never apply SC-10 as a rejection criterion at all.
+- Identity-less members (SC-3) are **not** in this set — a consumer MUST reject those (§3.4).
+
+**Domain-validator-enforced (WARN)** rules describe sanitization, accessibility, or migration-aid behavior — consumers SHOULD surface them but are not required to reject on their basis. **NOTE-tier** rows are informational only.
 
 **Advisory** rules carry the RFC 2119 weight stated in the cited section ([`NORMATIVE.md`](NORMATIVE.md) `MUST`/`SHOULD`/`MAY`, [`HTML_SAFETY.md`](HTML_SAFETY.md) §8 severity, [`ACCESSIBILITY.md`](ACCESSIBILITY.md) §8). Consumers that diverge from advisory `SHOULD`/`MAY` rules are non-canonical but not non-conforming. Where a rule is enforced in multiple tiers (schema + validator), satisfying the strictest tier suffices.
 
@@ -549,11 +563,13 @@ The catalog tiers describe what `validate_course.py --strict` enforces today; th
 
 **A note on JSON Schema `default` keywords.** Several rows above cite a property's `default` value (e.g. `isGraded` defaults to `true` on `quiz`, `points` defaults to `1.0` on questions, `placementUnit` defaults to `"sentence"`). Under JSON Schema Draft 7, `default` is an *annotation* — most validators (including `jsonschema` for Python, AJV with default options, etc.) do not apply or enforce it. A producer that omits the property emits a document that validates; a consumer that reads such a document MUST apply the default itself if it wants the documented behavior. The defaults are listed here so implementers know what the spec intends absent an explicit value — they are *schema-declared*, not *schema-enforced*. Consumers SHOULD NOT rely on the validator filling in defaults; producers SHOULD emit explicit values when the documented default does not match their intent.
 
-Where the reference validator and a normative document disagree, the normative document wins. Discrepancies should be reported as issues against this spec; the validator is updated to track.
+Where a reference validator and a normative document disagree, the normative document wins. Discrepancies should be reported as issues against this spec; the validator is updated to track.
 
 ---
 
 ## 14. Forward-looking deepenings (1.0 final)
+
+*(Historical: this section records the deepenings cataloged during the 1.0 cycle. 1.0 has since shipped and 1.1-rc.1 is the current publication; the still-open items below carry forward. Rules for the 1.1 artifact types are in [§15](#15-subject-collection-sc)–[§19](#19-consumer-side-obligations-not-expressible-as-document-checks).)*
 
 The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 64/64 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture; the 36 fixtures at the time of that rc.1 pass, plus the two `prompt`-correction fixtures added in rc.2, plus the per-type / referential-integrity / grading-matrix / globalId-uniqueness expansion added in rc.3).
 
@@ -561,6 +577,124 @@ Three areas remain explicitly forward-looking for `1.0` final or beyond:
 
 - **`--accessibility` validator flag.** The `<video>` without `<track kind="captions"\|"subtitles">` check (§12.2) is WARN at the current baseline. The 1.0-final `--accessibility` flag promotes it (and related accessibility warnings) to ERROR so tooling that wants to fail-build on accessibility-profile claims can do so.
 - **Tag namespace conventions.** Optional best-practice tag prefixes (`stage:`, `level:`, `exam:`, …) are described informally in [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §1. No schema-level constraint, no validator check; left to convention for `1.0`. Referential-integrity validation on `objectiveIds` is closed at rc.1 (consumers MUST report unresolved IDs per the validator).
-- **Reserved-type per-type schemas.** The 7 reserved question types (`hotspot`, `association`, etc.) validate against `question-base.schema.json` only in 1.0 (§10). First-class per-type schemas are targeted for the `1.1` minor.
+- **Reserved-type per-type schemas.** The 7 reserved question types (`hotspot`, `association`, etc.) validate against `question-base.schema.json` only (§10). First-class per-type schemas remain deferred to a future minor version (targeted for 2027) and are not part of 1.1.
 
 Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by `1.1`) will surface as new rows in the per-type tables above or as new entries in this section. The published `/1.0-rc.2/` and `/1.0-rc.3/` schema URLs remain immutable per [`NORMATIVE.md`](NORMATIVE.md) §8.3; any future closures land at `/1.0/` or a later version path.
+
+---
+
+## 15. Subject Collection (`SC-*`)
+
+Rules for `documentType: "subjectCollection"` documents.
+
+| # | Rule | Source | Tier | Severity |
+|---|---|---|---|---|
+| SC-1 | Root triplet `$schema`/`documentType`/`specVersion` present; `documentType == "subjectCollection"` | NORMATIVE §3.2 | schema | ERROR |
+| SC-2 | `globalId`, `version`, `title`, `scope` present; `scope.subject.id` non-empty | NORMATIVE §3.3; schema `required` | schema | ERROR |
+| SC-3 | Every tag and objective carries a non-empty `id` (identity is not optional) | NORMATIVE §3.4 | schema | ERROR |
+| SC-4 | Member ids unique within the document (tags and objectives separately) | NORMATIVE §3.4 | domain | ERROR |
+| SC-5 | Tag `slug` present and unique within the document | schema + domain | domain | ERROR |
+| SC-6 | Every `tags[].categoryId` resolves within `categories[]` (closure) | NORMATIVE §4.9 | domain | ERROR |
+| SC-7 | Every `tags[].parentId`, when present, is the member id of another tag in the document (parents are member ids, never slugs), **and the parent relation is acyclic** — no tag is its own parent, and no chain of `parentId` links returns to a tag already on that chain. The relation therefore forms a forest | NORMATIVE §4.9 | domain | ERROR |
+| SC-8 | Every `objectives[].tagIds` entry resolves within the document's `tags[]` (closure) | NORMATIVE §4.9 | domain | ERROR |
+| SC-9 | `difficultyBand` within the enum (`Recall`/`Understand`/`Apply`/`Analyze`/null) | schema | schema | ERROR |
+| SC-10 | `externalAlignments[].claim` within the 1.1 producer vocabulary (`references`/`alignedTo`/`covers`; `assesses`/`verifiedBy` reserved). **Producer-tier by design:** the schema deliberately leaves `claim` an open string so consumers can satisfy the §5.5 preserve-unknown-claims rule without a schema failure — the vocabulary binds what a 1.1 producer may *emit*, never what a consumer accepts. `scheme` and `id` non-empty (schema) | NORMATIVE §4.10, §5.5 | domain (producer-tier; the reference vocabulary tooling enforces it as an authoring/emission gate) + schema (`scheme`/`id`) | ERROR (emission) |
+| SC-11 | Category ids unique within the document | schema + domain | domain | ERROR |
+| SC-12 | `aliases`, when present, is an array (not a bare string) | schema | schema | ERROR |
+| SC-13 | `license` populated with a concrete value on documents intended for distribution (`"unspecified"` only for private drafts) | NORMATIVE §4.11 | advisory | WARN |
+| SC-14 | Objective `text` reads as a can-do capability (active verb, completes "…be able to:") | [`subject-collection-reference.md`](subject-collection-reference.md) §5 | advisory | NOTE |
+
+Reference implementation note: SC-4…SC-8, SC-11, SC-12 are implemented by the vocabulary-document validator in the reference tooling; SC-1 and SC-2's root-triplet checks are schema-enforced.
+
+---
+
+## 16. Curriculum Pack (`CP-*`)
+
+Rules for `documentType: "curriculumPack"` documents.
+
+| # | Rule | Source | Tier | Severity |
+|---|---|---|---|---|
+| CP-1 | Root triplet present; `documentType == "curriculumPack"` | NORMATIVE §3.2 | schema | ERROR |
+| CP-2 | `packMode` is `"manifest"` or `"bundle"` | schema | schema | ERROR |
+| CP-3 | `collectionRefs[]` entries carry non-empty `globalId`; `contentRefs[]` entries carry non-empty `type` + `id` (the referenced document's type-directed identity, NORMATIVE §4.4: course→`sourceCourseId`, questionSet→`sourceQuestionSetId`, else root `globalId`). **`contentRefs[].type` is a producer-closed vocabulary — `course`, `questionSet`, or `glossary`** (a SubjectCollection is referenced via `collectionRefs`; `curriculumPack` is prohibited — no pack nesting, §4.4). Like alignment `claim`, it binds producers only and is left schema-open (§5.8): a producer emitting any other value is non-conforming; a consumer MUST NOT reject an unrecognized type (§5.4), treating the ref as unresolvable | NORMATIVE §4.4, §5.8 | schema (`type`/`id` non-empty) + domain (producer type-vocabulary) | ERROR (emission) |
+| CP-4 | Step shape: `id` non-empty and unique within the pack; `kind` within the five-value enum; `label` non-empty; `year`/`term`/`weekOfTerm`/`durationLessons` integers ≥ 1; the `contentRef` **key** present on every step (null = unauthored slot); `selector`, when present, uses the node-globalId-bearing grammar `unit:`/`lesson:`/`item:` (interior nodes retain `globalId`; only the document root's identity is type-directed) | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.1–§4.3 | schema (per-step) + domain (id uniqueness) | ERROR |
+| CP-5 | `pacing` present when `sequence[]` is non-empty; `years`/`lessonsPerWeek` ≥ 1; `weeksPerTerm`, when declared, has `termsPerYear` entries ≥ 1; `teachingWeeksPerYear`, when both present, equals `sum(weeksPerTerm)` | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §5 | domain | ERROR |
+| CP-6 | Position within the frame: `year ≤ pacing.years`; `term ≤ termsPerYear`; `weekOfTerm` within the term; a step's week span (`ceil(durationLessons/lessonsPerWeek)` weeks from its start) stays inside its term | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.1, §5 | domain | ERROR |
+| CP-7 | Term capacity: per `(year, term)`, `Σ durationLessons ≤ weeksPerTerm[term−1] × lessonsPerWeek` | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §5 | domain | ERROR |
+| CP-8 | `dependsOn`: ids exist; no self-reference; every edge points at a step strictly earlier in the `(year, term, weekOfTerm)` timeline, or in the same week and earlier in document order (within a week, document order is the schedule) | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.4 | domain | ERROR |
+| CP-9 | Checkpoint presence: a step of kind `assessment`/`mock` carries a checkpoint object; any other kind carries `null` or omits the key | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.2, §4.5 | domain | ERROR |
+| CP-10 | Checkpoint shape: `kind` formative/summative (mock ⇒ summative); `format` non-empty; `scope` listed/allTaughtToDate; listed ⇒ `assessesObjectiveIds` non-empty; allTaughtToDate ⇒ `assessesObjectiveIds == []` | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.5 | domain | ERROR |
+| CP-11 | Taught-before-used: every listed assessed objective, and every objective on a `review` step, is first taught (a `teaching` step's `objectiveIds`) strictly earlier in the timeline | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.5 | domain | ERROR |
+| CP-12 | Bill of materials: every non-null step `contentRef` appears in root `contentRefs[]` with a matching `type` | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §3, §4.3 | domain | ERROR |
+| CP-13 | Coverage block: `collectionGlobalId` non-empty and present in `collectionRefs[]`; `assertions[]` within the two-value 1.1 vocabulary (unknown assertion strings are errors) | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §6 | schema + domain | ERROR |
+| CP-14 | With the referenced collection available: every `objectiveId`/`tagId` used anywhere (steps, checkpoints, exemptions) resolves to a collection member; declared coverage assertions hold over the non-exempt member set. Without it, validators skip these checks visibly rather than fail | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §6 | domain (collection-resolved) | ERROR |
+| CP-15 | Bundle closure: a bundle carries `embedded {collections, content}` and a manifest does not; every ref (root and step-level) resolves to an embedded document of the matching `documentType`, identity verbatim; a course selector resolves to a node of that kind inside the embedded course | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §2 | domain (bundle) | ERROR |
+| CP-16 | A bundle MUST NOT re-mint any embedded document's **type-directed portable identity** (root `globalId`, or a course/questionSet's `sourceCourseId` / `sourceQuestionSetId`; NORMATIVE §4.4) or its member ids | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §2 | consumer obligation — an import behavior, not a static-document check; cataloged in [§19](#19-consumer-side-obligations-not-expressible-as-document-checks) | (behavioral) |
+| CP-17 | Advisory hygiene: refs SHOULD pin `version` (consumers surface mismatches rather than silently substituting); a `teaching` step SHOULD list objectives; `sequence[]` SHOULD serialize in timeline order; an unauthored slot SHOULD carry an `authoringNote` (buffer steps excepted); week occupancy SHOULD stay within `lessonsPerWeek`; an objective SHOULD meet a formative checkpoint before a summative one; a checkpoint's effective assessed set SHOULD be non-empty; a review SHOULD revisit no sooner than `recyclingPolicy.minSpacingWeeks` (default 2) absolute weeks after first teach; a bundle SHOULD embed nothing unreferenced and SHOULD surface pinned-version drift | [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §2–§7 | advisory | WARN |
+
+Reference implementation note: CP-4…CP-15 and CP-17 are implemented by the pack validator in the reference tooling, whose docstring carries the rule-by-rule list as E01–E15/W01–W10. **Embedded-document validity:** the `embedded` block's documents are typed as generic objects in `curriculum-pack.schema.json`, so the pack schema does not by itself reject a malformed embedded artifact. CP-15 checks each embedded document's *identity* (`documentType` + its type-directed identity per NORMATIVE §4.4 — a course/questionSet by `sourceCourseId`/`sourceQuestionSetId`, a collection/glossary by root `globalId`) and *closure* (every ref resolves to an embedded document of the matching type; selectors resolve inside embedded courses). Full validation of each embedded document — against its own schema **and** its own domain rules, dispatched on the embedded document's `documentType` — is performed by the shared emission gate before a bundle is written. Every writer in the reference tooling runs that gate (the bundle assembler, `lc_pack.save()`, `lc_collection.save()`, and the pack validator's own `--validate` pass over a bundle), so an embedded artifact that is schema-valid but domain-invalid is rejected on the producer path rather than packaged. This is a producer-path guarantee of the reference tooling, not a constraint the pack schema itself expresses.
+
+---
+
+## 17. Glossary (`GL-*`)
+
+Rules for `documentType: "glossary"` documents.
+
+The declared-inventory rules follow a single severity principle: **a false claim is an ERROR; a missing claim is a WARN.** Gloss-rule and inventory ERRORs are interchange-boundary rules — they gate what a producer may *emit*, and a work-in-progress document inside an authoring tool may legitimately fail them mid-authoring ([`glossary-reference.md`](glossary-reference.md) §2).
+
+| # | Rule | Source | Tier | Severity |
+|---|---|---|---|---|
+| GL-1 | Root triplet present; `documentType == "glossary"`; `globalId`/`version`/`title`/`language` non-empty; `entries[]` present | NORMATIVE §3.2; schema | schema | ERROR |
+| GL-2 | `translationLanguages`, when present, is an array of unique, non-empty, BCP 47-shaped strings | [`glossary-reference.md`](glossary-reference.md) §1 | schema + domain | ERROR |
+| GL-3 | Entry shape: `id` non-empty and unique; `term` non-empty; `kind` within `word`/`phrase`; typed optional fields (strings non-empty incl. `firstMention`, `linkAutomatically` boolean, `examples[].text` non-empty); translation maps (`translations`, `definitionTranslations`, example translations) keyed by BCP 47 tags with non-empty values | [`glossary-reference.md`](glossary-reference.md) §2 | schema (per-field) + domain (id uniqueness) | ERROR |
+| GL-4 | The gloss rule: every entry carries a `definition`, or at least one `translations` value, or at least one `definitionTranslations` value (interchange-boundary) | [`glossary-reference.md`](glossary-reference.md) §2 | domain | ERROR |
+| GL-5 | Inventory membership: when `translationLanguages` is declared (non-empty), every translation key used anywhere in the document is a member of it. **Language tags are compared case-insensitively** (BCP 47 §2.1.1): a document declaring `es` and using the key `ES` satisfies this rule, and satisfies GL-6 as well. **Absent and empty declarations are equivalent — no claim is made, and GL-5/GL-6 are vacuous (GL-8 then applies)** | [`glossary-reference.md`](glossary-reference.md) §1 | domain | ERROR |
+| GL-6 | No false claims: every declared `translationLanguages` value is used by at least one translation value somewhere in the document, again compared case-insensitively. The same case-insensitive key governs GL-2's uniqueness check: `es` and `ES` in one `translationLanguages` array are a duplicate declaration, not two languages | [`glossary-reference.md`](glossary-reference.md) §1 | domain | ERROR |
+| GL-7 | Duplicate matching surface (`term`/`otherForms`) across entries. Surfaces are compared after Unicode normalization to **NFC** followed by **`casefold()`** — the Unicode caseless-matching operation, not simple lowercasing, so German `Straße` and `STRASSE` are one surface and canonically equivalent compositions of an accented character do not read as two — legal (senses are separate entries) but auto-linking consumers must disambiguate. **This warning is routinely *accepted*, not fixed:** two senses of one spelling are the model working as designed, so GL-7 exists to inform disambiguation, not to be driven to zero | [`glossary-reference.md`](glossary-reference.md) §2 | advisory | WARN |
+| GL-8 | Translations are present but the document declares no `translationLanguages` (missing claim — fires on imports; documents authored against the declaration always carry it) | [`glossary-reference.md`](glossary-reference.md) §1 | advisory | WARN |
+| GL-9 | An entry's `otherForms` repeats its own term (redundant matching surface) | [`glossary-reference.md`](glossary-reference.md) §2 | advisory | WARN |
+| GL-10 | Language-code lint: a declared `translationLanguages` value (or, absent a declaration, a used key) whose 2-letter primary subtag is not ISO 639-1, or whose 2-letter region subtag is not ISO 3166-1 alpha-2. 3-letter primary subtags and script subtags are shape-checked only | [`glossary-reference.md`](glossary-reference.md) §2 | advisory | WARN |
+| GL-11 | Absent `firstMention` is **legal — never an error or warning** (imported glossaries carry no lesson provenance; the entry renders as course-scoped background vocabulary). Surfaced only as a maturity signal (the validator's success report counts entries with/without it). A `firstMention` naming a lesson the importer does not hold is treated as absent | [`glossary-reference.md`](glossary-reference.md) §2.1 | advisory | NOTE |
+
+Reference implementation note: GL-1…GL-10 are implemented by the glossary validator in the reference tooling (rule ids GE01–GE05/GW01–GW04 in its docstring: GL-1↔GE01, GL-2↔GE01, GL-3↔GE02, GL-4↔GE03, GL-5↔GE04, GL-6↔GE05, GL-7↔GW01, GL-8↔GW02, GL-9↔GW03, GL-10↔GW04); GL-11 is NOTE-tier — implemented as the maturity report's `firstMention n/total` line, not as a GE/GW rule.
+
+---
+
+## 18. 1.1 deepenings — root and course (`RD-*`, `CO-*`)
+
+Rules that deepen the root document ([§3](#3-root-document)) and the course artifact ([§4](#4-course-level)) as of 1.1. They add no new fields; they enforce obligations NORMATIVE already carried.
+
+### 18.1 Root document, all artifact types
+
+| # | Rule | Source | Tier | Severity |
+|---|---|---|---|---|
+| RD-1 | `specVersion` ↔ `$schema` version agreement: when **both** fields are present, `specVersion` is well-formed `1.x`, and `$schema` is an `lc-json.org` versioned URL, the URL's version path MUST match `specVersion` on **major.minor** (patch releases share the minor's URL per §8.1: `1.0.1` legitimately pairs with `/1.0/` or `/1.0-rc.N/`). Field absence is governed separately by §3.2 and is not re-reported here | NORMATIVE §8.4 | domain | ERROR |
+| RD-2 | Unrecognized non-`x-` fields are surfaced **informationally**, one line per stray, stating the §5.4 consequence (consumers may ignore; free to drop on re-export; a future spec version may claim the name) and the remedy (`x-<vendor>-…` for guaranteed preservation, §7.4). `x-` members are listed separately as extension members with preservation expected. Never rises above NOTE — §5.4 makes these fields legal; this surfaces silent-drop risk and catches typos (`titel`). Skips: closed objects (already ERROR by contract), members of reserved/unknown-type questions (§6 preserves them wholesale), and the interior of `x-` subtrees (the namespace owner's business) | NORMATIVE §5.4, §7 (explains existing rules; adds none) | advisory | NOTE |
+
+A document that pins a `$schema` publication other than the validator's own is not an error — the reference validator surfaces it as a NOTE, because validating an rc.1 document with an rc.1-tagged validator is the normal case and validating it with a later one is legitimate.
+
+### 18.2 Course-level
+
+| # | Rule | Source | Tier | Severity |
+|---|---|---|---|---|
+| CO-1 | Every id in `courseObjectiveIds` and unit/lesson `objectiveIds` resolves within the course's own `objectives[]` pool (carried copies embedded; no dangling vocabulary references) | NORMATIVE §4.9 | domain | WARN for `specVersion` 1.0 documents (the 1.0 WARN-tier objective-reference-integrity posture, unchanged); **ERROR** for documents declaring `specVersion` ≥ 1.1 (this restates §4.9's MUST) |
+| CO-2 | `license`/`canonicalUrl`/`derivedFrom` validate against the shared publication field group | schema (composed) | schema | ERROR |
+| CO-3 | `glossaryRefs`, when present at course/unit/lesson, is an array of non-empty glossary `globalId` strings (placement encodes scope; no `{globalId, scope}` object form; junctions stop at Lesson) | [`glossary-reference.md`](glossary-reference.md); `course.schema.json` | schema | ERROR |
+| CO-4 | A `glossaryRefs` entry that resolves to no `glossaries[]` pool copy and no held document (a dangling ref) — consumers SHOULD surface it, naming the missing `globalId`, SHOULD preserve it for later binding, and MUST NOT fail the import | [`glossary-reference.md`](glossary-reference.md) | advisory (consumer-surfaced) | WARN |
+| CO-5 | `glossaries[]` pool hygiene: a pool entry no `glossaryRefs` references is a stowaway; the pool SHOULD hold one copy per referenced glossary, deduplicated by `globalId`. **Per-copy validity is NOT schema-enforced:** the `glossaries[]` items are typed as generic objects so a carried copy can travel whole (a `$ref` to the full glossary schema would collide with the pre-port/pool-copy tolerance for an omitted `$schema`/`specVersion`). A producer SHOULD ensure each pool copy is a valid glossary; a consumer MAY re-validate copies with the glossary validator. The reference course validator surfaces the dangling-ref (CO-4) and stowaway conditions but does not re-run the GL-\* rules on each copy | [`glossary-reference.md`](glossary-reference.md); `course.schema.json` | advisory (stowaway) + producer-obligation (per-copy validity) | WARN (stowaway) |
+
+---
+
+## 19. Consumer-side obligations not expressible as document checks
+
+Cataloged for implementers; these are behavioral, tested by round-trip/import tests rather than document validation.
+
+- Member reconciliation by id — no duplication; membership recording for tags; link-never-overwrite for non-owned objectives; verbatim creation of absent members ([`NORMATIVE.md`](NORMATIVE.md) §5.7).
+- Display-collision handling never merges members or reassigns ids ([`NORMATIVE.md`](NORMATIVE.md) §5.7).
+- Clean rejection of unimplemented `documentType`s, naming the type ([`NORMATIVE.md`](NORMATIVE.md) §5.1).
+- Preservation of unknown alignment-claim values, and of unrecognized *fields inside* `sequence[]` steps, across read/write cycles ([`NORMATIVE.md`](NORMATIVE.md) §5.5; [`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4 — the step shape itself is firm as of 1.1).
+- Preservation of `sequence[]` array order — within a week, document order is the schedule ([`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.4).
+- Emission of the `contentRef` key even when null: serializers that drop null values must exempt it ([`curriculum-pack-reference.md`](curriculum-pack-reference.md) §4.1).
+- Glossary entry reconciliation by id on re-import — update, never duplicate; ids preserved verbatim, never re-minted ([`NORMATIVE.md`](NORMATIVE.md) §3.4/§5.7 as extended to glossary entries).
+- `firstMention` handling on import: a value naming a lesson the importer does not hold is treated as absent (never an error); an importer that regenerates lesson GlobalIds MUST remap `firstMention` on glossaries imported alongside ([`glossary-reference.md`](glossary-reference.md) §2.1).
+- Bundle re-mint prohibition (CP-16): a consumer importing a bundle MUST NOT re-mint any embedded document's identity (root `globalId` or a course/questionSet's `sourceCourseId`/`sourceQuestionSetId`) or member ids — an import-behavior obligation, not a static-document check ([`curriculum-pack-reference.md`](curriculum-pack-reference.md) §2).

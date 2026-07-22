@@ -1,24 +1,20 @@
 #!/usr/bin/env python3
 """
-validate_course.py - Validate course.json / question-set.json structure.
+validate_course.py - Reference validator for LC-JSON `course` and `questionSet` documents.
 
 Usage:
-    python validate_course.py
-    python validate_course.py --course-path "path/to/course.json"
-    python validate_course.py --verbose
-    python validate_course.py --strict       # public-conformance mode (TD-155)
-    python validate_course.py --no-schema    # skip jsonschema, run domain checks only
+    python validate_course.py --course-path "path/to/document.json"
+    python validate_course.py --course-path "path/to/document.json" --verbose
+    python validate_course.py --course-path "path/to/document.json" --strict
+    python validate_course.py --course-path "path/to/document.json" --domain-only
 
-Public-conformance mode (TD-155, 2026-05-04):
+Public-conformance mode:
 
-    By default the validator is lenient: pre-1.0 document shapes from
-    internal Lesson Commons content (wrapped envelopes `{"course":{...}}`,
-    bare payloads `{"units":[...]}` with no documentType) emit a warning
-    and fall through with reduced schema enforcement. This is intentional
-    — the Lesson Commons Editor's migration paths still ingest these
-    shapes, and failing them outright would block the upgrade. Third-party
-    producers and consumers should treat the lenient path as a
-    Lesson-Commons-internal migration aid, not a published affordance.
+    By default the validator is lenient: pre-1.0 document shapes (wrapped
+    envelopes `{"course":{...}}`, bare payloads `{"units":[...]}` with no
+    documentType) emit a warning and fall through with reduced schema
+    enforcement, so producers migrating pre-1.0 content can still ingest it.
+    The lenient path is a migration aid, not a published affordance.
 
     `--strict` disables that tolerance. Pre-1.0 shapes become FATAL ERRORS
     in strict mode. Conformance-corpus runs MUST use --strict so that the
@@ -29,27 +25,29 @@ Public-conformance mode (TD-155, 2026-05-04):
     Public conformance claims under NORMATIVE.md §10 are evaluated in
     --strict mode.
 
-Two-pass validation (TD-109, 2026-04-28):
+Two-pass validation:
 
     1. PRIMARY — JSON Schema: every document is run through the published
-       schemas in LC.JSON/specification/schemas/ via the `jsonschema` package
-       (>=4.18, modern `referencing` API). This catches required-field
-       omissions, enum violations, UUID format drift, type mismatches, and
-       any other contract that the schemas already declare. Per-question
-       schema dispatch happens in a second jsonschema pass keyed off the
-       `type` discriminator (matching/ordering fall back to question-base
-       until Phase 5 adds their schemas).
+       schemas via the `jsonschema` package (>=4.18, modern `referencing`
+       API). This catches required-field omissions, enum violations, UUID
+       format drift, type mismatches, and any other contract the schemas
+       declare. Per-question schema dispatch keys off the `type` discriminator.
 
     2. SECONDARY — Domain rules: things JSON Schema can't easily express:
        HTML-tag allowlist + anchor scheme allowlist, gap-marker / accepted-
        answer count consistency, sequence integrity, points consistency
-       (item.points == sum of question.points), SentenceTransformation
-       chunk numbering and keyword case, MultiGapCloze comma/colon ban,
-       ContentSequence cross-reference resolution, signpost-without-
+       (item.points == sum of question.points), sentenceTransformation
+       chunk numbering and keyword case, multiGapCloze comma/colon ban,
+       contentSequence cross-reference resolution, signpost-without-
        objectives warning.
 
-If `jsonschema` is not installed the validator emits a startup warning and
-runs only the secondary pass. Install with `pip install -r LC.JSON/requirements.txt`.
+If `jsonschema` is not installed, full validation is UNAVAILABLE rather than
+successful: the validator exits 3 without reporting on the document. A note that
+the schema pass was skipped is not enough — the documented exit contract is
+`0 = conforming`, and a machine reading that exit cannot see a note. Pass
+`--domain-only` to run the secondary pass alone; that mode reports
+"DOMAIN-ONLY OK" and never claims conformance. Install the dependency with
+`pip install -r tools/requirements.txt`.
 """
 
 import json
@@ -58,39 +56,43 @@ import sys
 from pathlib import Path
 import argparse
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import _lcjson_schema
+
 
 # ---------------------------------------------------------------------------
-# JSON Schema integration (TD-109, 2026-04-28; Phase 5, 2026-04-28)
+# JSON Schema integration
 # ---------------------------------------------------------------------------
 #
-# We load every *.schema.json file from LC.JSON/specification/schemas/ into
+# We load every *.schema.json file from the bundled schemas directory into
 # a Registry once at startup. Each schema is registered under both its bare
-# filename and its declared canonical $id (`lc-json.org/1.0-rc.2/` for the
-# current rc.2 publication; `lc-json.org/1.0/` once 1.0 final ships) so
+# filename and its declared canonical $id (`lc-json.org/1.1-rc.1/` for the
+# current 1.1-rc.1 publication; each publication carries its own path) so
 # $ref resolution works whether a schema $refs a peer by filename or by
 # absolute URL.
 #
-# Phase 5 (2026-04-28) migrated every schema $id to the canonical
-# `lc-json.org/<version>/` host. The version path tracks the publication
-# being shipped (NORMATIVE.md §3.1 + §8.3): rc.N publications are at
-# `/1.0-rc.N/`; the `/1.0/` path is reserved for 1.0 final.
+# Every schema $id uses the canonical `lc-json.org/<version>/` host. The
+# version path tracks the publication being shipped (NORMATIVE.md §3.1 + §8.3):
+# rc.N publications are at `/<X.Y>-rc.N/`; the `/<X.Y>/` path is reserved for
+# that version's final release.
 
 _HERE = Path(__file__).resolve().parent
 
 # The publication this validator ships with. The bundled reference validator
-# tracks a single publication (the development head, currently 1.0-rc.2); it is
+# tracks a single publication (the development head, currently 1.1-rc.1); it is
 # NOT a dual-version validator — a document pins its version via $schema, and an
-# rc.1 document is validated with the rc.1-tagged validator. Bump this when
-# cutting the next publication (e.g. "1.0" at final). Drives both the public-repo
+# rc.1 document is validated with the rc.1-tagged validator (RD-1 now emits a
+# NOTE when the document pins a publication other than this one). Bump this when
+# cutting the next publication (e.g. "1.1" at final). Drives both the public-repo
 # schema-dir selection and the canonical $id registered for $ref resolution.
-_CURRENT_PUBLICATION = "1.0-rc.3"
+_CURRENT_PUBLICATION = "1.1-rc.1"
 
 
 def _detect_schemas_dir():
     """Resolve the schemas directory for the current layout.
 
-    Lesson Commons monorepo (source):  LC.JSON/tools/ → ../specification/schemas/
-    Public spec repo (published):      tools/         → ../schemas/<X.Y(-rc.N)>/
+    Source layout:            tools/ alongside a sibling specification/schemas/
+    Public spec repo layout:  tools/ → ../schemas/<X.Y(-rc.N)>/
 
     Tries the source-layout path first. In the public-repo layout, multiple
     immutable versioned dirs may coexist (e.g. a frozen schemas/1.0-rc.1/
@@ -117,8 +119,9 @@ def _detect_schemas_dir():
 SCHEMAS_DIR = _detect_schemas_dir()
 
 # Map question type discriminator (camelCase) → schema filename.
-# matching/ordering have no per-type schemas yet (Phase 5 task) — fall back
-# to question-base.schema.json.
+# Every currently specified question type has its own schema; the seven types
+# reserved for a future version fall back to question-base.schema.json (see the
+# note on that group below).
 _QUESTION_TYPE_SCHEMA = {
     "simpleGapFill": "simple-gap-fill.schema.json",
     "trueFalseQuestion": "true-false-question.schema.json",
@@ -132,7 +135,7 @@ _QUESTION_TYPE_SCHEMA = {
     "matching": "matching.schema.json",
     "ordering": "ordering.schema.json",
     "placement": "placement.schema.json",
-    # Reserved-for-2027 question types (FF-102) — declared in question-base
+    # Reserved-for-2027 question types — declared in question-base
     # enum but with no per-type schema yet. Validate against base only.
     "association": "question-base.schema.json",
     "hotspot": "question-base.schema.json",
@@ -189,6 +192,40 @@ def _load_schema_registry():
 
 _SCHEMA_REGISTRY, _SCHEMAS = _load_schema_registry()
 
+# Set by --domain-only. When true, EVERY schema pass is skipped and the run may
+# not report conformance. The flag is an explicit request for the reduced check,
+# so it wins over schema availability.
+_DOMAIN_ONLY = False
+
+# The publication the current document is being validated against. NORMATIVE
+# Section 8.4 makes the declared $schema URL the binding validation target, so a
+# document declaring an older publication is checked against THAT publication's
+# schemas when this tree carries them — not against the bundled set with a NOTE
+# apologising for the difference.
+_ACTIVE_PUBLICATION = _CURRENT_PUBLICATION
+
+
+def _bind_publication_for(doc):
+    """Point the schema passes at the publication `doc` declares.
+
+    Returns None on success, or a reason string when that publication is not
+    carried here — in which case the result is INDETERMINATE (exit 3) and no
+    conformance statement may be made.
+    """
+    global _SCHEMAS, _SCHEMA_REGISTRY, _ACTIVE_PUBLICATION
+    if not _JSONSCHEMA_AVAILABLE or _DOMAIN_ONLY:
+        return None
+    publication, entry, unavailable = _lcjson_schema.resolve_publication_for(doc)
+    if unavailable:
+        return unavailable
+    reason = _lcjson_schema.unavailable_reason(doc.get('documentType'), publication)
+    if reason:
+        return reason
+    _ACTIVE_PUBLICATION = publication
+    _SCHEMAS = entry['schemas']
+    _SCHEMA_REGISTRY = entry['registry']
+    return None
+
 
 def _format_schema_path(path_iter, ref_prefix=""):
     """Render a jsonschema absolute_path deque as 'ref_prefix > a > b > c'."""
@@ -203,12 +240,14 @@ def _validate_against_schema(payload, schema_filename, ref_prefix=""):
     If jsonschema isn't available, returns an empty list — caller relies on
     the secondary domain-rule pass.
     """
-    if not _JSONSCHEMA_AVAILABLE:
+    if not _JSONSCHEMA_AVAILABLE or _DOMAIN_ONLY:
         return []
 
     schema = _SCHEMAS.get(schema_filename)
     if schema is None:
-        return [f"INTERNAL: schema '{schema_filename}' not found in registry"]
+        # An absent schema is an infrastructure condition, not a document defect;
+        # _bind_publication_for() has already turned it into exit 3 upstream.
+        return []
 
     validator = Draft7Validator(schema, registry=_SCHEMA_REGISTRY)
     errors = []
@@ -227,7 +266,7 @@ def _validate_against_schema(payload, schema_filename, ref_prefix=""):
 
 
 def _validate_questions_per_type(questions, parent_ref):
-    """Run each question through its per-type schema (TD-109 secondary pass).
+    """Run each question through its per-type schema (secondary pass).
 
     Yields error strings. The parent's `course`/`question-set` schema only
     validates against question-base for items in a questions[] array, so
@@ -235,7 +274,7 @@ def _validate_questions_per_type(questions, parent_ref):
     sentenceTransformation, etc.) need a per-question pass to be enforced.
     """
     errors = []
-    if not _JSONSCHEMA_AVAILABLE:
+    if not _JSONSCHEMA_AVAILABLE or _DOMAIN_ONLY:
         return errors
 
     for idx, question in enumerate(questions or []):
@@ -279,7 +318,7 @@ def _walk_and_validate_all_questions(course):
 
 
 def _collect_weighted_points_notes(course):
-    """TD-122: emit informational notes when an Exercise/Quiz item's `points`
+    """Emit informational notes when an Exercise/Quiz item's `points`
     field differs from the sum of its question points. This is intentional —
     teachers weight an item to a fixed score (e.g. 10) regardless of question
     count or per-question values — so the mismatch is a NOTE, not a WARN.
@@ -315,8 +354,23 @@ def _collect_weighted_points_notes(course):
     return notes
 
 
+def _spec_version_at_least_1_1(spec_version):
+    """True when a document declares specVersion 1.1 or later within major 1.
+
+    CO-1 severity gate (ratified 2026-07-16): the objective-reference-integrity
+    check stays WARN for 1.0 documents (the historical objective-reference-integrity posture) and runs
+    at ERROR for specVersion >= 1.1, where NORMATIVE §4.9 makes carried-copy
+    self-containment a MUST. Malformed or absent specVersion falls back to the
+    lenient 1.0 posture (the envelope checks report the malformation itself).
+    """
+    if not isinstance(spec_version, str):
+        return False
+    match = re.match(r'^1\.(\d+)', spec_version.strip())
+    return bool(match) and int(match.group(1)) >= 1
+
+
 def _collect_objective_id_violations(course):
-    """KG-6: referential integrity for objectiveIds at every structural level.
+    """Referential integrity for objectiveIds at every structural level.
 
     Every entry in courseObjectiveIds[], unit.objectiveIds[], and
     lesson.objectiveIds[] MUST reference an id declared in
@@ -325,7 +379,7 @@ def _collect_objective_id_violations(course):
     renders nothing for that id).
 
     Returns a list of WARN-tier violation strings (warning-tier per the
-    TD-145 framing of integrity checks — does not block import, but
+    Integrity-check framing — does not block import, but
     surfaces authoring errors).
     """
     warnings = []
@@ -368,8 +422,85 @@ def _collect_objective_id_violations(course):
     return warnings
 
 
+def _collect_glossary_pool_warnings(course):
+    """CO-4 / CO-5: glossaryRefs closure against the course's glossaries[] pool.
+
+    glossaryRefs may appear at course/unit/lesson scope (junctions stop at
+    Lesson). Each ref SHOULD resolve to a carried copy in the root glossaries[]
+    pool. A ref that does not is surfaced as a WARNING, never an error: it may
+    still resolve against a glossary the consumer already holds, so the document
+    stays portable and the import MUST NOT fail (CO-4). A pool copy that no
+    glossaryRef anywhere references is a stowaway (CO-5, WARN).
+
+    Returns a list of warning strings.
+    """
+    warnings = []
+
+    refs = []  # (scope-label, globalId)
+    for gid in course.get('glossaryRefs') or []:
+        if isinstance(gid, str) and gid:
+            refs.append(('course', gid))
+    for u_idx, unit in enumerate(course.get('units') or []):
+        if not isinstance(unit, dict):
+            continue
+        for gid in unit.get('glossaryRefs') or []:
+            if isinstance(gid, str) and gid:
+                refs.append((f"unit {u_idx}", gid))
+        for l_idx, lesson in enumerate(unit.get('lessons') or []):
+            if not isinstance(lesson, dict):
+                continue
+            for gid in lesson.get('glossaryRefs') or []:
+                if isinstance(gid, str) and gid:
+                    refs.append((f"unit {u_idx} > lesson {l_idx}", gid))
+
+    # Count occurrences BEFORE building the identity set: CO-5 says the pool holds
+    # ONE copy per referenced Glossary, so two copies sharing a globalId is a
+    # hygiene violation the rule explicitly catalogs. Collapsing straight to a set
+    # discarded exactly that information.
+    pool_counts = {}
+    for g in (course.get('glossaries') or []):
+        if isinstance(g, dict) and g.get('globalId'):
+            gid = g['globalId']
+            pool_counts[gid] = pool_counts.get(gid, 0) + 1
+    pool_ids = set(pool_counts)
+
+    referenced_ids = {gid for _scope, gid in refs}
+
+    # CO-5 — the same Glossary carried more than once.
+    for gid, count in sorted(pool_counts.items()):
+        if count > 1:
+            warnings.append(
+                f"glossaries[] pool carries {count} copies of '{gid}' (CO-5); the "
+                "pool SHOULD hold one copy per referenced Glossary, deduplicated by "
+                "globalId. Duplicate carried copies bloat the document and, if they "
+                "have diverged, leave a consumer no way to tell which wording is "
+                "intended — keep one."
+            )
+
+    # CO-4 — a glossaryRef with no matching pool copy (dangling within this
+    # document). Advisory: the consumer may hold the glossary separately.
+    for scope, gid in refs:
+        if gid not in pool_ids:
+            warnings.append(
+                f"glossaryRef '{gid}' ({scope} scope) resolves to no glossaries[] "
+                "pool copy in this document. If no consumer holds it separately it "
+                "is a dangling reference (CO-4); consumers SHOULD surface it and "
+                "preserve it for later binding, and MUST NOT fail the import over it."
+            )
+
+    # CO-5 — a pool copy that no glossaryRef references (a stowaway).
+    for gid in sorted(i for i in pool_ids if i not in referenced_ids):
+        warnings.append(
+            f"glossaries[] pool carries a copy of '{gid}' that no glossaryRef "
+            "references (a stowaway, CO-5); the pool SHOULD hold one copy per "
+            "referenced glossary."
+        )
+
+    return warnings
+
+
 def _collect_duplicate_global_id_errors(entities):
-    """TD-206 / NORMATIVE §4.4: globalId values MUST be unique across all
+    """NORMATIVE §4.4: globalId values MUST be unique across all
     entities in a document.
 
     `entities` is an iterable of (ref, globalId) pairs — one per Unit, Lesson,
@@ -446,7 +577,7 @@ BOOLEANISH_FALSE = {"false", "0", "incorrect", "no", "cross"}
 TF_DISPLAY_STYLES = {"TrueFalse", "CorrectIncorrect", "CheckmarkX"}
 
 # ---------------------------------------------------------------------------
-# HTML safety profile (TD-130) — mirrors LC.JSON/specification/HTML_SAFETY.md.
+# HTML safety profile — mirrors the published HTML_SAFETY.md.
 #
 # Severity policy:
 #   ERROR   — XSS-class. Forbidden elements (§2.4), event handlers (`on*`),
@@ -585,7 +716,7 @@ def _classify_url_scheme(url):
 
 
 def validate_html_content(html, ref, field_name):
-    """Validate an HTML block against LC-JSON's HTML safety profile (TD-130).
+    """Validate an HTML block against LC-JSON's HTML safety profile.
 
     Returns (errors, warnings). See HTML_SAFETY.md §8 for the severity policy.
     """
@@ -680,9 +811,8 @@ def validate_html_content(html, ref, field_name):
                     warnings.append(
                         f"{ref}: {field_name} contains a tel: link. Permitted "
                         f"per HTML_SAFETY.md §7, but consumer policy varies "
-                        f"by audience — some consumers (Lesson Commons Learn "
-                        f"is one example) gate tel: links via a config flag "
-                        f"and default to off for school-age audiences."
+                        f"by audience — some consumers gate tel: links via a "
+                        f"config flag and default to off for school-age audiences."
                     )
                 elif scheme and scheme not in HTML_ALLOWED_LINK_SCHEMES:
                     warnings.append(
@@ -751,7 +881,7 @@ def validate_html_content(html, ref, field_name):
     # <track kind="captions"> or <track kind="subtitles"> element when the
     # video contains speech (ACCESSIBILITY.md §3.1 / WCAG 1.2.2). The rc.1
     # validator emits this as a WARN; the --accessibility flag in 1.0 final
-    # (TD-138 deepenings) will promote it to ERROR for tooling that wants to
+    # a future --accessibility mode will promote it to ERROR for tooling that wants to
     # fail-build on the accessibility-profile claim.
     for video_match in re.finditer(
         r'<\s*video\b[^>]*>(.*?)<\s*/\s*video\s*>',
@@ -808,7 +938,7 @@ def load_course(course_path):
 
 
 # ---------------------------------------------------------------------------
-# FF-101 Option D shape dispatch
+# Option D shape dispatch
 # ---------------------------------------------------------------------------
 
 def _canonicalise_doc_type(value):
@@ -830,11 +960,11 @@ def dispatch_document_shape(doc):
     Document shapes (importable by .NET dispatcher):
         'option-d-course'        — Option D root with documentType:"course"
         'option-d-question-set'  — Option D root with documentType:"questionSet"
-        'legacy-wrapped'         — {"course": {...}} envelope (pre-FF-101)
-        'legacy-bare'            — {"units": [...]} at root (pre-FF-101)
+        'legacy-wrapped'         — {"course": {...}} envelope (pre-1.0)
+        'legacy-bare'            — {"units": [...]} at root (pre-1.0)
 
     Fragment shapes (documentation-only; not importable as standalone files
-    but valid against their per-type schema — TD-109 widens the validator
+    but valid against their per-type schema — the validator is widened
     so the spec examples 01-16 + minimal fragments validate cleanly):
         'fragment-question'      — single question with `type` discriminator
         'fragment-item'          — single lesson item with `type` discriminator
@@ -884,7 +1014,7 @@ def dispatch_document_shape(doc):
 
 
 def check_spec_version(doc):
-    """FF-101 forward-compat guard. Returns (errors, warnings).
+    """Forward-compat guard. Returns (errors, warnings).
 
     Accepts any 1.x specVersion, rejects 2.x+ cleanly. Missing specVersion
     is tolerated (Option D documents should declare it, but legacy paths
@@ -906,6 +1036,245 @@ def check_spec_version(doc):
     return errors, warnings
 
 
+_SCHEMA_URL_RE = re.compile(
+    r'^https?://lc-json\.org/(?P<path>\d+\.\d+(?:-rc\.\d+)?)/[A-Za-z0-9._-]+\.schema\.json$'
+)
+_SPEC_VERSION_RE = re.compile(r'^1\.(?P<minor>\d+)(?:\.\d+)?$')
+
+
+def check_spec_version_schema_agreement(doc):
+    """RD-1 / NORMATIVE §8.4: specVersion and $schema MUST agree on the version.
+
+    Returns (errors, notes).
+
+    §8.4: "a document declaring specVersion: '1.0' MUST point $schema at either
+    /1.0/ ... or a /1.0-rc.N/ candidate path; a document declaring
+    specVersion: '1.1' MUST point $schema at /1.1/ or a /1.1-rc.N/ candidate path."
+
+    The comparison is on MAJOR.MINOR only: per §8.1 a patch bump is a
+    non-normative fix with no URL change, so specVersion "1.0.1" legitimately
+    pairs with /1.0/ or /1.0-rc.N/.
+
+    Guards (deliberately narrow — this rule reports disagreement, nothing else):
+      - both fields present; absence is §3.2's business (check_spec_version /
+        the schemas), not re-reported here;
+      - specVersion well-formed 1.x — a malformed or 2.x value already fails
+        check_spec_version, and re-reporting it here would double up;
+      - $schema is a recognizable lc-json.org versioned schema URL — a
+        non-canonical URL is §4.7's business, a different rule.
+
+    The second return value carries the D-tier publication NOTE: this validator
+    resolves $refs against its own bundled schemas (_CURRENT_PUBLICATION) and
+    never dispatches on the document's $schema, so when a document pins a
+    different publication we say what actually happened rather than implying a
+    conformance claim we have no standing to make.
+    """
+    errors = []
+    notes = []
+
+    spec_version = doc.get('specVersion')
+    schema_url = doc.get('$schema')
+    if not isinstance(spec_version, str) or not isinstance(schema_url, str):
+        return errors, notes
+
+    sv_match = _SPEC_VERSION_RE.match(spec_version)
+    if not sv_match:
+        return errors, notes
+
+    url_match = _SCHEMA_URL_RE.match(schema_url)
+    if not url_match:
+        return errors, notes
+
+    url_path = url_match.group('path')                  # e.g. "1.1-rc.1" or "1.0"
+    url_minor_version = url_path.split('-rc.')[0]       # e.g. "1.1"
+    doc_minor_version = f"1.{sv_match.group('minor')}"  # e.g. "1.1"
+
+    if url_minor_version != doc_minor_version:
+        errors.append(
+            f"specVersion '{spec_version}' disagrees with the $schema publication "
+            f"'{url_path}' (NORMATIVE §8.4: a document declaring specVersion "
+            f"'{doc_minor_version}' MUST point $schema at /{doc_minor_version}/ or a "
+            f"/{doc_minor_version}-rc.N/ path). $schema is the binding target for "
+            f"conformance: fix whichever field is wrong — re-export against the "
+            f"/{doc_minor_version}/ schema, or declare specVersion "
+            f"'{url_minor_version}' if the document really targets that contract."
+        )
+    elif url_path != _CURRENT_PUBLICATION:
+        notes.append(
+            f"Document pins publication /{url_path}/; this run loaded and validated "
+            f"against that publication's own schemas, so the result is a conformance "
+            f"statement about /{url_path}/ (NORMATIVE Section 8.4). Had those schemas "
+            f"not been carried here, the run would have exited 3 (indeterminate) "
+            f"rather than claiming conformance it could not establish."
+        )
+
+    return errors, notes
+
+
+# The seven reserved-for-2027 types: declared in the question-base enum,
+# no per-type schema yet. §6 preserves them wholesale, so their fields are SUPPOSED
+# to be unrecognized — the RD-2 lint skips their interiors entirely.
+_RESERVED_QUESTION_TYPES = {
+    "association", "hotspot", "graphicGapMatch", "graphicAssociate",
+    "graphicOrder", "fileUpload", "mediaPromptedEssay",
+}
+
+
+def _collect_property_names(node, seen_refs):
+    """Union of every property name reachable through JSON Schema applicators.
+
+    A property may be declared under any combination of allOf / anyOf / oneOf /
+    if / then / else — matching.schema.json, for instance, declares `pairs` and
+    `categories` inside if/then/else branches keyed on `matchingMode`, and
+    course.schema.json composes publication-fields.schema.json via allOf.
+
+    This deliberately takes the UNION across all branches rather than resolving
+    which branch applies: the caller is a NOTE-tier lint whose only failure mode
+    that matters is the false positive. A superset inventory can only make the
+    lint quieter, never wrong. Deciding which branch is actually satisfied is the
+    schema validator's job, and it has already run.
+    """
+    if not isinstance(node, dict):
+        return set()
+
+    names = set(node.get("properties", {}).keys())
+
+    ref = node.get("$ref")
+    if isinstance(ref, str) and not ref.startswith("#"):
+        target = ref.split("/")[-1]
+        if target not in seen_refs:
+            seen_refs.add(target)
+            names |= _collect_property_names(_SCHEMAS.get(target), seen_refs)
+
+    for kw in ("allOf", "anyOf", "oneOf"):
+        for sub in node.get(kw, []) or []:
+            names |= _collect_property_names(sub, seen_refs)
+
+    for kw in ("if", "then", "else", "not"):
+        if kw in node:
+            names |= _collect_property_names(node[kw], seen_refs)
+
+    return names
+
+
+def _known_properties(schema_name):
+    """Property-name inventory for a named schema (cycle-safe)."""
+    schema = _SCHEMAS.get(schema_name)
+    if not schema:
+        return set()
+    return _collect_property_names(schema, {schema_name})
+
+
+def _is_closed(schema_name):
+    """True when the schema declares additionalProperties: false.
+
+    Closed objects (matching pairs/categories, placement entries) already ERROR
+    by contract — the RD-2 lint must not double-report them as NOTEs.
+    """
+    schema = _SCHEMAS.get(schema_name) or {}
+    return schema.get("additionalProperties") is False
+
+
+def _collect_unknown_field_notes(obj, schema_name, where):
+    """RD-2: one NOTE per unrecognized field on one object. Never rises above NOTE.
+
+    §5.4 makes unknown fields LEGAL — LC-JSON objects are open unless §7.1 names
+    them closed. This surfaces the silent-drop risk (a consumer may ignore the
+    field and is free to drop it on re-export; a future spec version may claim
+    the name) and catches typos. `x-` members are reported approvingly: §7.4
+    promises them preservation.
+    """
+    notes = []
+    if not isinstance(obj, dict) or _is_closed(schema_name):
+        return notes
+
+    known = _known_properties(schema_name)
+    if not known:
+        return notes
+
+    for key in obj:
+        if key.startswith("$") or key in known:
+            continue
+        if key.startswith("x-"):
+            notes.append(
+                f"{where}: '{key}' — extension member; preservation expected "
+                f"across read/write cycles (§7.4)."
+            )
+        else:
+            notes.append(
+                f"{where}: '{key}' is not a field this spec version recognizes. It is "
+                f"legal (§5.4: consumers MUST NOT reject for it) but carries no "
+                f"guarantee — a consumer may ignore it, is free to drop it on "
+                f"re-export, and a future spec version may claim the name. If you "
+                f"need it preserved, rename it to 'x-<vendor>-{key}' (§7.4). If it "
+                f"was meant to be a spec field, check the spelling."
+            )
+    return notes
+
+
+def check_unknown_fields(course):
+    """RD-2 walk over a course document. Returns notes (NOTE tier only).
+
+    Guards (per the 2026-07-17 ruling):
+      1. closed objects are skipped — they already ERROR via additionalProperties
+      2. reserved/unknown-type questions are skipped wholesale — §6 preserves them
+         and their fields are supposed to be unrecognized
+      3. x- subtrees are never descended into — the namespace owner's interior is
+         not our business
+      4. per-question keys are question-base UNION the per-type schema
+    """
+    notes = []
+    notes.extend(_collect_unknown_field_notes(course, "course.schema.json", "Course root"))
+
+    for u_i, unit in enumerate(course.get("units") or []):
+        if not isinstance(unit, dict):
+            continue
+        notes.extend(_collect_unknown_field_notes(unit, "unit.schema.json", f"Unit {u_i}"))
+
+        for l_i, lesson in enumerate(unit.get("lessons") or []):
+            if not isinstance(lesson, dict):
+                continue
+            notes.extend(_collect_unknown_field_notes(
+                lesson, "lesson.schema.json", f"Unit {u_i} > Lesson {l_i}"))
+
+            for i_i, item in enumerate(lesson.get("items") or []):
+                if not isinstance(item, dict):
+                    continue
+                itype = normalize_item_type(item.get("type")) if isinstance(item.get("type"), str) else None
+                item_schema = _ITEM_TYPE_SCHEMA.get(itype)
+                where_item = f"Unit {u_i} > Lesson {l_i} > Item {i_i}"
+                if item_schema:
+                    notes.extend(_collect_unknown_field_notes(item, item_schema, where_item))
+
+                for q_i, question in enumerate(item.get("questions") or []):
+                    if not isinstance(question, dict):
+                        continue
+                    qtype = question.get("type")
+                    # Guard 2: reserved / unknown types are preserved wholesale (§6).
+                    if qtype in _RESERVED_QUESTION_TYPES or qtype not in _QUESTION_TYPE_SCHEMA:
+                        continue
+                    # Guard 4: base UNION per-type.
+                    known = (_known_properties("question-base.schema.json")
+                             | _known_properties(_QUESTION_TYPE_SCHEMA[qtype]))
+                    where_q = f"{where_item} > Question {q_i} ({qtype})"
+                    for key in question:
+                        if key.startswith("$") or key in known:
+                            continue
+                        if key.startswith("x-"):
+                            notes.append(f"{where_q}: '{key}' — extension member; "
+                                         f"preservation expected across read/write cycles (§7.4).")
+                        else:
+                            notes.append(
+                                f"{where_q}: '{key}' is not a field this spec version "
+                                f"recognizes. It is legal (§5.4) but carries no guarantee — "
+                                f"a consumer may ignore it, is free to drop it on re-export, "
+                                f"and a future spec version may claim the name. Rename to "
+                                f"'x-<vendor>-{key}' (§7.4) if you need it preserved; check "
+                                f"the spelling if it was meant to be a spec field."
+                            )
+    return notes
+
+
 def validate_question_set_flat(doc, verbose=False):
     """Validate an Option D question-set document.
 
@@ -915,6 +1284,7 @@ def validate_question_set_flat(doc, verbose=False):
     """
     all_errors = []
     all_warnings = []
+    all_notes = []
 
     # PRIMARY PASS — JSON Schema validation against question-set.schema.json.
     # Per-question type-specific validation runs as a secondary jsonschema
@@ -935,6 +1305,19 @@ def validate_question_set_flat(doc, verbose=False):
     sv_errors, sv_warnings = check_spec_version(doc)
     all_errors.extend(sv_errors)
     all_warnings.extend(sv_warnings)
+
+    # RD-1 / NORMATIVE §8.4: specVersion <-> $schema version agreement (ERROR),
+    # plus the publication NOTE when the document pins a different publication.
+    agree_errors, agree_notes = check_spec_version_schema_agreement(doc)
+    doc_for_identity = doc
+    all_errors.extend(agree_errors)
+    all_notes.extend(agree_notes)
+
+    # C1 / NORMATIVE §4.7, §8.4: the declared $schema must be the canonical URL
+    # for THIS document's documentType, in a publication this validator can
+    # actually load. RD-1 above compares only major.minor, which a document
+    # declaring the wrong artifact's schema passes.
+    all_errors.extend(_lcjson_schema.schema_identity_errors(doc_for_identity))
 
     # language / supportLanguage WARN — should be a plausible BCP 47 tag
     # (LOCALIZATION.md §3). Mirrors the course-level checks in
@@ -961,7 +1344,7 @@ def validate_question_set_flat(doc, verbose=False):
         all_errors.extend(errors)
         all_warnings.extend(warnings)
 
-    # TD-206 / NORMATIVE §4.4: document-wide globalId uniqueness (ERROR-tier).
+    # NORMATIVE §4.4: document-wide globalId uniqueness (ERROR-tier).
     all_errors.extend(_collect_duplicate_global_id_errors(
         (f"{qs_ref} > Q{idx + 1} ({q.get('type')})", q.get('globalId'))
         for idx, q in enumerate(questions)
@@ -979,6 +1362,7 @@ def validate_question_set_flat(doc, verbose=False):
     print(f"  Questions: {len(questions)}")
     print(f"  Errors: {len(all_errors)}")
     print(f"  Warnings: {len(all_warnings)}")
+    print(f"  Notes: {len(all_notes)}")
     print()
 
     if all_errors:
@@ -993,11 +1377,19 @@ def validate_question_set_flat(doc, verbose=False):
             print(f"  [WARN] {warning}")
         print()
 
-    if not all_errors and not all_warnings:
-        print("All checks passed!")
+    if all_notes:
+        print("NOTES:")
+        for note in all_notes:
+            print(f"  [NOTE] {note}")
+        print()
+
+    if not all_errors and not all_warnings and not all_notes:
+        print("DOMAIN-ONLY OK (not a conformance check)"
+              if _DOMAIN_ONLY else "All checks passed!")
         return True
     elif not all_errors:
-        print("Validation passed with warnings.")
+        print("DOMAIN-ONLY OK, with warnings (not a conformance check)"
+              if _DOMAIN_ONLY else "Validation passed with warnings.")
         return True
     else:
         print("Validation FAILED with errors.")
@@ -1194,7 +1586,7 @@ def validate_item(item, lesson_ref, item_index, lesson_items, verbose=False):
                 if 'set' in item['questions'][0]:
                     errors.append(f"{item_ref}: Questions nested in 'set' object (should be direct array)")
 
-            # TD-122: item.points is "weighted points" — an intentional
+            # item.points is "weighted points" — an intentional
             # override of the question-points sum (e.g. weight a 3-question
             # exercise to 10 points regardless of per-question values). The
             # sum-mismatch check has been lifted to a separate walker that
@@ -1315,11 +1707,11 @@ def validate_question(question, item_ref, question_index, verbose=False):
     if 'points' not in question:
         warnings.append(f"{question_ref}: Missing 'points' property")
 
-    # Domain-rule dispatch — accept both canonical camelCase (TD-108, post-2026-04-27)
-    # and the legacy PascalCase form so pre-TD-108 exports keep getting checked.
+    # Domain-rule dispatch — accept both canonical camelCase
+    # and the legacy PascalCase form so pre-1.0 exports keep getting checked.
     qt_lower = (question_type or "").lower()
 
-    # rc.2 domain rule (TD-212): the schema now allows an empty `prompt` (minLength 0),
+    # rc.2 domain rule: the schema now allows an empty `prompt` (minLength 0),
     # so emptiness must be caught here where it is a genuine error. For the four
     # REAL-CONTENT types the prompt *is* the question, so an empty/whitespace prompt
     # is an authoring error. The eight symbolic types carry their meaning in structured
@@ -1547,7 +1939,7 @@ def validate_multi_gap_cloze(question, question_ref, verbose=False):
     """Validate MultiGapCloze-specific properties.
 
     Key constraint: accepted answers must not contain commas (,) or colons (:).
-    Some consuming applications (Lesson Commons Learn is one) encode multi-gap
+    Some consuming applications encode multi-gap
     student submissions as "gap:answer,gap:answer" for transmission to the
     scoring engine; commas or colons inside an answer can be silently truncated
     during parsing, so a student typing the exact accepted answer would be
@@ -1563,7 +1955,7 @@ def validate_multi_gap_cloze(question, question_ref, verbose=False):
         errors.append(f"{question_ref}: 'gapAcceptedAnswers' must be a dictionary")
         return errors, warnings
 
-    # Gap-count + sequentiality (KG-1, KG-2): passage @@@N marker set MUST
+    # Gap-count + sequentiality: passage @@@N marker set MUST
     # match gapAcceptedAnswers key set; markers SHOULD be sequential from 1.
     consistency_errors, consistency_warnings = _check_cloze_gap_consistency(
         question.get('passage', ''), gap_accepted.keys(), question_ref, 'gapAcceptedAnswers'
@@ -1609,7 +2001,7 @@ def validate_multi_gap_cloze(question, question_ref, verbose=False):
 
 
 def validate_word_bank_cloze(question, question_ref, verbose=False):
-    """Domain rules for wordBankCloze (KG-1, KG-2).
+    """Domain rules for wordBankCloze (gap-count + sequentiality).
 
     Hard errors:
       - passage @@@N marker set MUST equal gapAcceptedAnswers key set.
@@ -1634,7 +2026,7 @@ def validate_word_bank_cloze(question, question_ref, verbose=False):
 
 
 def validate_multiple_choice_cloze(question, question_ref, verbose=False):
-    """Domain rules for multipleChoiceCloze (KG-1, KG-2, KG-5).
+    """Domain rules for multipleChoiceCloze (gap-count, sequentiality, index-bounds).
 
     Hard errors:
       - passage @@@N marker set MUST equal gapOptions key set.
@@ -1652,7 +2044,7 @@ def validate_multiple_choice_cloze(question, question_ref, verbose=False):
     if not isinstance(gap_options, dict) or not isinstance(correct_answers, dict):
         return errors, warnings  # schema already catches type errors
 
-    # Gap-count consistency against the passage (KG-1) — check against gapOptions;
+    # Gap-count consistency against the passage — check against gapOptions;
     # also fire a separate ERROR if correctAnswers keys diverge from gapOptions.
     consistency_errors, consistency_warnings = _check_cloze_gap_consistency(
         question.get('passage', ''), gap_options.keys(), question_ref, 'gapOptions'
@@ -1684,7 +2076,7 @@ def validate_multiple_choice_cloze(question, question_ref, verbose=False):
             + "."
         )
 
-    # Index-bounds check (KG-5): each correctAnswers[N] MUST be < len(gapOptions[N]).
+    # Index-bounds check: each correctAnswers[N] MUST be < len(gapOptions[N]).
     for gap_key, idx in correct_answers.items():
         if not isinstance(idx, int):
             continue  # schema already enforces integer type
@@ -1701,7 +2093,7 @@ def validate_multiple_choice_cloze(question, question_ref, verbose=False):
 
 
 def validate_multiple_choice(question, question_ref, verbose=False):
-    """Domain rules for multipleChoice (KG-3, KG-4).
+    """Domain rules for multipleChoice (correct-option + options/points closure).
 
     Hard errors:
       - 'optionsAndPoints' MUST contain an entry for every value in 'options'.
@@ -1717,7 +2109,7 @@ def validate_multiple_choice(question, question_ref, verbose=False):
     if not isinstance(options, list) or not isinstance(options_and_points, dict):
         return errors, warnings  # schema-level errors surface elsewhere
 
-    # KG-4: every option MUST have a corresponding optionsAndPoints entry.
+    # Every option MUST have a corresponding optionsAndPoints entry.
     missing = [o for o in options if o not in options_and_points]
     if missing:
         errors.append(
@@ -1735,7 +2127,7 @@ def validate_multiple_choice(question, question_ref, verbose=False):
             f"value in 'options'. Authors typically keep the two in sync; orphan entries are ignored."
         )
 
-    # KG-3: at least one positive-points entry (otherwise no answer is correct).
+    # At least one positive-points entry (otherwise no answer is correct).
     positive_count = sum(
         1 for k in options if isinstance(options_and_points.get(k), (int, float)) and options_and_points[k] > 0
     )
@@ -1749,7 +2141,7 @@ def validate_multiple_choice(question, question_ref, verbose=False):
 
 
 def validate_essay(question, question_ref, verbose=False):
-    """Domain rules for essay (KG-bonus: maxWords >= minWords when both > 0)."""
+    """Domain rules for essay: maxWords >= minWords when both are > 0."""
     errors = []
     warnings = []
 
@@ -1955,7 +2347,7 @@ def validate_course_level(course, verbose=False):
     if 'title' not in course or not course.get('title'):
         errors.append("Course: Missing 'title' property (REQUIRED)")
 
-    # TD-116 / ADR-018: sourceCourseId is the canonical course-identity
+    # sourceCourseId is the canonical course-identity
     # field. Course-level globalId was dropped from the wire (auto-
     # generated by consumers; not a portable identifier).
     source_course_id = course.get('sourceCourseId')
@@ -1979,7 +2371,7 @@ def validate_course_level(course, verbose=False):
             f"Migrate by renaming the field; values can be preserved as-is."
         )
 
-    # TD-091: course author credits are the `authors` array. A singular
+    # Course author credits are the `authors` array. A singular
     # `author` at the course root is not a course field (it belongs to the
     # questionSet artifact) — tolerated as an unknown field per NORMATIVE
     # §5.4 but discarded by conforming consumers, so flag it: the producer
@@ -2045,7 +2437,7 @@ _ITEM_TYPE_SCHEMA = {
 def validate_fragment(doc, shape, verbose=False):
     """Validate a single-entity fragment file against the appropriate schema.
 
-    Fragment files (LC.JSON/specification/examples/01-*.json,
+    Fragment files (examples/01-*.json,
     lesson-minimal.json, unit-minimal.json) are documentation fragments —
     single questions, items, units, or lessons without a course/questionSet
     wrapper. They aren't importable as standalone documents, but they ARE
@@ -2137,10 +2529,12 @@ def validate_fragment(doc, shape, verbose=False):
         print()
 
     if not all_errors and not all_warnings:
-        print("All checks passed!")
+        print("DOMAIN-ONLY OK (not a conformance check)"
+              if _DOMAIN_ONLY else "All checks passed!")
         return True
     if not all_errors:
-        print("Validation passed with warnings.")
+        print("DOMAIN-ONLY OK, with warnings (not a conformance check)"
+              if _DOMAIN_ONLY else "Validation passed with warnings.")
         return True
     print("Validation FAILED with errors.")
     return False
@@ -2149,12 +2543,12 @@ def validate_fragment(doc, shape, verbose=False):
 def validate_course(course_path, verbose=False, strict=False):
     """Validate a course.json or question-set.json file.
 
-    FF-101: dispatches by document shape. Option D documentType:"questionSet"
+    Dispatches by document shape. Option D documentType:"questionSet"
     routes to validate_question_set_flat(); everything else (Option D
     documentType:"course", legacy wrapped, legacy bare) routes to the
     course path below.
 
-    TD-155: when strict=True, legacy shapes ('legacy-wrapped', 'legacy-bare')
+    When strict=True, legacy shapes ('legacy-wrapped', 'legacy-bare')
     are fatal errors instead of tolerated-with-warning. Used by the
     conformance corpus harness so NORMATIVE §3.2 / §4.1 rejections are
     actually enforced.
@@ -2172,7 +2566,14 @@ def validate_course(course_path, verbose=False, strict=False):
 
     doc = result
 
-    # FF-101 shape dispatch
+    # NORMATIVE Section 8.4: validate against the publication the document declares.
+    bind_problem = _bind_publication_for(doc)
+    if bind_problem:
+        _lcjson_schema.exit_unavailable(bind_problem, stream=sys.stdout)
+    if _ACTIVE_PUBLICATION != _CURRENT_PUBLICATION:
+        print(f"Schemas: /{_ACTIVE_PUBLICATION}/ (as declared by the document)")
+
+    # Shape dispatch
     shape, payload = dispatch_document_shape(doc)
     if shape == 'unknown':
         print(
@@ -2184,7 +2585,7 @@ def validate_course(course_path, verbose=False, strict=False):
         )
         return False
 
-    # TD-155: strict mode rejects legacy shapes that the lenient default
+    # Strict mode rejects legacy shapes that the lenient default
     # tolerates with a warning. The 3 conformance fixtures
     # invalid/01-missing-document-type, invalid/10-wrapped-envelope,
     # invalid/11-bare-payload all dispatch to legacy-bare or legacy-wrapped
@@ -2200,17 +2601,17 @@ def validate_course(course_path, verbose=False, strict=False):
 
     if verbose:
         print(f"  Detected shape: {shape}")
-    if not _JSONSCHEMA_AVAILABLE:
+    if _DOMAIN_ONLY:
         print(
-            "  [WARN] jsonschema package not installed — running domain-rule pass only. "
-            "Install with: pip install -r LC.JSON/requirements.txt"
+            "  [WARN] DOMAIN-ONLY: schema validation skipped at your request "
+            "(--domain-only). This is NOT a conformance check."
         )
 
     # Question Set path (Option D only)
     if shape == 'option-d-question-set':
         return validate_question_set_flat(payload, verbose)
 
-    # Fragment paths — TD-109 widens the validator so spec example fragments
+    # Fragment paths — the validator is widened so spec example fragments
     # validate against their per-type schema. These shapes are not importable
     # as standalone files; they're documentation fragments meant to be pasted
     # into a full course.
@@ -2239,6 +2640,24 @@ def validate_course(course_path, verbose=False, strict=False):
     all_warnings = []
     all_notes = []
     all_warnings.extend(sv_warnings)
+
+    # RD-1 / NORMATIVE §8.4: specVersion <-> $schema version agreement (ERROR),
+    # plus the publication NOTE when the document pins a different publication.
+    # Runs in BOTH artifact paths (see validate_question_set_flat).
+    agree_errors, agree_notes = check_spec_version_schema_agreement(course)
+    doc_for_identity = course
+    all_errors.extend(agree_errors)
+    all_notes.extend(agree_notes)
+
+    # C1 / NORMATIVE §4.7, §8.4: the declared $schema must be the canonical URL
+    # for THIS document's documentType, in a publication this validator can
+    # actually load. RD-1 above compares only major.minor, which a document
+    # declaring the wrong artifact's schema passes.
+    all_errors.extend(_lcjson_schema.schema_identity_errors(doc_for_identity))
+
+    # RD-2 / NORMATIVE §5.4, §7: unrecognized-field lint (NOTE tier only — these
+    # fields are legal; the lint surfaces silent-drop risk and catches typos).
+    all_notes.extend(check_unknown_fields(course))
 
     # PRIMARY PASS — JSON Schema validation against course.schema.json.
     # Only run for Option D documents; legacy shapes don't have $schema/
@@ -2269,15 +2688,29 @@ def validate_course(course_path, verbose=False, strict=False):
         all_errors.extend(errors)
         all_warnings.extend(warnings)
 
-    # TD-122: weighted-points notes (informational, not warnings)
+    # weighted-points notes (informational, not warnings)
     all_notes.extend(_collect_weighted_points_notes(course))
 
-    # KG-6 (TD-141 / partial TD-145): objectiveIds referential integrity.
-    # Warning-tier — unresolved references don't block import but break
-    # signpost auto-rendering of objectives.
-    all_warnings.extend(_collect_objective_id_violations(course))
+    # objectiveIds referential integrity.
+    # 1.0 documents: warning-tier — unresolved references don't block import
+    # but break signpost auto-rendering of objectives. Documents declaring
+    # specVersion >= 1.1: ERROR-tier (CO-1, ratified 2026-07-16) — NORMATIVE
+    # 1.1 §4.9 makes carried-copy self-containment a MUST, and only new
+    # producers emit specVersion 1.1, so no existing document is affected.
+    objective_id_violations = _collect_objective_id_violations(course)
+    if _spec_version_at_least_1_1(course.get('specVersion')):
+        all_errors.extend(
+            v + " (ERROR at specVersion >= 1.1 per NORMATIVE §4.9 / CO-1)"
+            for v in objective_id_violations
+        )
+    else:
+        all_warnings.extend(objective_id_violations)
 
-    # TD-206 / NORMATIVE §4.4: document-wide globalId uniqueness (ERROR-tier).
+    # CO-4 / CO-5: glossaryRefs closure against the root glossaries[] pool
+    # (advisory — dangling refs and stowaway pool copies are WARN, never fatal).
+    all_warnings.extend(_collect_glossary_pool_warnings(course))
+
+    # NORMATIVE §4.4: document-wide globalId uniqueness (ERROR-tier).
     all_errors.extend(
         _collect_duplicate_global_id_errors(_walk_global_id_declarations(course))
     )
@@ -2314,10 +2747,12 @@ def validate_course(course_path, verbose=False, strict=False):
         print()
 
     if not all_errors and not all_warnings and not all_notes:
-        print("All checks passed!")
+        print("DOMAIN-ONLY OK (not a conformance check)"
+              if _DOMAIN_ONLY else "All checks passed!")
         return True
     elif not all_errors:
-        print("Validation passed.")
+        print("DOMAIN-ONLY OK (not a conformance check)"
+              if _DOMAIN_ONLY else "Validation passed.")
         return True
     else:
         print("Validation FAILED with errors.")
@@ -2333,19 +2768,40 @@ def main():
     except (AttributeError, Exception):
         pass
 
-    parser = argparse.ArgumentParser(description='Validate course.json structure')
-    parser.add_argument('--course-path', type=str,
-                        default=r'C:\Users\PC\OneDrive\@MY_CODE\CourseGenieSolution\CourseGenie.Runner\content\course.json',
-                        help='Path to course.json')
+    parser = argparse.ArgumentParser(description='Validate an LC-JSON course or questionSet document')
+    parser.add_argument('--course-path', type=str, required=True,
+                        help='Path to the LC-JSON document to validate')
     parser.add_argument('--verbose', action='store_true',
                         help='Show detailed validation information')
     parser.add_argument('--strict', action='store_true',
-                        help='Public-conformance mode (TD-155): reject legacy '
-                             'document shapes (wrapped envelope, bare payload, '
+                        help='Public-conformance mode: reject pre-1.0 document '
+                             'shapes (wrapped envelope, bare payload, '
                              'documentType-less roots). Required for '
                              'conformance-corpus enforcement.')
+    parser.add_argument('--domain-only', action='store_true',
+                        help='Run the domain-rule pass without JSON Schema '
+                             'validation. NOT a conformance check: reports '
+                             'DOMAIN-ONLY OK, never VALID. Without this flag, a '
+                             'validator that cannot run the schema pass exits 3 '
+                             '(validation unavailable) rather than reporting a '
+                             'result it did not actually establish.')
 
     args = parser.parse_args()
+
+    # Refuses to continue (exit 3) when schema validation cannot run, unless
+    # --domain-only was given. Guarantees exit 0 always means "schema pass ran
+    # and the document conformed".
+    global _DOMAIN_ONLY
+    _DOMAIN_ONLY = args.domain_only
+    if not _JSONSCHEMA_AVAILABLE:
+        reason = ("the 'jsonschema' package is not installed, so Draft-07 schema "
+                  "validation cannot run")
+    elif not _SCHEMAS:
+        reason = (f"no JSON Schemas could be loaded from {SCHEMAS_DIR}, so Draft-07 "
+                  "schema validation cannot run")
+    else:
+        reason = None
+    _lcjson_schema.cli_preflight(args.domain_only, stream=sys.stdout, reason=reason)
 
     success = validate_course(args.course_path, args.verbose, strict=args.strict)
     sys.exit(0 if success else 1)

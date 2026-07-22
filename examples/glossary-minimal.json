@@ -1,0 +1,96 @@
+{
+  "$schema": "https://lc-json.org/1.1-rc.1/glossary.schema.json",
+  "documentType": "glossary",
+  "specVersion": "1.1",
+  "globalId": "a1-food-vocabulary-en-es",
+  "version": "1.0.0",
+  "title": "A1 Food Vocabulary (English for Spanish speakers)",
+  "description": "Unit vocabulary for the food topic, with Spanish support.",
+  "language": "en",
+  "translationLanguages": [
+    "es"
+  ],
+  "license": "unspecified",
+  "authors": [
+    "Example Vocabulary Project"
+  ],
+  "entries": [
+    {
+      "id": "0a1b2c3d-1111-4a4a-8b8b-000000000001",
+      "term": "apple",
+      "kind": "word",
+      "firstMention": "5a2d81c3-4f6e-4b09-8d17-2c9e0f3a6b54",
+      "partOfSpeech": "noun",
+      "definition": "A round fruit with firm flesh and red, green, or yellow skin.",
+      "ipa": "/ˈæp.əl/",
+      "soundsLike": "AP-uhl",
+      "audioUrl": "audio/en/a1/apple.mp3",
+      "imageUrl": "images/glossary/apple.png",
+      "translations": {
+        "es": "manzana"
+      },
+      "otherForms": [
+        "apples"
+      ],
+      "examples": [
+        {
+          "text": "He picked an apple from the tree.",
+          "translations": {
+            "es": "Cogió una manzana del árbol."
+          }
+        }
+      ],
+      "tags": [
+        "topic:food"
+      ]
+    },
+    {
+      "id": "0a1b2c3d-1111-4a4a-8b8b-000000000002",
+      "term": "would like",
+      "kind": "phrase",
+      "partOfSpeech": "verb phrase",
+      "definition": "A polite way to say you want something.",
+      "translations": {
+        "es": "quisiera / me gustaría"
+      },
+      "otherForms": [
+        "'d like"
+      ],
+      "examples": [
+        {
+          "text": "I would like a coffee, please.",
+          "translations": {
+            "es": "Quisiera un café, por favor."
+          }
+        }
+      ],
+      "audioUrl": "audio/en/a1/would-like.mp3",
+      "tags": [
+        "topic:food",
+        "function:requests"
+      ]
+    },
+    {
+      "id": "0a1b2c3d-1111-4a4a-8b8b-000000000003",
+      "term": "bill",
+      "kind": "word",
+      "partOfSpeech": "noun",
+      "definition": "The piece of paper that shows how much you must pay.",
+      "definitionTranslations": {
+        "es": "El papel que muestra cuánto hay que pagar."
+      },
+      "translations": {
+        "es": "la cuenta"
+      },
+      "examples": [
+        {
+          "text": "Could we have the bill, please?"
+        }
+      ],
+      "linkAutomatically": false,
+      "tags": [
+        "topic:food"
+      ]
+    }
+  ]
+}

@@ -19,7 +19,7 @@ Course content in LC-JSON is independent of the tool that authored it. Schools, 
 Every LC-JSON document validates against published JSON Schemas. Authoring errors are caught before delivery, not after a learner gets stuck.
 
 **Build with confidence.**
-Schema URLs at every published version path — `lc-json.org/1.0/`, the frozen `lc-json.org/1.0-rc.N/` candidate paths, and any future minor or major release — are immutable. A document that validates today will validate forever. Forward-compatible additions land at new URL paths; existing files keep working.
+Schema URLs at every published version path — `lc-json.org/1.1-rc.1/`, `lc-json.org/1.0/`, the frozen `lc-json.org/1.0-rc.N/` candidate paths, and any future minor or major release — are immutable. A document that validates today will validate forever. Forward-compatible additions land at new URL paths; existing files keep working.
 
 ---
 
@@ -29,7 +29,7 @@ Schema URLs at every published version path — `lc-json.org/1.0/`, the frozen `
 - **[NORMATIVE.md](NORMATIVE.html)** — the conformance requirements (RFC 2119 keywords, producer/consumer roles).
 - **[Question types reference](question-types-reference.html)** — per-type property reference for all 12 implemented question types.
 - **[Schemas](https://github.com/lc-json/specification/tree/main/schemas)** — Draft-7 JSON Schemas for every artifact and question type.
-- **[Examples](https://github.com/lc-json/specification/tree/main/examples)** — minimal and full course examples; per-type fragments.
+- **[Examples](https://github.com/lc-json/specification/tree/main/examples)** — examples spanning all five artifact types, from minimal documents to fuller Course and QuestionSet samples, plus question, item, unit, and lesson fragments.
 
 ## For implementers
 
@@ -50,12 +50,30 @@ Schema URLs at every published version path — `lc-json.org/1.0/`, the frozen `
 
 ---
 
-## What's covered in 1.0
+## What's covered in 1.1
 
-Two artifact types sharing a common flat root format:
+Five artifact types sharing a common flat root format:
 
 - **Course** — hierarchical: Course → Units → Lessons → Items → Questions.
 - **Question Set** — flat list of questions for question-bank exchange and packaged delivery.
+- **Glossary** — flat list of terms with pronunciation, translations, examples, and inflected forms; attaches to a course, unit, or lesson.
+- **Subject Collection** — a reusable classification vocabulary: the tags and learning objectives for one subject at one level.
+- **Curriculum Pack** — an arrangement: sequence, pacing, and assessment checkpoints over a collection plus content documents.
+
+The three 1.1 additions are abstract at first read. Two distinctions do most of the work of telling the five types apart:
+
+| Type | Plain role | What sets it apart |
+|---|---|---|
+| **Course** | Learning content | Contains what learners work through |
+| **Question Set** | Assessment resource | Contains reusable questions |
+| **Glossary** | Learner reference | Contains the terms learners study |
+| **Subject Collection** | Curriculum vocabulary | Describes how educators *classify* content and objectives |
+| **Curriculum Pack** | Curriculum plan | *Arranges* and references content without becoming the content |
+
+- A **Subject Collection** describes how educators *classify* learning; a **Glossary** contains the words and meanings learners *study*.
+- A **Curriculum Pack** *arranges* learning content; a **Course** *contains* it.
+
+Each type's reference page opens with a plain-English summary for educators and curriculum teams; the rest of each page is the technical contract.
 
 Twelve question types fully implemented and schema-validated:
 
@@ -77,7 +95,9 @@ LC-JSON is licensed under the [Apache License, Version 2.0](https://www.apache.o
 
 ## Project status
 
-**Version `1.0` — accepted final release** (2026-06-30). The wire format is stable and schema URLs at `lc-json.org/1.0/` are immutable per `NORMATIVE.md` §8.3. `1.0` is a pure URL rebase of `1.0-rc.3` with no wire/content delta: the rc.3 schema set is republished unchanged at the final path, with only `$id`/`$schema` URL strings and document version labels updated. Every `1.0-rc.3`-valid document is valid under `1.0` with no migration or re-export. The earlier release-candidate paths — `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` — stay served and frozen.
+**Version `1.1-rc.1` — current publication** (2026-07-17), a release candidate at immutable `lc-json.org/1.1-rc.1/` URLs. It adds three artifact types — Glossary, Subject Collection, and Curriculum Pack — plus publication fields and `glossaryRefs` on courses. The addition is backwards-compatible: every `1.0`-valid document remains valid under `1.1` with no migration or re-export. As a candidate, `1.1-rc.1` may take backwards-compatible corrections before the `1.1` final release; the `/1.1/` path is not populated until then.
+
+**Version `1.0` — accepted final release** (2026-06-30). The 1.0 wire format is stable and schema URLs at `lc-json.org/1.0/` are immutable per `NORMATIVE.md` §8.3. `1.0` is a pure URL rebase of `1.0-rc.3` with no wire/content delta: the rc.3 schema set is republished unchanged at the final path, with only `$id`/`$schema` URL strings and document version labels updated. Every `1.0-rc.3`-valid document is valid under `1.0` with no migration or re-export. The earlier release-candidate paths — `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` — stay served and frozen.
 
 LC-JSON's public history begins with the 1.0 release-candidate line — `1.0-rc.2` (2026-05-30) was its first publicly announced release. Internal iteration before the candidate line is not reflected in the version history.
 

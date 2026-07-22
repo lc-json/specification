@@ -1,0 +1,30 @@
+{
+  "$schema": "https://lc-json.org/1.1-rc.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Unresolved objectiveId (CO-1 ERROR tier)",
+  "language": "en",
+  "supportLanguage": null,
+  "objectives": [
+    {
+      "id": "obj-0001",
+      "text": "Identify the parts of a cell",
+      "difficultyBand": "Recall"
+    }
+  ],
+  "courseObjectiveIds": [
+    "obj-0001"
+  ],
+  "units": [
+    {
+      "globalId": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+      "title": "Unit 1",
+      "sequence": 0,
+      "objectiveIds": [
+        "obj-0001",
+        "obj-9999"
+      ],
+      "lessons": []
+    }
+  ]
+}

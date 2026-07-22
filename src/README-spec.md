@@ -1,19 +1,21 @@
 # LC-JSON Specification
 
-**Spec version:** 1.0
-**Last updated:** 2026-06-30
+**Spec version:** 1.1-rc.1
+**Last updated:** 2026-07-22
 
 This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.
 
 > **Implementing LC-JSON?** See [NORMATIVE.md](NORMATIVE.md) for the conformance requirements (RFC 2119 keywords, producer/consumer roles, versioning rules, URL stability promises). This README is descriptive; NORMATIVE.md is authoritative. For terminology, see [GLOSSARY.md](GLOSSARY.md).
 
 **Complete Coverage:**
-- Two artifact types (Course, QuestionSet) sharing a common flat root format
+- Five artifact types sharing a common flat root format: three content documents
+  (Course, QuestionSet, Glossary), a vocabulary document (SubjectCollection), and an
+  arrangement document (CurriculumPack)
 - Course Hierarchy (Course → Units → Lessons → Items)
 - 5 Lesson Item Types (Content, Exercise, Quiz, ContentSequence, Signpost)
 - 19 Question Types (12 fully implemented + schema-validated; 7 reserved for a future minor version)
-- JSON Schemas (23) for validation — strictly enforced by the reference validator
-- Minimal + detailed examples (32 files, all schema-clean)
+- JSON Schemas (27) for validation — strictly enforced by the reference validator
+- Minimal + detailed examples (35 files, all schema-clean)
 
 ---
 
@@ -33,20 +35,24 @@ This is a deliberate stance against formats whose meaning only emerges through t
 
 LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing envelope around the document). Every conforming document carries `$schema`, `documentType`, and `specVersion` as root-level siblings. The course content itself is hierarchical — Course → Units → Lessons → Items → Questions — and reflects how teachers structure their material.
 
-### Two artifact types
+### Five artifact types
 
 | Artifact | `documentType` | Schema | Description |
 |----------|---------------|--------|-------------|
-| Course | `"course"` | [`course.schema.json`](schemas/course.schema.json) | Hierarchical course (Units → Lessons → Items). The standard shape for a full course. |
-| Question Set | `"questionSet"` | [`question-set.schema.json`](schemas/question-set.schema.json) | Flat list of questions for question-bank exchange and packaged delivery — no hierarchy. |
+| Course | `"course"` | [`course.schema.json`](https://lc-json.org/1.1-rc.1/course.schema.json) | Hierarchical course (Units → Lessons → Items). The usual shape for a full course. |
+| Question Set | `"questionSet"` | [`question-set.schema.json`](https://lc-json.org/1.1-rc.1/question-set.schema.json) | Flat list of questions for question-bank exchange and packaged delivery — no hierarchy. |
+| Glossary | `"glossary"` | [`glossary.schema.json`](https://lc-json.org/1.1-rc.1/glossary.schema.json) | Flat list of terms — pronunciation, translations, examples, inflected forms. Study material that attaches to a course, unit, or lesson. |
+| Subject Collection | `"subjectCollection"` | [`subject-collection.schema.json`](https://lc-json.org/1.1-rc.1/subject-collection.schema.json) | A reusable classification vocabulary: the tags and learning objectives for one subject at one level, as a portable document. |
+| Curriculum Pack | `"curriculumPack"` | [`curriculum-pack.schema.json`](https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json) | An arrangement: sequence, pacing, and assessment checkpoints referencing a Subject Collection plus content documents. |
 
-### Required root fields (both artifact types)
+### Required root fields (all artifact types)
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.0/<artifact>.schema.json",
-  "documentType": "course",      // or "questionSet"
-  "specVersion": "1.0",
+  "$schema": "https://lc-json.org/1.1-rc.1/<artifact>.schema.json",
+  "documentType": "course",      // or "questionSet", "glossary",
+                                 // "subjectCollection", "curriculumPack"
+  "specVersion": "1.1",
   "title": "...",
   ...
 }
@@ -84,6 +90,65 @@ reject them.
 
 ---
 
+## What v1.1 adds — vocabularies, arrangements, and glossaries
+
+LC-JSON 1.0 moved **content**: courses and question sets that survive the trip between
+tools. Version 1.1 adds the documents that sit *around* content — the classification it
+is organized by, the plan it is taught on, and the vocabulary students study alongside
+it. All three are ordinary LC-JSON files: flat root, stable ids, readable in a text
+editor.
+
+**A Subject Collection is a curriculum's working vocabulary as a file.** It holds the
+tags and learning objectives for one scope — *B2 adult general English*, *KS3
+mathematics* — with two properties free-text tagging cannot offer. First, every tag and
+objective has a permanent id, so two courses classified with the same member are
+*comparably* classified: search, curriculum mapping, and progress reporting can line
+them up without guessing that "conditionals" and "if-clauses" mean the same thing.
+Second, a collection can state precisely what external framework it tracks
+(`externalAlignments` — a national curriculum section, an official training catalog
+entry, an exam specification) without re-publishing that framework's content. For an
+educational authority or awarding body, this is the piece that makes publishing an
+official vocabulary practical: author the objectives once, point at the official
+register, and let any number of course authors reference the same members rather than
+re-typing them. For a content author, it means the expensive work — writing good can-do
+objectives — is done once per scope and reused, and a course built against a collection
+says so in a form other tools can verify. See
+[`subject-collection-reference.md`](subject-collection-reference.md).
+
+**A Curriculum Pack is a scheme of work that a machine can check.** Where a collection
+says *what the objectives are*, a pack says *how a program covers them*: an ordered
+sequence of steps on a calendar-relative timeline (year / term / week — never real
+dates, so any institution's calendar fits), each step teaching, revisiting, or assessing
+listed objectives, with pacing capacity and assessment checkpoints declared in the
+document. Because steps reference objective ids rather than prose, a validator can
+verify the claims a scheme of work usually only implies: nothing is assessed before it
+is taught, spaced revisits actually have spacing, term plans fit term capacity, and —
+against the referenced collection — every in-scope objective is taught and assessed at
+least once (`coverage`, a declared contract with explicit exemptions). A pack can start
+as a **blueprint** (the plan alone, every content slot empty), grow into a working
+**manifest** as courses are bound, and ship as a self-contained **bundle** — one
+document type at three depths of completion. For curriculum leads and inspectors, the
+pack is the difference between "the scheme of work says so" and "any conforming
+curriculum-pack validator holding the referenced collection can re-verify the claim." See
+[`curriculum-pack-reference.md`](curriculum-pack-reference.md).
+
+**A Glossary is the vocabulary students study, as a portable document.** Terms with
+pronunciation (IPA, a friendly respelling, audio), translations, example sentences, and
+inflected forms — designed language-education-first but serving any subject's key
+words. A glossary attaches to a course, unit, or lesson (`glossaryRefs`), and consumers
+can auto-link its terms in content, render study lists, or drive flashcards. It is the
+one v1.1 type that is *content* rather than structure: where a collection classifies
+what courses teach, a glossary **is** learning material. See
+[`glossary-reference.md`](glossary-reference.md).
+
+The three documents compose: a collection scopes a pack; the pack sequences courses,
+question sets, and glossaries; every reference is by stable id, so the set travels
+between tools without losing its joins. Consumers adopt at any depth — a tool that only
+reads courses ignores the rest and loses nothing ([`NORMATIVE.md`](NORMATIVE.md) §5.1
+scopes conformance per artifact type).
+
+---
+
 ## Directory Structure
 
 ```
@@ -96,10 +161,17 @@ specification/
 ├── VALIDATION.md                      # Rule catalog — schema / validator / advisory tiers
 ├── ITEM_PATTERNS.md                   # Informative authoring guide
 ├── question-types-reference.md        # Complete reference for all 19 question types
+├── subject-collection-reference.md    # Complete reference for the SubjectCollection type
+├── curriculum-pack-reference.md       # Complete reference for the CurriculumPack type
+├── glossary-reference.md              # Complete reference for the Glossary type
 ├── GLOSSARY.md                        # Terminology
 ├── schemas/                           # JSON Schema validation files
 │   ├── course.schema.json             # Course (top level)
 │   ├── question-set.schema.json       # QuestionSet (flat artifact)
+│   ├── glossary.schema.json           # Glossary (flat artifact)
+│   ├── subject-collection.schema.json # SubjectCollection (vocabulary artifact)
+│   ├── curriculum-pack.schema.json    # CurriculumPack (arrangement artifact)
+│   ├── publication-fields.schema.json # Shared publication field group (§4.11)
 │   ├── unit.schema.json               # Unit (within Course)
 │   ├── lesson.schema.json             # Lesson (within Unit)
 │   ├── item-base.schema.json          # Base schema for all Items
@@ -121,9 +193,12 @@ specification/
 │   ├── matching.schema.json           # Matching validation
 │   ├── ordering.schema.json           # Ordering validation
 │   └── placement.schema.json          # Placement type validation
-└── examples/                          # Example JSON files (32 total)
+└── examples/                          # Example JSON files (35 total)
     ├── course-minimal.json            # Minimal Course example
     ├── question-set-minimal.json      # Minimal QuestionSet example
+    ├── glossary-minimal.json          # Minimal Glossary example
+    ├── subject-collection-minimal.json # Minimal SubjectCollection example
+    ├── curriculum-pack-manifest.json  # Minimal CurriculumPack example (manifest depth)
     ├── question-set-10-true-false.json # Richer QuestionSet showcase
     ├── unit-minimal.json              # Minimal Unit example
     ├── lesson-minimal.json            # Minimal Lesson example
@@ -146,7 +221,22 @@ specification/
     └── sample-course-with-questions.json    # Full course example
 ```
 
-**Total:** 23 schemas (4 [course, questionSet, unit, lesson] + 1 item-base + 5 item types + 1 question-base + 12 question types).
+**Total:** 27 schemas (7 root/structural [course, questionSet, glossary, subjectCollection, curriculumPack, unit, lesson] + 1 publication-fields group + 1 item-base + 5 item types + 1 question-base + 12 question types).
+
+> **Source layout vs. published layout.** The tree above is the *source* directory, where the schemas sit in a single flat `schemas/`. The published specification does **not** use that layout: it serves each publication from its own versioned directory, so the files appear as
+>
+> ```
+> schemas/
+> ├── 1.1-rc.1/        # the current publication — 27 schemas
+> ├── 1.0/             # frozen final release
+> ├── 1.0-rc.1/        # frozen release candidates
+> ├── 1.0-rc.2/
+> └── 1.0-rc.3/
+> ```
+>
+> and each schema is served at an immutable versioned URL — `https://lc-json.org/1.1-rc.1/<name>.schema.json` for the current publication, with the frozen `/1.0/` and `/1.0-rc.N/` publications alongside it forever (NORMATIVE §8.3). That versioned URL is the value every document's `$schema` field carries, and it is the only citable form.
+>
+> This is why schema links differ between the two: the source documents use a relative `schemas/<name>.schema.json` so contributors browsing the source tree can follow them, and the publication step rewrites every one of those links to its absolute versioned URL. **A published schema link is always immutable** — there is deliberately no mutable "current" alias to cite by mistake.
 
 ---
 
@@ -168,9 +258,9 @@ Course (top level)
 ```
 
 **Minimal Examples for Quick Reference:**
-- [course-minimal.json](examples/course-minimal.json) - Bare minimum Course structure
-- [unit-minimal.json](examples/unit-minimal.json) - Bare minimum Unit
-- [lesson-minimal.json](examples/lesson-minimal.json) - Bare minimum Lesson
+- [course-minimal.json](https://lc-json.org/examples/course-minimal.json) - Bare minimum Course structure
+- [unit-minimal.json](https://lc-json.org/examples/unit-minimal.json) - Bare minimum Unit
+- [lesson-minimal.json](https://lc-json.org/examples/lesson-minimal.json) - Bare minimum Lesson
 
 ---
 
@@ -180,18 +270,18 @@ Every Lesson contains an `items` array with one or more of these 5 item types:
 
 | Item Type | Schema | Example | Description |
 |-----------|--------|---------|-------------|
-| **ContentItem** | [content-item.schema.json](schemas/content-item.schema.json) | [10-content-item.json](examples/10-content-item.json) | Reading/content pages with HTML content (subject to [HTML_SAFETY.md](HTML_SAFETY.md)) |
-| **ExerciseItem** | [exercise-item.schema.json](schemas/exercise-item.schema.json) | [11-exercise-item.json](examples/11-exercise-item.json) | Exercise-shaped questions container. Grading independent (`isGraded`). |
-| **QuizItem** (graded) | [quiz-item.schema.json](schemas/quiz-item.schema.json) | [12a-graded-quiz-item.json](examples/12a-graded-quiz-item.json) | Quiz-shaped, `isGraded: true` — typical assessment. |
-| **QuizItem** (ungraded) | [quiz-item.schema.json](schemas/quiz-item.schema.json) | [12b-ungraded-quiz-item.json](examples/12b-ungraded-quiz-item.json) | Quiz-shaped, `isGraded: false` — diagnostic pre-test, self-check. Same schema, different policy. |
-| **ContentSequenceItem** | [content-sequence-item.schema.json](schemas/content-sequence-item.schema.json) | [13-content-sequence-item.json](examples/13-content-sequence-item.json) | Grouped content with layout options (carousel, tabs, accordion) |
-| **SignpostItem** | [signpost-item.schema.json](schemas/signpost-item.schema.json) | [14-signpost-item.json](examples/14-signpost-item.json) | Structural navigation (intro/summary) with objectives and stats; `customHtml` subject to [HTML_SAFETY.md](HTML_SAFETY.md) |
+| **ContentItem** | [content-item.schema.json](https://lc-json.org/1.1-rc.1/content-item.schema.json) | [10-content-item.json](https://lc-json.org/examples/10-content-item.json) | Reading/content pages with HTML content (subject to [HTML_SAFETY.md](HTML_SAFETY.md)) |
+| **ExerciseItem** | [exercise-item.schema.json](https://lc-json.org/1.1-rc.1/exercise-item.schema.json) | [11-exercise-item.json](https://lc-json.org/examples/11-exercise-item.json) | Exercise-shaped questions container. Grading independent (`isGraded`). |
+| **QuizItem** (graded) | [quiz-item.schema.json](https://lc-json.org/1.1-rc.1/quiz-item.schema.json) | [12a-graded-quiz-item.json](https://lc-json.org/examples/12a-graded-quiz-item.json) | Quiz-shaped, `isGraded: true` — typical assessment. |
+| **QuizItem** (ungraded) | [quiz-item.schema.json](https://lc-json.org/1.1-rc.1/quiz-item.schema.json) | [12b-ungraded-quiz-item.json](https://lc-json.org/examples/12b-ungraded-quiz-item.json) | Quiz-shaped, `isGraded: false` — diagnostic pre-test, self-check. Same schema, different policy. |
+| **ContentSequenceItem** | [content-sequence-item.schema.json](https://lc-json.org/1.1-rc.1/content-sequence-item.schema.json) | [13-content-sequence-item.json](https://lc-json.org/examples/13-content-sequence-item.json) | Grouped content with layout options (carousel, tabs, accordion) |
+| **SignpostItem** | [signpost-item.schema.json](https://lc-json.org/1.1-rc.1/signpost-item.schema.json) | [14-signpost-item.json](https://lc-json.org/examples/14-signpost-item.json) | Structural navigation (intro/summary) with objectives and stats; `customHtml` subject to [HTML_SAFETY.md](HTML_SAFETY.md) |
 
-> **Exercise vs. Quiz.** These are structural distinctions only. They render differently in the UI and contribute to separate point buckets (enabling weighted grading). Whether the score counts toward a learner's grade is the `isGraded` flag, set independently. The examples model this: [`11-exercise-item.json`](examples/11-exercise-item.json) is a graded homework exercise (`isGraded: true`); [`12a-graded-quiz-item.json`](examples/12a-graded-quiz-item.json) and [`12b-ungraded-quiz-item.json`](examples/12b-ungraded-quiz-item.json) use the same content under the same schema to show that quiz can be either graded or ungraded. The fourth combination (ungraded exercise / open practice) is conventional and not given its own example.
+> **Exercise vs. Quiz.** These are structural distinctions only. They render differently in the UI and contribute to separate point buckets (enabling weighted grading). Whether the score counts toward a learner's grade is the `isGraded` flag, set independently. The examples model this: [`11-exercise-item.json`](https://lc-json.org/examples/11-exercise-item.json) is a graded homework exercise (`isGraded: true`); [`12a-graded-quiz-item.json`](https://lc-json.org/examples/12a-graded-quiz-item.json) and [`12b-ungraded-quiz-item.json`](https://lc-json.org/examples/12b-ungraded-quiz-item.json) use the same content under the same schema to show that quiz can be either graded or ungraded. The fourth combination (ungraded exercise / open practice) is conventional and not given its own example.
 >
 > For an authoring guide that walks through the full design space of `type` × `isGraded` × `isOptional` × `passMarkPercent` — common patterns (graded homework, diagnostic pre-test, exit ticket, etc.) and how different consumers may interpret each combination — see [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md).
 
-**Key Properties (all items inherit from [item-base.schema.json](schemas/item-base.schema.json)):**
+**Key Properties (all items inherit from [item-base.schema.json](https://lc-json.org/1.1-rc.1/item-base.schema.json)):**
 - `type` (required) - Discriminator: "content", "exercise", "quiz", "contentsequence", or "signpost"
 - `title` (required) - Display title for the item
 - `sequence` - Display order within lesson (0-based)
@@ -229,13 +319,34 @@ Every Lesson contains an `items` array with one or more of these 5 item types:
 
 ---
 
+### 1b. Artifact type references
+
+**Complete JSON Format References for the v1.1 artifact types**
+
+- [subject-collection-reference.md](./subject-collection-reference.md) — SubjectCollection: scope, members (tags and objectives), `externalAlignments`, carried copies in course documents.
+- [curriculum-pack-reference.md](./curriculum-pack-reference.md) — CurriculumPack: `sequence[]` steps on the calendar-relative timeline, pacing, assessment checkpoints, the `coverage` contract, and the blueprint / manifest / bundle depths.
+- [glossary-reference.md](./glossary-reference.md) — Glossary: terms, pronunciation, the declared `translationLanguages` inventory, `definitionTranslations`, `firstMention`, and `glossaryRefs` attachment.
+
+**When to use:**
+- Authoring or consuming a collection, pack, or glossary document
+- Understanding how the v1.1 types reference each other by stable id
+
+---
+
 ### 2. JSON Schema Files (`schemas/`)
 **Machine-Readable Validation**
 
 JSON Schema files for automated validation using tools like `ajv`, `jsonschema`, or IDE validators.
 
-**Course Hierarchy Schemas:**
+**Root Artifact Schemas:**
 - `course.schema.json` - Course (top level)
+- `question-set.schema.json` - QuestionSet (flat artifact)
+- `glossary.schema.json` - Glossary (flat artifact)
+- `subject-collection.schema.json` - SubjectCollection (vocabulary artifact)
+- `curriculum-pack.schema.json` - CurriculumPack (arrangement artifact)
+- `publication-fields.schema.json` - Shared publication field group, composed via `allOf` (NORMATIVE §4.11)
+
+**Course Hierarchy Schemas:**
 - `unit.schema.json` - Unit (within Course)
 - `lesson.schema.json` - Lesson (within Unit)
 
@@ -463,8 +574,8 @@ The 12 implemented types are the entire user-facing surface as of 1.0. The 7 res
 - [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) — Informative authoring guide for items + signposts + objectives
 - [`IMPLEMENTATIONS.md`](IMPLEMENTATIONS.md) — Directory of tools that produce, consume, or validate LC-JSON
 - [`CONTRIBUTORS.md`](CONTRIBUTORS.md) — Acknowledgments
-- [`schemas/`](schemas/) — JSON Schema files (the contract)
-- [`examples/`](examples/) — Example documents for every artifact and question type
+- [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas) — JSON Schema files (the contract)
+- [`examples/`](https://github.com/lc-json/specification/tree/main/examples) — Example documents for every artifact and question type
 - [`tests/`](tests/) — Conformance test corpus (valid and invalid cases)
 - [`question-types-reference.md`](question-types-reference.md) — Per-type property reference
 

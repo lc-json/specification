@@ -1,7 +1,7 @@
 {
-  "$schema": "https://lc-json.org/1.0/course.schema.json",
+  "$schema": "https://lc-json.org/1.1-rc.1/course.schema.json",
   "documentType": "course",
-  "specVersion": "1.0",
+  "specVersion": "1.1",
   "title": "Accessibility Round-Trip Preservation",
   "description": "Demonstrates NORMATIVE §12.1 — the accessibility-preservation floor required of every conforming consumer. A consumer that ingests this document and re-emits it MUST preserve: `alt` on `<img>`, `<track>` on `<video>`, `lang` and `dir` on HTML spans, the document-root `language` and `supportLanguage`, and any `x-`-namespaced accessibility metadata on reserved-type questions.",
   "language": "en",

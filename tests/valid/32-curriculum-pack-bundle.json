@@ -1,0 +1,321 @@
+{
+  "$schema": "https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json",
+  "documentType": "curriculumPack",
+  "specVersion": "1.1",
+  "globalId": "b1f0a2c4-3d5e-4f60-8a71-92b3c4d5e6f7",
+  "version": "1.0.0",
+  "title": "KS3 Fractions — Minimal Self-Contained Pack",
+  "description": "A minimal self-contained bundle: the KS3 fractions vocabulary plus an embedded course (referenced by sourceCourseId) and question set (by sourceQuestionSetId), demonstrating type-directed contentRef resolution and bundle closure.",
+  "packMode": "bundle",
+  "license": "unspecified",
+  "authors": [
+    "Example Vocabulary Project"
+  ],
+  "collectionRefs": [
+    {
+      "globalId": "ks3-maths-fractions",
+      "version": "1.1.0"
+    }
+  ],
+  "contentRefs": [
+    {
+      "type": "course",
+      "id": "a1c0ffee-0001-4a00-9a00-0000000000c1",
+      "version": "1.0"
+    },
+    {
+      "type": "questionSet",
+      "id": "c3e0d00d-0003-4c00-9c00-000000000095",
+      "version": "1.0"
+    }
+  ],
+  "pacing": {
+    "years": 1,
+    "termsPerYear": 1,
+    "weeksPerTerm": [
+      3
+    ],
+    "lessonsPerWeek": 3,
+    "note": "Half-term of three maths lessons per week."
+  },
+  "coverage": {
+    "collectionGlobalId": "ks3-maths-fractions",
+    "assertions": [
+      "everyObjectiveTaughtAtLeastOnce"
+    ],
+    "exemptObjectiveIds": [
+      "71b3e496-c92d-4d27-83a2-058717335398",
+      "82c4f5a7-da3e-4e38-94b3-169828446409",
+      "93d506b8-eb4f-4f49-a5c4-27a939557510",
+      "60a2d374-b81e-41c5-9290-e47584113176"
+    ]
+  },
+  "sequence": [
+    {
+      "id": "w01",
+      "kind": "teaching",
+      "label": "Equivalent fractions",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 1,
+      "durationLessons": 3,
+      "objectiveIds": [
+        "4e80b152-96fc-4fa3-b07e-c25362991f54"
+      ],
+      "contentRef": {
+        "type": "course",
+        "id": "a1c0ffee-0001-4a00-9a00-0000000000c1",
+        "version": "1.0",
+        "selector": "unit:b2d0face-0002-4b00-9b00-000000000021"
+      }
+    },
+    {
+      "id": "w02",
+      "kind": "teaching",
+      "label": "Adding and subtracting fractions",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 2,
+      "durationLessons": 3,
+      "objectiveIds": [
+        "5f91c263-a70d-40b4-818f-d3647300206a"
+      ],
+      "contentRef": {
+        "type": "questionSet",
+        "id": "c3e0d00d-0003-4c00-9c00-000000000095",
+        "version": "1.0"
+      },
+      "dependsOn": [
+        "w01"
+      ]
+    }
+  ],
+  "embedded": {
+    "collections": [
+      {
+        "$schema": "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+        "documentType": "subjectCollection",
+        "specVersion": "1.1",
+        "globalId": "ks3-maths-fractions",
+        "version": "1.1.0",
+        "title": "KS3 Mathematics — Fractions",
+        "description": "A minimal vocabulary for fractions work at Key Stage 3.",
+        "scope": {
+          "subject": {
+            "scheme": null,
+            "id": "mathematics",
+            "label": "Mathematics"
+          },
+          "level": {
+            "scheme": "UK-KS",
+            "id": "KS3",
+            "label": "Key Stage 3"
+          },
+          "audience": [
+            {
+              "scheme": null,
+              "id": "lower-secondary",
+              "label": "Lower Secondary"
+            }
+          ],
+          "purpose": [
+            {
+              "scheme": null,
+              "id": "school-curriculum",
+              "label": "School Curriculum"
+            }
+          ],
+          "jurisdiction": {
+            "scheme": "ISO-3166",
+            "id": "GB",
+            "label": "United Kingdom"
+          }
+        },
+        "license": "CC-BY-4.0",
+        "authors": [
+          "Example Vocabulary Project"
+        ],
+        "canonicalUrl": null,
+        "derivedFrom": [],
+        "externalAlignments": [
+          {
+            "claim": "alignedTo",
+            "scheme": "UK-NC-2014",
+            "id": "ks3-mathematics-number",
+            "label": "National curriculum in England: mathematics programmes of study, KS3 — Number"
+          }
+        ],
+        "categories": [
+          {
+            "id": "number",
+            "name": "Number",
+            "description": null,
+            "sortOrder": 1,
+            "icon": null
+          },
+          {
+            "id": "skills",
+            "name": "Working Mathematically",
+            "description": null,
+            "sortOrder": 2,
+            "icon": null
+          }
+        ],
+        "tags": [
+          {
+            "id": "0a4c7d1e-52b8-4b6f-9c3a-8e1f2d5a7b10",
+            "slug": "number:fractions",
+            "name": "Fractions",
+            "description": null,
+            "categoryId": "number",
+            "parentId": null,
+            "level": 0,
+            "sortOrder": 0,
+            "aliases": null,
+            "color": null,
+            "icon": null,
+            "isActive": true
+          },
+          {
+            "id": "1b5d8e2f-63c9-4c70-8d4b-9f203e6b8c21",
+            "slug": "number:fractions:equivalence",
+            "name": "Equivalent Fractions",
+            "description": "Recognising and generating equivalent forms, including simplest form.",
+            "categoryId": "number",
+            "parentId": "0a4c7d1e-52b8-4b6f-9c3a-8e1f2d5a7b10",
+            "level": 1,
+            "sortOrder": 0,
+            "aliases": null,
+            "color": null,
+            "icon": null,
+            "isActive": true
+          },
+          {
+            "id": "2c6e9f30-74da-4d81-9e5c-a03140779d32",
+            "slug": "number:fractions:operations",
+            "name": "Operations with Fractions",
+            "description": "Addition, subtraction, multiplication and division of proper and improper fractions.",
+            "categoryId": "number",
+            "parentId": "0a4c7d1e-52b8-4b6f-9c3a-8e1f2d5a7b10",
+            "level": 1,
+            "sortOrder": 1,
+            "aliases": null,
+            "color": null,
+            "icon": null,
+            "isActive": true
+          },
+          {
+            "id": "3d7fa041-85eb-4e92-af6d-b14251880e43",
+            "slug": "skills:worded-problems",
+            "name": "Worded Problems",
+            "description": "Translating a written scenario into mathematical form before solving.",
+            "categoryId": "skills",
+            "parentId": null,
+            "level": 0,
+            "sortOrder": 0,
+            "aliases": null,
+            "color": null,
+            "icon": null,
+            "isActive": true
+          }
+        ],
+        "objectives": [
+          {
+            "id": "4e80b152-96fc-4fa3-b07e-c25362991f54",
+            "text": "Recognise and generate equivalent fractions, expressing a fraction in its simplest form.",
+            "difficultyBand": "Understand",
+            "tagIds": [
+              "1b5d8e2f-63c9-4c70-8d4b-9f203e6b8c21"
+            ]
+          },
+          {
+            "id": "5f91c263-a70d-40b4-818f-d3647300206a",
+            "text": "Add and subtract fractions with different denominators, including mixed numbers.",
+            "difficultyBand": "Apply",
+            "tagIds": [
+              "2c6e9f30-74da-4d81-9e5c-a03140779d32"
+            ]
+          },
+          {
+            "id": "71b3e496-c92d-4d27-83a2-058717335398",
+            "text": "Multiply proper and improper fractions, simplifying the result.",
+            "difficultyBand": "Apply",
+            "tagIds": [
+              "2c6e9f30-74da-4d81-9e5c-a03140779d32"
+            ]
+          },
+          {
+            "id": "82c4f5a7-da3e-4e38-94b3-169828446409",
+            "text": "Multiply mixed numbers by converting to improper fractions first.",
+            "difficultyBand": "Apply",
+            "tagIds": [
+              "2c6e9f30-74da-4d81-9e5c-a03140779d32"
+            ]
+          },
+          {
+            "id": "93d506b8-eb4f-4f49-a5c4-27a939557510",
+            "text": "Divide fractions using the reciprocal, including mixed numbers.",
+            "difficultyBand": "Apply",
+            "tagIds": [
+              "2c6e9f30-74da-4d81-9e5c-a03140779d32"
+            ]
+          },
+          {
+            "id": "60a2d374-b81e-41c5-9290-e47584113176",
+            "text": "Solve worded problems requiring a choice of fraction operations, explaining the chosen method.",
+            "difficultyBand": "Analyze",
+            "tagIds": [
+              "2c6e9f30-74da-4d81-9e5c-a03140779d32",
+              "3d7fa041-85eb-4e92-af6d-b14251880e43"
+            ]
+          }
+        ]
+      }
+    ],
+    "content": [
+      {
+        "$schema": "https://lc-json.org/1.1-rc.1/course.schema.json",
+        "documentType": "course",
+        "specVersion": "1.1",
+        "sourceCourseId": "a1c0ffee-0001-4a00-9a00-0000000000c1",
+        "version": "1.0",
+        "title": "KS3 Fractions — Worked Course",
+        "language": "en",
+        "supportLanguage": null,
+        "units": [
+          {
+            "globalId": "b2d0face-0002-4b00-9b00-000000000021",
+            "title": "Equivalent Fractions",
+            "lessons": []
+          }
+        ]
+      },
+      {
+        "$schema": "https://lc-json.org/1.1-rc.1/question-set.schema.json",
+        "documentType": "questionSet",
+        "specVersion": "1.1",
+        "sourceQuestionSetId": "c3e0d00d-0003-4c00-9c00-000000000095",
+        "version": "1.0",
+        "title": "Fractions — Check Questions",
+        "language": "en",
+        "questions": [
+          {
+            "type": "trueFalseQuestion",
+            "globalId": "11111111-1111-4111-8111-1111111111f2",
+            "title": "Equivalence",
+            "tags": [],
+            "points": 1.0,
+            "difficulty": 1.0,
+            "prompt": "1/2 and 2/4 are equivalent fractions.",
+            "correctAnswer": true,
+            "displayStyle": "TrueFalse",
+            "feedback": {
+              "correct": "Yes.",
+              "incorrect": "They are equivalent."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

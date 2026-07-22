@@ -564,9 +564,9 @@ Per-row scoring. In `pairs` mode, each row is one item↔match comparison. In `c
 
 | `orderingUnit` | Typical chunk size | Typical layout | Example use |
 |---|---|---|---|
-| `"word"` | one word or short phrase | inline draggable tokens on one line | Unscramble a sentence — see [`16-ordering.json`](examples/16-ordering.json) |
-| `"sentence"` | one sentence (10–30 words) | stacked card blocks, vertical | Order steps of a process, narrative beats — see [`16b-sentence-ordering.json`](examples/16b-sentence-ordering.json) |
-| `"paragraph"` | one paragraph (50–100 words) | stacked block cards, vertical, larger | Order paragraphs of an essay — see [`16c-paragraph-ordering.json`](examples/16c-paragraph-ordering.json) |
+| `"word"` | one word or short phrase | inline draggable tokens on one line | Unscramble a sentence — see [`16-ordering.json`](https://lc-json.org/examples/16-ordering.json) |
+| `"sentence"` | one sentence (10–30 words) | stacked card blocks, vertical | Order steps of a process, narrative beats — see [`16b-sentence-ordering.json`](https://lc-json.org/examples/16b-sentence-ordering.json) |
+| `"paragraph"` | one paragraph (50–100 words) | stacked block cards, vertical, larger | Order paragraphs of an essay — see [`16c-paragraph-ordering.json`](https://lc-json.org/examples/16c-paragraph-ordering.json) |
 
 #### Word-level example
 
@@ -607,11 +607,11 @@ Per-row scoring. In `pairs` mode, each row is one item↔match comparison. In `c
 }
 ```
 
-See [`16b-sentence-ordering.json`](examples/16b-sentence-ordering.json) for the full example.
+See [`16b-sentence-ordering.json`](https://lc-json.org/examples/16b-sentence-ordering.json) for the full example.
 
 #### Paragraph-level example
 
-Same shape, with `orderingUnit: "paragraph"` and longer items. See [`16c-paragraph-ordering.json`](examples/16c-paragraph-ordering.json) — a four-paragraph essay-structure reorder.
+Same shape, with `orderingUnit: "paragraph"` and longer items. See [`16c-paragraph-ordering.json`](https://lc-json.org/examples/16c-paragraph-ordering.json) — a four-paragraph essay-structure reorder.
 
 #### Scoring
 
@@ -1042,8 +1042,8 @@ The seven question types in this section are reserved in the `question-base.sche
 
 - [`NORMATIVE.md`](NORMATIVE.md) — Conformance requirements (RFC 2119 keywords, producer/consumer roles).
 - [`README.md`](README-spec.md) — Specification overview.
-- [`schemas/`](schemas/) — JSON Schema files (the contract for each type).
-- [`examples/`](examples/) — Per-type example files (`01-simple-gap-fill.json` … `16c-paragraph-ordering.json`).
+- [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas) — JSON Schema files (the contract for each type).
+- [`examples/`](https://github.com/lc-json/specification/tree/main/examples) — Per-type example files (`01-simple-gap-fill.json` … `16c-paragraph-ordering.json`).
 - [`tests/`](tests/) — Conformance test corpus.
 
 ---

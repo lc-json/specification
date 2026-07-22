@@ -182,7 +182,7 @@ If a unit/lesson has no `objectiveIds[]` and no `customHtml`, consumers may rend
 
 - [NORMATIVE.md](NORMATIVE.md) — binding producer/consumer requirements
 - [README.md](README-spec.md) — spec overview
-- [examples/11-exercise-item.json](examples/11-exercise-item.json) — graded homework exercise
-- [examples/12a-graded-quiz-item.json](examples/12a-graded-quiz-item.json) — typical graded assessment
-- [examples/12b-ungraded-quiz-item.json](examples/12b-ungraded-quiz-item.json) — ungraded diagnostic pre-test
-- [schemas/exercise-item.schema.json](schemas/exercise-item.schema.json), [schemas/quiz-item.schema.json](schemas/quiz-item.schema.json) — formal schemas
+- [examples/11-exercise-item.json](https://lc-json.org/examples/11-exercise-item.json) — graded homework exercise
+- [examples/12a-graded-quiz-item.json](https://lc-json.org/examples/12a-graded-quiz-item.json) — typical graded assessment
+- [examples/12b-ungraded-quiz-item.json](https://lc-json.org/examples/12b-ungraded-quiz-item.json) — ungraded diagnostic pre-test
+- [schemas/exercise-item.schema.json](https://lc-json.org/1.1-rc.1/exercise-item.schema.json), [schemas/quiz-item.schema.json](https://lc-json.org/1.1-rc.1/quiz-item.schema.json) — formal schemas

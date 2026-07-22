@@ -2,14 +2,14 @@
 
 **An open learning-content interchange specification.**
 
-LC-JSON (Learning Content JSON) is a JSON-native format, schema set, and producer/consumer behavior contract for portable teacher-authored courses, lessons, questions, feedback, and assessment intent. It covers two artifact types (Course and Question Set) and 12 implemented question types, designed for portability between authoring tools, learning-management systems, and delivery platforms.
+LC-JSON (Learning Content JSON) is a JSON-native format, schema set, and producer/consumer behavior contract for portable teacher-authored courses, lessons, questions, feedback, and assessment intent. It covers five artifact types — Course, Question Set, Glossary, Subject Collection, and Curriculum Pack — and 12 implemented question types, designed for portability between authoring tools, learning-management systems, and delivery platforms.
 
 LC-JSON is a content-layer format — complementary to, not competing with, established LMS interop standards (LTI, OneRoster, xAPI, SCORM). See [the Rationale page](src/RATIONALE.md) for the full landscape and what LC-JSON is **not**.
 
 - **Specification site:** <https://lc-json.org>
-- **Schemas (1.0):** <https://lc-json.org/1.0/> *(the superseded `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` sets remain served and frozen per NORMATIVE.md §8.3)*
+- **Schemas (1.1-rc.1):** <https://lc-json.org/1.1-rc.1/> *(the `/1.0/` release and the superseded `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` sets remain served and frozen per NORMATIVE.md §8.3)*
 - **License:** [Apache 2.0](LICENSE)
-- **Current version:** `1.0` (released 2026-06-30)
+- **Current version:** `1.1-rc.1` (release candidate, 2026-07-17). Latest final release: `1.0` (2026-06-30).
 
 ## What's in this repository
 
@@ -18,7 +18,7 @@ LC-JSON is a content-layer format — complementary to, not competing with, esta
 | [`README.md`](README.md) (this file) | Repository overview |
 | [`src/`](src/) | Specification site source (mdBook) |
 | [`schemas/`](schemas/) | JSON Schema files (Draft 7) for every artifact, item type, and question type |
-| [`examples/`](examples/) | Example documents — minimal and full courses, per-question fragments |
+| [`examples/`](examples/) | Example documents — all five artifact types, from minimal documents to fuller Course and QuestionSet samples, plus question, item, unit, and lesson fragments |
 | [`tests/`](tests/) | Conformance test corpus (valid and invalid cases per clause) |
 | [`tools/`](tools/) | Reference Python tools: validator and conformance corpus harness |
 | [`NORMATIVE.md`](src/NORMATIVE.md) | RFC 2119 conformance requirements (the authoritative source for implementers) |
@@ -43,11 +43,11 @@ python tools/validate_course.py --course-path my-course.json
 
 The schemas resolve at stable, versioned URLs:
 
-- `https://lc-json.org/1.0/course.schema.json`
-- `https://lc-json.org/1.0/question-set.schema.json`
-- `https://lc-json.org/1.0/<schema-name>.schema.json` (23 schema files in total)
+- `https://lc-json.org/1.1-rc.1/course.schema.json`
+- `https://lc-json.org/1.1-rc.1/question-set.schema.json`
+- `https://lc-json.org/1.1-rc.1/<schema-name>.schema.json` (27 schema files in total)
 
-VS Code, JetBrains IDEs, and any JSON Schema validator can fetch these URLs for autocomplete and validation. The `1.0/` URL path is immutable; the earlier `1.0-rc.1/`, `1.0-rc.2/`, and `1.0-rc.3/` paths remain served and frozen (per [`NORMATIVE.md`](src/NORMATIVE.md) §8.3).
+VS Code, JetBrains IDEs, and any JSON Schema validator can fetch these URLs for autocomplete and validation. Every published path is immutable: `1.1-rc.1/` is the current publication, and the `1.0/` release plus the earlier `1.0-rc.1/`, `1.0-rc.2/`, and `1.0-rc.3/` paths remain served and frozen (per [`NORMATIVE.md`](src/NORMATIVE.md) §8.3).
 
 **See an example document:**
 
@@ -57,11 +57,13 @@ cat examples/course-minimal.json
 
 ## Conformance
 
-A tool may claim conformance to LC-JSON 1.0 as a *producer*, *consumer*, or unqualified (both). See [`NORMATIVE.md`](src/NORMATIVE.md) §10 for the full conformance-claim language. The [test corpus](tests/) lets implementations self-verify.
+A tool may claim conformance to LC-JSON as a *producer*, *consumer*, or unqualified (both), and conformance is scoped per artifact type — a tool that reads only courses claims only that. See [`NORMATIVE.md`](src/NORMATIVE.md) §10 for the full conformance-claim language. The [test corpus](tests/) lets implementations self-verify.
 
 ## Project status
 
-LC-JSON `1.0` was released on **2026-06-30** as the accepted final release. It is a pure URL rebase of `1.0-rc.3` with no wire/content delta: the rc.3 schema set is republished unchanged at `lc-json.org/1.0/`, with only `$id`/`$schema` URL strings and document version labels updated. Every `1.0-rc.3`-valid document is valid under `1.0` with no migration or re-export. The release-candidate paths `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` remain served and frozen per `NORMATIVE.md` §8.3.
+LC-JSON `1.1-rc.1` is the **current publication** (2026-07-17) — a release candidate published at immutable `lc-json.org/1.1-rc.1/` URLs. It is a backwards-compatible addition to `1.0`: three new artifact types (Glossary, Subject Collection, Curriculum Pack) plus publication fields and `glossaryRefs` on courses. Every `1.0`-valid document remains valid under `1.1` with no migration or re-export.
+
+LC-JSON `1.0` was released on **2026-06-30** as the accepted final release, and stays served and frozen at `lc-json.org/1.0/` alongside the `/1.0-rc.1/`, `/1.0-rc.2/`, and `/1.0-rc.3/` candidate paths, per `NORMATIVE.md` §8.3.
 
 The specification distils approximately 12 months of internal format iteration. Earlier internal versions were never publicly released and are not part of the public version history.
 

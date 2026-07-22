@@ -6,7 +6,7 @@ Thank you for your interest in contributing to the LC-JSON (Learning Content JSO
 
 - **Specification text:** [`README-spec.md`](README-spec.md), [`NORMATIVE.md`](NORMATIVE.md), [`question-types-reference.md`](question-types-reference.md).
 - **Schemas:** [`schemas/`](https://github.com/lc-json/specification/tree/main/schemas) — JSON Schema Draft 7.
-- **Examples:** [`examples/`](https://github.com/lc-json/specification/tree/main/examples) — 31 example documents.
+- **Examples:** [`examples/`](https://github.com/lc-json/specification/tree/main/examples) — 35 examples spanning all five artifact types, including complete documents and question, item, and structure fragments.
 - **Conformance tests:** [`tests/`](https://github.com/lc-json/specification/tree/main/tests) — valid and invalid cases per clause; see [`tests/README.md`](https://github.com/lc-json/specification/tree/main/tests/README.md).
 - **Implementation directory:** [`IMPLEMENTATIONS.md`](IMPLEMENTATIONS.md).
 

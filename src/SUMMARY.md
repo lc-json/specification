@@ -14,6 +14,9 @@
 - [Localization and language model](LOCALIZATION.md)
 - [Validation surface (rule catalog)](VALIDATION.md)
 - [Question types reference](question-types-reference.md)
+- [Subject Collection reference](subject-collection-reference.md)
+- [Curriculum Pack reference](curriculum-pack-reference.md)
+- [Glossary reference](glossary-reference.md)
 - [Item patterns (authoring guide)](ITEM_PATTERNS.md)
 - [Glossary](GLOSSARY.md)
 

@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1-rc.1/multi-gap-cloze.schema.json",
+  "title": "MultiGapCloze Question Schema",
+  "description": "Passage with multiple gaps, each accepting free text with multiple valid answers (Cambridge FCE/CAE Reading Part 2 - Open Cloze)",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "multiGapCloze"
+        },
+        "passage": {
+          "type": "string",
+          "description": "Text with numbered @@@1, @@@2, etc. marking gaps (1-based)",
+          "pattern": "@@@\\d+",
+          "minLength": 4
+        },
+        "gapAcceptedAnswers": {
+          "type": "object",
+          "description": "Dictionary: gap number (1-based, as string) → array of accepted answers. IMPORTANT: accepted answers should not contain commas (,) or colons (:). Some consuming applications encode multi-gap submissions as 'gap:answer,gap:answer' on the wire, in which case any comma or colon inside an answer can be silently truncated during scoring. Other punctuation is discouraged since MultiGapCloze is typically a vocabulary/grammar exercise (single words or short phrases); apostrophes (e.g., don't) and hyphens (e.g., well-known) are fine.",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "not": {
+                  "pattern": "[,:]"
+                }
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "gapCaseSensitive": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Dictionary: gap number → boolean (default: false)",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "boolean"
+            }
+          },
+          "default": null
+        },
+        "gapFeedback": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Dictionary: gap number → feedback string",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "string"
+            }
+          },
+          "default": null
+        },
+        "allowPartialCredit": {
+          "type": "boolean",
+          "description": "Award partial credit for some correct answers",
+          "default": true
+        }
+      },
+      "required": [
+        "passage",
+        "gapAcceptedAnswers"
+      ]
+    }
+  ]
+}

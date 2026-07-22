@@ -1,6 +1,6 @@
 # LC-JSON Conformance Test Corpus
 
-A curated set of test documents for verifying that an implementation conforms to **LC-JSON 1.0** (Learning Content JSON) as described in [`../NORMATIVE.md`](../NORMATIVE.md).
+A curated set of test documents for verifying that an implementation conforms to **LC-JSON 1.1** (Learning Content JSON) as described in [`../src/NORMATIVE.md`](../src/NORMATIVE.md).
 
 ## Structure
 
@@ -43,7 +43,7 @@ Formal behavioral conformance fixtures and a reference round-trip runner are an 
 
 ```json
 {
-  "specVersion": "1.0",
+  "specVersion": "1.1",
   "valid": [
     { "file": "01-course-minimal.json", "schema": "course.schema.json", "demonstrates": ["§..."] },
     ...
@@ -64,6 +64,6 @@ Formal behavioral conformance fixtures and a reference round-trip runner are an 
 
 ## Reference validator
 
-The reference implementation in `../../tools/validate_course.py` runs the corpus as part of its own test suite. CI for the public spec repository will run a strict validator over the corpus as a gate.
+The reference implementation in `../tools/validate_course.py` runs the corpus as part of its own test suite. CI for the public spec repository will run a strict validator over the corpus as a gate.
 
-The reference validator retains lenient handling of pre-1.0 document shapes (wrapped envelope `{"course": {...}}`, bare payload `{"units": [...]}` with no `documentType`) for backward compatibility with legacy content during migration. This lenient handling is a migration aid, not a feature of LC-JSON 1.0. The `--strict` flag — which the conformance harness `tools/run_corpus.py` always passes — disables the lenient paths and evaluates the published conformance contract.
+The reference validator retains lenient handling of pre-1.0 document shapes (wrapped envelope `{"course": {...}}`, bare payload `{"units": [...]}` with no `documentType`) for backward compatibility with legacy content during migration. This lenient handling is a migration aid, not a feature of LC-JSON. The `--strict` flag — which the conformance harness `tools/run_corpus.py` always passes — disables the lenient paths and evaluates the published conformance contract.

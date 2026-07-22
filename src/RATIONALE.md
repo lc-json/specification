@@ -1,7 +1,8 @@
 # LC-JSON Rationale and Positioning
 
 **Status:** Informative  
-**Spec version context:** LC-JSON 1.0  
+**Spec version context:** LC-JSON 1.1-rc.1  
+**Last updated:** 2026-07-22  
 **Audience:** teachers, curriculum designers, institutional reviewers, educational software developers, and implementers evaluating LC-JSON for adoption.
 
 This document is **informative**, not normative. It explains the design rationale and positioning behind LC-JSON. Conformance requirements remain in [`NORMATIVE.md`](NORMATIVE.md).
@@ -30,10 +31,15 @@ For teachers, it can be understood as a **portable course file format**: a way t
 
 For developers, LC-JSON defines a schema-validated JSON wire format plus producer/consumer conformance rules for exchanging learning content.
 
-LC-JSON 1.0 defines two artifact types:
+LC-JSON 1.1 defines five artifact types:
 
 - **Course** — hierarchical learning content: Course -> Units -> Lessons -> Items -> Questions.
 - **QuestionSet** — a flat list of questions for question-bank exchange and packaged delivery.
+- **Glossary** — a flat list of terms (definitions, pronunciation, translations, examples, etc.) that attaches to a course, unit, or lesson.
+- **SubjectCollection** — a reusable classification vocabulary: the tags and learning objectives for one subject at one level.
+- **CurriculumPack** — an arrangement: sequence, pacing, and assessment checkpoints over a collection plus content documents.
+
+The first two (added in 1.0) carry learning content; the last three (added in 1.1) carry the vocabulary, arrangement, and study material that sit around it.
 
 The practical goal is to preserve teacher-authored instructional intent: sequence, explanations, questions, distractors, feedback, objectives, tags, rubrics, and grading intent.
 
@@ -99,6 +105,19 @@ Runtime delivery, gradebook integration, learner analytics, roster sync, and LMS
 
 A typical adoption path is to author or preserve content in LC-JSON, then export or map selected surfaces to delivery, package, or analytics layers such as QTI, Common Cartridge, H5P, xAPI, or Caliper where needed.
 
+The 1.1 vocabulary and arrangement types sit alongside existing work rather than
+replacing it. Machine-readable standards frameworks already exist — **1EdTech® CASE®**[^case]
+is the established way authorities publish competency frameworks — and LC-JSON
+collections do not compete with those registers: a collection *points at* them
+(`externalAlignments`) while carrying the working tags and objectives that course
+files actually reference. What LC-JSON has lacked is the connective layer in
+the same plain-file format as the content: a scheme of work whose sequencing, pacing,
+and coverage claims are checkable by a validator against the vocabulary it cites, in
+a document a teacher can open and read. That — not the existence of machine-readable
+curricula — is the gap the Curriculum Pack addresses.
+
+[^case]: CASE® and 1EdTech® are trademarks of 1EdTech Consortium, Inc. ([1edtech.org](https://www.1edtech.org)).
+
 ## Landscape
 
 LC-JSON is one of several specifications that touch learning content. It sits at a specific layer — **content interchange** — and is intended to be used alongside, not instead of, the formats that handle adjacent concerns.
@@ -111,13 +130,13 @@ LC-JSON is one of several specifications that touch learning content. It sits at
 | **IMS Common Cartridge** | Multi-format content package | Bundles QTI, SCORM, web links, and a manifest into a single archive. LC-JSON is a single JSON-native artifact rather than a package format. |
 | **QTI 2.x / 3.0** | Question and assessment interchange | Closest peer. QTI was conceived as XML; 3.0 added a JSON binding but the conceptual model remains XML-shaped and the surface area is broad. LC-JSON is JSON-native from the start, course-shaped as well as question-bank-shaped, narrower in surface, and designed for direct human inspection. |
 | **OneRoster** | Roster, enrollment, grade exchange | Different layer; orthogonal to content. |
-| **CASE** | Competency and academic-standards framework | Different layer. CASE describes the competencies a course might address; LC-JSON describes the course content itself. Complementary. |
+| **CASE** | Competency and academic-standards framework | The nearest overlap is in objectives. CASE provides a standardized way for an authority to *publish* a canonical competency framework; an LC-JSON Subject Collection is a portable working vocabulary of objectives and tags that can declare its relationship to such a framework through typed `externalAlignments`, rather than republishing it. Complementary — the Subject Collection points to the external register; it does not replace or author it. |
 | **H5P** | Interactive content packages and runtimes | Different layer. H5P provides executable interaction types and player/runtime semantics; LC-JSON is a neutral editable source/interchange format that could generate or map to selected runtime targets. |
 | **Caliper** | Learning analytics event model | Different layer. Like xAPI, Caliper describes learner activity events; LC-JSON describes the content those events may refer to. Complementary. |
 
-This is a high-level map, not an exhaustive comparison. LC-JSON's intended combination — JSON-native, human-inspectable, and covering hierarchical course structure as well as flat question sets — is uncommon among established educational interchange formats.
+This is a high-level map, not an exhaustive comparison. LC-JSON's intended combination — JSON-native, human-inspectable, and covering hierarchical course structure as well as flat question sets — is uncommon among established educational interchange formats. 1.1 extends that combination beyond the content to the curriculum around it — a shared vocabulary of objectives and tags, and a scheme-of-work arrangement, in the same plain-file format — and adds something rarer still: a curriculum pack whose sequencing and coverage claims a validator can check against the vocabulary it cites.
 
-The question of whether such a format needs to exist resolves as follows: QTI is mature and deep for assessment exchange, and LC-JSON deliberately targets a narrower, JSON-native course-and-question authoring source rather than competing on assessment surface area; SCORM and Common Cartridge are package-and-delivery formats from an earlier era, not editable JSON; xAPI, Caliper, LTI, OneRoster, and CASE are oriented at other layers. LC-JSON exists to occupy the JSON-native, teacher-readable, course-and-question interchange slot.
+The question of whether such a format needs to exist resolves as follows: QTI is mature and deep for assessment exchange, and LC-JSON deliberately targets a narrower, JSON-native course-and-question authoring source rather than competing on assessment surface area; SCORM and Common Cartridge are package-and-delivery formats from an earlier era, not editable JSON; xAPI, Caliper, LTI, OneRoster, and CASE are oriented at other layers. LC-JSON exists to occupy the JSON-native, teacher-readable interchange slot — and, with 1.1, to widen it beyond courses and questions to the curriculum around them: a shared vocabulary authors can classify against, and a validator-checkable scheme of work that sequences content against it.
 
 ## How LC-JSON Differs
 
@@ -128,6 +147,8 @@ The same comparison, expressed as field-level stances:
 | Teacher-readable interchange files | First-class design principle | Many established interchange formats prioritize machine/tool processing over direct human inspection |
 | JSON-native validation | Published JSON Schemas (Draft 7) | QTI is XML-shaped (3.0 added a JSON binding); SCORM and Common Cartridge are XML and package-based |
 | Course + question portability in one family | Separate `course` and `questionSet` artifacts under a common flat root | QTI covers questions; SCORM and Common Cartridge package courses; few formats cover both as editable JSON |
+| Shared curriculum vocabulary across courses | A `subjectCollection` is a portable, owned vocabulary of reusable objectives and tags with stable member ids that are never re-minted. It can declare typed relationships to external frameworks (e.g. CASE) through `externalAlignments`. Courses can carry copies of collection-origin objectives with their ids preserved; a `curriculumPack` can reference the collection directly and use its objective and tag ids to sequence and pace content. This lets courses within a compatible scope share objective identities, while packs use a referenced objective-and-tag vocabulary for sequencing and coverage | Alignment references may exist in packages — for example, Common Cartridge can carry standards and CASE URIs — but a reusable, editable objective and tag vocabulary is typically managed separately from the portable content package, such as in an LMS or standards service |
+| Curriculum sequencing and coverage as checkable data | A `curriculumPack` makes the plan portable and calendar-relative. It can declare coverage assertions against a cited collection and enables validators to enforce the defined taught-before-used sequencing rules | Other systems can order resources, and schemes of work often live as prose or LMS structures; they do not generally encode this combination of relative pacing, coverage assertions, and taught-before-used rules as a portable, independently machine-checkable contract against a cited vocabulary |
 | Accessibility metadata preservation across import/export | Base consumer-conformance preservation floor for `alt`, `<track>`, `lang`, `dir`, `language`, `supportLanguage`, reserved-type accessibility metadata | Accessibility metadata can be dropped or normalized away during transformation |
 | Accessible delivery claims | Opt-in Accessibility Profile binding (see [`ACCESSIBILITY.md`](ACCESSIBILITY.md)) | Accessibility-conformance claims are typically made about the delivery platform, not the interchange file |
 | Unsupported future question types | Preserve verbatim and report; never silently drop | Fallback behavior varies by implementation; without an explicit preservation contract, data loss is a practical risk |
@@ -143,7 +164,7 @@ For teachers:
 
 For institutions:
 
-> LC-JSON is an open JSON-based interchange format designed to make teacher-authored learning content portable between compatible tools and platforms.
+> LC-JSON is an open, JSON-based interchange format that makes teacher-authored learning content portable between compatible tools and platforms. From version 1.1 it also supports shared curriculum vocabularies: a portable Subject Collection carries reusable learning objectives and tags and can declare typed relationships to official curriculum frameworks. Courses can carry objectives from the collection with their ids preserved, while a Curriculum Pack can reference the collection directly to sequence content and check coverage against it. Courses within a compatible scope can therefore reuse objective identities, while packs can reuse the collection's objective and tag vocabulary.
 
 For developers:
 
@@ -151,7 +172,7 @@ For developers:
 
 For standards reviewers:
 
-> LC-JSON is an emerging open learning-content interchange specification with a stable 1.0 release-candidate contract, published schemas, conformance fixtures, and explicit producer/consumer obligations.
+> LC-JSON is an emerging open learning-content interchange specification with a published 1.0 release and a 1.1 release candidate, published schemas, conformance fixtures, and explicit producer/consumer obligations.
 
 ## Scope and Limits
 
@@ -162,7 +183,7 @@ LC-JSON is a focused, open, schema-validated interchange specification for porta
 - A roster, enrollment, or grade-exchange format. That is OneRoster's domain.
 - A learning-analytics or activity-record format. That is xAPI / cmi5's domain.
 - A runtime delivery wrapper. SCORM 2004 defines a runtime API; LC-JSON does not.
-- An established industry standard. LC-JSON is an emerging open specification at 1.0-rc.3, with published schemas, conformance fixtures, and explicit producer/consumer obligations. Whether it becomes widely adopted will be determined by implementers and time, not by self-description.
+- A broadly adopted industry specification. LC-JSON is an emerging open specification with published, versioned schemas, conformance fixtures, and explicit producer/consumer obligations. Whether it becomes widely adopted will be determined by implementers and time, not by self-description.
 
-Within those limits, LC-JSON aims to be exactly one thing well: a JSON-native, human-inspectable interchange format for hierarchical courses and flat question sets, with extension-preserving round-trips, a base accessibility-preservation floor, and an opt-in Accessibility Profile for delivery obligations.
+Within those limits, LC-JSON aims to do one thing well: provide a JSON-native, human-inspectable interchange format for three learner-facing content types — hierarchical courses, flat question sets, and glossaries — plus two coordinating types: Subject Collections, which provide reusable objective-and-tag vocabularies, and Curriculum Packs, which arrange content against those vocabularies. It supports extension-preserving round-trips, a base accessibility-preservation floor, and an opt-in Accessibility Profile for delivery obligations.
 
