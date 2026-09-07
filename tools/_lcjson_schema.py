@@ -101,7 +101,7 @@ def _publication_of_dir(directory):
 def publication_dirs():
     """publication segment -> its schema directory, for every publication present.
 
-    In the published layout that is all five shipped publications; in the source
+    In the published layout that is all shipped publications; in the source
     layout it is the single publication under development.
     """
     root, layout = detect_schemas_root()
@@ -127,9 +127,7 @@ def bundled_publication():
     """The publication this validator treats as its own — the newest present.
 
     Derived by version-sorting the publications actually in the tree, so it moves
-    with the publication automatically. (This deliberately replaced a hardcoded
-    "1.1-rc.1" preference, which was a fourth version list nobody had documented
-    alongside the known three.)
+    with the publication automatically, rather than naming a publication here.
     """
     pubs = publication_dirs()
     if not pubs:
@@ -335,6 +333,37 @@ def exit_unavailable(reason, stream=None):
     sys.exit(EXIT_VALIDATION_UNAVAILABLE)
 
 
+def exit_unavailable_unless_definitive(schema_errors, reason, stream=None):
+    """Resolve an unrunnable Draft-07 pass into a truthful three-state result.
+
+    Canonical-$schema identity and RD-1 are computed without jsonschema and without
+    loading the publication the document declares, so when either has already failed,
+    the document is definitively non-conforming and that verdict does not depend on
+    the pass that could not run. Exiting 3 there discards a finding the tool already
+    holds — and because a harness may read any non-zero exit as "correctly rejected",
+    it can turn an unadjudicated fixture into a silent pass.
+
+    This relies on an invariant upheld by the producer of `schema_errors`, not on
+    inspecting them here: every error in that list is availability-independent. A
+    condition that only means "this tree cannot check that" — above all, a declared
+    publication absent locally — must arrive as `reason`, never as an error, or a 1.2
+    document would be reported non-conforming by a 1.1 validator.
+
+    Definitive errors present -> report them and exit 1, noting the list may be
+    partial. No definitive error -> genuinely indeterminate, exit 3.
+    """
+    if not schema_errors:
+        exit_unavailable(reason, stream)
+    out = stream or sys.stdout
+    print(f"INVALID — {len(schema_errors)} problem(s) established without the "
+          f"Draft-07 pass:", file=out)
+    for error in schema_errors:
+        print(f"  - {error}", file=out)
+    print(f"Note: the Draft-07 schema pass did not run ({reason}), so this list may "
+          f"be incomplete; the document is non-conforming regardless.", file=out)
+    sys.exit(1)
+
+
 def validate_against_schema(doc, schema_filename, entry=None):
     """Validate `doc` against a named schema from `entry` (default: the bundled
     publication). Returns a list of error strings.
@@ -400,7 +429,13 @@ def schema_identity_errors(doc):
     Verifies, when `$schema` is present:
       * the canonical host and a versioned publication path;
       * the schema filename matches the document's own `documentType`;
-      * the declared publication is one this validator can actually resolve.
+      * where the declared publication IS carried here, that it actually contains
+        the named artifact schema.
+
+    Every error returned is definitive and availability-independent: it condemns the
+    document on evidence that does not depend on which publications this tree happens
+    to carry. A publication simply being absent locally is an availability condition
+    (exit 3), not an error, and is not reported here.
 
     Absence of `$schema` is governed by Section 3.2 and is not reported here.
     Returns a list of error strings.
@@ -436,15 +471,16 @@ def schema_identity_errors(doc):
             f"documentType '{doctype}' is not a known LC-JSON artifact type, so its "
             f"declared $schema '{filename}' cannot be checked (NORMATIVE Section 3.3)")
 
+    # "This tree does not carry the declared publication" is deliberately NOT an
+    # error here. It is a fact about this validator's environment, not about the
+    # document: a 1.2 document is not non-conforming because a 1.1 validator cannot
+    # reach 1.2's schemas. resolve_publication_for() carries that case as an
+    # unavailable reason, which the CLI entry points turn into exit 3 — the
+    # three-state contract in IMPLEMENTATIONS.md, and NORMATIVE Section 5.2's
+    # forward-minor posture. Everything this function returns must be definitive
+    # independently of what is present locally, because callers exit 1 on it.
     known = publication_dirs()
-    if known and declared_pub not in known:
-        errors.append(
-            f"$schema declares publication '{declared_pub}', which does not exist in "
-            f"this tree — the published publications are {', '.join(sorted(known))}. "
-            "Section 8.4 makes the declared URL the binding validation target, so a "
-            "URL that resolves to nothing cannot be validated against and is not a "
-            "conformance claim this validator can honor.")
-    elif known and declared_pub in known:
+    if known and declared_pub in known:
         # The publication exists, but does the artifact schema exist WITHIN it?
         # Checking the directory alone let a SubjectCollection declare
         # /1.0/subject-collection.schema.json — a publication that predates the

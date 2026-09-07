@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/question-set.schema.json",
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
   "documentType": "questionSet",
   "specVersion": "1.1",
   "title": "Ordering (sentence unit, kendall scoring) — per-type conformance fixture",

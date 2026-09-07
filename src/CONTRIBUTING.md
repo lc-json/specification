@@ -40,7 +40,9 @@ A short, focused issue is more useful than a long one. If you are not sure wheth
 
 ### Tests and CI
 
-CI for this repository runs the conformance test corpus against the reference validator using `tools/run_corpus.py`, which invokes `validate_course.py --strict` on every fixture in `tests/manifest.json`. The harness exits non-zero unless every valid fixture passes and every invalid fixture fails — PRs that break a corpus expectation will not merge.
+CI for this repository runs the conformance test corpus using `tools/run_corpus.py`, which reads `tests/manifest.json` and dispatches each fixture to the reference validator for its `documentType`: `validate_course.py --strict` for `course` and `questionSet`, and `lc_collection.py`, `lc_pack.py` or `lc_glossary.py` for the three artifact types added in 1.1.
+
+The harness exits non-zero unless every valid fixture exits `0` and every invalid fixture is adjudicated as definitively non-conforming (exit `1`). An exit `3` is **indeterminate**, not a violation: the document was never checked, so the rule the fixture exists to prove went unverified. The harness therefore fails on `3` rather than accepting it as a rejection. PRs that break a corpus expectation will not merge.
 
 To reproduce locally before opening a PR:
 

@@ -1,8 +1,8 @@
 # Governance
 
 **Status:** Informative.
-**Spec version:** 1.0
-**Last updated:** 2026-05-29
+**Spec version:** 1.1
+**Last updated:** 2026-09-07
 
 ## Stewardship
 
@@ -26,7 +26,7 @@ Substantive proposals (anything beyond a typo or non-normative fix) are document
 
 The LC-JSON repository maintains a **single living specification source**. Published releases create **immutable versioned artifacts** — the per-version schema URLs (`lc-json.org/<version>/<name>.schema.json`). Backward compatibility and behavioral changes are documented through **versioned schema URLs, release notes, and the changelog**.
 
-There is no separate, independently maintained prose source for a prior published version: the **git tag is the historical source**. The living specification (this repository's working tree) advances to the current version; prior versions persist as (a) their immutable published schema URLs and (b) git tags and commits. For example, the schemas at `/1.0-rc.1/` and `/1.0-rc.2/` stay served and frozen, but the repository's working schemas have moved on to `/1.0-rc.3/`; to read the spec exactly as rc.1 published it, read the rc.1 git tag, not the current working tree.
+There is no separate, independently maintained prose source for a prior published version: the **git tag is the historical source**. The living specification (this repository's working tree) advances to the current version; prior versions persist as (a) their immutable published schema URLs and (b) git tags and commits. Every prior publication's schemas stay served and frozen at their own versioned path while the working tree moves on to the next; to read the specification exactly as a given version published it, read that version's git tag, not the current working tree.
 
 ## Release Candidate Policy
 
@@ -47,7 +47,7 @@ Once the threshold is met, the maintainer will publish a transition plan: charte
 
 ## Trademark and naming
 
-"Lesson Commons" is a trademark of Brent Miller and is **not asserted** over the LC-JSON specification, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation. Implementers may state conformance freely.
+Lesson Commons® is a registered trademark of Brent Miller and is **not asserted** over the LC-JSON specification, the names "LC-JSON" or "Learning Content JSON", or any conforming implementation. Implementers may state conformance freely.
 
 The canonical sources for the LC-JSON specification are this repository — [`github.com/lc-json/specification`](https://github.com/lc-json/specification) — and the published site at [`lc-json.org`](https://lc-json.org). Forks and mirrors are permitted under the Apache 2.0 license, but only the URLs above carry the canonical specification text. A forked or mirrored copy that materially differs from these sources is a derivative work and should be named accordingly — not "LC-JSON" without qualification.
 

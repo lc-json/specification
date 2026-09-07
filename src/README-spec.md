@@ -1,7 +1,7 @@
 # LC-JSON Specification
 
-**Spec version:** 1.1-rc.1
-**Last updated:** 2026-07-22
+**Spec version:** 1.1
+**Last updated:** 2026-09-07
 
 This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.
 
@@ -39,17 +39,17 @@ LC-JSON uses a **flat root** with a `documentType` discriminator (no enclosing e
 
 | Artifact | `documentType` | Schema | Description |
 |----------|---------------|--------|-------------|
-| Course | `"course"` | [`course.schema.json`](https://lc-json.org/1.1-rc.1/course.schema.json) | Hierarchical course (Units → Lessons → Items). The usual shape for a full course. |
-| Question Set | `"questionSet"` | [`question-set.schema.json`](https://lc-json.org/1.1-rc.1/question-set.schema.json) | Flat list of questions for question-bank exchange and packaged delivery — no hierarchy. |
-| Glossary | `"glossary"` | [`glossary.schema.json`](https://lc-json.org/1.1-rc.1/glossary.schema.json) | Flat list of terms — pronunciation, translations, examples, inflected forms. Study material that attaches to a course, unit, or lesson. |
-| Subject Collection | `"subjectCollection"` | [`subject-collection.schema.json`](https://lc-json.org/1.1-rc.1/subject-collection.schema.json) | A reusable classification vocabulary: the tags and learning objectives for one subject at one level, as a portable document. |
-| Curriculum Pack | `"curriculumPack"` | [`curriculum-pack.schema.json`](https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json) | An arrangement: sequence, pacing, and assessment checkpoints referencing a Subject Collection plus content documents. |
+| Course | `"course"` | [`course.schema.json`](https://lc-json.org/1.1/course.schema.json) | Hierarchical course (Units → Lessons → Items). The usual shape for a full course. |
+| Question Set | `"questionSet"` | [`question-set.schema.json`](https://lc-json.org/1.1/question-set.schema.json) | Flat list of questions for question-bank exchange and packaged delivery — no hierarchy. |
+| Glossary | `"glossary"` | [`glossary.schema.json`](https://lc-json.org/1.1/glossary.schema.json) | Flat list of terms — pronunciation, translations, examples, inflected forms. Study material that attaches to a course, unit, or lesson. |
+| Subject Collection | `"subjectCollection"` | [`subject-collection.schema.json`](https://lc-json.org/1.1/subject-collection.schema.json) | A reusable classification vocabulary: the tags and learning objectives for one subject at one level, as a portable document. |
+| Curriculum Pack | `"curriculumPack"` | [`curriculum-pack.schema.json`](https://lc-json.org/1.1/curriculum-pack.schema.json) | An arrangement: sequence, pacing, and assessment checkpoints referencing a Subject Collection plus content documents. |
 
 ### Required root fields (all artifact types)
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/<artifact>.schema.json",
+  "$schema": "https://lc-json.org/1.1/<artifact>.schema.json",
   "documentType": "course",      // or "questionSet", "glossary",
                                  // "subjectCollection", "curriculumPack"
   "specVersion": "1.1",
@@ -227,14 +227,15 @@ specification/
 >
 > ```
 > schemas/
-> ├── 1.1-rc.1/        # the current publication — 27 schemas
+> ├── 1.1/             # the current publication — 27 schemas
+> ├── 1.1-rc.1/        # frozen release candidate
 > ├── 1.0/             # frozen final release
 > ├── 1.0-rc.1/        # frozen release candidates
 > ├── 1.0-rc.2/
 > └── 1.0-rc.3/
 > ```
 >
-> and each schema is served at an immutable versioned URL — `https://lc-json.org/1.1-rc.1/<name>.schema.json` for the current publication, with the frozen `/1.0/` and `/1.0-rc.N/` publications alongside it forever (NORMATIVE §8.3). That versioned URL is the value every document's `$schema` field carries, and it is the only citable form.
+> and each schema is served at an immutable versioned URL — `https://lc-json.org/1.1/<name>.schema.json` for the current publication, with the frozen `/1.1-rc.1/`, `/1.0/`, and `/1.0-rc.N/` publications alongside it forever (NORMATIVE §8.3). That versioned URL is the value every document's `$schema` field carries, and it is the only citable form.
 >
 > This is why schema links differ between the two: the source documents use a relative `schemas/<name>.schema.json` so contributors browsing the source tree can follow them, and the publication step rewrites every one of those links to its absolute versioned URL. **A published schema link is always immutable** — there is deliberately no mutable "current" alias to cite by mistake.
 
@@ -270,18 +271,18 @@ Every Lesson contains an `items` array with one or more of these 5 item types:
 
 | Item Type | Schema | Example | Description |
 |-----------|--------|---------|-------------|
-| **ContentItem** | [content-item.schema.json](https://lc-json.org/1.1-rc.1/content-item.schema.json) | [10-content-item.json](https://lc-json.org/examples/10-content-item.json) | Reading/content pages with HTML content (subject to [HTML_SAFETY.md](HTML_SAFETY.md)) |
-| **ExerciseItem** | [exercise-item.schema.json](https://lc-json.org/1.1-rc.1/exercise-item.schema.json) | [11-exercise-item.json](https://lc-json.org/examples/11-exercise-item.json) | Exercise-shaped questions container. Grading independent (`isGraded`). |
-| **QuizItem** (graded) | [quiz-item.schema.json](https://lc-json.org/1.1-rc.1/quiz-item.schema.json) | [12a-graded-quiz-item.json](https://lc-json.org/examples/12a-graded-quiz-item.json) | Quiz-shaped, `isGraded: true` — typical assessment. |
-| **QuizItem** (ungraded) | [quiz-item.schema.json](https://lc-json.org/1.1-rc.1/quiz-item.schema.json) | [12b-ungraded-quiz-item.json](https://lc-json.org/examples/12b-ungraded-quiz-item.json) | Quiz-shaped, `isGraded: false` — diagnostic pre-test, self-check. Same schema, different policy. |
-| **ContentSequenceItem** | [content-sequence-item.schema.json](https://lc-json.org/1.1-rc.1/content-sequence-item.schema.json) | [13-content-sequence-item.json](https://lc-json.org/examples/13-content-sequence-item.json) | Grouped content with layout options (carousel, tabs, accordion) |
-| **SignpostItem** | [signpost-item.schema.json](https://lc-json.org/1.1-rc.1/signpost-item.schema.json) | [14-signpost-item.json](https://lc-json.org/examples/14-signpost-item.json) | Structural navigation (intro/summary) with objectives and stats; `customHtml` subject to [HTML_SAFETY.md](HTML_SAFETY.md) |
+| **ContentItem** | [content-item.schema.json](https://lc-json.org/1.1/content-item.schema.json) | [10-content-item.json](https://lc-json.org/examples/10-content-item.json) | Reading/content pages with HTML content (subject to [HTML_SAFETY.md](HTML_SAFETY.md)) |
+| **ExerciseItem** | [exercise-item.schema.json](https://lc-json.org/1.1/exercise-item.schema.json) | [11-exercise-item.json](https://lc-json.org/examples/11-exercise-item.json) | Exercise-shaped questions container. Grading independent (`isGraded`). |
+| **QuizItem** (graded) | [quiz-item.schema.json](https://lc-json.org/1.1/quiz-item.schema.json) | [12a-graded-quiz-item.json](https://lc-json.org/examples/12a-graded-quiz-item.json) | Quiz-shaped, `isGraded: true` — typical assessment. |
+| **QuizItem** (ungraded) | [quiz-item.schema.json](https://lc-json.org/1.1/quiz-item.schema.json) | [12b-ungraded-quiz-item.json](https://lc-json.org/examples/12b-ungraded-quiz-item.json) | Quiz-shaped, `isGraded: false` — diagnostic pre-test, self-check. Same schema, different policy. |
+| **ContentSequenceItem** | [content-sequence-item.schema.json](https://lc-json.org/1.1/content-sequence-item.schema.json) | [13-content-sequence-item.json](https://lc-json.org/examples/13-content-sequence-item.json) | Grouped content with layout options (carousel, tabs, accordion) |
+| **SignpostItem** | [signpost-item.schema.json](https://lc-json.org/1.1/signpost-item.schema.json) | [14-signpost-item.json](https://lc-json.org/examples/14-signpost-item.json) | Structural navigation (intro/summary) with objectives and stats; `customHtml` subject to [HTML_SAFETY.md](HTML_SAFETY.md) |
 
 > **Exercise vs. Quiz.** These are structural distinctions only. They render differently in the UI and contribute to separate point buckets (enabling weighted grading). Whether the score counts toward a learner's grade is the `isGraded` flag, set independently. The examples model this: [`11-exercise-item.json`](https://lc-json.org/examples/11-exercise-item.json) is a graded homework exercise (`isGraded: true`); [`12a-graded-quiz-item.json`](https://lc-json.org/examples/12a-graded-quiz-item.json) and [`12b-ungraded-quiz-item.json`](https://lc-json.org/examples/12b-ungraded-quiz-item.json) use the same content under the same schema to show that quiz can be either graded or ungraded. The fourth combination (ungraded exercise / open practice) is conventional and not given its own example.
 >
 > For an authoring guide that walks through the full design space of `type` × `isGraded` × `isOptional` × `passMarkPercent` — common patterns (graded homework, diagnostic pre-test, exit ticket, etc.) and how different consumers may interpret each combination — see [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md).
 
-**Key Properties (all items inherit from [item-base.schema.json](https://lc-json.org/1.1-rc.1/item-base.schema.json)):**
+**Key Properties (all items inherit from [item-base.schema.json](https://lc-json.org/1.1/item-base.schema.json)):**
 - `type` (required) - Discriminator: "content", "exercise", "quiz", "contentsequence", or "signpost"
 - `title` (required) - Display title for the item
 - `sequence` - Display order within lesson (0-based)

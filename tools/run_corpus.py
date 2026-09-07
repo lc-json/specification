@@ -12,7 +12,13 @@ Validator dispatch by `documentType`:
     subjectCollection     → lc_collection.py --validate FILE
     curriculumPack        → lc_pack.py --validate FILE
     glossary              → lc_glossary.py --validate FILE
-All four share the same exit contract: 0 = conforming, non-zero = a violation.
+All four share the same three-state exit contract:
+    0 = conforming
+    1 = definitively non-conforming
+    3 = INDETERMINATE — no conformance statement could be made (a dependency or
+        the declared publication's schemas are absent). Exit 3 is NOT a violation:
+        an invalid fixture that exits 3 was never adjudicated, so this harness
+        counts it as a failure rather than as a correct rejection.
 A manifest entry MAY set "validator" explicitly to override the documentType
 dispatch (e.g. to run a curriculumPack fixture with a --collection argument);
 see the manifest's "validatorArgs" field.
@@ -54,7 +60,8 @@ DEFAULT_TESTS_DIR = _detect_tests_dir()
 VALIDATOR = THIS_DIR / "validate_course.py"
 
 # documentType → (validator script, argv builder taking the fixture path).
-# All four validators exit 0 on a conforming document and non-zero on a violation.
+# All four validators share the three-state contract above: 0 conforming,
+# 1 definitively non-conforming, 3 indeterminate (never a violation).
 _DISPATCH = {
     "course":            (THIS_DIR / "validate_course.py", lambda p: ["--course-path", str(p), "--strict"]),
     "questionSet":       (THIS_DIR / "validate_course.py", lambda p: ["--course-path", str(p), "--strict"]),
@@ -189,16 +196,25 @@ def main():
 
     print()
 
-    # Invalid fixtures MUST fail under --strict.
-    print(f"Invalid fixtures (expecting exit non-zero):")
+    # Invalid fixtures MUST be adjudicated as definitively non-conforming: exit 1.
+    # Exit 3 means the validator could make no statement about the document, so the
+    # rule the fixture exists to prove was never checked — that is a harness failure,
+    # not a pass. Accepting any non-zero exit here would let an unadjudicated fixture
+    # inflate the pass total.
+    print(f"Invalid fixtures (expecting exit 1):")
     for entry in invalid_entries:
         rel = entry["file"]
         path = args.tests_dir / rel
         rc, output = run_validator(path, entry, args.verbose)
-        status = "PASS" if rc != 0 else "FAIL"
+        status = "PASS" if rc == 1 else "FAIL"
         print(f"  [{status}] {rel}  (exit {rc})  -- {entry.get('violatedClause', '?')}")
         if rc == 0:
             failures.append(("invalid-but-passed", rel, entry.get("violation", "")))
+        elif rc != 1:
+            last = output.strip().splitlines()[-1] if output.strip() else "no output"
+            failures.append(("invalid-but-indeterminate", rel,
+                             f"exit {rc}: the fixture was never adjudicated against "
+                             f"{entry.get('violatedClause', 'its rule')} — {last}"))
 
     print()
 

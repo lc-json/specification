@@ -1,6 +1,6 @@
 # Subject Collection Reference (LC-JSON 1.1)
 
-**Last updated:** 2026-07-22
+**Last updated:** 2026-09-07
 
 > **Status: Informative.** This document explains and illustrates the SubjectCollection artifact type. The binding requirements are in [`NORMATIVE.md`](NORMATIVE.md) (§3.3.1 incorporates the **SC-1 … SC-14** rule family, plus §3.4, §4.9, §4.10, §4.11) and the JSON Schemas; the rules are enumerated and tiered in [`VALIDATION.md`](VALIDATION.md) §15. Where this document differs from NORMATIVE.md, the schemas, or the VALIDATION.md catalog, those sources govern.
 
@@ -40,7 +40,7 @@ Collections exist to make three things portable that free-text tagging cannot:
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+  "$schema": "https://lc-json.org/1.1/subject-collection.schema.json",
   "documentType": "subjectCollection",
   "specVersion": "1.1",
   "globalId": "b2-adult-esl",

@@ -131,7 +131,7 @@ def new_glossary(global_id, title, language, version="1.0.0",
                  translation_languages=None, description=None,
                  license_="unspecified"):
     return {
-        "$schema": "https://lc-json.org/1.1-rc.1/glossary.schema.json",
+        "$schema": "https://lc-json.org/1.1/glossary.schema.json",
         "documentType": "glossary",
         "specVersion": "1.1",
         "globalId": global_id,
@@ -470,7 +470,8 @@ def main(argv=None):
     if full:
         schema_errors, unavailable = _lcjson_schema.schema_stage(doc, "glossary")
         if unavailable:
-            _lcjson_schema.exit_unavailable(unavailable)
+            _lcjson_schema.exit_unavailable_unless_definitive(
+                schema_errors, unavailable)
     errors, warnings = validate(doc)
     errors = schema_errors + errors
     for warning in warnings:

@@ -7,7 +7,7 @@ name: Build and deploy spec site
 #
 # Pages serves https://lc-json.org from the gh-pages branch.
 # Schemas resolve at https://lc-json.org/<version>/<file>.schema.json
-# (/1.1-rc.1/ is the current publication; /1.0/ and /1.0-rc.1..3/ stay served and frozen; /1.1/ once 1.1 final ships).
+# (/1.1/ is the current publication; /1.1-rc.1/, /1.0/, and /1.0-rc.1..3/ stay served and frozen).
 
 on:
   push:
@@ -90,12 +90,13 @@ jobs:
 
       # Copy schemas into the published output so they resolve at
       # lc-json.org/<version>/*.schema.json (the URL embedded in every
-      # conforming JSON file's $schema field). 1.1-rc.1 is the current
-      # publication; 1.0 and its rc.1/rc.2/rc.3 snapshots stay served and frozen
-      # alongside it per NORMATIVE.md §8.3.
+      # conforming JSON file's $schema field). 1.1 is the current publication;
+      # the 1.1-rc.1 snapshot, 1.0, and its rc.1/rc.2/rc.3 snapshots stay
+      # served and frozen alongside it per NORMATIVE.md §8.3.
       - name: Copy schemas to book output
         run: |
-          mkdir -p book/1.1-rc.1 book/1.0 book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
+          mkdir -p book/1.1 book/1.1-rc.1 book/1.0 book/1.0-rc.1 book/1.0-rc.2 book/1.0-rc.3
+          cp -v schemas/1.1/*.schema.json book/1.1/
           cp -v schemas/1.1-rc.1/*.schema.json book/1.1-rc.1/
           cp -v schemas/1.0/*.schema.json book/1.0/
           cp -v schemas/1.0-rc.1/*.schema.json book/1.0-rc.1/
@@ -108,10 +109,10 @@ jobs:
           # the alias was a MUTABLE URL sitting next to a specification whose central
           # schema promise is immutable versioned URLs (NORMATIVE.md §8.3), so a reader
           # could cite `/schemas/foo` and get a different publication after the next
-          # release. Schema links are now rewritten to their absolute versioned URL at
-          # publication time by `copy_spec_doc()` in scripts/deploy/publish-spec.sh,
-          # which fixes site and GitHub navigation together and keeps every published
-          # link immutable. Do not reintroduce this alias.
+          # release. Schema links in the spec chapters are instead rewritten to their
+          # absolute versioned URL when this repository is generated, which fixes site
+          # and GitHub navigation together and keeps every published link immutable.
+          # Do not reintroduce this alias.
 
       # Copy examples, tests, and tools so they're browseable at
       # lc-json.org/<path>/. Documents in src/ link to these.
@@ -130,7 +131,7 @@ jobs:
           # "<version>:<expected schema count>" — the count is per-publication:
           # the 1.0 series ships 23; 1.1 adds glossary, subject-collection,
           # curriculum-pack, and publication-fields for 27.
-          for entry in 1.1-rc.1:27 1.0:23 1.0-rc.1:23 1.0-rc.2:23 1.0-rc.3:23; do
+          for entry in 1.1:27 1.1-rc.1:27 1.0:23 1.0-rc.1:23 1.0-rc.2:23 1.0-rc.3:23; do
             v="${entry%:*}"
             expected="${entry#*:}"
             test -f book/$v/course.schema.json || (echo "ERROR: course.schema.json missing from book/$v/" && exit 1)

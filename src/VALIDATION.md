@@ -4,7 +4,7 @@
 
 The four reference validators — [`tools/validate_course.py`](../tools/validate_course.py), [`tools/lc_collection.py`](../tools/lc_collection.py), [`tools/lc_pack.py`](../tools/lc_pack.py), and [`tools/lc_glossary.py`](../tools/lc_glossary.py) — are **non-authoritative reference implementations**. They implement the contract; they do not define it. Where a validator's behavior and a normative source disagree, the normative source wins and the validator is a defect to be fixed.
 **Spec version:** 1.1
-**Last updated:** 2026-07-22
+**Last updated:** 2026-09-07
 
 This document maps every documented validation rule in LC-JSON (Learning Content JSON) 1.1 to the place where it is enforced. The audience is implementers building consumers, validators, or producer round-trip tests — the same audience as [`NORMATIVE.md`](NORMATIVE.md).
 
@@ -569,7 +569,7 @@ Where a reference validator and a normative document disagree, the normative doc
 
 ## 14. Forward-looking deepenings (1.0 final)
 
-*(Historical: this section records the deepenings cataloged during the 1.0 cycle. 1.0 has since shipped and 1.1-rc.1 is the current publication; the still-open items below carry forward. Rules for the 1.1 artifact types are in [§15](#15-subject-collection-sc)–[§19](#19-consumer-side-obligations-not-expressible-as-document-checks).)*
+*(Historical: this section records the deepenings cataloged during the 1.0 cycle. 1.0 has since shipped and 1.1 is the current publication; the still-open items below carry forward. Rules for the 1.1 artifact types are in [§15](#15-subject-collection-sc)–[§19](#19-consumer-side-obligations-not-expressible-as-document-checks).)*
 
 The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending `tools/validate_course.py` (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged **Domain-validator-enforced** rather than **Advisory**; new invalid conformance fixtures (`tests/invalid/21-mcq-no-correct-option.json`, `22-mcq-options-points-missing-entry.json`, `23-word-bank-cloze-gap-count-mismatch.json`, `24-multiple-choice-cloze-index-out-of-bounds.json`) pin the ERROR-tier checks. The corpus runs 64/64 under `python tools/run_corpus.py` (the harness invokes `validate_course.py --strict` internally on every fixture; the 36 fixtures at the time of that rc.1 pass, plus the two `prompt`-correction fixtures added in rc.2, plus the per-type / referential-integrity / grading-matrix / globalId-uniqueness expansion added in rc.3).
 

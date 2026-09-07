@@ -46,23 +46,23 @@ The property that a document survives a read → modify → write cycle through 
 
 ### Course
 
-The hierarchical artifact type: a course contains units, each unit contains lessons, each lesson contains items, and items of type `exercise` or `quiz` contain questions. Identified at the root by `documentType: "course"`. Schema: [`course.schema.json`](https://lc-json.org/1.1-rc.1/course.schema.json).
+The hierarchical artifact type: a course contains units, each unit contains lessons, each lesson contains items, and items of type `exercise` or `quiz` contain questions. Identified at the root by `documentType: "course"`. Schema: [`course.schema.json`](https://lc-json.org/1.1/course.schema.json).
 
 ### QuestionSet
 
-The flat artifact type: a question set is a list of questions without any enclosing course/unit/lesson scaffold. Used for question-bank exchange and packaged delivery of curated question batches. Identified at the root by `documentType: "questionSet"`. Schema: [`question-set.schema.json`](https://lc-json.org/1.1-rc.1/question-set.schema.json).
+The flat artifact type: a question set is a list of questions without any enclosing course/unit/lesson scaffold. Used for question-bank exchange and packaged delivery of curated question batches. Identified at the root by `documentType: "questionSet"`. Schema: [`question-set.schema.json`](https://lc-json.org/1.1/question-set.schema.json).
 
 ### Glossary
 
-The `glossary` artifact type: a flat list of terms with immutable member ids, designed language-education-first (pronunciation, translations, examples, inflected forms) and named for teacher readability. Content-adjacent learning material, not vocabulary-about-content (contrast **Subject Collection**). Schema: [`glossary.schema.json`](https://lc-json.org/1.1-rc.1/glossary.schema.json); reference: [`glossary-reference.md`](glossary-reference.md).
+The `glossary` artifact type: a flat list of terms with immutable member ids, designed language-education-first (pronunciation, translations, examples, inflected forms) and named for teacher readability. Content-adjacent learning material, not vocabulary-about-content (contrast **Subject Collection**). Schema: [`glossary.schema.json`](https://lc-json.org/1.1/glossary.schema.json); reference: [`glossary-reference.md`](glossary-reference.md).
 
 ### Subject Collection
 
-The `subjectCollection` artifact type: a reusable classification *vocabulary* (tags and learning objectives) for a structured `(subject, level, audience, purpose, jurisdiction)` scope. Carries no learner-facing content; classifies the content that courses deliver. Schema: [`subject-collection.schema.json`](https://lc-json.org/1.1-rc.1/subject-collection.schema.json); reference: [`subject-collection-reference.md`](subject-collection-reference.md).
+The `subjectCollection` artifact type: a reusable classification *vocabulary* (tags and learning objectives) for a structured `(subject, level, audience, purpose, jurisdiction)` scope. Carries no learner-facing content; classifies the content that courses deliver. Schema: [`subject-collection.schema.json`](https://lc-json.org/1.1/subject-collection.schema.json); reference: [`subject-collection-reference.md`](subject-collection-reference.md).
 
 ### Curriculum Pack
 
-The `curriculumPack` artifact type: an *arrangement* — sequence, pacing, and checkpoints — referencing a Subject Collection plus content documents. Schema: [`curriculum-pack.schema.json`](https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json); reference: [`curriculum-pack-reference.md`](curriculum-pack-reference.md).
+The `curriculumPack` artifact type: an *arrangement* — sequence, pacing, and checkpoints — referencing a Subject Collection plus content documents. Schema: [`curriculum-pack.schema.json`](https://lc-json.org/1.1/curriculum-pack.schema.json); reference: [`curriculum-pack-reference.md`](curriculum-pack-reference.md).
 
 ### vocabulary document
 
@@ -214,7 +214,7 @@ A typed `{claim, scheme, id, label}` entry in `externalAlignments[]` connecting 
 
 ### publication metadata
 
-The optional distribution fields shared by the distributable artifact types: `license`, `canonicalUrl`, `derivedFrom[]` ([`NORMATIVE.md`](NORMATIVE.md) §4.11; composed via [`publication-fields.schema.json`](https://lc-json.org/1.1-rc.1/publication-fields.schema.json)).
+The optional distribution fields shared by the distributable artifact types: `license`, `canonicalUrl`, `derivedFrom[]` ([`NORMATIVE.md`](NORMATIVE.md) §4.11; composed via [`publication-fields.schema.json`](https://lc-json.org/1.1/publication-fields.schema.json)).
 
 ---
 
@@ -284,7 +284,7 @@ A question type that has a published per-type JSON Schema in the current spec ve
 
 ### reserved question type
 
-A `type` discriminator value listed in [`question-base.schema.json`](https://lc-json.org/1.1-rc.1/question-base.schema.json)'s discriminator enum that does **not** yet have a published per-type schema. The 1.0 reserved types are `association`, `hotspot`, `graphicGapMatch`, `graphicAssociate`, `graphicOrder`, `fileUpload`, and `mediaPromptedEssay`. Consumers MUST preserve reserved-type questions in full across read/write cycles — every field, value, and nested structure (§6.4; semantic preservation, key order is producer-discretion per §6.2).
+A `type` discriminator value listed in [`question-base.schema.json`](https://lc-json.org/1.1/question-base.schema.json)'s discriminator enum that does **not** yet have a published per-type schema. The 1.0 reserved types are `association`, `hotspot`, `graphicGapMatch`, `graphicAssociate`, `graphicOrder`, `fileUpload`, and `mediaPromptedEssay`. Consumers MUST preserve reserved-type questions in full across read/write cycles — every field, value, and nested structure (§6.4; semantic preservation, key order is producer-discretion per §6.2).
 
 ### unknown question type
 

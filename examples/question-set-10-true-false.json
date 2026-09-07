@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/question-set.schema.json",
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
   "documentType": "questionSet",
   "specVersion": "1.1",
   "sourceQuestionSetId": "550e8400-e29b-41d4-a716-446655442300",

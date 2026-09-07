@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1/multiple-choice-cloze.schema.json",
+  "title": "MultipleChoiceCloze Question Schema",
+  "description": "Passage with multiple gaps, each gap has 3-4 discrete options (dropdown) - Cambridge FCE/CAE Reading Part 1",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "multipleChoiceCloze"
+        },
+        "passage": {
+          "type": "string",
+          "description": "Text with numbered @@@1, @@@2, etc. marking gaps (1-based)",
+          "pattern": "@@@\\d+",
+          "minLength": 4
+        },
+        "gapOptions": {
+          "type": "object",
+          "description": "Dictionary: gap number (1-based, as string) → array of options",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 2
+            }
+          }
+        },
+        "correctAnswers": {
+          "type": "object",
+          "description": "Dictionary: gap number (1-based, as string) → correct option index (0-based)",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "gapOptionFeedback": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Nested dictionary: gap number → option index → feedback string",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "object",
+              "patternProperties": {
+                "^[0-9]+$": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": null
+        },
+        "allowPartialCredit": {
+          "type": "boolean",
+          "description": "Award partial credit for some correct answers",
+          "default": true
+        },
+        "shuffleOptions": {
+          "type": "boolean",
+          "description": "Randomize option order within each gap",
+          "default": false
+        }
+      },
+      "required": [
+        "passage",
+        "gapOptions",
+        "correctAnswers"
+      ]
+    }
+  ]
+}

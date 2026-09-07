@@ -1,6 +1,6 @@
 # Glossary Reference (LC-JSON 1.1)
 
-**Last updated:** 2026-07-22
+**Last updated:** 2026-09-07
 
 > **Status: Informative.** This document explains and illustrates the Glossary artifact type. The binding requirements are in [`NORMATIVE.md`](NORMATIVE.md) (§3.3.1 incorporates the **GL-1 … GL-11** rule family, plus §3.4 member identity) and the JSON Schemas; the rules are enumerated and tiered in [`VALIDATION.md`](VALIDATION.md) §17. Where this document differs from NORMATIVE.md, the schemas, or the VALIDATION.md catalog, those sources govern.
 
@@ -34,7 +34,7 @@ artifacts, so they carry the publication field group (`license`, `canonicalUrl`,
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/glossary.schema.json",
+  "$schema": "https://lc-json.org/1.1/glossary.schema.json",
   "documentType": "glossary",
   "specVersion": "1.1",
   "globalId": "a1-food-vocabulary-en-es",
@@ -223,7 +223,7 @@ of which the spec mandates:
   self-containment, the exporting course SHOULD embed a **carried copy** of each
   referenced glossary in its root `glossaries[]` pool — the whole document, identity
   verbatim, transport not authorship (the `objectives[]`-pool pattern at document
-  scale; see [`course.schema.json`](https://lc-json.org/1.1-rc.1/course.schema.json) `glossaries[]`). One `.json` file then carries the course,
+  scale; see [`course.schema.json`](https://lc-json.org/1.1/course.schema.json) `glossaries[]`). One `.json` file then carries the course,
   glossaries included. A ref that resolves to no pool copy and no held document is a
   **dangling ref** — legal: consumers SHOULD surface it ("this course references a
   glossary that isn't included"), SHOULD preserve it for later binding, and MUST NOT

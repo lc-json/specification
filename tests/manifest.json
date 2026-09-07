@@ -475,7 +475,7 @@
     {
       "file": "invalid/41-spec-version-schema-disagreement.json",
       "violatedClause": "§8.4 — specVersion ↔ $schema version agreement (RD-1; validate_course.py: check_spec_version_schema_agreement)",
-      "violation": "The document declares specVersion \"1.0\" while pinning $schema at the /1.1-rc.1/ publication. §8.4 requires the two to agree on major.minor: a specVersion \"1.0\" document MUST point $schema at /1.0/ or a /1.0-rc.N/ path. This is the seam between two enforcement regimes — §5.8 dispatches schemas from $schema while CO-1 gates its severity on specVersion, so a disagreeing document validates its 1.1 content against the 1.1 schemas while claiming the more lenient 1.0 contract."
+      "violation": "The document declares specVersion \"1.0\" while pinning $schema at the /1.1/ publication. §8.4 requires the two to agree on major.minor: a specVersion \"1.0\" document MUST point $schema at /1.0/ or a /1.0-rc.N/ path. This is the seam between two enforcement regimes — §5.8 dispatches schemas from $schema while CO-1 gates its severity on specVersion, so a disagreeing document validates its 1.1 content against the 1.1 schemas while claiming the more lenient 1.0 contract."
     },
     {
       "file": "invalid/42-objective-id-unresolved.json",

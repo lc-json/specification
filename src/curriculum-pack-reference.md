@@ -1,6 +1,6 @@
 # Curriculum Pack Reference (LC-JSON 1.1)
 
-**Last updated:** 2026-07-22
+**Last updated:** 2026-09-07
 
 > **Status: Informative.** This document explains and illustrates the CurriculumPack artifact type. The binding requirements are in [`NORMATIVE.md`](NORMATIVE.md) (§3.3.1 incorporates the **CP-1 … CP-17** rule family) and the JSON Schemas; the rules are enumerated and tiered in [`VALIDATION.md`](VALIDATION.md) §16. Where this document differs from NORMATIVE.md, the schemas, or the VALIDATION.md catalog, those sources govern.
 
@@ -36,7 +36,7 @@ Two properties distinguish a pack from a prose scheme of work:
 
 ```json
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json",
+  "$schema": "https://lc-json.org/1.1/curriculum-pack.schema.json",
   "documentType": "curriculumPack",
   "specVersion": "1.1",
   "globalId": "0d1f4a7e-6f2b-4c1e-9a3d-2b8c5e7f9a01",

@@ -66,8 +66,8 @@ import _lcjson_schema
 #
 # We load every *.schema.json file from the bundled schemas directory into
 # a Registry once at startup. Each schema is registered under both its bare
-# filename and its declared canonical $id (`lc-json.org/1.1-rc.1/` for the
-# current 1.1-rc.1 publication; each publication carries its own path) so
+# filename and its declared canonical $id (`lc-json.org/1.1/` for the
+# current 1.1 publication; each publication carries its own path) so
 # $ref resolution works whether a schema $refs a peer by filename or by
 # absolute URL.
 #
@@ -79,13 +79,13 @@ import _lcjson_schema
 _HERE = Path(__file__).resolve().parent
 
 # The publication this validator ships with. The bundled reference validator
-# tracks a single publication (the development head, currently 1.1-rc.1); it is
+# tracks a single publication (the development head, currently 1.1); it is
 # NOT a dual-version validator — a document pins its version via $schema, and an
 # rc.1 document is validated with the rc.1-tagged validator (RD-1 now emits a
 # NOTE when the document pins a publication other than this one). Bump this when
-# cutting the next publication (e.g. "1.1" at final). Drives both the public-repo
+# cutting the next publication (e.g. "1.2-rc.1"). Drives both the public-repo
 # schema-dir selection and the canonical $id registered for $ref resolution.
-_CURRENT_PUBLICATION = "1.1-rc.1"
+_CURRENT_PUBLICATION = "1.1"
 
 
 def _detect_schemas_dir():

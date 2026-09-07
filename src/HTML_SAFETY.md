@@ -18,8 +18,8 @@ HTML is permitted in the following fields:
 
 | Field | Carrier | Schema reference |
 |---|---|---|
-| `html` | `ContentItem` | [`schemas/content-item.schema.json`](https://lc-json.org/1.1-rc.1/content-item.schema.json) |
-| `customHtml` | `SignpostItem` | [`schemas/signpost-item.schema.json`](https://lc-json.org/1.1-rc.1/signpost-item.schema.json) |
+| `html` | `ContentItem` | [`schemas/content-item.schema.json`](https://lc-json.org/1.1/content-item.schema.json) |
+| `customHtml` | `SignpostItem` | [`schemas/signpost-item.schema.json`](https://lc-json.org/1.1/signpost-item.schema.json) |
 
 No other LC-JSON 1.0 field carries HTML. Question prompts, hints, choice text, feedback strings, and similar author-visible prose are plain text. A producer MUST NOT embed HTML in plain-text fields; a consumer MUST treat HTML in plain-text fields as literal text.
 
@@ -384,8 +384,8 @@ A consumer that imports a document containing forbidden content under §8.1 MUST
 
 - [`NORMATIVE.md`](NORMATIVE.md) §11 — normative reference to this document
 - [`ITEM_PATTERNS.md`](ITEM_PATTERNS.md) §3 — `tel:` consumer policy as one example of consumer plurality
-- [`schemas/content-item.schema.json`](https://lc-json.org/1.1-rc.1/content-item.schema.json) — `html` field
-- [`schemas/signpost-item.schema.json`](https://lc-json.org/1.1-rc.1/signpost-item.schema.json) — `customHtml` field
+- [`schemas/content-item.schema.json`](https://lc-json.org/1.1/content-item.schema.json) — `html` field
+- [`schemas/signpost-item.schema.json`](https://lc-json.org/1.1/signpost-item.schema.json) — `customHtml` field
 - [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — `alt`, captions, keyboard alternatives, language/direction, placeholder accessibility for reserved types, WCAG 2.1 AA cross-references, recommended ARIA patterns (rc.1 release; additive deepenings — per-criterion normative table, expanded ARIA patterns, conformance fixtures — land in 1.0 final)
 - [`tests/`](tests/) — conformance fixtures including `valid/06-html-with-video-track.json` and `invalid/13-html-with-script.json`
 

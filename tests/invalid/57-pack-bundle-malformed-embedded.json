@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json",
+  "$schema": "https://lc-json.org/1.1/curriculum-pack.schema.json",
   "documentType": "curriculumPack",
   "specVersion": "1.1",
   "globalId": "b1f0a2c4-3d5e-4f60-8a71-92b3c4d5e6f7",
@@ -81,7 +81,7 @@
   "embedded": {
     "collections": [
       {
-        "$schema": "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+        "$schema": "https://lc-json.org/1.1/subject-collection.schema.json",
         "documentType": "subjectCollection",
         "specVersion": "1.1",
         "globalId": "ks3-maths-fractions",

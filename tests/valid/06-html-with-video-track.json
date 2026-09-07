@@ -1,5 +1,5 @@
 {
-  "$schema": "https://lc-json.org/1.1-rc.1/course.schema.json",
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
   "documentType": "course",
   "specVersion": "1.1",
   "title": "Valid course — HTML safety profile §7 media (video + track)",

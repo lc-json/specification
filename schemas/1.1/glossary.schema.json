@@ -1,0 +1,218 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1/glossary.schema.json",
+  "title": "LC-JSON Glossary Document Schema",
+  "description": "A glossary: a flat list of terms with immutable member ids, designed language-education-first (pronunciation, translations, examples) and named for teacher readability. The document is single-language (`language` is the language of terms, definitions, and examples); per-entry `translations`/`definitionTranslations`/example translation maps are CONTENT — data about the term, like its IPA — not field-level document localization, so they do not conflict with LOCALIZATION §2.4. The root `translationLanguages` array is the document's declared translation inventory: a checkable claim (declared, not implied) that the domain validator verifies in both directions — an undeclared key in use is an error (a false claim would be too: a declared language nothing uses is an error), while translations present with no declaration is only a warning. There is deliberately no `supportLanguage` on glossaries: the which-one-to-display preference lives in the delivery context (the attached course's supportLanguage, or the user's L1), not on the portable artifact. Cross-field semantics (the gloss rule: definition or at least one translation, checked at the interchange boundary; inventory membership; duplicate matching surfaces) are domain-validated — see the GL-* rules in VALIDATION.md.",
+  "allOf": [
+    {
+      "$ref": "publication-fields.schema.json"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "translations": {
+      "type": "object",
+      "description": "Renderings of the text in other languages, keyed by BCP 47 language tag (e.g. 'es', 'pt-BR'). Keys are data; display prefixes like 'ES:' are presentation a consumer generates.",
+      "propertyNames": {
+        "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "entry": {
+      "type": "object",
+      "description": "One term IN ONE SENSE — a word or phrase as the course uses it. Multiple senses are multiple entries, each with its own immutable id. Every field name is chosen to survive being read aloud to a teacher.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Immutable member id, minted once. Display text is never identity; renames never change the id."
+        },
+        "term": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The term itself, in the document's language."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "word",
+            "phrase"
+          ],
+          "description": "Whether the entry is a single word or a multi-word phrase."
+        },
+        "partOfSpeech": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Open vocabulary: 'noun', 'verb', 'phrasal verb', 'adjective', …"
+        },
+        "definition": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A definition in the document's language. Optional — the gloss rule (domain-validated) requires every entry to carry AT LEAST ONE OF: a definition, a translations value, or a definitionTranslations value. Any one alone satisfies it; a monolingual subject glossary of definitions carries no translations at all."
+        },
+        "definitionTranslations": {
+          "description": "Renderings of the definition in other languages, keyed by BCP 47 tag — the keyed-map replacement for inline '[es: …]' gloss prefixes. Content about the term, like the definition itself; keys count toward the document's translationLanguages inventory. Satisfies the gloss rule on its own.",
+          "allOf": [
+            { "$ref": "#/definitions/translations" }
+          ]
+        },
+        "examples": {
+          "type": "array",
+          "description": "Example sentences showing the term in use.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "translations": {
+                "$ref": "#/definitions/translations"
+              }
+            },
+            "required": [
+              "text"
+            ]
+          },
+          "default": []
+        },
+        "ipa": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Pronunciation in the International Phonetic Alphabet, e.g. \"/ˈæp.əl/\"."
+        },
+        "soundsLike": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Reader-friendly pronunciation respelling, e.g. \"AP-uhl\". A companion to ipa, never a substitute notation."
+        },
+        "audioUrl": {
+          "type": "string",
+          "minLength": 1,
+          "description": "URL (typically relative) of a pronunciation recording."
+        },
+        "imageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "description": "URL (typically relative) of an illustrative image — used by flashcard-style consumers."
+        },
+        "translations": {
+          "$ref": "#/definitions/translations"
+        },
+        "otherForms": {
+          "type": "array",
+          "description": "Inflected or variant forms of the term ('went' under go; \"'d like\" under would like). Consumers that auto-link terms in content match on these too.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "tags": {
+          "type": "array",
+          "description": "Taxonomic tags as display strings, the same convention as courses (colon-namespaced, e.g. 'topic:food').",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "linkAutomatically": {
+          "type": "boolean",
+          "default": true,
+          "description": "When false, consumers that auto-link glossary terms in content skip this entry — e.g. a term that appears inside quiz answers."
+        },
+        "firstMention": {
+          "type": "string",
+          "minLength": 1,
+          "description": "GlobalId of the lesson where this term is introduced. Optional: imported glossaries legitimately carry no lesson provenance, and a firstMention naming a lesson the importer does not hold is treated as absent. Importers that regenerate lesson ids MUST remap this field. Consumers SHOULD auto-link the term only from its firstMention lesson onward (spoiler-safe)."
+        }
+      },
+      "required": [
+        "id",
+        "term"
+      ]
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL of this schema. Producers MUST emit it; consumers SHOULD tolerate its absence."
+    },
+    "documentType": {
+      "type": "string",
+      "const": "glossary",
+      "description": "Artifact discriminator. Always the literal string \"glossary\"."
+    },
+    "specVersion": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+(\\.[0-9]+)?$",
+      "description": "LC-JSON spec version. This document type first appears in v1.1."
+    },
+    "globalId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Portable document identity. Immutable; preserved verbatim on import."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+(\\.[0-9]+){0,2}$",
+      "description": "Content version of this glossary. Numeric, dotted, 1 to 3 segments."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "language": {
+      "type": "string",
+      "minLength": 1,
+      "description": "BCP 47 tag: the language of the terms, definitions, and examples. A glossary document is single-language; per-entry translations are content about the terms."
+    },
+    "translationLanguages": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$"
+      },
+      "uniqueItems": true,
+      "default": [],
+      "description": "The document's declared translation inventory: the exact set of BCP 47 language keys appearing in any entry's translations, definitionTranslations, or example translations (domain-validated in both directions — an undeclared key in use, or a declared language nothing uses, is an error; see GL rules). Array order MAY be read as preference order by consumers that must choose one language. An absent or empty array means no claim is made (typical for foreign imports); the validator then only warns."
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/entry"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "$schema",
+    "documentType",
+    "specVersion",
+    "globalId",
+    "version",
+    "title",
+    "language",
+    "entries"
+  ]
+}

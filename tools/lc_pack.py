@@ -120,7 +120,7 @@ DEFAULT_MIN_SPACING_WEEKS = 2
 def new_pack(global_id, title, version="1.0.0", pack_mode="manifest",
              license_="unspecified", description=None):
     return {
-        "$schema": "https://lc-json.org/1.1-rc.1/curriculum-pack.schema.json",
+        "$schema": "https://lc-json.org/1.1/curriculum-pack.schema.json",
         "documentType": "curriculumPack",
         "specVersion": "1.1",
         "globalId": global_id,
@@ -831,7 +831,8 @@ def main():
         schema_errors, unavailable = _lcjson_schema.schema_stage(
             doc, "curriculumPack")
         if unavailable:
-            _lcjson_schema.exit_unavailable(unavailable)
+            _lcjson_schema.exit_unavailable_unless_definitive(
+                schema_errors, unavailable)
     errors, warnings = validate(doc, collection)
     # A bundle's embedded documents are part of what this pack asserts, so they
     # are checked here too — schema and domain, not schema alone. Skipped in

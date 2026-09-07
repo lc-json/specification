@@ -32,7 +32,7 @@ ALIGNMENT_CLAIMS = {"references", "alignedTo", "covers"}
 def new_document(global_id, title, subject_id, subject_label, version="1.0.0",
                  license_="unspecified", description=None):
     return {
-        "$schema": "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+        "$schema": "https://lc-json.org/1.1/subject-collection.schema.json",
         "documentType": "subjectCollection",
         "specVersion": "1.1",
         "globalId": global_id,
@@ -231,7 +231,8 @@ def main():
             schema_errors, unavailable = _lcjson_schema.schema_stage(
                 doc, "subjectCollection")
             if unavailable:
-                _lcjson_schema.exit_unavailable(unavailable)
+                _lcjson_schema.exit_unavailable_unless_definitive(
+                    schema_errors, unavailable)
         problems = schema_errors + validate(doc)
         if problems:
             print(f"INVALID — {len(problems)} problem(s):")
