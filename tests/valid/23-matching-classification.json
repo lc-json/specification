@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Matching (classification mode) — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "matching",
+      "globalId": "23232323-1111-4111-8111-000000000001",
+      "title": "Time expressions by tense",
+      "points": 6.0,
+      "difficulty": 4.0,
+      "prompt": "",
+      "matchingMode": "classification",
+      "categories": [
+        { "label": "past simple", "items": ["yesterday", "in May 2019", "a year ago"] },
+        { "label": "present perfect", "items": ["never", "all my life", "since 2020"] }
+      ],
+      "distractors": ["future continuous"],
+      "allowPartialCredit": true
+    }
+  ]
+}

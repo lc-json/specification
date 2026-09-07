@@ -1,0 +1,35 @@
+{
+  "type": "sentenceTransformation",
+  "globalId": "550e8400-e29b-41d4-a716-446655440018",
+  "title": "FCE Use of English Part 4 - Key Word Transformation (Present Perfect)",
+  "tags": [
+    "grammar:present-perfect:time-expressions",
+    "exam:fce-use-of-english-part4",
+    "level:B2",
+    "skill:paraphrase"
+  ],
+  "points": 2.0,
+  "difficulty": 8.0,
+  "hint": "Think about time expressions go with the present perfect and past simple verb tenses.",
+  "prompt": "",
+  "promptSentence": "I haven't seen John for three weeks.",
+  "keyword": "LAST",
+  "targetSentence": "The @@@ was three weeks ago.",
+  "acceptedChunks": {
+    "1": [
+      "last time"
+    ],
+    "2": [
+      "I saw John"
+    ]
+  },
+  "chunkFeedback": {
+    "1": "The fixed phrase is 'the last time' — always used with the past simple.",
+    "2": "Past simple 'saw' is needed because 'the last time' is a past time period."
+  },
+  "allOrNothing": false,
+  "feedback": {
+    "correct": "Excellent! You successfully transformed the sentence from the present perfect to the past simple.",
+    "incorrect": "Remember: 'I haven't seen John for three weeks' → 'The last time I saw John was three weeks ago'. Present perfect with 'for' changes to past simple with 'ago'."
+  }
+}

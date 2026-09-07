@@ -1,0 +1,32 @@
+{
+  "type": "placement",
+  "globalId": "550e8400-e29b-41d4-a716-446655441740",
+  "title": "An Argument About Universal Basic Income — Label Each Section",
+  "tags": [
+    "exam:ielts-reading",
+    "argumentation:essay-structure",
+    "economics:public-policy"
+  ],
+  "points": 6.0,
+  "difficulty": 5.5,
+  "hint": "Each section plays a single recognisable role in the argument: the writer's claim, background context, an opposing view, evidence for the writer's side, a concession or limit, and a closing position. Two of the labels do not fit any section.",
+  "prompt": "",
+  "placementUnit": "sectionLabel",
+  "passage": "@@@1 A modest universal basic income — paid to every adult, regardless of income or employment — would do more to reduce poverty in this country than any combination of the means-tested benefits we currently rely on. The case rests less on novelty than on a sober reading of how our existing safety net actually performs.\n\n@@@2 The current system was largely assembled in the post-war decades, when stable full-time employment was assumed to be the norm and unemployment was treated as a temporary deviation from it. Benefits were attached to specific contingencies — losing a job, falling ill, raising a child alone — and applicants had to prove their circumstances each time. The bureaucratic machinery this requires has grown to consume a substantial share of the system's total cost.\n\n@@@3 Critics object that a universal payment would be wasteful — sending money to people who do not need it — and would reduce the incentive to work. Both objections deserve a serious hearing. If a basic income were generous enough to live on without working, employers would surely struggle to fill less desirable jobs, and the cost to the public purse would be substantial.\n\n@@@4 But the trial evidence we have does not support the strongest version of these worries. In Finland's two-year experiment, recipients of a modest €560-per-month basic income worked roughly the same number of hours as the control group, while reporting markedly lower stress and somewhat better health. Smaller pilots in Canada, Kenya, and several US cities point in the same direction: at modest payment levels, work effort holds up, and recipients spend the money on essentials rather than on substitutes for work.\n\n@@@5 None of this would justify replacing every existing benefit with a single universal payment. Disability support, housing benefit in expensive cities, and pensions for those with long contribution histories all do work that a flat universal payment would do badly. A realistic basic income would coexist with these targeted programmes, replacing only the tangle of small means-tested benefits whose administrative cost rivals their payouts.\n\n@@@6 The case for a basic income, then, is not utopian and not radical. It is the case for replacing a system whose complexity has outgrown its usefulness with a simpler floor that catches everyone — and for trusting recipients, on the evidence we now have, to spend a modest cushion the way most of us would: on rent, on food, and on a little less worry at the end of the month.",
+  "placements": [
+    { "gap": 1, "item": "the writer's main claim" },
+    { "gap": 2, "item": "background context" },
+    { "gap": 3, "item": "the opposing view" },
+    { "gap": 4, "item": "evidence supporting the claim" },
+    { "gap": 5, "item": "a concession" },
+    { "gap": 6, "item": "the writer's closing position" }
+  ],
+  "distractors": [
+    "a personal anecdote",
+    "a historical comparison"
+  ],
+  "feedback": {
+    "correct": "Nicely read. The argument moves classically: claim (1) → background that motivates the claim (2) → fair statement of the opposing view (3) → evidence that pushes back on the strongest version of that view (4) → concession that the claim has limits (5) → closing position that re-states the claim with the concession built in (6). The two distractor labels — 'a personal anecdote' and 'a historical comparison' — describe moves the essay deliberately avoids; the writer's case is built on policy reasoning and trial evidence rather than on personal stories or analogies to other periods.",
+    "incorrect": "For each section, ask: what work does it do in the argument? Section 1 states a position; section 2 explains why the current system needs replacing; section 3 names the strongest objections fairly; section 4 introduces the evidence that pushes back on those objections; section 5 admits where the argument doesn't reach; section 6 returns to the position with the limits incorporated. The two distractors describe rhetorical moves — anecdote and historical comparison — that this particular essay does not use."
+  }
+}

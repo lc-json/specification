@@ -1,0 +1,21 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Invalid: wordBankCloze with an empty wordBank",
+  "language": "en",
+  "questions": [
+    {
+      "type": "wordBankCloze",
+      "globalId": "38383838-0000-4000-8000-000000000001",
+      "title": "No words to choose from",
+      "points": 1.0,
+      "prompt": "",
+      "passage": "I saw @@@1 owl on the walk home.",
+      "wordBank": [],
+      "gapAcceptedAnswers": {
+        "1": ["an"]
+      }
+    }
+  ]
+}

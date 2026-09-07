@@ -1,0 +1,31 @@
+{
+  "type": "matching",
+  "globalId": "550e8400-e29b-41d4-a716-446655441550",
+  "title": "Time Expressions — Classify by Tense",
+  "tags": [
+    "grammar:tenses:past-simple",
+    "grammar:tenses:present-perfect",
+    "level:B1"
+  ],
+  "points": 6.0,
+  "difficulty": 4.0,
+  "hint": "If the time expression points to a finished moment in the past, it goes with past simple. If it links the past to now, it goes with present perfect.",
+  "prompt": "",
+  "matchingMode": "classification",
+  "categories": [
+    {
+      "label": "past simple",
+      "items": ["a year ago", "yesterday", "in May 2019"]
+    },
+    {
+      "label": "present perfect",
+      "items": ["all my life", "never", "since 2020"]
+    }
+  ],
+  "distractors": ["future continuous"],
+  "allowPartialCredit": true,
+  "feedback": {
+    "correct": "Nicely classified. Past simple is for finished past moments tied to a specific time; present perfect connects an unfinished or recently-finished period to now. Notice how 'in May 2019' (a specific past moment) goes with past simple while 'since 2020' (a period that includes now) goes with present perfect.",
+    "incorrect": "Re-check the time expressions one by one. The diagnostic is whether the expression locates an action at a finished past moment (past simple) or links a past action to now (present perfect). 'Never' and 'always-up-to-now' phrasings ('all my life') are present perfect; specific past dates ('a year ago', 'yesterday', 'in May 2019') are past simple."
+  }
+}

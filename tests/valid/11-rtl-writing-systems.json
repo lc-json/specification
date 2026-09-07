@@ -1,0 +1,32 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Right-to-Left Writing Systems",
+  "description": "An introduction to right-to-left writing systems and what they mean for the design of digital interfaces.",
+  "language": "en",
+  "supportLanguage": null,
+  "units": [
+    {
+      "globalId": "8250d9aa-dc11-4ade-b109-cfc8ffaf3508",
+      "title": "Writing Systems",
+      "sequence": 0,
+      "lessons": [
+        {
+          "globalId": "d56e4909-0e34-4f38-8786-7250d9989042",
+          "title": "Right-to-Left Writing Systems",
+          "sequence": 0,
+          "items": [
+            {
+              "type": "content",
+              "globalId": "5b605f91-9065-4ba1-851a-86b364fbc403",
+              "title": "Right-to-Left Writing Systems",
+              "sequence": 0,
+              "html": "<h2>What \"right-to-left\" means</h2><p>Some of the world's widely used writing systems run from right to left. Examples include <strong>Arabic</strong> (<span dir=\"rtl\" lang=\"ar\">العربية</span>), <strong>Urdu</strong> (<span dir=\"rtl\" lang=\"ur\">اردو</span>), <strong>Persian</strong> (<span dir=\"rtl\" lang=\"fa\">فارسی</span>), and <strong>Hebrew</strong> (<span dir=\"rtl\" lang=\"he\">עברית</span>).</p><p>In an RTL line, the first character sits at the right edge, the line ends at the left edge, and the next line begins on the right. Embedded numbers, punctuation, and Latin-script terms are ordered correctly by the Unicode bidirectional algorithm when the base direction is declared.</p><blockquote dir=\"rtl\" lang=\"ar\"><p>تُكتب العربية من اليمين إلى اليسار.</p></blockquote><blockquote dir=\"rtl\" lang=\"ur\"><p>اردو دائیں سے بائیں لکھی جاتی ہے۔</p></blockquote><blockquote dir=\"rtl\" lang=\"fa\"><p>فارسی از راست به چپ نوشته می‌شود.</p></blockquote><blockquote dir=\"rtl\" lang=\"he\"><p>עברית נכתבת מימין לשמאל.</p></blockquote><p>Each example sentence says that the named language is written from right to left.</p><h2>Implications for books and digital UI</h2><p>RTL writing systems aren't just a render-time setting — they shape how readers expect content to be organised:</p><ul><li>Books open and progress in the opposite direction — the first page sits on the right.</li><li>Tables, timelines, and ordered lists feel natural running right to left.</li><li>Embedded numbers, Latin terms, and punctuation need correct bidirectional ordering inside an otherwise RTL line.</li><li>Navigation chrome, progress indicators, and directional icons are typically mirrored.</li></ul><h2>Adapting digital interfaces to RTL</h2><p>For an interface to feel native to an RTL reader, two things must happen:</p><ol><li>The <strong>content</strong> declares its direction — via the HTML <code>dir</code> attribute (or the equivalent at the application layer) — so the bidirectional algorithm lays it out correctly.</li><li>The <strong>chrome</strong> is mirrored — typically via logical CSS properties (<code>margin-inline-start</code> rather than <code>margin-left</code>, <code>text-align: start</code> rather than <code>text-align: left</code>) and flipped directional icons.</li></ol><p>Honouring the first without the second produces readable RTL content sitting inside an LTR shell. Doing both is what makes the interface feel native to a reader whose script runs right to left.</p>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Invalid: shortAnswer missing acceptedAnswers",
+  "language": "en",
+  "questions": [
+    {
+      "type": "shortAnswer",
+      "globalId": "31313131-0000-4000-8000-000000000001",
+      "title": "No way to score this",
+      "points": 1.0,
+      "prompt": "What is the capital of France?"
+    }
+  ]
+}

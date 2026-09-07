@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1-rc.1/multiple-choice.schema.json",
+  "title": "MultipleChoice Question Schema",
+  "description": "Single or multiple correct answers with optional partial credit",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "multipleChoice"
+        },
+        "options": {
+          "type": "array",
+          "description": "Array of answer choices",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 2
+        },
+        "optionsAndPoints": {
+          "type": "object",
+          "description": "Dictionary mapping options to points (>0 = correct)",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "allowMultipleCorrect": {
+          "type": "boolean",
+          "description": "Allow selecting multiple answers",
+          "default": false
+        },
+        "allowPartialCredit": {
+          "type": "boolean",
+          "description": "Award partial credit for partially correct answers",
+          "default": true
+        },
+        "penalizeIncorrect": {
+          "type": "boolean",
+          "description": "Deduct points for incorrect selections",
+          "default": false
+        },
+        "shuffleOptions": {
+          "type": "boolean",
+          "description": "Randomize option order for each student",
+          "default": false
+        },
+        "showLetterLabels": {
+          "type": "boolean",
+          "description": "Display A, B, C, D labels",
+          "default": false
+        }
+      },
+      "required": [
+        "options",
+        "optionsAndPoints"
+      ]
+    }
+  ]
+}

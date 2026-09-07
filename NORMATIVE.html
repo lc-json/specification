@@ -1,0 +1,744 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Conformance requirements (normative) - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/NORMATIVE.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-specification--normative-requirements"><a class="header" href="#lc-json-specification--normative-requirements">LC-JSON Specification — Normative Requirements</a></h1>
+<p><strong>Spec version:</strong> 1.1
+<strong>Status:</strong> Normative (final release — published at /1.1/)
+<strong>Last updated:</strong> 2026-09-07</p>
+<p>This document states the requirements that conforming LC-JSON (Learning Content JSON) tools MUST satisfy. It is the authoritative source of truth for compliance; descriptive material elsewhere in the specification illustrates how to meet these requirements but does not relax them.</p>
+<hr>
+<h2 id="1-scope"><a class="header" href="#1-scope">1. Scope</a></h2>
+<p>This document specifies the requirements for tools that produce, consume, or validate LC-JSON 1.1 documents. It defines:</p>
+<ul>
+<li>The canonical wire format for the five artifact types (Course, QuestionSet, Glossary, SubjectCollection, CurriculumPack).</li>
+<li>Two conformance roles — <em>producer</em> and <em>consumer</em> — and what each MUST do.</li>
+<li>Versioning rules and URL stability guarantees.</li>
+<li>Conformance-claim language (how a tool may state it conforms).</li>
+</ul>
+<p>This document does not prescribe implementation strategies, programming languages, or runtime architecture. Any tool meeting the requirements below conforms, regardless of how it is built.</p>
+<p>LC-JSON 1.1 is a purely additive minor version over 1.0 (§8.2): every conforming 1.0 document is a conforming 1.1 document with unchanged meaning. The additions are the three new artifact types (§3.3) — two vocabulary/arrangement types and the glossary content type — the member-identity and self-containment rules that make them portable (§3.4, §4.9–§4.11, §5.7), and the optional course-root additions: three publication-metadata fields and the <code>glossaryRefs</code> attachment arrays (Appendix A).</p>
+<hr>
+<h2 id="2-conformance-language"><a class="header" href="#2-conformance-language">2. Conformance Language</a></h2>
+<p>The key words <strong>MUST</strong>, <strong>MUST NOT</strong>, <strong>REQUIRED</strong>, <strong>SHALL</strong>, <strong>SHALL NOT</strong>, <strong>SHOULD</strong>, <strong>SHOULD NOT</strong>, <strong>RECOMMENDED</strong>, <strong>MAY</strong>, and <strong>OPTIONAL</strong> in this document are to be interpreted as described in <a href="https://www.rfc-editor.org/rfc/rfc2119">RFC 2119</a> and <a href="https://www.rfc-editor.org/rfc/rfc8174">RFC 8174</a> when, and only when, they appear in all capitals.</p>
+<p>A requirement stated in lowercase (“must,” “should”) is descriptive prose, not a normative requirement.</p>
+<hr>
+<h2 id="3-document-identity"><a class="header" href="#3-document-identity">3. Document Identity</a></h2>
+<h3 id="31-canonical-url-space"><a class="header" href="#31-canonical-url-space">3.1 Canonical URL space</a></h3>
+<p>LC-JSON schemas are published at:</p>
+<pre><code>https://lc-json.org/&lt;spec-version&gt;/&lt;schema-name&gt;.schema.json
+</code></pre>
+<p>The <code>&lt;spec-version&gt;</code> segment identifies either a released version (<code>1.0</code>, <code>1.1</code>, <code>2.0</code>, …) or a <strong>release candidate</strong> — an immutable draft of an upcoming version, published for review and implementer feedback before the final release is accepted (e.g., <code>1.0-rc.1</code>, <code>1.0-rc.2</code>, <code>1.0-rc.3</code>, <code>1.1-rc.1</code>, …). Each receives its own URL path. For released spec version 1.0, schemas resolve at <code>https://lc-json.org/1.0/*.schema.json</code>. For release candidates, schemas resolve at <code>https://lc-json.org/1.0-rc.N/*.schema.json</code>, one URL path per candidate.</p>
+<p>URLs under any published path — released or release-candidate — are immutable. They MUST NOT be renamed, removed, redirected to a different schema, or repointed to a non-canonical host once published.</p>
+<p>The <code>/X.Y/</code> URL path is <strong>reserved</strong> for the accepted final <code>X.Y</code> release and MUST NOT be populated until that release is published. Release candidates targeting <code>X.Y</code> are published at <code>/X.Y-rc.N/</code> paths. A document pinned via <code>$schema</code> to <code>/X.Y-rc.N/</code> does not automatically validate against <code>/X.Y/</code>; adoption of the final release is an explicit choice by the publisher (typically a re-export against the new schema URL). See §8.1 and §8.3 for the full versioning and stability contract.</p>
+<h3 id="32-required-root-fields"><a class="header" href="#32-required-root-fields">3.2 Required root fields</a></h3>
+<p>Every conforming LC-JSON document MUST contain at the root, as siblings (not nested under any envelope):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Required?</th><th>Type</th><th>Value</th></tr>
+</thead>
+<tbody>
+<tr><td><code>documentType</code></td><td>MUST</td><td>string</td><td><code>"course"</code>, <code>"questionSet"</code>, <code>"glossary"</code>, <code>"subjectCollection"</code>, or <code>"curriculumPack"</code>. The artifact discriminator.</td></tr>
+<tr><td><code>specVersion</code></td><td>MUST</td><td>string</td><td>The LC-JSON contract version this document conforms to. Pattern enforced by the schemas; consumer/producer rules in §5.2 / §4.6.</td></tr>
+<tr><td><code>$schema</code></td><td>MUST (producer) / SHOULD-tolerate (consumer)</td><td>string</td><td>A URL identifying the schema for this document type at the spec version the producer conforms to (e.g., <code>https://lc-json.org/1.1/&lt;artifact&gt;.schema.json</code> for a 1.1-final producer; <code>https://lc-json.org/1.0/&lt;artifact&gt;.schema.json</code> for a 1.0-final producer). Consumers SHOULD accept documents that omit <code>$schema</code> (re-import scenarios from older or lenient producers), but MUST reject any other root-field omission.</td></tr>
+</tbody>
+</table>
+</div>
+<p>A document missing <code>documentType</code> or <code>specVersion</code> is non-conforming. A producer that emits a document missing <code>$schema</code> is non-conforming with respect to that document; a consumer that rejects an otherwise-valid document on the basis of a missing <code>$schema</code> is overly strict and SHOULD instead infer the schema from <code>documentType</code> + <code>specVersion</code>.</p>
+<h3 id="33-artifact-types"><a class="header" href="#33-artifact-types">3.3 Artifact types</a></h3>
+<p>Spec version 1.1 defines exactly five artifact types:</p>
+<ul>
+<li><strong>Course</strong> (<code>documentType: "course"</code>) — hierarchical learning content (Course → Units → Lessons → Items → Questions). Validated by <code>course.schema.json</code>.</li>
+<li><strong>QuestionSet</strong> (<code>documentType: "questionSet"</code>) — flat list of questions without a course/unit/lesson scaffold. Validated by <code>question-set.schema.json</code>.</li>
+<li><strong>Glossary</strong> (<code>documentType: "glossary"</code>) — a flat list of <strong>terms</strong> with immutable member ids: pronunciation, translations, examples, inflected forms. Content-adjacent learning material a student studies — not vocabulary <em>about</em> content (contrast SubjectCollection). Validated by <code>glossary.schema.json</code>. See <a href="glossary-reference.html"><code>glossary-reference.md</code></a>.</li>
+<li><strong>SubjectCollection</strong> (<code>documentType: "subjectCollection"</code>) — a reusable classification <strong>vocabulary</strong>: tags and learning objectives for a structured <code>(subject, level, audience, purpose, jurisdiction)</code> scope. Validated by <code>subject-collection.schema.json</code>. See <a href="subject-collection-reference.html"><code>subject-collection-reference.md</code></a>.</li>
+<li><strong>CurriculumPack</strong> (<code>documentType: "curriculumPack"</code>) — an <strong>arrangement</strong>: sequence, pacing, and checkpoints referencing a SubjectCollection plus content documents. Validated by <code>curriculum-pack.schema.json</code>. See <a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a>.</li>
+</ul>
+<p>Course, QuestionSet, and Glossary are <em>content</em> documents; SubjectCollection is a <em>vocabulary</em> document; CurriculumPack is an <em>arrangement</em> document. The vocabulary/arrangement types never carry learner-facing content items or questions — they classify and organize content documents. A glossary carries learner-facing study material (its terms) but never items or questions.</p>
+<p>A producer MUST emit exactly one of these artifact types per document. Mixing artifact types within a single document is non-conforming.</p>
+<h3 id="331-conformance-rules-by-artifact-type-normative"><a class="header" href="#331-conformance-rules-by-artifact-type-normative">3.3.1 Conformance rules by artifact type (normative)</a></h3>
+<p>A conforming document MUST satisfy the rules for its artifact type. For Course and QuestionSet those rules are stated in §4–§6, in §12 (accessibility preservation), and in the JSON Schemas. For the artifact types introduced in 1.1 the rules are, in addition to §3.4 (member identity), §4.9 (self-containment), §4.10 (alignment claims), and §4.11 (publication metadata):</p>
+<ul>
+<li><strong>SubjectCollection</strong> — the structural, member-identity, closure, and alignment-claim rules identified <strong>SC-1 … SC-14</strong>.</li>
+<li><strong>CurriculumPack</strong> — the step-shape, pacing, checkpoint, taught-before-used, term-capacity, dependency-direction, bill-of-materials, coverage, and bundle-closure rules identified <strong>CP-1 … CP-17</strong>.</li>
+<li><strong>Glossary</strong> — the structural, gloss, and declared-translation-inventory rules identified <strong>GL-1 … GL-11</strong>.</li>
+<li><strong>Course (1.1 deepenings)</strong> — the specVersion↔<code>$schema</code> agreement rule <strong>RD-1</strong>, and the objective-pool and glossary-attachment rules identified <strong>CO-1 … CO-5</strong>.</li>
+</ul>
+<p><strong>These rule families are normative requirements of this specification.</strong> <a href="VALIDATION.html"><code>VALIDATION.md</code></a> §15–§19 enumerates each rule, cites its source, and tags its enforcement tier (<em>schema-enforced</em>, <em>domain-validator-enforced</em>, or <em>advisory</em>); each rule’s severity (ERROR / WARN / NOTE) is as tagged there. The three reference documents — <a href="subject-collection-reference.html"><code>subject-collection-reference.md</code></a>, <a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a>, and <a href="glossary-reference.html"><code>glossary-reference.md</code></a> — are <strong>informative</strong>: they explain and illustrate these rules but do not add to or relax them. Where a reference document differs from this document, the JSON Schemas, or the VALIDATION.md catalog, this document and the schemas govern.</p>
+<h3 id="34-member-identity-vocabulary-and-glossary-documents"><a class="header" href="#34-member-identity-vocabulary-and-glossary-documents">3.4 Member identity (vocabulary and glossary documents)</a></h3>
+<p>A SubjectCollection’s entries — <code>tags[]</code> and <code>objectives[]</code> — and a Glossary’s <code>entries[]</code> are the owning document’s <strong>members</strong>. Members are identified by portable, stable ids, and those ids are the unit of interoperability across documents, tools, and time:</p>
+<ul>
+<li>Every member MUST carry an <code>id</code> that is <strong>immutable for the life of the member</strong>. Renaming a tag, re-wording an objective, re-parenting a tag, or moving a member between display categories are content revisions of the owning document (a new document <code>version</code>), never id changes.</li>
+<li><strong>Display text is never identity.</strong> <code>slug</code>, <code>name</code>, and <code>label</code> are mutable presentation and lookup fields; no conforming tool may key member identity on them.</li>
+<li>For <strong>SubjectCollection members</strong> (tags and objectives), a member <code>id</code> encountered in another document <strong>identifies the same member</strong>. Two documents that both carry tag id <code>X</code> are both referring to one shared concept — this is what makes classification comparable across independently-authored content (see §5.7 for the consumer obligations this creates). <strong>Glossary entry identity is narrower — see the glossary bullet below.</strong></li>
+<li>A document’s <code>globalId</code> is likewise portable and immutable: consumers MUST preserve it verbatim on import and MUST NOT re-mint it.</li>
+</ul>
+<p>The membership model is deliberately asymmetric between the two member kinds:</p>
+<ul>
+<li>A <strong>tag</strong> may be a member of any number of SubjectCollections. A document listing a tag asserts <em>membership</em>, not exclusive ownership.</li>
+<li>An <strong>objective</strong> has exactly one owning document (its wording is scope-specific). Other documents may <em>reference</em> and <em>carry copies of</em> an objective (§4.9), but only the owner revises its wording.</li>
+<li>A <strong>glossary entry</strong> is single-owner, like an objective, and its identity is <strong>document-scoped</strong>: the identifying key is the pair <code>(glossary globalId, entry id)</code>, and entry ids are required to be unique only within their owning glossary. An entry id encountered in a <em>different</em> glossary is a different entry — the cross-document same-id-same-member rule above applies to collection members only. Entries are not carried into other documents in 1.1 — a course references a whole glossary (<code>glossaryRefs</code>), never individual entries — so entry ids exist for re-import reconciliation (§5.7): the same entry id in a later version of <em>the same glossary</em> (same <code>globalId</code>) is the same entry, updated in place, never duplicated or re-minted.</li>
+</ul>
+<hr>
+<h2 id="4-producer-conformance"><a class="header" href="#4-producer-conformance">4. Producer Conformance</a></h2>
+<p>A <em>producer</em> is any tool that emits LC-JSON documents intended for external consumption.</p>
+<h3 id="41-wire-format"><a class="header" href="#41-wire-format">4.1 Wire format</a></h3>
+<p>A producer MUST emit documents in the canonical flat-root form: <code>$schema</code>, <code>documentType</code>, and <code>specVersion</code> at the top level, with the artifact payload as flat siblings. Nested envelopes such as <code>{"course": {...}}</code> are non-conforming.</p>
+<h3 id="42-discriminator-casing"><a class="header" href="#42-discriminator-casing">4.2 Discriminator casing</a></h3>
+<p>A producer MUST emit the <code>type</code> discriminator on questions in canonical camelCase form: <code>"simpleGapFill"</code>, <code>"trueFalseQuestion"</code>, <code>"multipleChoice"</code>, <code>"wordBankCloze"</code>, <code>"multiGapCloze"</code>, <code>"multipleChoiceCloze"</code>, <code>"shortAnswer"</code>, <code>"essay"</code>, <code>"sentenceTransformation"</code>, <code>"matching"</code>, <code>"ordering"</code>, <code>"placement"</code>.</p>
+<p>A producer MUST emit the <code>type</code> discriminator on items in canonical lowercase form: <code>"content"</code>, <code>"exercise"</code>, <code>"quiz"</code>, <code>"contentsequence"</code>, <code>"signpost"</code>.</p>
+<p>A producer MUST emit <code>documentType</code> in canonical camelCase form: <code>"course"</code>, <code>"questionSet"</code>, <code>"glossary"</code>, <code>"subjectCollection"</code>, or <code>"curriculumPack"</code>.</p>
+<h3 id="43-item-type-semantics"><a class="header" href="#43-item-type-semantics">4.3 Item-type semantics</a></h3>
+<p>The <code>exercise</code> and <code>quiz</code> item-type discriminators are structural distinctions, not policy. They allow consumers to render the two forms differently in the UI and to track their points in separate buckets (enabling weighted grading).</p>
+<p>The grading policy of an item is composed independently from its type via the <code>isGraded</code>, <code>isOptional</code>, and <code>passMarkPercent</code> fields. All four combinations of <code>{exercise, quiz} × {graded, ungraded}</code> are valid LC-JSON: a graded exercise (e.g. homework that counts), an ungraded exercise (open practice), a graded quiz (typical assessment), and an ungraded quiz (e.g. diagnostic pre-test, self-check) are all conforming.</p>
+<p>A producer MUST NOT infer or assert grading state from item type alone, and a consumer MUST NOT reject a document on the basis that an <code>exercise</code> is graded or a <code>quiz</code> is ungraded.</p>
+<h3 id="44-identifiers"><a class="header" href="#44-identifiers">4.4 Identifiers</a></h3>
+<p>A producer MUST emit <code>globalId</code> values as RFC 4122 UUIDs (any version) where the schema requires them. Specifically: every Unit, Lesson, Item, and Question MUST have a <code>globalId</code>; these identify the entity across re-imports, enabling consumers to match unchanged content against existing records and detect modifications.</p>
+<p>Within a single document, <code>globalId</code> values MUST be unique across all entities (Units, Lessons, Items, and Questions share one namespace). A document in which two entities carry the same <code>globalId</code> does not conform: a consumer keyed on <code>globalId</code> cannot tell the entities apart, so re-import matching breaks and updates can land on the wrong record. <code>globalId</code> comparison is case-insensitive (the hexadecimal digits of a UUID carry no case significance).</p>
+<p>A producer SHOULD emit a <code>sourceCourseId</code> at the course root for any course that may be re-imported or version-tracked. <code>sourceCourseId</code> is the stable course-identity field — the same <code>sourceCourseId</code> across versions of a course identifies them as the same logical course, enabling consumers to detect re-imports and apply update semantics rather than treating each upload as a fresh course. <code>sourceCourseId</code> is generated by the source authoring system; it does not identify a human author. A QuestionSet carries the analogous <code>sourceQuestionSetId</code> at its root, with the same source-side semantics.</p>
+<p>Vocabulary- and glossary-document identifiers follow §3.4: a producer MUST emit an <code>id</code> on every SubjectCollection member and every Glossary entry, and MUST NOT re-mint an id when regenerating or revising a document (the member persists; the document’s <code>version</code> changes). Member ids are opaque strings; RFC 4122 UUIDs are RECOMMENDED. Document identity for both types is the root <code>globalId</code> (an opaque string chosen by the original publisher; stable, human-readable slugs and UUIDs are both conventional) together with <code>version</code>.</p>
+<p><strong>Document identity by artifact type.</strong> The <strong>portable document identity</strong> — the value another document uses when it references this one — depends on the document’s <code>documentType</code>:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>documentType</code></th><th>Portable document identity</th></tr>
+</thead>
+<tbody>
+<tr><td><code>course</code></td><td><code>sourceCourseId</code></td></tr>
+<tr><td><code>questionSet</code></td><td><code>sourceQuestionSetId</code></td></tr>
+<tr><td><code>subjectCollection</code></td><td><code>globalId</code></td></tr>
+<tr><td><code>glossary</code></td><td><code>globalId</code></td></tr>
+<tr><td><code>curriculumPack</code></td><td><code>globalId</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Course and QuestionSet identity is source-side (<code>sourceCourseId</code> / <code>sourceQuestionSetId</code>); the three 1.1 artifact types carry a publisher-chosen root <code>globalId</code>. A Curriculum Pack references content by the value above for the referenced document’s <code>type</code>, carried in the reference’s <code>id</code> field (§3 of <a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a>; step-level binding in §4.3). Because a producer only SHOULD emit <code>sourceCourseId</code> / <code>sourceQuestionSetId</code>, <strong>a Curriculum Pack producer MUST NOT emit a <code>contentRef</code> to a Course or QuestionSet that does not carry the identifier its <code>type</code> resolves against</strong> — like the §4.9 closure rules, this is a producer-emission requirement: a conforming validator reports a pack that references an id-less course as an error, but a Course is never obliged to carry <code>sourceCourseId</code> merely to exist standalone. SubjectCollection and Glossary always carry a root <code>globalId</code>, so a reference to one always resolves. The identity-by-type table above defines how each artifact type is identified <strong>when it is referenced</strong>; it does not itself make every type a <code>contentRef</code> target. A Curriculum Pack’s <code>contentRefs</code> bind <strong>content documents only</strong> — Course, QuestionSet, or Glossary — and a pack <strong>MUST NOT</strong> reference another Curriculum Pack: an arrangement is not embeddable content, and 1.1 does not define pack-in-pack nesting (SubjectCollections are referenced through <code>collectionRefs</code>, not <code>contentRefs</code>). The <code>contentRefs[].type</code> vocabulary is <strong>closed for producers</strong>: a producer MUST emit one of <code>course</code>, <code>questionSet</code>, or <code>glossary</code>, and MUST NOT emit <code>curriculumPack</code> or any other value. Like the alignment-claim vocabulary (§4.10, §5.5), it binds producers only and is deliberately left schema-open (§5.8): a consumer that meets a <code>contentRefs[].type</code> it does not recognize MUST NOT reject the document — it treats the reference as unresolvable and preserves it across read/write cycles. Consumers MUST NOT conflate a source-side id with a platform-assigned identifier (see the forward-direction note below): a <code>contentRef</code> resolves against source-side identity, never against a platform id.</p>
+<blockquote>
+<p><strong>Forward-direction note (informative, not normative for 1.0):</strong> Future versions of LC-JSON may introduce a complementary <code>coursePlatformId</code> field for platform-assigned course identifiers, enabling round-trip flows where a teacher exports from a platform and re-imports to an authoring tool with the platform’s identity preserved. Implementations should not rely on this field’s absence in 1.0 documents being permanent. A platform-assigned identifier is deployment-scoped and is <strong>not</strong> the identity a Curriculum Pack <code>contentRef</code> resolves against (which is always the source-side <code>sourceCourseId</code> / <code>sourceQuestionSetId</code>), so introducing it does not change pack reference resolution.</p>
+</blockquote>
+<h3 id="45-property-naming"><a class="header" href="#45-property-naming">4.5 Property naming</a></h3>
+<p>A producer MUST emit all property names in camelCase. PascalCase, snake_case, and other casings are non-conforming on the wire.</p>
+<h3 id="46-spec-version"><a class="header" href="#46-spec-version">4.6 Spec version</a></h3>
+<p>A producer MUST emit <code>specVersion</code> matching the spec version it implements. For producers conforming to this document, <code>specVersion</code> MUST begin with <code>"1."</code> (e.g., <code>"1.0"</code>, <code>"1.1"</code>, <code>"1.1.1"</code>).</p>
+<p><code>specVersion</code> carries the contract version regardless of which publication the producer targets. The specific publication — release candidate or final release — is identified by the <code>$schema</code> URL (§4.7). A producer conforming to the 1.1 final release emits <code>specVersion: "1.1"</code> together with <code>$schema: "https://lc-json.org/1.1/course.schema.json"</code>; a producer that conformed to the earlier 1.1-rc.1 candidate emits the same <code>specVersion</code> value together with that publication’s <code>$schema</code> URL (the <code>/1.1-rc.1/</code> path, which stays served and frozen — see §8.3). <code>specVersion</code> does not include release-candidate suffixes — <code>"1.1-rc.1"</code> is not a conforming <code>specVersion</code> value.</p>
+<h3 id="47-schema-url"><a class="header" href="#47-schema-url">4.7 Schema URL</a></h3>
+<p>A producer MUST emit a <code>$schema</code> URL pointing at the canonical published schema for its <code>documentType</code> <strong>at the spec version the producer conforms to</strong>. For example: a producer conforming to LC-JSON 1.1 emits <code>https://lc-json.org/1.1/course.schema.json</code> for courses and <code>https://lc-json.org/1.1/subject-collection.schema.json</code> for subject collections; a producer conforming to 1.0 final emits <code>https://lc-json.org/1.0/course.schema.json</code>. A producer that emits a non-canonical URL or omits the field is non-conforming.</p>
+<p>The strict producer / lenient consumer split (§3.2 above) is deliberate: emitting <code>$schema</code> makes documents self-describing for IDEs, schema dispatch, and ad-hoc validation; tolerating its absence on import preserves portability across older or otherwise-non-conforming producers without hard-failing re-imports.</p>
+<h3 id="48-validation-before-emit"><a class="header" href="#48-validation-before-emit">4.8 Validation before emit</a></h3>
+<p>A producer SHOULD validate every emitted document against the published JSON Schemas before delivery. A producer that emits an invalid document is non-conforming with respect to that document.</p>
+<h3 id="49-self-containment-of-vocabulary-references-closure-and-carried-copies"><a class="header" href="#49-self-containment-of-vocabulary-references-closure-and-carried-copies">4.9 Self-containment of vocabulary references (closure and carried copies)</a></h3>
+<p><strong>SubjectCollection closure.</strong> A conforming SubjectCollection document is self-contained:</p>
+<ul>
+<li><code>categories[]</code> MUST include every category referenced by any <code>tags[].categoryId</code>. Categories are shared display buckets, not identity; consumers merge them by category id.</li>
+<li>Every <code>objectives[].tagIds</code> entry MUST resolve to a member of the document’s own <code>tags[]</code>.</li>
+<li>Every <code>tags[].parentId</code> MUST be the member id of another tag in the document (parents are member ids, never slugs).</li>
+<li>The <code>parentId</code> relation MUST be <strong>acyclic</strong>: no tag may be its own parent, and no sequence of <code>parentId</code> links may return to a tag already visited along that sequence. Because each tag has at most one parent, an acyclic relation is a forest — every tag reaches a root in finitely many steps. A document containing a <code>parentId</code> cycle of any length is non-conforming, and a consumer walking the hierarchy is entitled to assume termination.</li>
+</ul>
+<p>A producer MUST NOT emit a SubjectCollection whose members link outside the document. A document that violates closure is non-conforming.</p>
+<p><strong>Carried copies in content documents.</strong> A course document may assign objectives that originate in a SubjectCollection (its <code>courseObjectiveIds</code> / <code>objectiveIds</code> arrays reference them). A producer emitting such a course MUST embed a copy of every referenced objective in the course’s <code>objectives[]</code> pool — <strong>with the member id preserved verbatim</strong> — so the document remains self-contained. Such an embedded copy is a <em>carried copy</em>: it travels for portability and does not transfer ownership or revise the member’s wording (§5.7 governs what a consumer does with it). A course document <strong>declaring <code>specVersion</code> 1.1 or later</strong> whose objective-id references do not all resolve within its own <code>objectives[]</code> pool is non-conforming. Documents declaring <code>specVersion</code> 1.0 retain their 1.0 meaning unchanged: unresolved objective references were an advisory (warning-tier) condition in 1.0 and remain so for 1.0 documents — this rule tightens only what 1.1 producers emit, which is what keeps 1.1 additive under §8.2.</p>
+<p>The same pattern applies at document scale for glossaries: a producer emitting a course whose <code>glossaryRefs</code> reference glossaries it holds SHOULD embed a carried copy of each referenced glossary document — whole, with <code>globalId</code> and entry member ids preserved verbatim — in the course’s root <code>glossaries[]</code> pool, so a single course file is self-contained. The obligation is SHOULD, not MUST: a glossary ref that resolves to no carried copy is legal (a <em>dangling ref</em> — consumers surface it and never fail the import; see §4.9 and <a href="glossary-reference.html"><code>glossary-reference.md</code></a> §4), because the course’s learner-facing content is complete without its glossary panel, which is not true of assigned objectives.</p>
+<h3 id="410-alignment-claims"><a class="header" href="#410-alignment-claims">4.10 Alignment claims</a></h3>
+<p>A SubjectCollection may assert typed alignments to external frameworks and registries via <code>externalAlignments[]</code>. Each entry carries <code>{claim, scheme, id, label}</code>:</p>
+<ul>
+<li><code>claim</code> MUST be one of the 1.1 claim types: <code>"references"</code>, <code>"alignedTo"</code>, or <code>"covers"</code>. The values <code>"assesses"</code> and <code>"verifiedBy"</code> are <strong>reserved</strong> for a future version; a 1.1 producer MUST NOT emit them. This vocabulary binds <strong>producers only</strong> and is deliberately not closed in the schema: a consumer never rejects a document over a claim value it does not recognize (§5.5) — the schema leaves <code>claim</code> open precisely so the §5.1 schema-validation obligation and the §5.5 preservation obligation cannot collide.</li>
+<li><code>scheme</code> and <code>id</code> MUST both be present and non-empty: <code>scheme</code> names the external namespace (e.g., a standards body, a national curriculum register, an official catalog), and <code>id</code> is the identifier <strong>within that namespace</strong>. <code>label</code> is optional display text.</li>
+</ul>
+<p>External registries are referenced, never re-implemented: an alignment entry points at an external identifier; it does not embed or restate the external framework’s content. A consumer MUST NOT reject a document for carrying an alignment whose <code>scheme</code> it does not recognize, and MUST preserve alignment entries across read/write cycles; interpretation of any given scheme is consumer-defined.</p>
+<h3 id="411-publication-metadata"><a class="header" href="#411-publication-metadata">4.11 Publication metadata</a></h3>
+<p>The distributable artifact types — Course, SubjectCollection, CurriculumPack, and Glossary — carry publication metadata as optional top-level fields: <code>license</code>, <code>canonicalUrl</code>, and <code>derivedFrom[]</code> (alongside the type’s existing <code>authors</code>/<code>version</code> fields). QuestionSet is excluded by role: it is a lightweight referencable resource, not a distribution-governed one. A glossary shares QuestionSet’s <em>structural</em> lightness (flat root, referencable) but is distribution-governed: glossaries are shareable, remixable artifacts, which is precisely what the publication fields exist for.</p>
+<ul>
+<li>A producer SHOULD populate <code>license</code> on any document intended for distribution beyond its authoring environment. The value <code>"unspecified"</code> is appropriate only for private drafts.</li>
+<li><code>derivedFrom[]</code> entries (<code>{globalId, version}</code>) record provenance: the document(s) this one was revised or remixed from. A producer creating a new document by modifying an existing one SHOULD record the source there.</li>
+<li>A producer MUST NOT encode commerce data (price, entitlement, buyer identity) in publication metadata or anywhere else in an LC-JSON document.</li>
+</ul>
+<hr>
+<h2 id="5-consumer-conformance"><a class="header" href="#5-consumer-conformance">5. Consumer Conformance</a></h2>
+<p>A <em>consumer</em> is any tool that ingests LC-JSON documents from an external source.</p>
+<p><strong>Consumer conformance requires more than schema validation.</strong> Schema validation (§5.1) is necessary but not sufficient: a conformant consumer ALSO satisfies the discriminator-handling rule (§5.3), the unknown-fields rule (§5.4), the reserved-enum-values rule (§5.5), the randomization requirements (§5.6), the member-identity rules where vocabulary members appear (§5.7), and — where reserved or unknown question types appear — the round-trip preservation obligations in §6. A generic JSON Schema validator alone does not implement these; consumers MUST implement the relevant §5.x and §6 obligations to claim conformance (see §10.3). See the worked example at the end of this section.</p>
+<h3 id="51-strict-validation"><a class="header" href="#51-strict-validation">5.1 Strict validation</a></h3>
+<p>A consumer MUST validate incoming documents against the published JSON Schemas for the declared <code>documentType</code> and reject documents that fail schema validation.</p>
+<p><strong>Exception (§6 fallback for unknown types).</strong> Schema-validation failures whose only cause is one or more <code>type</code> discriminator values not present in the consumer’s implemented <code>question-base.schema.json</code> enum do not trigger §5.1 rejection. The consumer applies the §6 fallback to those questions (preserve verbatim, treat earned points as <code>0</code>, render placeholder, report to user) and validates the rest of the document under §5.1. All other schema-validation failures — missing required fields, type mismatches, pattern violations on known fields, <code>additionalProperties</code> violations on closed objects, etc. — still trigger rejection. This carve-out is what makes §5.2’s “accept any 1.x <code>specVersion</code>” rule operable: a 1.0-only consumer reading a 1.x+ document with a future-minor question type satisfies both §5.1 and §6 by following this path.</p>
+<p><strong>Unimplemented artifact types.</strong> A consumer is not required to implement every artifact type. A consumer that does not implement a document’s declared <code>documentType</code> MUST reject that document cleanly, naming the unsupported type — it MUST NOT attempt a partial or coerced interpretation. Conformance claims are scoped per artifact type (§10.1).</p>
+<h3 id="52-spec-version-handling"><a class="header" href="#52-spec-version-handling">5.2 Spec version handling</a></h3>
+<p>A consumer MUST accept any <code>specVersion</code> value whose major version it implements (e.g., a 1.x consumer accepts <code>1.0</code>, <code>1.1</code>, <code>1.0.1</code>, …; the canonical pattern is enforced by <code>course.schema.json</code> / <code>question-set.schema.json</code>).</p>
+<p>A consumer MUST reject <code>specVersion</code> values whose major version exceeds what it implements (a 1.x consumer rejects <code>2.0</code>, <code>2.1</code>, <code>3.0</code>, …). The rejection SHOULD be a clear error indicating the unsupported spec version.</p>
+<p>A consumer MUST NOT silently downgrade or interpret unknown spec versions.</p>
+<h3 id="53-discriminator-handling"><a class="header" href="#53-discriminator-handling">5.3 Discriminator handling</a></h3>
+<p>A consumer MUST recognize canonical camelCase question-type discriminators and canonical lowercase item-type discriminators as defined in §4.2. Non-canonical casings are non-conforming and MUST be rejected.</p>
+<h3 id="54-unknown-fields"><a class="header" href="#54-unknown-fields">5.4 Unknown fields</a></h3>
+<p>A consumer MUST NOT reject a document solely because it contains additional fields not defined by the schema. Such fields are reserved for forward-compatible additions and MUST be ignored or preserved at the consumer’s discretion.</p>
+<h3 id="55-reserved-enum-values"><a class="header" href="#55-reserved-enum-values">5.5 Reserved enum values</a></h3>
+<p>A consumer MUST accept question types listed in <code>question-base.schema.json</code>’s <code>enum</code> even when no per-type schema is published for them. Full handling obligations — including round-trip preservation, learner-facing placeholder rendering, and grading semantics — are normative under §6 (Reserved and unknown types).</p>
+<p>The same forward-compatible posture applies to alignment-claim values (§4.10): a consumer encountering an <code>externalAlignments[].claim</code> value outside the 1.1 set MUST NOT reject the document, MUST NOT interpret the claim, and MUST preserve the entry verbatim across read/write cycles.</p>
+<h3 id="56-randomization-requirements-for-matching-and-placement"><a class="header" href="#56-randomization-requirements-for-matching-and-placement">5.6 Randomization requirements for matching and placement</a></h3>
+<p>For <code>matching</code> and <code>placement</code> questions, two surfaces a consumer presents to a learner have no author-defined order:</p>
+<ol>
+<li><strong>The choice pool</strong>, comprising every authored answer value (<code>pairs[].match</code> or <code>categories[].label</code> for matching; <code>placements[].item</code> for placement) plus any <code>distractors</code>. Source order would directly expose the correct-answer mapping (the N-th option being the correct answer for the N-th row or gap), defeating the question.</li>
+<li><strong>The row order in <code>matching</code> classification mode</strong>, where each row is one item to be classified. Source order is grouped by category — items belonging to <code>categories[0]</code> first, then <code>categories[1]</code>, and so on — which directly exposes the answer (the first N rows all share the same category label).</li>
+</ol>
+<p>A consumer MUST present both surfaces to learners in randomized order. A consumer MUST NOT render either surface in source order. The randomization algorithm and any seeding strategy are consumer-defined.</p>
+<p>These requirements do not apply to:</p>
+<ul>
+<li><code>multipleChoice</code> and other single-question choice lists, where authors may deliberately position the correct option and the question schema’s own <code>shuffleOptions</code> field governs shuffle policy per question.</li>
+<li>The order of pair rows in <code>matching</code> pairs mode, where each item has its own distinct match value and source row order does not directly expose the answer.</li>
+<li>The order of items in <code>ordering</code> source-tile pools, where the question’s structural design requires the tile pool to be presented in non-source order regardless.</li>
+</ul>
+<h3 id="57-member-identity-handling"><a class="header" href="#57-member-identity-handling">5.7 Member-identity handling</a></h3>
+<p>When a consumer that maintains a persistent store of vocabulary members ingests a document carrying members (a SubjectCollection, or a course with carried copies per §4.9), the member ids govern reconciliation:</p>
+<ul>
+<li><strong>An incoming member id the consumer already holds identifies the same member.</strong> The consumer MUST NOT create a duplicate member for it.</li>
+<li><strong>Tags — record membership.</strong> When a SubjectCollection lists a tag the consumer already holds, the consumer records the tag’s membership in that collection. It MUST NOT duplicate the tag, and MUST NOT transfer or revoke the tag’s other memberships.</li>
+<li><strong>Objectives — link, never overwrite.</strong> When a document carries an objective the consumer already holds, the consumer links to its existing member. It MUST NOT modify the existing member’s wording, difficulty, or tag links from the incoming copy <strong>unless the incoming document is the member’s owning document</strong> (a revision of the owning SubjectCollection, or a re-import of the course that owns the objective). Carried copies (§4.9) are read-only with respect to the member they duplicate.</li>
+<li><strong>Ownership is determinable only as far as the wire permits — 1.1 carries no owner/provenance marker.</strong> An objective listed in a SubjectCollection’s <code>objectives[]</code> is owned by that collection (§3.4: collections own their objectives), and a consumer MAY treat that as an authoritative ownership claim. A course’s <code>objectives[]</code> pool is deliberately ambiguous — it holds the course’s own objectives and carried copies without distinction, and nothing on the wire says which — so <strong>a consumer cannot determine from a course document alone whether that course owns a given objective id or merely carries a copy of one owned elsewhere.</strong> Because of that, a consumer MUST NOT overwrite one document’s wording for an objective id with another’s on the basis of an inferred course ownership (<strong>link-never-overwrite</strong>): it reconciles by id, keeps the ingested wordings, and SHOULD surface a divergence between two sources for the same id rather than silently picking one, offering a <strong>fork</strong> (a new member id) as the keep-mine path. When a SubjectCollection listing an id is ingested, the collection’s wording MAY be treated as authoritative for that id from then on; absent any collection claim, an id seen only in course pools has no determinable owner and is treated as shared-by-reference. Two SubjectCollections both listing the same objective id is a document-set conflict the consumer SHOULD surface — the model gives objectives exactly one owner. A per-copy provenance marker on carried copies, which would let a consumer resolve course-level ownership deterministically, is reserved for a future minor version (alongside the reserved course→collection reference); until it exists, the obligations above are the whole of what a 1.1 consumer is required to do.</li>
+<li><strong>Absent members are created verbatim.</strong> A member id the consumer does not hold is created from the incoming copy with its id preserved — never re-minted — so that a later document carrying the same id reconciles to it.</li>
+<li><strong>Glossary entries reconcile like objectives.</strong> When a consumer re-ingests a glossary it already holds (same document <code>globalId</code>), entry ids govern the update: an entry id already held is the same entry (update in place, never duplicate); an absent id is created verbatim; ids are never re-minted. A glossary entry’s <code>firstMention</code> naming a lesson the consumer does not hold is treated as absent; a consumer that regenerates lesson <code>globalId</code>s on import MUST remap <code>firstMention</code> on glossaries imported alongside.</li>
+<li><strong>Identity-less members are rejected; closure is a producer-validity rule.</strong> The §4.9 closure rules and §3.4 identity rule are <strong>producer-emission requirements</strong>: a producer MUST NOT emit a violating SubjectCollection, and such a document is non-conforming (a conforming validator reports it as an error). On the <strong>consumer</strong> side the two rules differ in strictness, mirroring the strict-producer / lenient-consumer split of §3.2 and §5.1:
+<ul>
+<li>A consumer MUST reject a SubjectCollection whose members lack ids — identity is non-optional (§3.4) and there is nothing to reconcile against.</li>
+<li>A consumer SHOULD reject a SubjectCollection that violates the §4.9 closure rules, reporting the specific violations; a lenient consumer MAY instead ingest it with the violations surfaced (for example, treating an unresolved <code>categoryId</code> as an uncategorized tag). Closure is what a <em>producer</em> must guarantee; a consumer is not obliged to fail an otherwise-usable document over it.</li>
+</ul>
+</li>
+<li><strong>Display collisions never override identity.</strong> If an incoming member’s <code>slug</code> (or other display/lookup field) collides with a <em>different</em> member the consumer already holds, the consumer resolves the collision on the display field (e.g., by qualifying the incoming slug) — it MUST NOT merge the two members or reassign the id.</li>
+</ul>
+<p>A consumer with no persistent member store (e.g., a single-document validator or converter) satisfies §5.7 vacuously, but MUST still preserve member ids verbatim across any read/write cycle.</p>
+<h3 id="58-consumer-validation-order-informative"><a class="header" href="#58-consumer-validation-order-informative">5.8 Consumer validation order (informative)</a></h3>
+<p>The §5.x obligations compose into one algorithm; implementers who follow it satisfy the strict-validation and forward-compatibility rules simultaneously:</p>
+<ol>
+<li>Parse the JSON. A parse failure is fatal.</li>
+<li>Dispatch the schema from <code>documentType</code> + the <code>$schema</code> URL (inferring from <code>documentType</code> + <code>specVersion</code> when <code>$schema</code> is absent, per §3.2). An unimplemented <code>documentType</code> is rejected cleanly, naming the type (§5.1).</li>
+<li>Validate against the schema. A failure whose <strong>only</strong> cause is one or more unknown question-<code>type</code> discriminators routes those questions to the §6 fallback and the rest of the document continues (§5.1, Exception). <strong>Every other schema failure is import-fatal.</strong> Note what does <em>not</em> fail schema validation by design: unknown fields on open objects (§5.4 — LC-JSON objects are open unless §7.1 names them closed), and vocabulary values the spec deliberately leaves schema-open because their vocabularies bind producers only (alignment <code>claim</code>, pack <code>contentRefs[].type</code>).</li>
+<li>Apply the domain rules cataloged in <code>VALIDATION.md</code> at their stated tiers — ERROR-tier domain failures reject; WARN/NOTE-tier are surfaced, never fatal.</li>
+<li>Ignore-or-preserve unknown fields (§5.4) and extension members (§7.4); reconcile members (§5.7); apply the §6 obligations to any fallback questions.</li>
+</ol>
+<h3 id="forward-compatibility-three-look-alike-situations-informative"><a class="header" href="#forward-compatibility-three-look-alike-situations-informative">Forward compatibility: three look-alike situations (informative)</a></h3>
+<p>A 1.0-conformant consumer reading a 1.x document may encounter three superficially-similar cases at the JSON layer, each governed by a <em>different</em> consumer obligation. A generic JSON Schema validator handles none of them automatically.</p>
+<ol>
+<li>
+<p><strong>An unknown top-level field on a question.</strong> Example: <code>"explanationVideoUrl": "..."</code> appears on a <code>multipleChoice</code> question. Under §5.4 (Unknown fields), the consumer MUST NOT reject the document; it ignores or preserves the field at its discretion.</p>
+</li>
+<li>
+<p><strong>An extension-namespaced field.</strong> Example: <code>"x-somecompany-difficultyBand": "B2"</code> appears on the same question. Under §7 (Extensions), the consumer MUST NOT reject for it and SHOULD preserve it verbatim across read/write cycles.</p>
+</li>
+<li>
+<p><strong>An unknown <code>type</code> discriminator value.</strong> Example: a question carries <code>"type": "novelCodingTask"</code> — a value the consumer’s implemented <code>question-base.schema.json</code> enum does not include. Per §6.1, <em>reserved</em> and <em>unknown</em> types are handled identically: it does not matter whether <code>novelCodingTask</code> is destined for a future minor version, is a vendor-specific extension type, or will never be standardized at all. Under §5.1 (Strict validation, Exception) and §6.2 (Consumer obligations), the consumer applies the §6 fallback to that question (preserve verbatim, treat earned points as <code>0</code>, render a placeholder naming the type, report to user) and validates the rest of the document. Note that earned points are set to <code>0</code>, but the question’s <strong>possible</strong> points still count toward the item’s total — the item’s maximum is consumer-independent by design, so a learner who completes the item in a fuller consumer can earn all the points the producer declared while a learner in a more limited consumer earns whatever subset they can; both report grades against the same denominator. Under §6.4 (Round-trip preservation), if the consumer re-exports the document, the <code>novelCodingTask</code> question is preserved with every member, value, and nested structure intact (semantic preservation; key order is producer-discretion per §6.2).</p>
+</li>
+</ol>
+<p>These three cases look similar at the JSON layer but are not interchangeable. Implementers using a generic JSON Schema validator (<code>jsonschema</code> for Python, Ajv for JavaScript, etc.) MUST add the §5.x and §6 fallback logic above the base validation call — particularly for case 3, where a generic validator would reject the whole document on the unknown <code>"novelCodingTask"</code> enum value, but §5.1’s Exception is what permits the rest of the document to validate while §6 governs the unknown-type question.</p>
+<hr>
+<h2 id="6-reserved-and-unknown-types"><a class="header" href="#6-reserved-and-unknown-types">6. Reserved and Unknown Types</a></h2>
+<h3 id="61-definitions"><a class="header" href="#61-definitions">6.1 Definitions</a></h3>
+<p>A <em>reserved type</em> is a <code>type</code> discriminator value listed in <code>question-base.schema.json</code>’s discriminator enum that does not have a published per-type schema in this spec version. The 1.0 reserved types are: <code>association</code>, <code>hotspot</code>, <code>graphicGapMatch</code>, <code>graphicAssociate</code>, <code>graphicOrder</code>, <code>fileUpload</code>, and <code>mediaPromptedEssay</code>.</p>
+<p>An <em>unknown type</em> is a <code>type</code> discriminator value not listed in <code>question-base.schema.json</code>’s discriminator enum. Unknown types may appear in 1.x+ documents read by 1.0-only consumers.</p>
+<p>For the purposes of this section, reserved and unknown types are handled identically.</p>
+<h3 id="62-consumer-obligations"><a class="header" href="#62-consumer-obligations">6.2 Consumer obligations</a></h3>
+<p>When a consumer encounters a question whose <code>type</code> is reserved or unknown, the consumer:</p>
+<ul>
+<li><strong>MUST</strong> preserve every member of the question object across read/write cycles — every field name, every value, every nested object and array, and any extension fields present on import. No field dropping, no value mutation, no <code>globalId</code> rewriting. (Key order within JSON objects is producer-discretion: producers SHOULD preserve input key order for authoring ergonomics and diff stability, but consumers are not required to — JSON object members are unordered per RFC 8259 §4.)</li>
+<li><strong>MUST NOT</strong> silently drop the question from the parent item’s <code>questions[]</code> array. The question’s existence is preserved even when its rendering is not supported.</li>
+<li><strong>MUST</strong> treat the question’s earned points as <code>0</code> for grading purposes. The question’s possible points still count toward the item’s total — the maximum is not silently reduced.</li>
+<li><strong>MUST</strong> report the unsupported question to the user (or upstream caller) at import time, naming the type and the question’s <code>globalId</code>. Form is implementation-defined (UI banner, log line, returned warning), but the report is required.</li>
+<li><strong>SHOULD</strong> render a non-interactive placeholder in the learner UI naming the type. Example: <em>“Question type ‘hotspot’ is not supported by this application. Skip to the next question.”</em></li>
+<li><strong>SHOULD</strong> disable navigation gating for unsupported questions (e.g. do not block lesson completion just because a reserved question was not answered).</li>
+<li><strong>MAY</strong> offer the learner a way to view the raw question data (instructor preview, debug mode), but <strong>MUST NOT</strong> expose internal field names to the learner UI by default.</li>
+</ul>
+<h3 id="63-producer-obligations"><a class="header" href="#63-producer-obligations">6.3 Producer obligations</a></h3>
+<p>A producer that emits reserved types:</p>
+<ul>
+<li><strong>SHOULD NOT</strong> emit reserved question types in 1.0 documents intended for cross-implementation distribution. Reserved types are explicitly tool-specific extensions until promoted in a future version.</li>
+<li><strong>MUST</strong> still satisfy <code>question-base.schema.json</code> if it does emit them: valid <code>type</code>, valid <code>globalId</code>, valid <code>points</code>, valid <code>prompt</code>, plus any other <code>question-base</code> requirements. Consumers’ fallback handling can only operate on a structurally well-formed object.</li>
+<li><strong>SHOULD</strong> document in the tool’s README which reserved types it emits and which fields it populates, so other tool authors can interoperate or contribute.</li>
+</ul>
+<h3 id="64-round-trip-preservation"><a class="header" href="#64-round-trip-preservation">6.4 Round-trip preservation</a></h3>
+<p>A consumer that imports an LC-JSON document, modifies it, and re-exports MUST preserve every member of every reserved-type question in the exported document — including their <code>globalId</code>, <code>type</code>, <code>points</code>, <code>prompt</code>, and any additional fields that were present on import. No field dropping, no value mutation. (Key order within JSON objects is producer-discretion per §6.2; the preservation obligation is semantic, not byte-level.)</p>
+<p>The intent is that a teacher exporting from a consumer that does not support <code>hotspot</code> can take the file back to a consumer that does, without losing the hotspot question. This is the core interop guarantee for reserved types: consumers MUST NOT strip reserved questions on export even if they cannot render them on import.</p>
+<h3 id="65-producer-guidance-informative"><a class="header" href="#65-producer-guidance-informative">6.5 Producer guidance (informative)</a></h3>
+<p>To make a reserved-type question maximally compatible with future first-class implementations and other producers emitting the same name:</p>
+<ul>
+<li>Use the published reserved name exactly (<code>hotspot</code>, not <code>Hotspot</code> or <code>hotspot-question</code>).</li>
+<li>Always populate <code>globalId</code> (UUID), <code>points</code>, and <code>prompt</code>.</li>
+<li>Use additional fields conservatively — anything beyond <code>question-base</code> is by convention only until 1.1 publishes a per-type schema. Document any tool-specific extensions in your README.</li>
+<li>Avoid generic field names that 1.1 schemas may use canonically (<code>data</code>, <code>config</code>, <code>settings</code>).</li>
+</ul>
+<p>This subsection is informative — producers that do not follow it still produce valid LC-JSON. But the future first-class schemas are likelier to land cleanly if 1.0 producers stay within the spirit.</p>
+<blockquote>
+<p><strong>Note (1.1):</strong> this version promotes no reserved question types to first-class schemas; the 1.0 reserved-type list is unchanged in 1.1.</p>
+</blockquote>
+<hr>
+<h2 id="7-extensions"><a class="header" href="#7-extensions">7. Extensions</a></h2>
+<p>LC-JSON is deliberately small. Tools frequently need to attach data that is meaningful to themselves but is not part of the interchange contract — authoring provenance, internal identifiers, editor state, analytics hints. Namespaced extensions provide a forward-compatible, collision-free way to carry such data without polluting the core format or requiring a spec revision.</p>
+<h3 id="71-extension-members"><a class="header" href="#71-extension-members">7.1 Extension members</a></h3>
+<p>An <em>extension member</em> is an object member whose key begins with the prefix <code>x-</code> followed by a vendor or tool namespace, for example <code>x-acme-reviewState</code> or <code>x-acme.lineage</code>.</p>
+<p>Extension members MAY appear on the document root and on any Course, Unit, Lesson, Item, or Question object, and — in vocabulary, arrangement, and glossary documents — on any category, tag, objective, alignment, reference, or glossary entry. They MUST NOT be added to objects whose schema declares <code>additionalProperties: false</code> (in 1.0, the <code>matching</code> pair/category entries and <code>placement</code> entries), because those objects are closed by contract and would fail validation.</p>
+<p>The <code>x-</code> prefix is reserved exclusively for extensions. A producer MUST NOT introduce a non-extension field whose name begins with <code>x-</code>.</p>
+<h3 id="72-namespacing"><a class="header" href="#72-namespacing">7.2 Namespacing</a></h3>
+<p>The segment immediately following <code>x-</code> is the <em>namespace</em> and MUST identify the originating tool or vendor (e.g. <code>x-acme</code>). Namespacing prevents two tools from colliding on the same key with incompatible meanings. A producer MUST NOT emit an extension member under a namespace it does not own.</p>
+<p>A namespace owner SHOULD document the extension members it emits — their shape and meaning — in its public implementation notes (for known implementations, in <a href="IMPLEMENTATIONS.html"><code>IMPLEMENTATIONS.md</code></a>).</p>
+<h3 id="73-additive-only-constraint"><a class="header" href="#73-additive-only-constraint">7.3 Additive-only constraint</a></h3>
+<p>Extensions are strictly additive. A producer MUST NOT encode in an extension member any data required for a baseline-correct interpretation of the document. A consumer that ignores every extension member MUST still obtain a complete and correct learning experience. Equivalently: removing all <code>x-</code> members from a conforming document MUST leave a conforming document with equivalent learner-facing meaning.</p>
+<p>This keeps extensions from degenerating into a shadow format that fragments the ecosystem.</p>
+<h3 id="74-consumer-obligations"><a class="header" href="#74-consumer-obligations">7.4 Consumer obligations</a></h3>
+<p>A consumer MUST NOT reject a document solely because it contains extension members (this restates §5.4 for the namespaced case).</p>
+<p>A consumer MUST NOT interpret an extension member outside its own namespace as having any defined meaning. A consumer MAY read and act on extension members within namespaces it understands.</p>
+<p>A consumer that imports, modifies, and re-exports a document SHOULD preserve extension members it does not understand, re-attaching each to the same object it arrived on (identified by <code>globalId</code> where the object carries one). A consumer that preserves all unrecognized extension members across a round trip is said to be <em>extension-preserving</em>; a consumer that cannot SHOULD document the loss.</p>
+<p>The SHOULD — rather than MUST — acknowledges that some consumers have fixed internal storage with nowhere to hold arbitrary foreign data. But preservation is what lets a tool use LC-JSON as a faithful transfer or backup format for its own tool-specific state: a document that round-trips through an extension-preserving consumer comes back whole, including data that consumer never understood.</p>
+<h3 id="75-producer-obligations"><a class="header" href="#75-producer-obligations">7.5 Producer obligations</a></h3>
+<p>A producer MAY emit extension members under namespaces it owns, subject to §7.1–§7.3. A producer MUST keep extension content well-formed JSON. A producer SHOULD prefer extension members over overloading core fields (for example, encoding private state in <code>tags</code> or <code>title</code>) for tool-specific data.</p>
+<hr>
+<h2 id="8-versioning-and-stability"><a class="header" href="#8-versioning-and-stability">8. Versioning and Stability</a></h2>
+<h3 id="81-semantic-versioning"><a class="header" href="#81-semantic-versioning">8.1 Semantic versioning</a></h3>
+<p>Spec versions follow a semver-style scheme: <code>MAJOR.MINOR[.PATCH]</code>.</p>
+<ul>
+<li>A <strong>major</strong> version bump (e.g., 1.x → 2.0) signifies a breaking change. New schemas are published at a new URL path (<code>/2.0/</code>).</li>
+<li>A <strong>minor</strong> version bump (e.g., 1.0 → 1.1) signifies an additive change. New schemas are published at a new URL path (<code>/1.1/</code>).</li>
+<li>A <strong>patch</strong> bump signifies non-normative fixes (description text, examples, clarifications). No URL change.</li>
+<li>A <strong>release candidate</strong> of an upcoming version <code>X.Y</code> carries the version label <code>X.Y-rc.N</code> (where <code>N</code> is <code>1</code>, <code>2</code>, …) and is published at its own URL path <code>/X.Y-rc.N/</code>. RCs allow non-breaking refinements between the candidate and the accepted final release; each RC is its own immutable publication. The final <code>X.Y</code> release is published at <code>/X.Y/</code> only when accepted. Documents pinned to <code>/X.Y-rc.N/</code> do not auto-promote to <code>/X.Y/</code> — adopting the final release is an explicit publisher choice (typically a re-export against the new schema URL).</li>
+</ul>
+<h3 id="82-definition-of-breaking"><a class="header" href="#82-definition-of-breaking">8.2 Definition of “breaking”</a></h3>
+<p>For the purposes of §8.1, a change is <strong>breaking</strong> if and only if it causes a previously-conforming document to stop validating under the new schema, or to change in meaning under the new schema (i.e., a field that previously had one interpretation now has another).</p>
+<p>Loosening the schema so that a previously-non-conforming document begins to validate is <strong>not</strong> breaking by this definition: documents that already conformed continue to conform with unchanged meaning. The additive examples below rely on this asymmetry.</p>
+<p>Examples of breaking changes:</p>
+<ul>
+<li>Renaming a property.</li>
+<li>Removing an enum value that existing documents may have used.</li>
+<li>Tightening a constraint (e.g., reducing a string’s <code>maxLength</code> below an existing value’s length).</li>
+<li>Adding a new required property.</li>
+<li>Changing a property’s type.</li>
+</ul>
+<p>Examples of additive changes:</p>
+<ul>
+<li>Adding an optional property.</li>
+<li>Adding an enum value.</li>
+<li>Loosening a constraint (e.g., increasing <code>maxLength</code>).</li>
+<li>Removing a property from an object’s <code>required</code> list (the field becomes optional).</li>
+<li>Adding an entirely new artifact type with its own <code>documentType</code> value.</li>
+</ul>
+<p>LC-JSON 1.1 is additive by this definition: its changes are three new artifact types, new optional properties on the course document (publication metadata at the root; <code>glossaryRefs</code> at course/unit/lesson), and new enum values. Every conforming 1.0 document validates unchanged under the 1.1 schemas with unchanged meaning.</p>
+<h3 id="83-url-stability"><a class="header" href="#83-url-stability">8.3 URL stability</a></h3>
+<p>Schemas published at any published version path — released versions and release candidates alike — MUST remain available at that URL with byte-identical content (modulo whitespace) for the lifetime of the specification. Specifically:</p>
+<ul>
+<li><code>https://lc-json.org/1.0/*.schema.json</code> MUST resolve to the 1.0 schemas indefinitely once 1.0 final is published.</li>
+<li><code>https://lc-json.org/1.0-rc.N/*.schema.json</code> MUST resolve to the rc.N schemas indefinitely once rc.N is published.</li>
+<li>These URLs MUST NOT be redirected to a different schema, even one that is “compatible” or “improved.”</li>
+<li>These URLs MUST NOT be moved to a non-canonical host.</li>
+<li>The <code>/X.Y/</code> URL path MUST NOT be populated until <code>X.Y</code> final is published; serving rc.N content at <code>/X.Y/</code> is non-conforming and prevents downstream documents from distinguishing the candidate from the final release.</li>
+</ul>
+<p>This guarantee enables conforming documents to embed <code>$schema</code> URLs that remain valid for the document’s entire lifetime in archives, version-control systems, and offline contexts — including across rc.N → final transitions, where rc.N documents continue to validate against their original rc.N URL indefinitely.</p>
+<h3 id="84-version-path-forward-compatibility"><a class="header" href="#84-version-path-forward-compatibility">8.4 Version-path forward compatibility</a></h3>
+<p>A document is validated against the schemas at the URL given in its <code>$schema</code> field — that URL is the document’s <strong>canonical schema location</strong> and the binding target for conformance. The <code>specVersion</code> field declares the spec version the document targets; the <code>$schema</code> URL identifies the specific schema publication (release or release candidate) it was authored against. Both MUST be present (§3.2) and MUST agree on the targeted version (§4.6, §4.7): a document declaring <code>specVersion: "1.0"</code> MUST point <code>$schema</code> at either <code>/1.0/</code> (the final release, once published) or a <code>/1.0-rc.N/</code> candidate path; a document declaring <code>specVersion: "1.1"</code> MUST point <code>$schema</code> at <code>/1.1/</code> or a <code>/1.1-rc.N/</code> candidate path.</p>
+<p><strong>Reminder (§4.6):</strong> <code>specVersion</code> never carries an <code>-rc.N</code> suffix. Every document targeting the 1.1 contract — whether authored against an rc.N candidate or 1.1 final — declares <code>specVersion: "1.1"</code>. The specific publication is identified by <code>$schema</code>. For example, a document authored during the 1.1-rc.1 phase looks like:</p>
+<pre><code class="language-json">{
+  "$schema":     "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+  "documentType": "subjectCollection",
+  "specVersion":  "1.1",
+  ...
+}
+</code></pre>
+<p>It follows that:</p>
+<ul>
+<li>A document declaring <code>specVersion: "1.0"</code> with <code>$schema</code> pointing at <code>/1.0/</code> MUST validate against the schemas published at <code>/1.0/</code>. The 1.0 final release has shipped; <code>/1.0/</code> is populated and frozen (§8.3).</li>
+<li>A document declaring <code>specVersion: "1.0"</code> with <code>$schema</code> pointing at <code>/1.0-rc.N/</code> MUST validate against the schemas published at <code>/1.0-rc.N/</code> and is not required to validate against <code>/1.0/</code>. The rc.N → final transition is an explicit publisher choice (see §8.1, §8.3) — a re-export against the new <code>$schema</code> URL — not an automatic upgrade.</li>
+<li>A document declaring <code>specVersion: "1.1"</code> MUST validate against the schemas at its declared <code>$schema</code> URL. Backward compatibility runs the other way and is defined by consumer obligation, not by cross-schema validation: a 1.1 consumer MUST continue to accept any valid 1.0 document (1.1 adds artifact types and optional fields; it removes nothing a 1.0 document relies on). “Validate a 1.1 document against 1.0 schemas” is not defined — the 1.1 artifact types have no 1.0 schema, and additive fields would fail a strict 1.0 schema.</li>
+</ul>
+<hr>
+<h2 id="9-deprecation"><a class="header" href="#9-deprecation">9. Deprecation</a></h2>
+<p>A field, discriminator value, or shape may be deprecated in a minor version and removed in a subsequent major version.</p>
+<h3 id="91-deprecation-marking"><a class="header" href="#91-deprecation-marking">9.1 Deprecation marking</a></h3>
+<p>Deprecated fields MUST be marked with <code>"deprecated": true</code> in their schema definition and SHOULD include a <code>description</code> referencing their replacement.</p>
+<h3 id="92-producer-behavior-for-deprecated-fields"><a class="header" href="#92-producer-behavior-for-deprecated-fields">9.2 Producer behavior for deprecated fields</a></h3>
+<p>A producer MUST NOT emit deprecated fields in new documents. A producer that re-emits previously-imported documents MAY preserve deprecated fields it received, but SHOULD prefer to emit only the canonical replacement.</p>
+<h3 id="93-consumer-behavior-for-deprecated-fields"><a class="header" href="#93-consumer-behavior-for-deprecated-fields">9.3 Consumer behavior for deprecated fields</a></h3>
+<p>A consumer MUST continue to accept deprecated fields for the lifetime of the major version that introduced the deprecation. Removal is permitted only at the next major version bump.</p>
+<h3 id="94-currently-deprecated-items"><a class="header" href="#94-currently-deprecated-items">9.4 Currently deprecated items</a></h3>
+<p>No items are deprecated in 1.0 or 1.1. The specification ships clean.</p>
+<hr>
+<h2 id="10-conformance-claims"><a class="header" href="#10-conformance-claims">10. Conformance Claims</a></h2>
+<h3 id="101-base-lc-json-conformance"><a class="header" href="#101-base-lc-json-conformance">10.1 Base LC-JSON conformance</a></h3>
+<p>A tool MAY claim conformance to LC-JSON 1.1 as follows:</p>
+<ul>
+<li><strong>“Conforms to LC-JSON 1.1 as a producer”</strong> — the tool emits documents satisfying §4.</li>
+<li><strong>“Conforms to LC-JSON 1.1 as a consumer”</strong> — the tool ingests documents satisfying §5, §6, §7, and the accessibility-preservation obligations of §12.1.</li>
+<li><strong>“Conforms to LC-JSON 1.1”</strong> without qualification — the tool implements both producer and consumer conformance.</li>
+</ul>
+<p>Conformance is scoped to the artifact types the tool implements. A tool that implements only Course and QuestionSet MAY claim LC-JSON 1.1 conformance <strong>for those artifact types</strong> — provided it satisfies every applicable requirement, including §5.1’s clean rejection of documentTypes it does not implement and §5.2’s acceptance of 1.x <code>specVersion</code> values on the types it does. A claim SHOULD name its artifact-type scope when it is narrower than the full set (e.g., <em>“Conforms to LC-JSON 1.1 as a consumer (course, questionSet)”</em>). A claim without a scope qualifier asserts all five artifact types.</p>
+<h3 id="102-lc-json-accessibility-profile-conformance-opt-in"><a class="header" href="#102-lc-json-accessibility-profile-conformance-opt-in">10.2 LC-JSON Accessibility Profile conformance (opt-in)</a></h3>
+<p>A tool that additionally satisfies the obligations in <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> MAY claim:</p>
+<ul>
+<li><strong>“Conforms to the LC-JSON 1.1 Accessibility Profile as a producer”</strong> — the tool emits documents satisfying §4 plus the producer-side obligations in <code>ACCESSIBILITY.md</code> §§2–7.</li>
+<li><strong>“Conforms to the LC-JSON 1.1 Accessibility Profile as a consumer”</strong> — the tool ingests and renders documents satisfying §5/§6/§7/§12.1 plus the consumer-side MUST-level obligations in <code>ACCESSIBILITY.md</code> §§2–8.</li>
+<li><strong>“Conforms to the LC-JSON 1.1 Accessibility Profile”</strong> without qualification — both producer and consumer.</li>
+</ul>
+<p>A consumer claiming the Accessibility Profile MUST satisfy all MUST-level items in <code>ACCESSIBILITY.md</code> §§2–8 for its role; partial satisfaction is misclaim. See §12 for the profile’s binding text.</p>
+<h3 id="103-claim-accuracy"><a class="header" href="#103-claim-accuracy">10.3 Claim accuracy</a></h3>
+<p>A tool MUST NOT claim conformance unless it satisfies all applicable MUST requirements. A tool MAY publish self-test results against the conformance test corpus (see <code>tests/</code>) as evidence.</p>
+<p>Three rules guard against the predictable misclaims:</p>
+<ol>
+<li><strong>Producer ≠ consumer.</strong> Claim only the roles the tool actually satisfies; a producer-side conformance claim does not extend to the consumer role without satisfying §5.</li>
+<li><strong>The Accessibility Profile is fully bound.</strong> Claiming the Accessibility Profile means every MUST-level item in <code>ACCESSIBILITY.md</code> §§2–8 (for the claimed role) is satisfied. Partial profile claims are misclaim.</li>
+<li><strong>LC-JSON does not certify WCAG conformance.</strong> The LC-JSON Accessibility Profile provides the wire-format affordances and consumer-rendering obligations that <em>enable</em> WCAG 2.1 AA delivery; a delivering consumer’s own WCAG claim (under EN 301 549, DOJ ADA Title II, Section 508, Section 504, or equivalent) is separate and remains the consumer’s responsibility.</li>
+</ol>
+<h3 id="104-suggested-wording-informative"><a class="header" href="#104-suggested-wording-informative">10.4 Suggested wording (informative)</a></h3>
+<p>Implementers may use the following short forms for marketing pages, badges, READMEs, and footers. They are advisory — formal claims live in §10.1 and §10.2.</p>
+<p><strong>Tier 1 — Base LC-JSON 1.1 conformance</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Wording</th></tr>
+</thead>
+<tbody>
+<tr><td>Badge</td><td><strong>LC-JSON 1.1 Compatible</strong></td></tr>
+<tr><td>Sentence</td><td><em>“Reads and writes LC-JSON 1.1 — the open Learning Content JSON specification at lc-json.org.”</em></td></tr>
+<tr><td>Formal</td><td><em>“Conforms to LC-JSON 1.1 as a producer / consumer / producer and consumer.”</em></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Tier 2 — LC-JSON 1.1 Accessibility Profile</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Form</th><th>Wording</th></tr>
+</thead>
+<tbody>
+<tr><td>Badge</td><td><strong>LC-JSON 1.1 Accessibility Profile</strong></td></tr>
+<tr><td>Sentence</td><td><em>“Delivers LC-JSON 1.1 content with accessible rendering — keyboard navigation, screen-reader support, captions, language-aware text direction. Conforms to the LC-JSON 1.1 Accessibility Profile.”</em></td></tr>
+<tr><td>Formal</td><td><em>“Conforms to the LC-JSON 1.1 Accessibility Profile as a producer / consumer / producer and consumer.”</em></td></tr>
+</tbody>
+</table>
+</div>
+<p>Role qualifiers (<code>(producer)</code> / <code>(consumer)</code>) SHOULD accompany the badge or sentence when the implementation supports only one role, so readers do not infer capabilities the tool does not provide.</p>
+<p>A Tier 2 claim implies Tier 1 (the Accessibility Profile is additive to base conformance); no double-badging is needed.</p>
+<h3 id="105-trademark"><a class="header" href="#105-trademark">10.5 Trademark</a></h3>
+<p>Trademark rights in “LC-JSON” and “Learning Content JSON” are not asserted against conformance claims. Any tool meeting the requirements above MAY freely state its conformance and use the suggested wording in §10.4.</p>
+<hr>
+<h2 id="11-html-safety-profile"><a class="header" href="#11-html-safety-profile">11. HTML Safety Profile</a></h2>
+<p>LC-JSON permits HTML in two fields: <code>ContentItem.html</code> and <code>SignpostItem.customHtml</code>. The complete normative HTML safety profile — allowed elements, allowed attributes, URL-scheme allowlist, sanitization obligation, link normalization, media handling, and unknown-element handling — is specified in <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a>. SubjectCollection, CurriculumPack, and Glossary documents carry no HTML-bearing fields; their text fields (<code>name</code>, <code>description</code>, objective <code>text</code>, glossary <code>definition</code>, translation values, …) are plain text, and a consumer SHOULD render them as such.</p>
+<p>A producer that emits HTML in any HTML-bearing field MUST emit only constructs permitted by <code>HTML_SAFETY.md</code> §2 (elements), §3 (attributes), and §4 (URL schemes).</p>
+<p>A consumer that renders HTML from any HTML-bearing field MUST sanitize the HTML against <code>HTML_SAFETY.md</code> §5 before rendering, MUST normalize <code>&lt;a target="_blank"&gt;</code> to include <code>rel="noopener noreferrer"</code> per §6.1, and MUST strip-while-preserving-text any unknown element per §6.2. A consumer MUST reject any document containing forbidden constructs listed under §8.1 (<code>&lt;script&gt;</code>, event handlers, <code>javascript:</code>/<code>vbscript:</code> URLs, etc.).</p>
+<p><code>HTML_SAFETY.md</code> is normative and forms part of LC-JSON 1.1. The split into a separate document reflects its length, not its status.</p>
+<hr>
+<h2 id="12-accessibility-profile"><a class="header" href="#12-accessibility-profile">12. Accessibility Profile</a></h2>
+<p>LC-JSON’s accessibility model distinguishes two layers: <strong>preservation</strong> of accessibility metadata across read/write cycles (binding on every conforming consumer), and <strong>delivery</strong> of accessible rendering to end users (binding only when the Accessibility Profile is claimed).</p>
+<p>The motivating concern is that accessibility information must survive transformation. In real ecosystems, educational content is exported, imported, translated, edited, and repackaged across multiple tools; accessibility failures most commonly occur during these transformations rather than during original authoring — alt text silently removed during save operations, transcripts discarded during export, localized accessibility text overwritten, unknown accessibility fields stripped by intermediate tools. The accessibility-preservation floor (§12.1) protects the format against that failure mode in every conforming consumer. The Accessibility Profile (§12.2) is the opt-in commitment to also <em>deliver</em> the affordances accessibly.</p>
+<h3 id="121-base-conformance-accessibility-preservation"><a class="header" href="#121-base-conformance-accessibility-preservation">12.1 Base-conformance accessibility preservation</a></h3>
+<p>A conforming consumer that re-emits a document MUST NOT degrade its accessibility shape. Specifically:</p>
+<ul>
+<li><code>alt</code> attributes on <code>&lt;img&gt;</code> MUST round-trip.</li>
+<li><code>&lt;track&gt;</code> elements (including <code>kind</code>, <code>src</code>, <code>srclang</code>, <code>label</code>, <code>default</code>) on <code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code> MUST round-trip.</li>
+<li><code>lang</code> and <code>dir</code> attributes on HTML-bearing elements MUST round-trip.</li>
+<li>The required document-root <code>language</code> field MUST round-trip. The document-root <code>supportLanguage</code> field MUST round-trip when present, including explicit <code>null</code>.</li>
+<li>Reserved-type questions MUST round-trip with any accessibility metadata they carry, per §6.4.</li>
+<li>Extension-preserving consumers (§7.4) SHOULD round-trip <code>x-</code>-namespaced extension members that carry accessibility data.</li>
+</ul>
+<p>These obligations are part of base LC-JSON conformance; a consumer claiming “Conforms to LC-JSON 1.1 as a consumer” satisfies them. The HTML safety profile (§11 / <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a>) explicitly allows <code>alt</code>, <code>&lt;track&gt;</code>, <code>lang</code>, and <code>dir</code> on every applicable element class to make this preservation possible.</p>
+<p>Base conformance is <strong>preservation only</strong>: it never requires a producer to <em>author</em> accessibility content (alt text, captions, transcripts). A small or non-institutional producer is therefore never non-conforming for omitting them — the reference validator surfaces omissions as non-blocking warnings. The obligation to <em>author</em> accessibility content is part of the opt-in Accessibility Profile (§12.2). The two-layer split is intentional: accessibility information is never silently stripped or ignored on read/write (base), while the heavier “the content must actually be accessible” bar is opt-in for the products — typically institutional, or those with legal or marketing accessibility commitments — that need it.</p>
+<h3 id="122-the-accessibility-profile-opt-in"><a class="header" href="#122-the-accessibility-profile-opt-in">12.2 The Accessibility Profile (opt-in)</a></h3>
+<p>The accessibility profile defined in <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> — alt-text requirements, video caption obligations for instructional content, keyboard alternatives for structured-task question types, non-color feedback, language-aware rendering, accessible reserved-type placeholders, and validator severities — is bound by an opt-in claim (§10.2).</p>
+<ul>
+<li>A consumer claiming the Accessibility Profile MUST satisfy the structured-task keyboard alternatives (<code>ACCESSIBILITY.md</code> §4), the non-color-feedback obligations (§5), the language/<code>dir</code> rendering obligations (§6), and the reserved-type placeholder accessibility (§7).</li>
+<li>A producer claiming the Accessibility Profile MUST emit the producer-side authoring obligations across <code>ACCESSIBILITY.md</code> §§2–7. These include, at minimum: <code>alt</code> on every <code>&lt;img&gt;</code> (§2.1); <code>&lt;track&gt;</code> captions on prerecorded instructional video carrying speech, <strong>plus a transcript</strong> for that video, and a transcript for prerecorded audio-only instructional content (§3.1); and root <code>language</code> matching the delivery language (§6). These authoring MUSTs apply only under a Profile claim — they are not base-conformance obligations (§12.1).</li>
+<li>Tools that satisfy preservation (§12.1) but not delivery (§12.2) are conforming LC-JSON consumers but are NOT conforming Accessibility Profile consumers, and MUST NOT claim the latter.</li>
+</ul>
+<h3 id="123-relationship-to-wcag"><a class="header" href="#123-relationship-to-wcag">12.3 Relationship to WCAG</a></h3>
+<p>WCAG governs rendered user experiences; LC-JSON governs portability and metadata preservation. A consumer claiming the LC-JSON Accessibility Profile carries the wire-format affordances and consumer-rendering obligations that WCAG 2.1 AA delivery requires (alt text, captions, language/direction, textual feedback, keyboard alternatives); the consumer’s own jurisdictional WCAG conformance claim (under EN 301 549, DOJ ADA Title II, Section 508, Section 504, or equivalent) remains separate and is the consumer’s responsibility, not LC-JSON’s.</p>
+<p>A tool MUST NOT claim WCAG 2.1 AA conformance by virtue of LC-JSON Accessibility Profile conformance alone. LC-JSON does not certify WCAG conformance.</p>
+<p><code>ACCESSIBILITY.md</code> is normative for tools claiming the Accessibility Profile and forms part of LC-JSON 1.1 in that capacity. The split into a separate document reflects the opt-in scope, not a lesser status.</p>
+<hr>
+<h2 id="13-localization-and-language"><a class="header" href="#13-localization-and-language">13. Localization and language</a></h2>
+<p>LC-JSON 1.x is <strong>single-language-per-document</strong>. A document declares one delivery language in the root <code>language</code> field; multiple languages are delivered as multiple documents, not as localized field bundles within one document. The full model — the distinct roles of <code>language</code> (delivery), <code>lang</code>/<code>dir</code> (language of parts), and <code>supportLanguage</code> (the optional pedagogical L1 layer), the accepted language-tag forms, and the expectations around assistive-technology pronunciation — is specified in <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a>.</p>
+<p>Binding requirements (restated here; full detail in <code>LOCALIZATION.md</code>):</p>
+<ul>
+<li>A producer <strong>MUST</strong> emit a <code>language</code> root field matching the document’s delivery language.</li>
+<li>Language-tag values (<code>language</code>, <code>supportLanguage</code>, HTML <code>lang</code>) are BCP 47 tags. Producers SHOULD use the bare ISO 639-1 primary subtag unless a region/script subtag carries meaning; a consumer MAY act on only the primary subtag.</li>
+<li>A producer <strong>SHOULD</strong> mark HTML spans whose language differs from the delivery language with <code>lang</code> (and <code>dir</code> where script direction differs); a consumer <strong>MUST</strong> preserve <code>lang</code>/<code>dir</code> through sanitization and round-trip (see §12.1).</li>
+<li><code>lang</code> is the <em>necessary</em> affordance for assistive-technology language switching, but correct pronunciation also depends on the end user’s screen reader and installed voices — outside the format’s control. Emitting <code>lang</code> is not optional on that account; it is the floor (<code>LOCALIZATION.md</code> §7).</li>
+</ul>
+<p><code>LOCALIZATION.md</code> is normative for the obligations it states and informative for the pronunciation-expectations discussion. Where it and this document disagree, this document wins.</p>
+<p>The root-<code>language</code> producer MUST above (and the §12.1 round-trip obligations on <code>language</code>/<code>supportLanguage</code>) bind <strong>per document type, for the types that define those fields</strong>: Course, QuestionSet, and Glossary. SubjectCollection and CurriculumPack documents do not carry a root <code>language</code> field in 1.1 — omitting it there is not a conformance failure: a vocabulary’s member wording is authored in one language as a matter of practice, but the classification it expresses is language-neutral, and the structured <code>scope</code> (subject/level/audience/purpose/jurisdiction) is the discovery surface. A future version may add an optional <code>language</code> field to the vocabulary types if implementer experience shows the need; producers wanting to record wording language today may use an extension member (§7).</p>
+<p>Glossary documents are single-language like courses: the required root <code>language</code> names the language of terms, definitions, and examples. Per-entry translation maps (<code>translations</code>, <code>definitionTranslations</code>, example translations) are <strong>content</strong> — data about the term — not field-level document localization, so they do not breach the single-language rule; the optional root <code>translationLanguages</code> array declares their exact language inventory as a checkable claim. Glossaries carry <strong>no</strong> <code>supportLanguage</code>: the which-translation-to-display preference belongs to the delivery context (the attached course’s <code>supportLanguage</code>, or the consumer’s knowledge of the user’s L1), not to the portable artifact. See <a href="glossary-reference.html"><code>glossary-reference.md</code></a> §1.</p>
+<hr>
+<h2 id="14-validation-surface"><a class="header" href="#14-validation-surface">14. Validation surface</a></h2>
+<p>The requirements in this document are enforced across three sites: the 27 JSON Schemas under <a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a> in the published tree (23 from 1.0, plus <code>subject-collection.schema.json</code>, <code>curriculum-pack.schema.json</code>, <code>glossary.schema.json</code>, and the shared <code>publication-fields.schema.json</code>), the reference validators (the course validator, the vocabulary-document validator covering the §4.9 closure rules and §3.4 identity rules, the Curriculum Pack validator covering the CP-1 … CP-17 step, pacing, checkpoint, coverage, and bundle-closure rules, and the glossary validator covering the gloss rule and translation-inventory rules), and the per-document prose in the companion normative documents (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a>, <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a>, <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a>). <a href="VALIDATION.html"><code>VALIDATION.md</code></a> catalogs every documented rule and tags it with its enforcement tier — <em>schema-enforced</em>, <em>domain-validator-enforced</em>, or <em>advisory</em>. Implementers building consumers, validators, or producer round-trip tests should consult <code>VALIDATION.md</code> for the one-map view of what to check.</p>
+<p><code>VALIDATION.md</code> is a catalog: it enumerates and tiers the rules whose normative force comes from this document (including the §3.3.1 artifact-type rule families it incorporates), from the schemas, and from the companion normative documents. It introduces no requirements of its own beyond those sources. Where its wording and any of those sources disagree, those sources win.</p>
+<p>The four reference validators named above are <strong>non-authoritative reference implementations</strong>. Only this document (including the rule families it incorporates at §3.3.1), the companion normative documents, and the JSON Schemas’ constraints are authoritative. A validator’s behavior — in any mode, including <code>--strict</code> — never defines the conformance contract: where a validator diverges from these sources, the validator is defective and the sources govern.</p>
+<p>The three artifact-type reference documents (<code>subject-collection-reference.md</code>, <code>curriculum-pack-reference.md</code>, <code>glossary-reference.md</code>) are <strong>informative</strong> — they explain and illustrate the rules incorporated by §3.3.1 but are not themselves authoritative (§3.3.1).</p>
+<p>Schema <code>description</code> strings sometimes restate normative requirements (including RFC 2119 keywords) for implementer convenience at the point of use. Those restatements are not independently binding: this document and the JSON Schemas are authoritative, and where a schema description’s wording diverges from this document, this document wins; where the schema’s <em>constraints</em> apply, they bind as stated in §5.1. The schema’s <em>constraints</em> (types, patterns, <code>required</code>, enums) are binding as stated in §5.1.</p>
+<hr>
+<h2 id="14a-security-and-privacy-considerations-informative"><a class="header" href="#14a-security-and-privacy-considerations-informative">14a. Security and privacy considerations (informative)</a></h2>
+<p>LC-JSON documents are content, and 1.1 widens what they can carry: external URLs (<code>canonicalUrl</code>, <code>officialSourceURI</code>-style alignment ids, glossary <code>audioUrl</code>/<code>imageUrl</code>), whole embedded documents (pack bundles, the course <code>glossaries[]</code> pool), globally portable identifiers, and preserved unknown fields. Implementers should hold four postures:</p>
+<ul>
+<li><strong>URLs are references, never instructions.</strong> A consumer SHOULD NOT dereference document-carried URLs automatically without a policy the deploying institution controls (allowlists, user gesture, or no fetching at all). <code>canonicalUrl</code> and alignment ids are provenance to <em>display</em>, not endpoints to call; media URLs are resolved subject to the consumer’s own content policy. Nothing in LC-JSON conformance requires network access.</li>
+<li><strong>Embedded documents are untrusted input.</strong> A bundle’s <code>embedded</code> block and a course’s <code>glossaries[]</code> pool are imports like any other: validate each embedded document under its own rules before use, and apply the full <code>HTML_SAFETY.md</code> sanitization to any HTML-bearing field regardless of how the document arrived.</li>
+<li><strong>Portable artifacts carry no person data.</strong> LC-JSON documents describe learning content, never learners: no learner identities, progress, grades, or contact data belong in any field of a portable artifact (grading <em>policy</em> fields like <code>passMarkPercent</code> are content; grade <em>records</em> are not). §4.11 already excludes commerce data; the same posture applies to personal data. <code>authors</code> is public display credit a contributor chose to assert.</li>
+<li><strong>Extensions inherit the same duty.</strong> <code>x-</code> members are preserved verbatim across tools and jurisdictions (§7.4); a producer SHOULD NOT place personal data or secrets in extension members, precisely because faithful consumers will carry them everywhere the document goes.</li>
+</ul>
+<p>This section is informative: it creates no new conformance requirements, but implementers claiming conformance should expect deployers to ask these questions.</p>
+<hr>
+<h2 id="15-references"><a class="header" href="#15-references">15. References</a></h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc2119">RFC 2119 — Key words for use in RFCs to Indicate Requirement Levels</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8174">RFC 8174 — Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc4122">RFC 4122 — A Universally Unique IDentifier (UUID) URN Namespace</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc3986">RFC 3986 — Uniform Resource Identifier (URI): Generic Syntax</a></li>
+<li><a href="https://www.rfc-editor.org/info/bcp47">BCP 47 — Tags for Identifying Languages</a></li>
+<li><a href="https://json-schema.org/draft-07/schema">JSON Schema Draft 7</a></li>
+<li>LC-JSON HTML safety profile: <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a></li>
+<li>LC-JSON accessibility profile: <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a></li>
+<li>LC-JSON localization and language model: <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a></li>
+<li>LC-JSON validation surface (informative): <a href="VALIDATION.html"><code>VALIDATION.md</code></a></li>
+<li>LC-JSON glossary (informative): <a href="GLOSSARY.html"><code>GLOSSARY.md</code></a></li>
+<li>LC-JSON schemas: <a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a></li>
+<li>LC-JSON examples: <a href="https://github.com/lc-json/specification/tree/main/examples"><code>examples/</code></a></li>
+<li>LC-JSON conformance test corpus: <a href="tests/"><code>tests/</code></a></li>
+<li>LC-JSON glossary reference: <a href="glossary-reference.html"><code>glossary-reference.md</code></a></li>
+<li>LC-JSON subject-collection reference: <a href="subject-collection-reference.html"><code>subject-collection-reference.md</code></a></li>
+<li>LC-JSON curriculum-pack reference: <a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a></li>
+</ul>
+<hr>
+<h2 id="appendix-a--changes-from-10-informative"><a class="header" href="#appendix-a--changes-from-10-informative">Appendix A — Changes from 1.0 (informative)</a></h2>
+<p>LC-JSON 1.1 is additive per §8.2. The complete change list:</p>
+<ol>
+<li><strong>Three new artifact types.</strong> <code>subjectCollection</code> (vocabulary: tags + learning objectives with structured scope), <code>curriculumPack</code> (arrangement: sequence/pacing/checkpoints referencing a collection plus content), and <code>glossary</code> (content: a flat term list with pronunciation, translations, examples). New schemas <code>subject-collection.schema.json</code>, <code>curriculum-pack.schema.json</code>, and <code>glossary.schema.json</code>; <code>documentType</code> gains the three values (§3.2, §3.3, §4.2).</li>
+<li><strong>Member identity and membership.</strong> New §3.4 (immutable member ids; display is never identity; the same <strong>collection-member</strong> id in another document is the same member, while glossary entry identity is document-scoped as <code>(glossary globalId, entry id)</code>; tags many-membership, objectives and glossary entries single-owner), §4.9 (collection closure + carried copies in course documents), and §5.7 (consumer reconciliation: no duplication, membership recording for tags, link-never-overwrite for objectives, ownership resolution from ingested claims, entry reconciliation on glossary re-import, verbatim creation of absent members, identity-less rejection, display-collision handling).</li>
+<li><strong>Alignment claims.</strong> New §4.10: <code>externalAlignments[]</code> with claim types <code>references</code> / <code>alignedTo</code> / <code>covers</code>; <code>assesses</code> and <code>verifiedBy</code> reserved; forward-compatible consumer handling in §5.5.</li>
+<li><strong>Publication metadata.</strong> New §4.11: optional <code>license</code>, <code>canonicalUrl</code>, and <code>derivedFrom[]</code> on the distributable types (Course, SubjectCollection, CurriculumPack, Glossary), added to the course root as plain optional top-level fields (composition via the shared <a href="https://lc-json.org/1.1/publication-fields.schema.json"><code>publication-fields.schema.json</code></a>). QuestionSet excluded by role. Commerce data stays out of LC-JSON.</li>
+<li><strong>Glossary attachment.</strong> Optional <code>glossaryRefs</code> arrays on the course root, units, and lessons — plain glossary <code>globalId</code> strings whose <em>placement</em> encodes scope (nearest attachment wins; junctions stop at Lesson) — plus an optional root <code>glossaries[]</code> pool carrying a whole-document copy of each referenced glossary, identity verbatim, for single-file self-containment (§4.9). A ref that resolves to no pool copy and no held document is legal and consumer-surfaced, never an import failure (see <a href="glossary-reference.html"><code>glossary-reference.md</code></a> §4 and <a href="https://lc-json.org/1.1/course.schema.json"><code>course.schema.json</code></a>).</li>
+<li><strong>Unimplemented-artifact-type handling.</strong> §5.1 addition: clean rejection naming the unsupported type; §10.1 addition: conformance claims scoped per artifact type.</li>
+<li><strong>Extension surface.</strong> §7.1 extended to the vocabulary/arrangement/glossary objects.</li>
+<li><strong>No other changes.</strong> Question types (implemented and reserved), item types, HTML safety, the Accessibility Profile, and the localization model are unchanged from 1.0. Course/QuestionSet <code>tags</code> remain free wire strings — the opaque member ids of collections do not replace them; an optional member-id reference alongside the string arrays is reserved for future coordination.</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="RATIONALE.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="HTML_SAFETY.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="RATIONALE.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="HTML_SAFETY.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

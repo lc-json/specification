@@ -1,0 +1,196 @@
+{
+  "$schema": "https://lc-json.org/1.1/curriculum-pack.schema.json",
+  "documentType": "curriculumPack",
+  "specVersion": "1.1",
+  "globalId": "7b3ce485-c92f-4206-83a1-f5869622428b",
+  "version": "1.0.0",
+  "title": "KS3 Fractions — Six-Week Consolidation Pack",
+  "description": "A manifest pack sequencing two fraction resources against the KS3 fractions vocabulary.",
+  "packMode": "manifest",
+  "license": "unspecified",
+  "authors": [
+    "Example Vocabulary Project"
+  ],
+  "collectionRefs": [
+    {
+      "globalId": "ks3-maths-fractions",
+      "version": "1.1.0"
+    }
+  ],
+  "contentRefs": [
+    {
+      "type": "course",
+      "id": "8c4df596-da30-4317-94b2-069a7733539c",
+      "version": "1.2"
+    },
+    {
+      "type": "questionSet",
+      "id": "9d5e06a7-eb41-4428-a5c3-17ab88446a0d",
+      "version": "1.0"
+    }
+  ],
+  "pacing": {
+    "years": 1,
+    "termsPerYear": 1,
+    "weeksPerTerm": [
+      6
+    ],
+    "lessonsPerWeek": 3,
+    "note": "One half-term of three maths lessons per week."
+  },
+  "coverage": {
+    "collectionGlobalId": "ks3-maths-fractions",
+    "assertions": [
+      "everyObjectiveTaughtAtLeastOnce",
+      "everyObjectiveAssessedAtLeastOnce"
+    ],
+    "exemptObjectiveIds": [
+      "60a2d374-b81e-41c5-9290-e47584113176"
+    ]
+  },
+  "recyclingPolicy": {
+    "minSpacingWeeks": 2
+  },
+  "sequence": [
+    {
+      "id": "w01",
+      "kind": "teaching",
+      "label": "Equivalent fractions",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 1,
+      "durationLessons": 3,
+      "objectiveIds": [
+        "4e80b152-96fc-4fa3-b07e-c25362991f54"
+      ],
+      "contentRef": {
+        "type": "course",
+        "id": "8c4df596-da30-4317-94b2-069a7733539c",
+        "version": "1.2",
+        "selector": "unit:5a2d81c3-4f6e-4b09-8d17-2c9e0f3a6b54"
+      }
+    },
+    {
+      "id": "w02",
+      "kind": "teaching",
+      "label": "Adding and subtracting fractions",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 2,
+      "durationLessons": 3,
+      "objectiveIds": [
+        "5f91c263-a70d-40b4-818f-d3647300206a"
+      ],
+      "contentRef": null,
+      "authoringNote": "Common denominators first; end with mixed-number subtraction.",
+      "dependsOn": [
+        "w01"
+      ]
+    },
+    {
+      "id": "w03a",
+      "kind": "teaching",
+      "label": "Multiplying fractions",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 3,
+      "durationLessons": 2,
+      "objectiveIds": [
+        "71b3e496-c92d-4d27-83a2-058717335398"
+      ],
+      "contentRef": null,
+      "authoringNote": "Area-model introduction before the procedural rule."
+    },
+    {
+      "id": "w03b",
+      "kind": "teaching",
+      "label": "Multiplying mixed numbers",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 3,
+      "durationLessons": 1,
+      "objectiveIds": [
+        "82c4f5a7-da3e-4e38-94b3-169828446409"
+      ],
+      "contentRef": null,
+      "authoringNote": "Convert-then-multiply; contrast with the common add-the-parts error.",
+      "dependsOn": [
+        "w03a"
+      ]
+    },
+    {
+      "id": "w04-review",
+      "kind": "review",
+      "label": "Spiral revisit: equivalence and addition",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 4,
+      "durationLessons": 1,
+      "objectiveIds": [
+        "4e80b152-96fc-4fa3-b07e-c25362991f54",
+        "5f91c263-a70d-40b4-818f-d3647300206a"
+      ],
+      "contentRef": null,
+      "authoringNote": "Ten-minute retrieval starter plus mixed practice set."
+    },
+    {
+      "id": "w04",
+      "kind": "teaching",
+      "label": "Dividing fractions",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 4,
+      "durationLessons": 2,
+      "objectiveIds": [
+        "93d506b8-eb4f-4f49-a5c4-27a939557510"
+      ],
+      "contentRef": {
+        "type": "questionSet",
+        "id": "9d5e06a7-eb41-4428-a5c3-17ab88446a0d",
+        "version": "1.0"
+      }
+    },
+    {
+      "id": "w05-check",
+      "kind": "assessment",
+      "label": "Mid-pack written check",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 5,
+      "durationLessons": 1,
+      "objectiveIds": [],
+      "contentRef": null,
+      "authoringNote": "Twenty-minute low-stakes paper covering everything taught so far.",
+      "checkpoint": {
+        "kind": "formative",
+        "format": "20-minute written check",
+        "assessesObjectiveIds": [
+          "4e80b152-96fc-4fa3-b07e-c25362991f54",
+          "5f91c263-a70d-40b4-818f-d3647300206a",
+          "71b3e496-c92d-4d27-83a2-058717335398",
+          "82c4f5a7-da3e-4e38-94b3-169828446409",
+          "93d506b8-eb4f-4f49-a5c4-27a939557510"
+        ],
+        "scope": "listed"
+      }
+    },
+    {
+      "id": "w06-test",
+      "kind": "mock",
+      "label": "End-of-unit test",
+      "year": 1,
+      "term": 1,
+      "weekOfTerm": 6,
+      "durationLessons": 2,
+      "objectiveIds": [],
+      "contentRef": null,
+      "authoringNote": "Full end-of-unit paper in exam conditions; mark against the taught set.",
+      "checkpoint": {
+        "kind": "summative",
+        "format": "45-minute end-of-unit paper",
+        "assessesObjectiveIds": [],
+        "scope": "allTaughtToDate"
+      }
+    }
+  ]
+}

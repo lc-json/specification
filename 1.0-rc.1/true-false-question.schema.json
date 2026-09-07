@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.1/true-false-question.schema.json",
+  "title": "TrueFalseQuestion Schema (v2)",
+  "description": "Binary choice question with boolean correctAnswer as single source of truth. Supports configurable display styles and penalty system.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "trueFalseQuestion"
+        },
+        "correctAnswer": {
+          "type": "boolean",
+          "description": "The correct answer as a boolean. True means the statement is true/correct. This is the single source of truth for scoring."
+        },
+        "displayStyle": {
+          "type": "string",
+          "description": "Display style: TrueFalse (default), CorrectIncorrect, or CheckmarkX. Presentation only — does not affect scoring.",
+          "enum": [
+            "TrueFalse",
+            "CorrectIncorrect",
+            "CheckmarkX"
+          ],
+          "default": "TrueFalse"
+        },
+        "penalizeIncorrect": {
+          "type": "boolean",
+          "description": "Whether to apply a point penalty for a wrong answer. Independent of item type and `isGraded` — author's choice. Common: `false` when you want learners to try without risk; `true` when guessing should cost something.",
+          "default": false
+        },
+        "incorrectPenaltyPercent": {
+          "type": "number",
+          "description": "Percentage of question value to deduct for incorrect answer (0-100). 0%=no penalty, 50%=partial, 100%=full penalty.",
+          "minimum": 0.0,
+          "maximum": 100.0,
+          "default": 50.0
+        }
+      },
+      "required": [
+        "correctAnswer"
+      ]
+    }
+  ]
+}

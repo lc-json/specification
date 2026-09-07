@@ -1,0 +1,25 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "sourceCourseId": "550e8400-e29b-41d4-a716-4466554400a2",
+  "version": "1.0",
+  "title": "A1 Food Topic (glossary not yet bound)",
+  "subtitle": "A course for beginners with notes in Spanish",
+  "description": "An A1-level English course for adult Spanish-speaking learners. Vocabulary, grammar, and reading introduced gradually; key terms and instructions also given in Spanish.",
+  "authors": [
+    "Dr. Jane Smith"
+  ],
+  "language": "en",
+  "supportLanguage": "es",
+  "tags": [
+    "language:english",
+    "level:A1",
+    "audience:spanish-speakers"
+  ],
+  "units": [],
+  "glossaryRefs": [
+    "a1-numbers-vocabulary-en-es"
+  ],
+  "glossaries": []
+}

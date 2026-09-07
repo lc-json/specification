@@ -1,0 +1,27 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Placement — TOEFL Sentence Insertion variant (decoy gaps)",
+  "language": "en",
+  "questions": [
+    {
+      "type": "placement",
+      "globalId": "22222222-2222-4222-8222-222222222204",
+      "title": "Single-item placement with 4 candidate positions",
+      "points": 2.0,
+      "difficulty": 6.0,
+      "prompt": "Where does this sentence best fit? «That step is what links the energy of sunlight to the chemistry of every meal we eat.»",
+      "placementUnit": "sentence",
+      "passage": "Photosynthesis converts sunlight into sugars. @@@1 The reaction takes place in chloroplasts. @@@2 Light splits water and frees electrons. @@@3 Those electrons drive the assembly of carbon dioxide into glucose. @@@4",
+      "placements": [
+        { "gap": 3, "item": "That step is what links the energy of sunlight to the chemistry of every meal we eat." }
+      ],
+      "allowPartialCredit": false,
+      "feedback": {
+        "correct": "Yes.",
+        "incorrect": "Re-read."
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Uppercase item discriminator — invalid per §4.2",
+  "language": "en",
+  "supportLanguage": null,
+  "units": [
+    {
+      "globalId": "44444444-4444-4444-8444-444444444444",
+      "title": "Unit 1",
+      "lessons": [
+        {
+          "globalId": "55555555-5555-4555-8555-555555555555",
+          "title": "Lesson 1",
+          "items": [
+            {
+              "type": "CONTENT",
+              "globalId": "66666666-6666-4666-8666-666666666666",
+              "title": "Content with uppercase type",
+              "html": "<p>Item type discriminator MUST be lowercase ('content'). 'CONTENT' is non-conforming.</p>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

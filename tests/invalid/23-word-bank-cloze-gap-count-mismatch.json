@@ -1,0 +1,23 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Invalid: wordBankCloze passage @@@N count doesn't match gapAcceptedAnswers keys",
+  "language": "en",
+  "questions": [
+    {
+      "type": "wordBankCloze",
+      "globalId": "33333333-3333-4333-8333-333333333323",
+      "title": "WBC gap-count mismatch",
+      "points": 2.0,
+      "difficulty": 5.0,
+      "prompt": "Fill the gaps.",
+      "passage": "I saw @@@1 cat and @@@2 dog in @@@3 park.",
+      "wordBank": ["a", "the"],
+      "gapAcceptedAnswers": {
+        "1": ["a"],
+        "2": ["a"]
+      }
+    }
+  ]
+}

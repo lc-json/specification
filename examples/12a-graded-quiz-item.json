@@ -1,0 +1,121 @@
+{
+  "type": "quiz",
+  "globalId": "550e8400-e29b-41d4-a716-446655441200",
+  "sequence": 2,
+  "title": "World Rivers (Graded Quiz Version)",
+  "instructions": "End-of-unit quiz. Read each statement carefully. Decide whether it is true or false. Your score will count toward your unit grade.",
+  "suggestedTime": 5,
+  "isOptional": false,
+  "isGraded": true,
+  "points": 5.0,
+  "passMarkPercent": 70.0,
+  "questions": [
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655441201",
+      "title": "Seine — Longest in France?",
+      "tags": [
+        "geography:rivers:europe",
+        "stage:lower-secondary",
+        "fact-recall"
+      ],
+      "points": 1.0,
+      "difficulty": 7.0,
+      "prompt": "The Seine flows through Paris and is the longest river in France.",
+      "correctAnswer": false,
+      "penalizeIncorrect": false,
+      "incorrectPenaltyPercent": 0.0,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct! The Seine flows through Paris, but the longest river in France is the Loire (about 1,012 km). The Seine is about 777 km.",
+        "incorrect": "Almost. The Seine is famous for Paris, but the Loire is the longest river in France (1,012 km vs the Seine's 777 km)."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655441202",
+      "title": "Mississippi — Direction and Mouth",
+      "tags": [
+        "geography:rivers:north-america",
+        "stage:lower-secondary",
+        "fact-recall"
+      ],
+      "points": 1.0,
+      "difficulty": 3.0,
+      "prompt": "The Mississippi River flows generally north to south through the United States and empties into the Gulf of Mexico.",
+      "correctAnswer": true,
+      "penalizeIncorrect": false,
+      "incorrectPenaltyPercent": 0.0,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct! The Mississippi starts in northern Minnesota and flows south for about 3,766 km, draining most of the central United States before reaching the Gulf of Mexico in Louisiana.",
+        "incorrect": "Actually true. The Mississippi flows north-to-south from Minnesota to the Gulf of Mexico."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655441203",
+      "title": "Amazon — Volume of Water",
+      "tags": [
+        "geography:rivers:south-america",
+        "stage:lower-secondary",
+        "fact-recall"
+      ],
+      "points": 1.0,
+      "difficulty": 6.0,
+      "hint": "Think about volume of water, not length.",
+      "prompt": "The Amazon River carries more water than any other river on Earth.",
+      "correctAnswer": true,
+      "penalizeIncorrect": false,
+      "incorrectPenaltyPercent": 0.0,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct! By volume of water (called 'discharge'), the Amazon dwarfs every other river. It carries about one fifth of all the freshwater that flows into the world's oceans.",
+        "incorrect": "Actually true. The Amazon's discharge is about 209,000 cubic metres per second — more than the next seven largest rivers combined."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655441204",
+      "title": "Nile — Flows North",
+      "tags": [
+        "geography:rivers:africa",
+        "stage:lower-secondary",
+        "fact-recall"
+      ],
+      "points": 1.0,
+      "difficulty": 4.0,
+      "hint": "Look at a map: where are its sources, and where does it reach the sea?",
+      "prompt": "The Nile flows north from its sources in central Africa and empties into the Mediterranean Sea.",
+      "correctAnswer": true,
+      "penalizeIncorrect": false,
+      "incorrectPenaltyPercent": 0.0,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct! The Nile is one of the few major rivers that flows north. It runs about 6,650 km from its sources in Burundi, Rwanda, and Ethiopia to the Mediterranean coast of Egypt.",
+        "incorrect": "Actually true. Most large rivers in the Northern Hemisphere flow south, but the Nile is a famous exception — it flows north for about 6,650 km to the Mediterranean."
+      }
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655441205",
+      "title": "Thames — Through Paris?",
+      "tags": [
+        "geography:rivers:europe",
+        "stage:lower-secondary",
+        "fact-recall"
+      ],
+      "points": 1.0,
+      "difficulty": 3.0,
+      "prompt": "The Thames flows through Paris before emptying into the English Channel.",
+      "correctAnswer": false,
+      "penalizeIncorrect": false,
+      "incorrectPenaltyPercent": 0.0,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Correct! Two things wrong with that statement: (1) the Thames flows through London, not Paris (the Seine flows through Paris). (2) The Thames empties into the North Sea, not the English Channel.",
+        "incorrect": "Watch out for the geography mix-up: the Thames flows through London (not Paris), and empties into the North Sea (not the English Channel). The Seine is the river of Paris."
+      }
+    }
+  ]
+}

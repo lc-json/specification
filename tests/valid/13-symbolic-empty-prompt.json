@@ -1,0 +1,18 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Symbolic question with empty prompt",
+  "language": "en",
+  "questions": [
+    {
+      "type": "simpleGapFill",
+      "globalId": "13131313-1313-4313-8313-131313131313",
+      "points": 1.0,
+      "prompt": "",
+      "sentence": "The capital of France is @@@.",
+      "acceptedAnswers": ["Paris", "paris"],
+      "caseSensitive": false
+    }
+  ]
+}

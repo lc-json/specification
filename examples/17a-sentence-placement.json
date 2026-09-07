@@ -1,0 +1,49 @@
+{
+  "type": "placement",
+  "globalId": "550e8400-e29b-41d4-a716-446655441700",
+  "title": "How Vaccines Train the Immune System — Place the Missing Sentences",
+  "tags": [
+    "exam:fce-part-6",
+    "biology:immunology",
+    "qualification:b2-first"
+  ],
+  "points": 12.0,
+  "difficulty": 6.0,
+  "hint": "Most of the missing sentences begin with a discourse marker — 'However', 'In contrast', 'For instance' — that anchors them to the sentence before. The distractor is plausible on the topic but does not fit any specific gap.",
+  "prompt": "",
+  "placementUnit": "sentence",
+  "passage": "When a vaccine enters the body, it carries a harmless version of the pathogen — a fragment of protein, a weakened virus, or a strand of genetic instructions. @@@1 The immune system, never having seen the real pathogen, treats this rehearsal as a genuine threat and mobilises its defences. White blood cells called B-cells produce antibodies that lock onto the foreign material, while T-cells learn to recognise infected cells and destroy them.\n\n@@@2 These memory cells circulate at low levels for years, sometimes decades. If the real pathogen ever arrives, the response that took two weeks the first time can be completed in two days. @@@3\n\nNot every vaccine works the same way. Live attenuated vaccines use a weakened form of the original microbe and tend to produce strong, long-lasting immunity. @@@4 Subunit and mRNA vaccines, by contrast, present only a fragment of the pathogen — usually a single surface protein — and so cannot cause the disease at all. @@@5\n\nVaccine effectiveness is rarely all-or-nothing. @@@6 This is why outbreaks can still occur in vaccinated populations, although the illness is usually milder and the chain of transmission is shorter. The point of vaccination is not to make every individual immune in isolation; it is to raise the population's collective resistance high enough that the pathogen cannot spread freely.",
+  "placements": [
+    {
+      "gap": 1,
+      "item": "This decoy presents the immune system with a kind of training exercise."
+    },
+    {
+      "gap": 2,
+      "item": "Crucially, after the threat is cleared, a small population of B-cells and T-cells is preserved as memory."
+    },
+    {
+      "gap": 3,
+      "item": "That speed is the difference between a brief, mild infection and a serious illness."
+    },
+    {
+      "gap": 4,
+      "item": "However, because the microbe is still alive, they are not usually given to people whose immune systems are compromised."
+    },
+    {
+      "gap": 5,
+      "item": "The trade-off is that they often need a booster dose to maintain protection over time."
+    },
+    {
+      "gap": 6,
+      "item": "Even a successful vaccine typically reduces, rather than abolishes, the chance of infection."
+    }
+  ],
+  "distractors": [
+    "Antibiotics, unlike vaccines, treat infections after they have already taken hold."
+  ],
+  "feedback": {
+    "correct": "Excellent. The sentences track the article's logic: gap 1 frames the vaccine as a 'training exercise'; gap 2 introduces immune memory; gap 3 lands the payoff (speed of the second response); gap 4 qualifies the live-vaccine paragraph with a safety caveat; gap 5 names the trade-off for subunit/mRNA vaccines; gap 6 sets up the closing argument about population-level protection. The distractor is on-topic but talks about antibiotics, which the article never discusses.",
+    "incorrect": "Re-read the sentences immediately before and after each gap. Most of the missing sentences begin with a discourse marker ('However', 'Crucially', 'Even a successful vaccine…') that signals their relationship to what came before. Gap 1 should explain the metaphor the next sentence picks up ('rehearsal'); gap 2 must introduce memory cells before the next sentence describes them; gap 4 is a 'however' caveat to the live-vaccine paragraph; the distractor is the antibiotic sentence — vaccines and antibiotics work on different problems."
+  }
+}

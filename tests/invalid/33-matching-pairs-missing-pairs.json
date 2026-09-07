@@ -1,0 +1,18 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Invalid: matching in pairs mode without a pairs[] array",
+  "language": "en",
+  "questions": [
+    {
+      "type": "matching",
+      "globalId": "33333333-0000-4000-8000-000000000001",
+      "title": "Pairs mode, no pairs",
+      "points": 2.0,
+      "prompt": "",
+      "matchingMode": "pairs",
+      "allowPartialCredit": true
+    }
+  ]
+}

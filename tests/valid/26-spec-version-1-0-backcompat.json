@@ -1,0 +1,9 @@
+{
+  "$schema": "https://lc-json.org/1.0-rc.2/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.0",
+  "title": "Minimal Conforming 1.0 Course (backwards-compatibility guard)",
+  "language": "en",
+  "supportLanguage": null,
+  "units": []
+}

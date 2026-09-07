@@ -1,0 +1,29 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "MultipleChoice — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "multipleChoice",
+      "globalId": "15151515-0000-4000-8000-000000000001",
+      "title": "Capital of Australia",
+      "points": 1.0,
+      "difficulty": 3.0,
+      "prompt": "Which city is the capital of Australia?",
+      "options": ["Sydney", "Canberra", "Melbourne", "Perth"],
+      "optionsAndPoints": {
+        "Sydney": 0,
+        "Canberra": 1,
+        "Melbourne": 0,
+        "Perth": 0
+      },
+      "allowMultipleCorrect": false,
+      "feedback": {
+        "correct": "Right — Canberra was purpose-built as the capital.",
+        "incorrect": "It's the planned city between Sydney and Melbourne."
+      }
+    }
+  ]
+}

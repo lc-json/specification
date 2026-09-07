@@ -1,0 +1,1023 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "sourceCourseId": "550e8400-e29b-41d4-a716-446655444100",
+  "version": "1.0",
+  "title": "Introduction to Study Skills",
+  "description": "A short course on the three pillars of effective studying: using memory deliberately, reading actively and taking good notes; and managing time well enough to actually prepare for exams.",
+  "authors": [
+    "Dr. Jane Smith"
+  ],
+  "language": "en",
+  "tags": [
+    "subject:study-skills",
+    "stage:upper-secondary",
+    "audience:students"
+  ],
+  "objectives": [
+    {
+      "id": "obj-0009",
+      "text": "Explain why effective study is a learnable skill rather than a fixed trait, and identify the underlying principles (attention, retrieval, spacing, sleep) that make study techniques work",
+      "difficultyBand": "Understand"
+    },
+    {
+      "id": "obj-0010",
+      "text": "Choose appropriate study techniques — for memory, reading, note-taking, and exam preparation — based on the situation in front of you",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0011",
+      "text": "Distinguish between study habits that genuinely produce learning and those that only feel productive",
+      "difficultyBand": "Analyze"
+    },
+    {
+      "id": "obj-0012",
+      "text": "Build a study schedule that combines spacing, focused work, and active retrieval to prepare for exams without cramming",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0013",
+      "text": "Apply deliberate memory techniques — attention, mnemonics, mental imagery, chunking, and spacing — to encode and retain new information",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0014",
+      "text": "Engage actively with written material — by questioning, retrieving, and choosing a note-taking structure that fits the situation — rather than reading it passively",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0015",
+      "text": "Plan and prepare for exams using distributed effort, retrieval practice, and adequate rest, rather than last-minute cramming",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0001",
+      "text": "Recognise that memory is a learnable skill, not a fixed trait",
+      "difficultyBand": "Understand"
+    },
+    {
+      "id": "obj-0002",
+      "text": "Use mnemonics, the method of loci, chunking, and spaced repetition to remember new information",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0003",
+      "text": "Read texts actively using a structured method such as SQ3R",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0004",
+      "text": "Choose a note-taking method (Cornell, outline, mind map) appropriate to the situation",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0005",
+      "text": "Plan study time using a calendar and short focused work blocks",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0006",
+      "text": "Prepare for exams using practice tests, spaced review, and adequate sleep",
+      "difficultyBand": "Apply"
+    },
+    {
+      "id": "obj-0007",
+      "text": "Explain the difference between recognising and recalling information",
+      "difficultyBand": "Understand"
+    },
+    {
+      "id": "obj-0008",
+      "text": "Identify which study habits genuinely help learning and which only feel productive",
+      "difficultyBand": "Analyze"
+    }
+  ],
+  "courseObjectiveIds": [
+    "obj-0009",
+    "obj-0010",
+    "obj-0011",
+    "obj-0012"
+  ],
+  "units": [
+    {
+      "globalId": "550e8400-e29b-41d4-a716-446655444110",
+      "sequence": 0,
+      "title": "Unit 1: Using Your Memory Effectively",
+      "tags": [
+        "topic:memory",
+        "skill:cognitive"
+      ],
+      "objectiveIds": [
+        "obj-0013"
+      ],
+      "lessons": [
+        {
+          "globalId": "550e8400-e29b-41d4-a716-446655444120",
+          "sequence": 0,
+          "title": "Lesson 1.1: Why You Don't Have a Bad Memory",
+          "objectiveIds": [
+            "obj-0001",
+            "obj-0007"
+          ],
+          "items": [
+            {
+              "type": "signpost",
+              "globalId": "550e8400-e29b-41d4-a716-446655444121",
+              "sequence": 0,
+              "title": "Welcome to Introduction to Study Skills",
+              "signpostType": "intro",
+              "scope": "course",
+              "customHtml": "<p>You've signed up to learn how to <strong>learn better</strong> — a skill that pays back across every subject, exam, and project for the rest of your life.</p>\n\n<p>This course covers three of the most useful study skills: <strong>using your memory effectively</strong>, <strong>reading actively and taking good notes</strong>, and <strong>planning your time and preparing for exams</strong>. Each unit gives you the ideas behind the technique, then asks you to try it on a few practice questions.</p>\n\n<p>None of this is locked behind talent. The students you envy aren't smarter than you; they've stumbled onto a few habits that work and stuck with them. By the end of the course you'll know what those habits are and how to make them yours.</p>"
+            },
+            {
+              "type": "signpost",
+              "globalId": "550e8400-e29b-41d4-a716-446655444122",
+              "sequence": 1,
+              "title": "Welcome to Unit 1: Using Your Memory Effectively",
+              "signpostType": "intro",
+              "scope": "unit",
+              "customHtml": "<p>Here's something most people get wrong: they think they have <strong>bad memory</strong>. They don't. They just aren't using their memory the way it works best.</p>\n\n<p>Two thousand years ago, Roman orators memorised speeches that took hours to deliver — without notes. Your grandparents knew the phone numbers of dozens of friends and relatives by heart, before mobile phones did the remembering for them. None of those people had a special gene. They had <strong>attention</strong> and a few <strong>tricks</strong>.</p>\n\n<p>This unit teaches you the same tricks. The first lesson tackles the myth that some people are simply born forgetful. The second hands you the techniques — mnemonics, mental images, chunking, spaced repetition — that turn remembering from a hope into a habit.</p>"
+            },
+            {
+              "type": "content",
+              "globalId": "550e8400-e29b-41d4-a716-446655444123",
+              "sequence": 2,
+              "title": "Why You Don't Have a Bad Memory",
+              "suggestedTime": 6,
+              "html": "<h1>Why You Don't Have a Bad Memory</h1>\n\n<p>When students say <em>'I have a bad memory'</em>, they usually mean one of three things, and none of them are about memory itself:</p>\n\n<ul>\n  <li><strong>I wasn't really paying attention.</strong> If you didn't notice something properly, your brain didn't store it. There's nothing to recall later because nothing was ever encoded.</li>\n  <li><strong>I was multitasking.</strong> The brain doesn't actually divide attention — it switches. When you study with a phone in your hand, you're not absorbing two streams; you're encoding both badly.</li>\n  <li><strong>I crammed it.</strong> Material rehearsed once on the night before an exam fades within days. Memory needs <strong>spacing</strong> — the same information revisited several times across days or weeks.</li>\n</ul>\n\n<p>The good news: every one of these is fixable. Pay full attention to one thing at a time, study without distraction, and revisit the material more than once. Sleep matters too — the brain consolidates what you learned during the day while you sleep, which is why all-nighters tend to be worse than going to bed at midnight.</p>\n\n<p>Your memory isn't broken. It just hasn't been used the way it was designed to be used.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "550e8400-e29b-41d4-a716-446655444124",
+              "sequence": 3,
+              "title": "Memory Myths — True or False?",
+              "instructions": "Read each statement carefully and decide whether it's true or false. Your answers don't count toward a grade — this is just to help you check what stuck from the lesson.",
+              "suggestedTime": 5,
+              "points": 4.0,
+              "passMarkPercent": 0.0,
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444131",
+                  "title": "Born with a bad memory?",
+                  "tags": [
+                    "topic:memory:myths",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 2.0,
+                  "prompt": "Most people are born with naturally bad memories that no amount of practice can change.",
+                  "correctAnswer": false,
+                  "feedback": {
+                    "correct": "Correct. With rare exceptions, the differences in everyday memory between people are explained by attention, study habits, and sleep — not by hard-wired ability. Memory researchers can train ordinary volunteers to recall hundreds of digits in order; the techniques are learnable.",
+                    "incorrect": "Actually false. The differences in everyday memory are mostly down to attention, study habits, and sleep — all changeable. Researchers have trained ordinary volunteers to recall hundreds of digits using techniques anyone can learn."
+                  }
+                },
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444132",
+                  "title": "Vivid mental images",
+                  "tags": [
+                    "topic:memory:encoding",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Memorising a list of items is easier when you connect each item to a vivid mental image.",
+                  "correctAnswer": true,
+                  "feedback": {
+                    "correct": "Correct. The brain remembers vivid, unusual images far better than abstract words. Linking 'milk' to 'a cow standing on your kitchen table' is harder to forget than just the word 'milk' — and that's the trick mnemonists rely on.",
+                    "incorrect": "Actually true. Vivid, unusual images stick in memory more reliably than abstract words. Imagining a cow on your kitchen table is a stronger memory hook than rehearsing the word 'milk' on its own."
+                  }
+                },
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444133",
+                  "title": "Multitasking and memory",
+                  "tags": [
+                    "topic:memory:attention",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "hint": "Think about what the brain is actually doing when it tries to attend to two streams at once.",
+                  "prompt": "Multitasking — checking messages while reading a textbook — improves memory because the brain processes more information at once.",
+                  "correctAnswer": false,
+                  "feedback": {
+                    "correct": "Correct. The brain doesn't truly attend to two streams in parallel; it switches rapidly, and each switch costs encoding quality. Studying with a phone within reach reliably leads to weaker recall than the same time spent without it.",
+                    "incorrect": "Actually false. The brain switches between tasks rather than running them in parallel, and each switch breaks encoding. People who study with a phone within reach consistently recall less than those who put it away."
+                  }
+                },
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444134",
+                  "title": "Sleep and consolidation",
+                  "tags": [
+                    "topic:memory:consolidation",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 2.0,
+                  "prompt": "Sleeping well after studying helps the brain consolidate what you learned during the day.",
+                  "correctAnswer": true,
+                  "feedback": {
+                    "correct": "Correct. During sleep, the brain replays and stabilises new memories, moving them from fragile short-term traces to more durable long-term ones. That's a big part of why pulling an all-nighter before an exam tends to backfire — you skip the consolidation step.",
+                    "incorrect": "Actually true. Sleep is when the brain replays and stabilises new memories. Skipping it (pulling an all-nighter) skips the consolidation step, which is why students who sleep before an exam usually outperform those who don't."
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "globalId": "550e8400-e29b-41d4-a716-446655444140",
+          "sequence": 1,
+          "title": "Lesson 1.2: Memory Tricks That Work",
+          "objectiveIds": [
+            "obj-0002"
+          ],
+          "items": [
+            {
+              "type": "content",
+              "globalId": "550e8400-e29b-41d4-a716-446655444141",
+              "sequence": 0,
+              "title": "Memory Tricks That Work",
+              "suggestedTime": 8,
+              "html": "<h1>Memory Tricks That Work</h1>\n\n<p>Once you accept that memory is a skill, the question becomes: which techniques actually help? Decades of research and a couple of thousand years of practice agree on a small handful.</p>\n\n<h2>Mnemonics</h2>\n\n<p>A <strong>mnemonic</strong> is any device that turns dry information into something memorable. Many you already use without naming them: <em>'PEMDAS'</em> for the order of operations in maths (Parentheses, Exponents, Multiplication, Division, Addition, Subtraction), <em>'Please Excuse My Dear Aunt Sally'</em> as the spelled-out version, or <em>'Richard Of York Gave Battle In Vain'</em> for the colours of the rainbow. Anything that hooks the new information onto something familiar.</p>\n\n<h2>Method of loci (the memory palace)</h2>\n\n<p>Roman orators pictured walking through a familiar building — say, their own house — placing each part of a speech in a different room. To recall the speech, they walked the building in their mind. The technique works because spaces are easier to remember than abstract ideas. Place the things you need to remember in the rooms of a building you know, and they're suddenly far easier to retrieve.</p>\n\n<h2>Chunking</h2>\n\n<p>The number 0114873256 is hard to remember. The same digits as 011-487-3256 are easy. <strong>Chunking</strong> groups information into meaningful pieces, and meaningful pieces sit better in memory than long undifferentiated strings.</p>\n\n<h2>Spaced repetition</h2>\n\n<p>Reviewing the same material once a day for a week beats studying it for seven hours straight. Each review is a chance for the brain to reach for the information and strengthen the path. The longer you wait between reviews (within reason), the stronger the consolidation. This is why a 30-minute review every evening for ten days will outperform a five-hour Sunday cram.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "550e8400-e29b-41d4-a716-446655444142",
+              "sequence": 1,
+              "title": "Pick the Right Memory Trick",
+              "instructions": "For each scenario, choose the technique most likely to help. There's no single right answer in real life — these are best-fit choices.",
+              "suggestedTime": 8,
+              "points": 4.0,
+              "passMarkPercent": 0.0,
+              "questions": [
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444151",
+                  "title": "Memorising a 12-step recipe",
+                  "tags": [
+                    "topic:memory:method-of-loci",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 4.0,
+                  "prompt": "Maria has to memorise a 12-step recipe for a cooking exam, in order. Which technique is most likely to help her recall the steps reliably?",
+                  "options": [
+                    "Reading the recipe aloud once before the exam.",
+                    "Writing the recipe by hand three times in a row.",
+                    "Imagining each step happening in a different room of her house, then mentally walking through the house.",
+                    "Highlighting the recipe in three different colours."
+                  ],
+                  "optionsAndPoints": {
+                    "Reading the recipe aloud once before the exam.": 0.0,
+                    "Writing the recipe by hand three times in a row.": 0.0,
+                    "Imagining each step happening in a different room of her house, then mentally walking through the house.": 1.0,
+                    "Highlighting the recipe in three different colours.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Excellent. Linking each step to a specific location is the method of loci — the technique Roman orators used to memorise speeches that lasted hours. The vivid, spatial nature of the imagined house gives the brain a much stronger hook than rereading or rewriting alone.",
+                    "incorrect": "The strongest technique here is the method of loci — imagining each step in a different room of a familiar house, then walking through it mentally. Rereading, rewriting, and highlighting all feel like work, but they don't anchor the order in a way the brain can retrieve under pressure.",
+                    "choiceFeedback": {
+                      "Reading the recipe aloud once before the exam.": "Reading once is recognition, not recall. It produces a comfortable feeling of familiarity without anchoring the steps in a way you can retrieve in order.",
+                      "Writing the recipe by hand three times in a row.": "Repetition can help, but mechanical copying without visualisation gives the brain little to anchor. After a few hours the order tends to blur.",
+                      "Imagining each step happening in a different room of her house, then mentally walking through the house.": "Correct! This is the method of loci. Spatial memory is unusually strong, so attaching each step to a room makes the sequence retrievable.",
+                      "Highlighting the recipe in three different colours.": "Highlighting feels productive, but research consistently shows it's one of the weakest study techniques — it marks importance without forcing real engagement with the material."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444152",
+                  "title": "Remembering an 11-digit number",
+                  "tags": [
+                    "topic:memory:chunking",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Sam needs to memorise the 11-digit ID number 47921836570 long enough to type it into a form on a different screen. Which approach is most likely to work?",
+                  "options": [
+                    "Repeating all 11 digits aloud as one long string.",
+                    "Breaking the number into chunks like 479-218-365-70.",
+                    "Memorising the digits in reverse order first, then forwards.",
+                    "Closing his eyes and trying to picture the digits floating in space."
+                  ],
+                  "optionsAndPoints": {
+                    "Repeating all 11 digits aloud as one long string.": 0.0,
+                    "Breaking the number into chunks like 479-218-365-70.": 1.0,
+                    "Memorising the digits in reverse order first, then forwards.": 0.0,
+                    "Closing his eyes and trying to picture the digits floating in space.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. This is chunking. Short-term memory holds about four items reliably; one stream of eleven digits exceeds that, but four chunks of two-to-three digits sit comfortably inside the limit. It's the same reason phone numbers are written with dashes.",
+                    "incorrect": "The technique here is chunking. Short-term memory comfortably holds about four items. Eleven digits as one long string is too many, but four chunks of two-to-three digits each fit easily — which is why phone numbers are written with dashes.",
+                    "choiceFeedback": {
+                      "Repeating all 11 digits aloud as one long string.": "Eleven digits exceeds the comfortable limit of short-term memory. Repetition alone won't compress them.",
+                      "Breaking the number into chunks like 479-218-365-70.": "Correct! Chunking turns 11 items into 4, which fits inside short-term memory's natural limit.",
+                      "Memorising the digits in reverse order first, then forwards.": "Doubling the work doesn't help — the underlying problem is that 11 digits is just too many to hold as a single stream.",
+                      "Closing his eyes and trying to picture the digits floating in space.": "Visualisation works for vivid, structured images. A floating string of digits has no structure to anchor."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444153",
+                  "title": "Vocabulary across ten days",
+                  "tags": [
+                    "topic:memory:spaced-repetition",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Two students each need to memorise 50 vocabulary words for a test in ten days. Which study schedule is likely to produce the best long-term recall?",
+                  "options": [
+                    "All five hours of studying in one Sunday afternoon, two days before the test.",
+                    "Thirty minutes of review every day for ten days, including the day before.",
+                    "An hour the night before the test, plus an hour on the morning of the test.",
+                    "Reading through the list each evening without ever testing yourself on it."
+                  ],
+                  "optionsAndPoints": {
+                    "All five hours of studying in one Sunday afternoon, two days before the test.": 0.0,
+                    "Thirty minutes of review every day for ten days, including the day before.": 1.0,
+                    "An hour the night before the test, plus an hour on the morning of the test.": 0.0,
+                    "Reading through the list each evening without ever testing yourself on it.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Correct. Short, repeated sessions across many days is spaced repetition, and it consistently outperforms cramming. Each review is a chance to retrieve the words from memory rather than just see them — and retrieval is what strengthens recall.",
+                    "incorrect": "Spaced repetition wins here. Thirty minutes a day for ten days produces dramatically better long-term recall than the same five hours crammed into one session — because each daily review is a retrieval opportunity, and retrieval is what strengthens memory.",
+                    "choiceFeedback": {
+                      "All five hours of studying in one Sunday afternoon, two days before the test.": "Cramming produces a feeling of mastery on the day, but recall fades quickly. Without spacing, memory consolidation never finishes.",
+                      "Thirty minutes of review every day for ten days, including the day before.": "Correct! Spaced repetition — short, daily sessions across many days — beats cramming every time it's tested.",
+                      "An hour the night before the test, plus an hour on the morning of the test.": "Two sessions clustered close together is barely better than one long session. The spacing has to be measured in days, not hours.",
+                      "Reading through the list each evening without ever testing yourself on it.": "Reading isn't retrieving. Without an attempt to produce the answer from memory, the review is mostly an exercise in feeling familiar."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444154",
+                  "title": "Twelve cranial nerves in order",
+                  "tags": [
+                    "topic:memory:mnemonics",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 4.0,
+                  "prompt": "An anatomy student has to remember the names of the twelve cranial nerves, in order, for an exam in two weeks. Which technique is most likely to make the order stick?",
+                  "options": [
+                    "Reading the list aloud three times in the hour before the exam.",
+                    "Learning a sentence in which each word's first letter matches a nerve's first letter, in order.",
+                    "Memorising the nerves alphabetically, since the order doesn't really matter.",
+                    "Drawing each nerve once without labels while watching a video."
+                  ],
+                  "optionsAndPoints": {
+                    "Reading the list aloud three times in the hour before the exam.": 0.0,
+                    "Learning a sentence in which each word's first letter matches a nerve's first letter, in order.": 1.0,
+                    "Memorising the nerves alphabetically, since the order doesn't really matter.": 0.0,
+                    "Drawing each nerve once without labels while watching a video.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. A first-letter mnemonic — like the famous 'On Old Olympus' Towering Tops, A Finn And German Vault And Hop' — is the standard tool here, and it's been used by medical students for over a century. The sentence gives the brain a memorable string to attach the nerve names to.",
+                    "incorrect": "The technique medical students have used for over a century here is a first-letter mnemonic — a sentence whose words start with the same letters as the nerves, in order ('On Old Olympus' Towering Tops...'). The sentence gives the brain something concrete to attach the list to.",
+                    "choiceFeedback": {
+                      "Reading the list aloud three times in the hour before the exam.": "Three reads in an hour is cramming. The list will feel familiar but won't be retrievable in order under exam pressure.",
+                      "Learning a sentence in which each word's first letter matches a nerve's first letter, in order.": "Correct! This is a first-letter mnemonic, and it's the classic technique for memorising ordered lists.",
+                      "Memorising the nerves alphabetically, since the order doesn't really matter.": "The order does matter — anatomy questions often test it. Reordering the list to suit yourself just creates a second list to learn later.",
+                      "Drawing each nerve once without labels while watching a video.": "Drawing engages attention, but doing it once won't fix twelve names in a specific order — and the divided attention with the video makes encoding worse."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "globalId": "550e8400-e29b-41d4-a716-446655444210",
+      "sequence": 1,
+      "title": "Unit 2: Active Reading and Note-Taking",
+      "tags": [
+        "topic:reading",
+        "topic:note-taking",
+        "skill:study-method"
+      ],
+      "objectiveIds": [
+        "obj-0014"
+      ],
+      "lessons": [
+        {
+          "globalId": "550e8400-e29b-41d4-a716-446655444220",
+          "sequence": 0,
+          "title": "Lesson 2.1: How to Read Actively",
+          "objectiveIds": [
+            "obj-0003"
+          ],
+          "items": [
+            {
+              "type": "signpost",
+              "globalId": "550e8400-e29b-41d4-a716-446655444221",
+              "sequence": 0,
+              "title": "Welcome to Unit 2: Active Reading and Note-Taking",
+              "signpostType": "intro",
+              "scope": "unit",
+              "customHtml": "<p>You can read the same chapter twice and remember almost nothing. That isn't a reading-speed problem — it's a <strong>passive reading</strong> problem. Your eyes pass over the words, your mind drifts, and the page slides by without leaving a trace.</p>\n\n<p><strong>Active reading</strong> is the opposite. You ask questions before you start. You predict what the next paragraph will say. You stop and summarise. You write something down. The reading takes longer, but what you remember is dramatically more.</p>\n\n<p>This unit gives you a structured method for active reading (SQ3R) and three practical note-taking systems — Cornell, the outline method, and mind maps — so the things you read actually become things you know.</p>"
+            },
+            {
+              "type": "content",
+              "globalId": "550e8400-e29b-41d4-a716-446655444222",
+              "sequence": 1,
+              "title": "How to Read Actively (SQ3R)",
+              "suggestedTime": 8,
+              "html": "<h1>How to Read Actively (SQ3R)</h1>\n\n<p>The SQ3R method, developed in the 1940s and still widely taught, breaks reading into five steps. Each one is a small bit of extra work; together they turn passive reading into something far more durable.</p>\n\n<h2>S — Survey</h2>\n\n<p>Before you start reading, spend two or three minutes <strong>flipping through</strong> the chapter. Look at the headings, the diagrams, the chapter summary, the questions at the end. You're building a map of the chapter so the details have something to attach to as you read.</p>\n\n<h2>Q — Question</h2>\n\n<p>Turn each section heading into a <strong>question</strong>. The heading 'The Reign of Terror' becomes 'Why was it called the Reign of Terror, and how long did it last?' Now you're reading to <em>find an answer</em> rather than just reading.</p>\n\n<h2>R — Read</h2>\n\n<p>Read the section actively, looking for the answer to your question. Underline or note key sentences as you go. Don't try to highlight everything — pick the few sentences that actually answer the question.</p>\n\n<h2>R — Recite</h2>\n\n<p>Close the book. Try to <strong>summarise the section</strong> from memory in your own words — out loud, on paper, or in your head. This is the most important step. Pulling the information out of memory (rather than reading it again) is what makes it stick.</p>\n\n<h2>R — Review</h2>\n\n<p>Come back to your notes a day later, then a week later, then a month later. Each <strong>review</strong> is a chance to strengthen the memory. This is spaced repetition applied to reading.</p>\n\n<p>The key insight: rereading feels productive but mostly just feels familiar. SQ3R replaces the comfortable feeling with active retrieval — and active retrieval is what learning actually is.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "550e8400-e29b-41d4-a716-446655444223",
+              "sequence": 2,
+              "title": "Active Reading in Practice",
+              "instructions": "Each scenario describes something a student is doing. Pick the answer that best identifies what's happening or why it works.",
+              "suggestedTime": 8,
+              "points": 4.0,
+              "passMarkPercent": 0.0,
+              "questions": [
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444231",
+                  "title": "Surveying a chapter",
+                  "tags": [
+                    "topic:reading:sq3r",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Sara opens her chemistry textbook to a new chapter on acids and bases. Before reading anything in detail, she flips through the chapter, glancing at the headings, the diagrams, and the chapter summary. Which active-reading strategy is she using?",
+                  "options": [
+                    "Surveying — building a mental map of the chapter before deep reading.",
+                    "Annotating — marking up the text as she reads it.",
+                    "Skimming — reading only enough to get by.",
+                    "Memorising — committing the chapter to memory in one pass."
+                  ],
+                  "optionsAndPoints": {
+                    "Surveying — building a mental map of the chapter before deep reading.": 1.0,
+                    "Annotating — marking up the text as she reads it.": 0.0,
+                    "Skimming — reading only enough to get by.": 0.0,
+                    "Memorising — committing the chapter to memory in one pass.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. Surveying is the first step in SQ3R: a quick pass through headings, figures, and summary to give the upcoming details a place to land. Two or three minutes of surveying often saves much more time later.",
+                    "incorrect": "This is surveying — the first step of SQ3R. Spending two or three minutes mapping the chapter before deep reading gives the details a structure to attach to. Annotating happens during the read; skimming and memorising are different goals entirely.",
+                    "choiceFeedback": {
+                      "Surveying — building a mental map of the chapter before deep reading.": "Correct! Surveying is the 'S' in SQ3R. A quick map first; deep reading second.",
+                      "Annotating — marking up the text as she reads it.": "Annotating happens during reading. Sara hasn't started reading the text yet — she's previewing.",
+                      "Skimming — reading only enough to get by.": "Skimming is a substitute for deep reading. Surveying is a precursor to it.",
+                      "Memorising — committing the chapter to memory in one pass.": "Memorising can't happen in one quick flip-through, and that isn't what Sara is doing."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444232",
+                  "title": "Heading as a question",
+                  "tags": [
+                    "topic:reading:sq3r",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 4.0,
+                  "prompt": "As David reads a chapter on the French Revolution, he turns each section heading into a question — for example, the heading 'The Reign of Terror' becomes 'Why was it called the Reign of Terror, and how long did it last?' Why is this technique effective?",
+                  "options": [
+                    "It makes the reading more entertaining, which helps memory indirectly.",
+                    "It changes reading from passive to goal-directed; the brain stays engaged because it's actively hunting for an answer.",
+                    "It guarantees that every fact in the chapter will be remembered.",
+                    "It saves time by allowing the reader to skip over difficult sections."
+                  ],
+                  "optionsAndPoints": {
+                    "It makes the reading more entertaining, which helps memory indirectly.": 0.0,
+                    "It changes reading from passive to goal-directed; the brain stays engaged because it's actively hunting for an answer.": 1.0,
+                    "It guarantees that every fact in the chapter will be remembered.": 0.0,
+                    "It saves time by allowing the reader to skip over difficult sections.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. Turning headings into questions gives the reading a target. Without one, the brain drifts; with one, it actively scans for the answer. This is the 'Q' step of SQ3R, and it's the single most effective lift from passive to active reading.",
+                    "incorrect": "The point is that questions give reading a target. Without a target, the brain drifts; with one, it engages in something psychologists call 'effortful retrieval', which is the engine of real learning. Entertainment, completeness, and skipping aren't what's happening here.",
+                    "choiceFeedback": {
+                      "It makes the reading more entertaining, which helps memory indirectly.": "Entertainment isn't the mechanism. Questions create directed attention, which works regardless of whether the topic is fun.",
+                      "It changes reading from passive to goal-directed; the brain stays engaged because it's actively hunting for an answer.": "Correct! Goal-directed reading produces sharply better recall than reading without a target.",
+                      "It guarantees that every fact in the chapter will be remembered.": "Nothing guarantees total recall. Questioning improves recall — it doesn't perfect it.",
+                      "It saves time by allowing the reader to skip over difficult sections.": "It doesn't save time. If anything, it slows reading slightly — and the trade-off is well worth it."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444233",
+                  "title": "Closing the book to summarise",
+                  "tags": [
+                    "topic:reading:retrieval-practice",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 4.0,
+                  "hint": "What's the difference between recognising material and producing it from memory?",
+                  "prompt": "After finishing a chapter on cell biology, Priya closes the textbook and tries to write a one-paragraph summary from memory before checking it against the book. Which best describes the benefit of this technique?",
+                  "options": [
+                    "It feels productive, but research shows it doesn't actually help retention.",
+                    "It forces active retrieval, which strengthens memory more powerfully than rereading.",
+                    "It only works if the summary is written by hand rather than typed.",
+                    "It substitutes for reading the chapter, so she doesn't need to read it carefully."
+                  ],
+                  "optionsAndPoints": {
+                    "It feels productive, but research shows it doesn't actually help retention.": 0.0,
+                    "It forces active retrieval, which strengthens memory more powerfully than rereading.": 1.0,
+                    "It only works if the summary is written by hand rather than typed.": 0.0,
+                    "It substitutes for reading the chapter, so she doesn't need to read it carefully.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. This is the testing effect, sometimes called retrieval practice — pulling information out of memory strengthens the path back to it far more than passive review. Even a partial, gappy summary helps, because the act of trying is most of the benefit.",
+                    "incorrect": "What Priya is doing is retrieval practice, also known as the testing effect. Producing material from memory — even imperfectly — strengthens recall much more than reading the same material again. The act of trying is the active ingredient.",
+                    "choiceFeedback": {
+                      "It feels productive, but research shows it doesn't actually help retention.": "It does help — retrieval practice is one of the most consistently supported techniques in learning research.",
+                      "It forces active retrieval, which strengthens memory more powerfully than rereading.": "Correct! This is the testing effect, and it's the active ingredient behind the 'Recite' step in SQ3R.",
+                      "It only works if the summary is written by hand rather than typed.": "Hand vs. typing is a separate (and much smaller) effect. The retrieval is what matters; the medium is mostly aesthetic.",
+                      "It substitutes for reading the chapter, so she doesn't need to read it carefully.": "Retrieval can only retrieve what was read carefully in the first place. It's a complement, not a substitute."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444234",
+                  "title": "The illusion of fluency",
+                  "tags": [
+                    "topic:reading:metacognition",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 5.0,
+                  "prompt": "Tomas reads through the same chapter on photosynthesis three times in a row. By the end he feels like he understands it well, but a week later he can't recall the main steps. What's the most likely reason?",
+                  "options": [
+                    "He didn't read slowly enough.",
+                    "He needed to memorise the chapter rather than understand it.",
+                    "Rereading produces a feeling of familiarity that the brain mistakes for learning. Without retrieval practice or spacing, the material doesn't stick.",
+                    "Photosynthesis is a topic that simply cannot be retained without specialised techniques."
+                  ],
+                  "optionsAndPoints": {
+                    "He didn't read slowly enough.": 0.0,
+                    "He needed to memorise the chapter rather than understand it.": 0.0,
+                    "Rereading produces a feeling of familiarity that the brain mistakes for learning. Without retrieval practice or spacing, the material doesn't stick.": 1.0,
+                    "Photosynthesis is a topic that simply cannot be retained without specialised techniques.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. This is one of the most important findings in learning research: feeling fluent is not the same as being able to retrieve. Rereading three times produces strong familiarity but weak retrieval. To convert one into the other, the brain needs to actively pull the information out — and to do it more than once, spaced over days.",
+                    "incorrect": "The trap here is the 'illusion of fluency'. Reading something three times feels like learning it, but the feeling is mostly familiarity. To turn that feeling into actual recall, the brain has to retrieve the information from memory — and ideally do it more than once across spaced days.",
+                    "choiceFeedback": {
+                      "He didn't read slowly enough.": "Reading speed isn't really the variable. Even a slow rereading is still rereading.",
+                      "He needed to memorise the chapter rather than understand it.": "Understanding isn't the problem either — Tomas felt he understood. The gap is between feeling fluent and being able to recall.",
+                      "Rereading produces a feeling of familiarity that the brain mistakes for learning. Without retrieval practice or spacing, the material doesn't stick.": "Correct! This is the illusion of fluency, and it's why rereading is one of the worst-rated study techniques in research.",
+                      "Photosynthesis is a topic that simply cannot be retained without specialised techniques.": "Photosynthesis is a normal topic. The problem is the technique, not the subject."
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "globalId": "550e8400-e29b-41d4-a716-446655444240",
+          "sequence": 1,
+          "title": "Lesson 2.2: Effective Note-Taking Methods",
+          "objectiveIds": [
+            "obj-0004"
+          ],
+          "items": [
+            {
+              "type": "content",
+              "globalId": "550e8400-e29b-41d4-a716-446655444241",
+              "sequence": 0,
+              "title": "Three Note-Taking Methods",
+              "suggestedTime": 7,
+              "html": "<h1>Three Note-Taking Methods</h1>\n\n<p>There's no single best way to take notes. Different situations reward different formats. Three are worth knowing well — pick the one that fits the situation in front of you.</p>\n\n<h2>Cornell notes</h2>\n\n<p>Split each page into three regions: a narrow <strong>cue column</strong> on the left (about a quarter of the width), a wider <strong>notes column</strong> on the right, and a <strong>summary band</strong> across the bottom. As you take the lecture or reading down in the notes column, leave the cue column blank. Afterwards, fill the cue column with key terms or questions, and write a one-or-two-sentence summary at the bottom. Cover the notes column and use the cues to test yourself — built-in retrieval practice.</p>\n\n<p>Cornell notes are unusually good for fast-paced lectures and for material you'll have to recall on tests, because the structure builds in self-testing.</p>\n\n<h2>The outline method</h2>\n\n<p>Use indented bullet points to capture hierarchy: main idea on the far left, sub-points indented under it, examples indented under those. The outline method shines when the source material has obvious structure — a textbook chapter with clear sub-sections, a presentation with numbered slides, anything where the relationships between ideas are nested.</p>\n\n<p>It's quick to write and easy to scan later. Less good for free-flowing discussion or material where the connections cross between branches rather than running in parallel.</p>\n\n<h2>Mind maps</h2>\n\n<p>Start with the central idea in the middle of the page. Branch outward to related ideas, branch again to the sub-ideas, and so on. Draw arrows between branches when ideas connect across the structure.</p>\n\n<p>Mind maps are at their best for <strong>brainstorming</strong>, for essay planning, and for showing how a topic's parts relate to each other. They're not great for capturing fast-moving lectures — too slow to draw — but they're outstanding for thinking.</p>\n\n<h2>Pick the method to fit the situation</h2>\n\n<p>One technique doesn't fit every kind of source. The skill is choosing — Cornell when speed and self-testing matter, outline when structure is clear, mind map when you're connecting and exploring.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "550e8400-e29b-41d4-a716-446655444242",
+              "sequence": 1,
+              "title": "Match the Note-Taking Method to the Situation",
+              "instructions": "For each situation, pick the note-taking method most likely to fit. Two extra methods are listed in the right-hand column to make the matching honest — they don't pair with any of the situations.",
+              "suggestedTime": 6,
+              "points": 4.0,
+              "passMarkPercent": 0.0,
+              "questions": [
+                {
+                  "type": "matching",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444243",
+                  "title": "Note-taking methods and their best uses",
+                  "tags": [
+                    "topic:note-taking",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 4.0,
+                  "difficulty": 5.0,
+                  "hint": "Two of the methods on the right are decoys — they don't match anything on the left.",
+                  "prompt": "",
+                  "distractors": [
+                    "Verbatim transcription — write down every word the speaker says, then re-read it later without further processing",
+                    "Highlighter-only — mark passages in three colours during reading and rely on the highlights as your record"
+                  ],
+                  "feedback": {
+                    "correct": "Excellent work. Cornell suits fast lectures because the cue column doubles as a self-test; mind maps fit brainstorming because they're built for exploration; the outline method maps cleanly onto already-hierarchical material; and flashcards are the standard tool for vocabulary because the prompt-and-answer format is exactly what a vocab quiz is testing. The two decoys — verbatim transcription and highlighter-only — are research's classic examples of techniques that feel productive but rarely produce learning.",
+                    "incorrect": "Re-pair the matches by what the situation actually needs. Cornell suits fast lectures (built-in self-testing), mind maps suit brainstorming (built for connections), outline suits already-hierarchical material, and flashcards suit definition-style review. Verbatim transcription and highlighter-only sit in the decoy column for a reason: each one feels like work, but each is a study technique that research consistently rates as among the weakest."
+                  },
+                  "matchingMode": "pairs",
+                  "pairs": [
+                    {
+                      "item": "A 50-minute lecture where the professor speaks rapidly and covers many topics, and you'll be tested on the material later",
+                      "match": "Cornell notes — narrow cue column on the left, notes on the right, summary at the bottom; built-in self-testing"
+                    },
+                    {
+                      "item": "Brainstorming connections between ideas for an essay on the causes of World War I",
+                      "match": "Mind map — central idea, branches outward to related ideas, with arrows showing connections across branches"
+                    },
+                    {
+                      "item": "Studying a chapter that has clearly nested sub-topics: main idea, sub-points, and examples",
+                      "match": "Outline method — indented bullet points capturing hierarchy from main idea to sub-points to examples"
+                    },
+                    {
+                      "item": "Reviewing 60 vocabulary definitions for a quiz the next morning",
+                      "match": "Flashcards — one prompt per card with the answer on the back, reviewed in spaced sessions"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "globalId": "550e8400-e29b-41d4-a716-446655444310",
+      "sequence": 2,
+      "title": "Unit 3: Time Management and Exam Preparation",
+      "tags": [
+        "topic:time-management",
+        "topic:exam-prep",
+        "skill:planning"
+      ],
+      "objectiveIds": [
+        "obj-0015"
+      ],
+      "lessons": [
+        {
+          "globalId": "550e8400-e29b-41d4-a716-446655444320",
+          "sequence": 0,
+          "title": "Lesson 3.1: Planning Your Study Time",
+          "objectiveIds": [
+            "obj-0005",
+            "obj-0008"
+          ],
+          "items": [
+            {
+              "type": "signpost",
+              "globalId": "550e8400-e29b-41d4-a716-446655444321",
+              "sequence": 0,
+              "title": "Welcome to Unit 3: Time Management and Exam Preparation",
+              "signpostType": "intro",
+              "scope": "unit",
+              "customHtml": "<p>The night before is not when learning happens. It is too late for memory to consolidate, too late for understanding to form, and too late for the body to be rested enough to perform.</p>\n\n<p><strong>Planning beats cramming</strong> — not because planners are virtuous, but because the brain works best on schedules. A small amount of focused study, repeated across days, costs less effort and produces dramatically better results than one long panic session.</p>\n\n<p>This unit gives you a planning system (calendars and focused work blocks), and an exam-preparation method (practice tests, spaced review, sleep). The end-of-course quiz checks whether the ideas have stuck.</p>"
+            },
+            {
+              "type": "content",
+              "globalId": "550e8400-e29b-41d4-a716-446655444322",
+              "sequence": 1,
+              "title": "Planning Your Study Time",
+              "suggestedTime": 7,
+              "html": "<h1>Planning Your Study Time</h1>\n\n<p>Most students don't fail because they're stupid. They fail because they ran out of time, and they ran out of time because they never really planned it.</p>\n\n<h2>Use a calendar, not a to-do list</h2>\n\n<p>To-do lists capture <strong>what</strong> you need to do but say nothing about <em>when</em>. Tasks float, slip, and accumulate guilt. A calendar pins each task to a specific time slot. The mental load drops because the future is already decided. If you have an essay due in a fortnight, you don't carry it on a list — you put 'essay outline, Tuesday 7-8pm' on the calendar and stop thinking about it until Tuesday at 7pm.</p>\n\n<h2>Work in focused blocks</h2>\n\n<p>The <strong>Pomodoro technique</strong> divides study into 25-minute focused blocks separated by 5-minute breaks. Phone away. Tabs closed. One thing for 25 minutes. Then a real break. Four blocks make a 'pomodoro cycle', after which you take a longer break of about 20 minutes.</p>\n\n<p>The exact numbers matter less than the principle: short, undivided attention beats long, distracted attention. Many students who think they 'studied for three hours' really studied for thirty minutes spread across three hours of phone-checking. A genuine 25 minutes is worth more than that.</p>\n\n<h2>Sort by urgent vs. important</h2>\n\n<p>Not all tasks are equal. Some are urgent (a deadline tomorrow); some are important (the cumulative final in three months); some are neither. Without sorting, the urgent always wins, and the important quietly slips. The trick is to put a small slot for the important-but-not-urgent on every day's calendar — even ten minutes — so the long-term tasks don't get crushed by the short-term ones.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "550e8400-e29b-41d4-a716-446655444323",
+              "sequence": 2,
+              "title": "Planning — True or False?",
+              "instructions": "Decide whether each statement is true or false. There's no penalty for a wrong answer.",
+              "suggestedTime": 5,
+              "points": 4.0,
+              "passMarkPercent": 0.0,
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444331",
+                  "title": "Focused blocks vs marathons",
+                  "tags": [
+                    "topic:time-management:pomodoro",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Studying in 25-minute focused blocks tends to produce better recall than three-hour study marathons.",
+                  "correctAnswer": true,
+                  "feedback": {
+                    "correct": "Correct. Attention fades sharply after about 25-30 minutes; longer sessions earn diminishing returns and start to harm encoding. Short focused blocks separated by breaks usually outperform long marathons of the same total length.",
+                    "incorrect": "Actually true. Attention fades sharply after about 25-30 minutes, and longer sessions earn diminishing returns. The Pomodoro technique works precisely because it stops you before encoding quality drops."
+                  }
+                },
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444332",
+                  "title": "Multitasking and productivity",
+                  "tags": [
+                    "topic:time-management:focus",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Multitasking — checking messages while studying — increases productivity because the brain processes more information at once.",
+                  "correctAnswer": false,
+                  "feedback": {
+                    "correct": "Correct. The brain doesn't process two streams in parallel; it switches between them, and each switch costs encoding quality. Studying with a phone in reach reliably produces weaker recall than the same time spent without it, even if it doesn't feel that way in the moment.",
+                    "incorrect": "Actually false. The brain switches between tasks rather than running them in parallel; each switch breaks encoding. Multitasking feels productive but consistently produces weaker results than single-tasking."
+                  }
+                },
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444333",
+                  "title": "Calendar vs to-do list",
+                  "tags": [
+                    "topic:time-management:planning",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 3.0,
+                  "prompt": "Putting tasks on a calendar with specific time slots makes you more likely to actually do them than keeping a plain to-do list.",
+                  "correctAnswer": true,
+                  "feedback": {
+                    "correct": "Correct. To-do lists tell you what; calendars tell you when. Without a 'when', tasks slip indefinitely. Anchoring a task to a specific time — what psychologists call an 'implementation intention' — substantially raises the chance you'll actually do it.",
+                    "incorrect": "Actually true. Researchers call this the 'implementation intention' effect. Specifying when you'll do a task — not just what — sharply raises the chance you'll follow through, compared to a list with no times attached."
+                  }
+                },
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444334",
+                  "title": "Important but not urgent",
+                  "tags": [
+                    "topic:time-management:prioritization",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 4.0,
+                  "hint": "Think about what happens to long-term goals when you only ever react to the next deadline.",
+                  "prompt": "An assignment that's important but not urgent should be delayed until something more pressing forces you to start it.",
+                  "correctAnswer": false,
+                  "feedback": {
+                    "correct": "Correct. The 'urgent always crushes the important' problem is exactly why long-term goals stall. The fix is to give important-but-not-urgent tasks a small daily or weekly slot — even ten minutes — so they accumulate progress before the deadline becomes urgent.",
+                    "incorrect": "Actually false. Important-but-not-urgent tasks (the cumulative project, the long reading list, the slow revision) lose every fight with urgent ones unless you protect time for them on the calendar before the urgency arrives."
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "globalId": "550e8400-e29b-41d4-a716-446655444340",
+          "sequence": 1,
+          "title": "Lesson 3.2: Preparing for Exams",
+          "objectiveIds": [
+            "obj-0006",
+            "obj-0007"
+          ],
+          "items": [
+            {
+              "type": "content",
+              "globalId": "550e8400-e29b-41d4-a716-446655444341",
+              "sequence": 0,
+              "title": "Preparing for Exams",
+              "suggestedTime": 8,
+              "html": "<h1>Preparing for Exams</h1>\n\n<p>Exam preparation is where everything in this course comes together. The techniques you've already met — spaced review, retrieval practice, focused blocks, planning — are most of what you need. The trick is putting them in the right order, and respecting one principle most students under-appreciate: <strong>recognising is not the same as recalling</strong>.</p>\n\n<h2>Recognising vs. recalling</h2>\n\n<p>When you read something familiar, your brain says 'yes, I've seen this before' — that's <strong>recognition</strong>. It's a comfortable feeling. It's also a poor predictor of exam performance, because exams almost always require <strong>recall</strong>: producing the information from memory without prompts.</p>\n\n<p>The two feel similar from inside your head but rely on different mechanisms. The single biggest improvement most students can make is to stop measuring their preparation by recognition ('I've read this; I know it') and start measuring it by recall ('I just closed the book and wrote out the answer').</p>\n\n<h2>Practice tests</h2>\n\n<p>Doing a full <strong>practice exam</strong> under timed conditions is the most powerful single technique for exam prep. It's the only one that simulates everything at once — the question style, the time pressure, the act of producing an answer from memory. After the practice exam, mark it strictly and review every mistake. The mistakes are the gold; they tell you exactly what to study next.</p>\n\n<h2>Spaced review across the term, not just the week before</h2>\n\n<p>Set aside ten or fifteen minutes a week to review old material throughout the term, not just before the exam. Each session is a retrieval rep that strengthens long-term memory. By the time the exam arrives, you've reviewed the early material five or ten times — versus the cramming alternative, which reviews it once.</p>\n\n<h2>Sleep before the exam</h2>\n\n<p>Sleep is when memory consolidates. An all-nighter doesn't add information; it removes consolidation, dulls attention, and damages working memory. A rested student who studied 80% of the topics will reliably outperform an exhausted student who studied 100% of them.</p>\n\n<h2>The day-of routine</h2>\n\n<p>Eat something. Don't try to learn new material. A quick scan of your notes is fine — but anything beyond that is more likely to spike anxiety than to help your score.</p>"
+            },
+            {
+              "type": "quiz",
+              "globalId": "550e8400-e29b-41d4-a716-446655444342",
+              "sequence": 1,
+              "title": "Course Quiz: Studying Effectively",
+              "instructions": "Five questions covering the whole course. You need 70% to pass — three or four correct out of five. Take your time; there's no time limit.",
+              "suggestedTime": 12,
+              "isGraded": true,
+              "points": 5.0,
+              "passMarkPercent": 70.0,
+              "questions": [
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444351",
+                  "title": "One week before a big exam",
+                  "tags": [
+                    "topic:exam-prep:practice-tests",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 5.0,
+                  "prompt": "One week before a big exam, a student has read every chapter twice and rewritten her notes once. Which addition is most likely to improve her score?",
+                  "options": [
+                    "Reading every chapter a third time.",
+                    "Doing two or three full practice exams under timed conditions, then reviewing every mistake.",
+                    "Highlighting her notes again in different colours.",
+                    "Pulling an all-nighter to fit in extra revision."
+                  ],
+                  "optionsAndPoints": {
+                    "Reading every chapter a third time.": 0.0,
+                    "Doing two or three full practice exams under timed conditions, then reviewing every mistake.": 1.0,
+                    "Highlighting her notes again in different colours.": 0.0,
+                    "Pulling an all-nighter to fit in extra revision.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. Practice exams under timed conditions simulate everything at once — question style, time pressure, retrieval — and the mistakes you make tell you exactly what to study next. It's the single most efficient use of the last week before any exam.",
+                    "incorrect": "The strongest move at this stage is timed practice exams. They simulate every aspect of the real exam at once and surface exactly what's still weak. Rereading and re-highlighting build familiarity, not recall; an all-nighter actively harms performance.",
+                    "choiceFeedback": {
+                      "Reading every chapter a third time.": "By the third read, the student is mostly building familiarity, not new recall. Effort goes in; learning largely doesn't.",
+                      "Doing two or three full practice exams under timed conditions, then reviewing every mistake.": "Correct! Practice exams under realistic conditions are the single most efficient last-week technique.",
+                      "Highlighting her notes again in different colours.": "Re-highlighting is a low-yield activity. It feels productive without producing retrieval.",
+                      "Pulling an all-nighter to fit in extra revision.": "All-nighters skip the consolidation step and damage attention. They almost always cost more performance than they buy in extra revision time."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444352",
+                  "title": "Recognising vs recalling",
+                  "tags": [
+                    "topic:exam-prep:recall",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 5.0,
+                  "prompt": "When studying for an exam, what's the difference between recognising and recalling material?",
+                  "options": [
+                    "Recognising is reading something familiar; recalling is producing the answer from memory without prompts.",
+                    "Recognising is for vocabulary; recalling is for maths.",
+                    "Recognising is harder than recalling, so it's a stronger study technique.",
+                    "There's no real difference — they describe the same memory operation."
+                  ],
+                  "optionsAndPoints": {
+                    "Recognising is reading something familiar; recalling is producing the answer from memory without prompts.": 1.0,
+                    "Recognising is for vocabulary; recalling is for maths.": 0.0,
+                    "Recognising is harder than recalling, so it's a stronger study technique.": 0.0,
+                    "There's no real difference — they describe the same memory operation.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. Recognising is the comfortable feeling of 'I've seen this before'. Recalling is producing it from memory cold. Exams almost always require recall, which is why study techniques built around recognition (rereading, highlighting) tend to over-predict exam performance.",
+                    "incorrect": "Recognising is the feeling of familiarity you get when you re-read something; recalling is producing the answer from memory without prompts. The two feel similar but use different mechanisms — and exams almost always test recall, not recognition.",
+                    "choiceFeedback": {
+                      "Recognising is reading something familiar; recalling is producing the answer from memory without prompts.": "Correct! And exams almost always require the second one.",
+                      "Recognising is for vocabulary; recalling is for maths.": "The distinction isn't subject-specific. Both happen in every domain; the difference is recognition vs. retrieval.",
+                      "Recognising is harder than recalling, so it's a stronger study technique.": "It's the other way around. Recognising is easier (and more comfortable); recalling is what exams test.",
+                      "There's no real difference — they describe the same memory operation.": "There's a meaningful difference — they're processed differently in the brain, and most students study the easier one and then are surprised on the exam."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444353",
+                  "title": "1 a.m. before a 9 a.m. exam",
+                  "tags": [
+                    "topic:exam-prep:sleep",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 4.0,
+                  "prompt": "It's 1 a.m. before a 9 a.m. exam. The student has reviewed everything she planned to review, but she's tired. Which is the better choice for her exam performance?",
+                  "options": [
+                    "Stay up another two hours to do one more pass through her notes.",
+                    "Drink coffee and re-cover the trickiest topics one more time.",
+                    "Sleep for the next eight hours; rested recall almost always beats one more cram session.",
+                    "Wake up at 5 a.m. and review everything one final time."
+                  ],
+                  "optionsAndPoints": {
+                    "Stay up another two hours to do one more pass through her notes.": 0.0,
+                    "Drink coffee and re-cover the trickiest topics one more time.": 0.0,
+                    "Sleep for the next eight hours; rested recall almost always beats one more cram session.": 1.0,
+                    "Wake up at 5 a.m. and review everything one final time.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. Sleep at this point is doing real work — consolidating what was learned over the past weeks. Two extra hours of cramming might add a few facts, but they cost you working memory, attention, and stamina the next morning. The rested student almost always outperforms the exhausted one.",
+                    "incorrect": "Sleep wins this trade. By 1 a.m. the night before an exam, the brain still has memory consolidation to do — and that work happens during sleep. Two extra hours of revision won't add as many points as eight hours of sleep will buy in attention, working memory, and stamina the next morning.",
+                    "choiceFeedback": {
+                      "Stay up another two hours to do one more pass through her notes.": "The marginal review gained doesn't outweigh the consolidation and attention lost.",
+                      "Drink coffee and re-cover the trickiest topics one more time.": "Coffee masks fatigue without removing it. Working memory and consolidation both still suffer.",
+                      "Sleep for the next eight hours; rested recall almost always beats one more cram session.": "Correct! The rested student reliably outperforms the exhausted one.",
+                      "Wake up at 5 a.m. and review everything one final time.": "Cutting sleep short still costs consolidation, and an early-morning panic review is more likely to spike anxiety than to add real points."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444354",
+                  "title": "Why spaced study beats cramming",
+                  "tags": [
+                    "topic:exam-prep:spaced-repetition",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 5.0,
+                  "prompt": "A student who studies vocabulary for one hour today and another hour next week is likely to remember the words better than one who studies for two hours today. Why?",
+                  "options": [
+                    "Practising for shorter periods is just easier on the brain.",
+                    "Spaced repetition uses the act of recalling after a delay to strengthen memory; cramming offers no such retrieval window.",
+                    "Two-hour sessions cause the brain to overheat.",
+                    "There's no real difference — total time studied is what matters most."
+                  ],
+                  "optionsAndPoints": {
+                    "Practising for shorter periods is just easier on the brain.": 0.0,
+                    "Spaced repetition uses the act of recalling after a delay to strengthen memory; cramming offers no such retrieval window.": 1.0,
+                    "Two-hour sessions cause the brain to overheat.": 0.0,
+                    "There's no real difference — total time studied is what matters most.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. The week between sessions matters because the second session forces the brain to retrieve the words from memory rather than just see them again. Retrieval after a delay is what strengthens long-term memory; cramming gives the brain no such opportunity.",
+                    "incorrect": "Spacing wins because of what happens in the gap. By the second session a week later, the words are partially forgotten — and the act of re-retrieving them is what strengthens long-term memory. Cramming skips the retrieval and produces a feeling of mastery that fades quickly.",
+                    "choiceFeedback": {
+                      "Practising for shorter periods is just easier on the brain.": "Effort isn't the variable. Some spaced sessions can be just as taxing as cramming; the difference is the retrieval gap.",
+                      "Spaced repetition uses the act of recalling after a delay to strengthen memory; cramming offers no such retrieval window.": "Correct! The week-long gap is the active ingredient.",
+                      "Two-hour sessions cause the brain to overheat.": "Brains don't overheat. The reason cramming underperforms is the absence of spacing, not session length alone.",
+                      "There's no real difference — total time studied is what matters most.": "Total time matters, but distribution of that time matters too — sometimes more. Two one-hour sessions a week apart consistently beat one two-hour session in retention tests."
+                    }
+                  }
+                },
+                {
+                  "type": "multipleChoice",
+                  "globalId": "550e8400-e29b-41d4-a716-446655444355",
+                  "title": "Productive-feeling vs productive",
+                  "tags": [
+                    "topic:exam-prep:metacognition",
+                    "stage:upper-secondary"
+                  ],
+                  "points": 1.0,
+                  "difficulty": 5.0,
+                  "prompt": "Which of these study habits is most likely to feel productive but produce the weakest exam result?",
+                  "options": [
+                    "Closing the book and writing a summary from memory, then checking it against the text.",
+                    "Doing a practice exam under timed conditions and marking it strictly.",
+                    "Rereading a textbook chapter four times the night before the exam.",
+                    "Explaining the topic out loud to a friend or family member."
+                  ],
+                  "optionsAndPoints": {
+                    "Closing the book and writing a summary from memory, then checking it against the text.": 0.0,
+                    "Doing a practice exam under timed conditions and marking it strictly.": 0.0,
+                    "Rereading a textbook chapter four times the night before the exam.": 1.0,
+                    "Explaining the topic out loud to a friend or family member.": 0.0
+                  },
+                  "shuffleOptions": true,
+                  "showLetterLabels": true,
+                  "feedback": {
+                    "correct": "Right. Rereading is the canonical 'feels productive but isn't' technique. By the fourth read, the chapter feels deeply familiar — and the brain misreads that familiarity as mastery. The other three options all involve genuine retrieval, which is what the exam will actually test.",
+                    "incorrect": "The trap is rereading. Each pass adds familiarity but very little new recall — and familiarity feels almost identical to mastery from inside your head. Summary writing, practice exams, and explaining to others all force the brain to produce information from memory, which is what exams test.",
+                    "choiceFeedback": {
+                      "Closing the book and writing a summary from memory, then checking it against the text.": "This is retrieval practice — one of the strongest study techniques, not the weakest.",
+                      "Doing a practice exam under timed conditions and marking it strictly.": "Practice exams are the gold standard for exam prep. Strong technique, not the weak one.",
+                      "Rereading a textbook chapter four times the night before the exam.": "Correct! Rereading produces the illusion of fluency without the recall to back it up — the classic 'feels productive but isn't' study habit.",
+                      "Explaining the topic out loud to a friend or family member.": "Explaining out loud is a form of retrieval and forces you to find words for what you know. Strong technique."
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "signpost",
+              "globalId": "550e8400-e29b-41d4-a716-446655444399",
+              "sequence": 2,
+              "title": "End of Course",
+              "signpostType": "summary",
+              "scope": "course",
+              "customHtml": "<p>You've reached the end of the course. You've covered the three pillars of effective study: <strong>memory</strong>, <strong>active reading and note-taking</strong>, and <strong>time management and exam preparation</strong>.</p>\n\n<p>None of these techniques work the first time you try them. Mnemonics feel awkward at first. Active reading takes longer than passive reading until it doesn't. Pomodoro feels artificial until your brain settles into the rhythm. Give each one a fortnight before judging it.</p>\n\n<p>The students who do well aren't the ones with special talent. They're the ones who stuck with the boring, deliberate techniques long enough for them to become automatic. You now know what those techniques are. The rest is practice.</p>"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

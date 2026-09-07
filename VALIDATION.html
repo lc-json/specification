@@ -1,0 +1,1046 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Validation surface (rule catalog) - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/VALIDATION.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-validation-surface"><a class="header" href="#lc-json-validation-surface">LC-JSON Validation Surface</a></h1>
+<p><strong>Status:</strong> Informative reference. The authoritative rules live in <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> — including the artifact-type rule families it incorporates at §3.3.1 — in the companion normative documents (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a>, <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a>, <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a>), and in the constraints of the JSON Schemas under <a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a>. This document catalogs them in one place.</p>
+<p>The four reference validators — <a href="../tools/validate_course.py"><code>tools/validate_course.py</code></a>, <a href="../tools/lc_collection.py"><code>tools/lc_collection.py</code></a>, <a href="../tools/lc_pack.py"><code>tools/lc_pack.py</code></a>, and <a href="../tools/lc_glossary.py"><code>tools/lc_glossary.py</code></a> — are <strong>non-authoritative reference implementations</strong>. They implement the contract; they do not define it. Where a validator’s behavior and a normative source disagree, the normative source wins and the validator is a defect to be fixed.
+<strong>Spec version:</strong> 1.1
+<strong>Last updated:</strong> 2026-09-07</p>
+<p>This document maps every documented validation rule in LC-JSON (Learning Content JSON) 1.1 to the place where it is enforced. The audience is implementers building consumers, validators, or producer round-trip tests — the same audience as <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a>.</p>
+<p>The catalog is <strong>additive and descriptive</strong>: it introduces no new normative rules. The inventory pass that built this catalog (2026-05-24) surfaced eight documented-but-unenforced rules; all eight were closed in the same rc.1-polish session by extending <a href="../tools/validate_course.py"><code>tools/validate_course.py</code></a> (no schema changes). See <a href="#14-forward-looking-deepenings-10-final">§14 Forward-looking deepenings</a> for the deepenings cataloged during the 1.0 cycle (1.0 has since shipped; the still-open items carry forward).</p>
+<p><strong>Rules for the 1.1 artifact types are cataloged in <a href="#15-subject-collection-sc">§15</a> (Subject Collection, <code>SC-*</code>), <a href="#16-curriculum-pack-cp">§16</a> (Curriculum Pack, <code>CP-*</code>), and <a href="#17-glossary-gl">§17</a> (Glossary, <code>GL-*</code>); <a href="#18-11-deepenings-root-and-course-rd-co">§18</a> catalogs the 1.1 deepenings to the root document (<code>RD-*</code>) and to courses (<code>CO-*</code>).</strong> These four rule families are <strong>normative requirements</strong> — <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §3.3.1 incorporates SC-*, CP-*, GL-*, RD-1, and CO-* as conformance rules for their artifact types; the sections below enumerate each rule, cite its source, and tag its enforcement tier. (This catalog adds nothing to those rules; it is the one-map view of them.) The rule ids are load-bearing — the reference validators cite them — so they cannot silently drift. §15–§18 follow §14 rather than sitting beside §3–§11 to keep the 1.0 section numbers (and their anchors) stable.</p>
+<hr>
+<h2 id="1-scope-and-structure"><a class="header" href="#1-scope-and-structure">1. Scope and structure</a></h2>
+<p>LC-JSON’s validation surface is split across four enforcement sites:</p>
+<ul>
+<li><strong>27 JSON Schemas</strong> in <a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a> — declarative constraints (Draft 7) enforced by any conforming JSON Schema validator.</li>
+<li><strong><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a></strong> — RFC 2119 prose obligations that may or may not be representable in JSON Schema.</li>
+<li><strong><a href="../tools/validate_course.py"><code>tools/validate_course.py</code></a></strong> (the reference validator) — domain checks that run after schema validation, plus consumer-friendly diagnostics.</li>
+<li><strong>Companion normative documents and informative references</strong> — <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> (normative) and <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> (normative for tools claiming the Accessibility Profile; preservation obligations bind every consumer per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1); per-type prose in <a href="question-types-reference.html"><code>question-types-reference.md</code></a> and authoring patterns in <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> (both informative).</li>
+</ul>
+<p>A consumer that only runs schema validation will accept documents the spec considers invalid (e.g. an MCQ with no correct option, a <code>placement</code> whose <code>placements[].gap</code> points at a missing <code>@@@N</code> marker). A consumer that re-implements the reference validator from prose will miss rules. This catalog gives implementers one map of <em>“these are all the things a conforming consumer must check, and here’s where each rule is enforced.”</em></p>
+<h3 id="11-the-three-enforcement-tiers"><a class="header" href="#11-the-three-enforcement-tiers">1.1 The three enforcement tiers</a></h3>
+<p>The rule tables below tag each rule with one tier:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Tier</th><th>Meaning</th><th>Citation format</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Schema-enforced</strong></td><td>Expressed in one of the JSON Schemas under <a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a>. Any Draft-7 validator catches violations.</td><td><code>schemas/&lt;file&gt;.schema.json: &lt;json-pointer&gt;</code></td></tr>
+<tr><td><strong>Domain-validator-enforced</strong></td><td>Not (or not cleanly) expressible in JSON Schema; the reference validator <a href="../tools/validate_course.py"><code>tools/validate_course.py</code></a> checks it. Conforming consumers MUST replicate these checks to round-trip and grade correctly.</td><td><code>validate_course.py: &lt;function-name&gt;</code> + NORMATIVE § where cited</td></tr>
+<tr><td><strong>Advisory</strong></td><td>Described in prose (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a>, <a href="README-spec.html"><code>README.md</code></a>, <a href="question-types-reference.html"><code>question-types-reference.md</code></a>, <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a>) but not mechanically enforced anywhere. SHOULD/MAY rules, naming conventions, behaviors the spec hints at but lets consumers vary. Listed so implementers know what they are choosing.</td><td>Document and section</td></tr>
+</tbody>
+</table>
+</div>
+<p>A fourth, implicit tier — <strong>runtime-enforced</strong> — covers grading policy, navigation gating, gradebook display. Out of scope for this document; LC-JSON specifies <em>document validity</em>, not runtime behavior.</p>
+<h3 id="12-severity-domain-validator-rows"><a class="header" href="#12-severity-domain-validator-rows">1.2 Severity (Domain-validator rows)</a></h3>
+<p>The reference validator distinguishes three severities on its domain-rule pass. Schema-enforced rows are always hard errors (any schema violation fails the document); Advisory rows are not enforced. Domain rows carry one of:</p>
+<ul>
+<li><strong>ERROR</strong> — the validator returns non-zero exit; the document is non-conforming. Consumers MUST reject.</li>
+<li><strong>WARN</strong> — the document is reported as suspect but still parses; the validator returns success. Conforming consumers SHOULD surface the warning to the user.</li>
+<li><strong>NOTE</strong> — informational only (e.g. <code>item.points</code> intentionally weighted away from the sum of question points). The validator returns success without raising; no consumer obligation.</li>
+</ul>
+<p>Where a single rule is enforced at multiple tiers (e.g. schema + validator double-check for friendlier messages), the row lists both. Satisfying the strictest tier suffices.</p>
+<h3 id="13-strict-mode-and-the-lenient-migration-path"><a class="header" href="#13-strict-mode-and-the-lenient-migration-path">1.3 Strict mode and the lenient migration path</a></h3>
+<p>The reference validator <a href="../tools/validate_course.py"><code>tools/validate_course.py</code></a> accepts a <code>--strict</code> flag. The default (lenient) mode emits a warning and falls through with reduced enforcement when it encounters two pre-1.0 document shapes: the wrapped envelope <code>{"course": {...}}</code> and the bare payload <code>{"units": [...]}</code> with no <code>documentType</code>. Neither shape is part of the published 1.0 contract; the lenient handling is a <strong>maintainer-side migration aid</strong> that allows pre-1.0 document shapes to be ingested during the upgrade — it is not a published affordance third-party producers may rely on.</p>
+<p>Under <code>--strict</code>, both shapes are fatal errors. The conformance corpus harness <a href="../tools/run_corpus.py"><code>tools/run_corpus.py</code></a> always invokes the validator with <code>--strict</code> (every fixture is run through the validator); CI runs the harness on every PR; and per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §10.3 conformance claims under §10 are evaluated in <code>--strict</code> mode. Third-party consumers and producers should treat the lenient path as a maintainer-side migration aid only. <code>--strict</code> is the mode in which the reference validator attempts to implement the published contract in full; the contract itself is stated in <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a>, the companion normative documents, and the schema constraints — not by the validator’s behavior.</p>
+<p>Rows in the tables below that depend on this distinction explicitly say “ERROR under <code>--strict</code>; WARN otherwise”; everywhere else, the rule applies uniformly.</p>
+<hr>
+<h2 id="2-where-to-look"><a class="header" href="#2-where-to-look">2. Where to look</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>What</th><th>Where</th></tr>
+</thead>
+<tbody>
+<tr><td>JSON Schemas</td><td><a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/*.schema.json</code></a> — 27 files</td></tr>
+<tr><td>Reference validator (course, questionSet)</td><td><a href="../tools/validate_course.py"><code>tools/validate_course.py</code></a></td></tr>
+<tr><td>Conformance language (RFC 2119 MUSTs/SHOULDs/MAYs)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a></td></tr>
+<tr><td>Per-type property reference</td><td><a href="question-types-reference.html"><code>question-types-reference.md</code></a></td></tr>
+<tr><td>Subject Collection property reference</td><td><a href="subject-collection-reference.html"><code>subject-collection-reference.md</code></a></td></tr>
+<tr><td>Curriculum Pack property reference</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a></td></tr>
+<tr><td>Glossary property reference</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a></td></tr>
+<tr><td>HTML safety profile (elements, attributes, URL schemes, sanitization)</td><td><a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a></td></tr>
+<tr><td>Accessibility profile (preservation + opt-in delivery claim)</td><td><a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a></td></tr>
+<tr><td>Item authoring patterns (consumer-policy plurality)</td><td><a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a></td></tr>
+<tr><td>Conformance test fixtures</td><td><a href="tests/"><code>tests/</code></a> — manifest + valid/invalid sets</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="3-root-document"><a class="header" href="#3-root-document">3. Root document</a></h2>
+<p>Required root fields (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §3.2). Both artifact types (<code>course</code>, <code>questionSet</code>) share these.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Producer</strong> MUST emit <code>$schema</code> pointing at the canonical published schema URL</td><td>Schema-enforced (producer validity)</td><td><code>course.schema.json: /required[*]="$schema"</code>, <code>question-set.schema.json: /required[*]="$schema"</code></td><td>§3.2, §4.7</td></tr>
+<tr><td><strong>Consumer</strong> SHOULD tolerate documents that omit <code>$schema</code> (infer the schema from <code>documentType</code> + <code>specVersion</code>); MUST reject any other root-field omission</td><td>Advisory (consumer-side import tolerance)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §3.2</td><td>§3.2</td></tr>
+<tr><td><code>$schema</code>, when present, is a URI</td><td>Schema-declared via <code>format: "uri"</code> (annotation; not universally enforced by Draft-7 validators — see <a href="#13-conformance-note">§13</a>)</td><td><code>course.schema.json: /properties/$schema/format="uri"</code>, <code>question-set.schema.json: /properties/$schema/format="uri"</code></td><td>§4.7</td></tr>
+<tr><td><code>documentType</code> required at root</td><td>Schema-enforced</td><td><code>course.schema.json: /required[*]="documentType"</code>, <code>question-set.schema.json: /required[*]="documentType"</code></td><td>§3.2</td></tr>
+<tr><td><code>documentType</code> is <code>"course"</code> (course document)</td><td>Schema-enforced</td><td><code>course.schema.json: /properties/documentType/const="course"</code></td><td>§3.2, §4.2, §5.3</td></tr>
+<tr><td><code>documentType</code> is <code>"questionSet"</code> (question-set document)</td><td>Schema-enforced</td><td><code>question-set.schema.json: /properties/documentType/const="questionSet"</code></td><td>§3.2, §4.2, §5.3</td></tr>
+<tr><td>Non-canonical <code>documentType</code> casing rejected (<code>"Course"</code>, <code>"questionset"</code>, <code>"question-set"</code>)</td><td>Schema-enforced (via <code>const</code>)</td><td><code>course.schema.json</code> / <code>question-set.schema.json</code> <code>const</code>; <code>validate_course.py: dispatch_document_shape</code> provides casing-tolerant dispatch as a maintainer-side migration aid (<a href="#13-strict-mode-and-the-lenient-migration-path">§1.3</a>) — disabled under <code>--strict</code></td><td>§4.2, §5.3</td></tr>
+<tr><td><code>specVersion</code> required at root</td><td>Schema-enforced</td><td><code>course.schema.json: /required[*]="specVersion"</code>, <code>question-set.schema.json: /required[*]="specVersion"</code></td><td>§3.2, §4.6</td></tr>
+<tr><td><code>specVersion</code> matches <code>^1\.[0-9]+(\.[0-9]+)?$</code></td><td>Schema-enforced + Domain-validator-enforced (ERROR for <code>2.x</code>+)</td><td><code>course.schema.json: /properties/specVersion/pattern</code>; <code>validate_course.py: check_spec_version</code></td><td>§4.6, §5.2</td></tr>
+<tr><td><code>specVersion</code> MUST NOT carry an <code>-rc.N</code> suffix</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §4.6, §8.4</td><td>§4.6</td></tr>
+<tr><td><code>language</code> required at root</td><td>Schema-enforced</td><td><code>course.schema.json: /required[*]="language"</code>, <code>question-set.schema.json: /required[*]="language"</code></td><td>§12.1</td></tr>
+<tr><td><code>language</code> is a plausible BCP 47 tag (bare ISO 639-1, or with region/script subtag)</td><td>Domain-validator-enforced (WARN; schema typed only, no <code>pattern</code>)</td><td><code>validate_course.py: validate_course_level</code> (course path) and <code>validate_question_set_flat</code> (question-set path), via <code>_is_plausible_language_tag</code></td><td>§13, <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a> §3</td></tr>
+<tr><td><code>supportLanguage</code> is a plausible BCP 47 tag (or omitted/null)</td><td>Domain-validator-enforced (WARN; schema typed only)</td><td><code>validate_course.py: validate_course_level</code> (course path) and <code>validate_question_set_flat</code> (question-set path), via <code>_is_plausible_language_tag</code></td><td>§13, <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a> §3</td></tr>
+<tr><td>Pre-1.0 wrapped envelope <code>{"course": {...}}</code> rejected (published contract; lenient migration aid in default mode)</td><td>Domain-validator-enforced (ERROR under <code>--strict</code>; WARN otherwise — see <a href="#13-strict-mode-and-the-lenient-migration-path">§1.3</a>)</td><td><code>validate_course.py: validate_course</code> (<code>--strict</code> branch)</td><td>§3.2, §4.1</td></tr>
+<tr><td>Pre-1.0 bare payload <code>{"units": [...]}</code> rejected (published contract; lenient migration aid in default mode)</td><td>Domain-validator-enforced (ERROR under <code>--strict</code>; WARN otherwise — see <a href="#13-strict-mode-and-the-lenient-migration-path">§1.3</a>)</td><td><code>validate_course.py: validate_course</code> (<code>--strict</code> branch)</td><td>§3.2, §4.1</td></tr>
+<tr><td>Property names are camelCase</td><td>Advisory (consumer-side import is lenient via <code>JsonNormalizer</code>-style helpers)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §4.5</td><td>§4.5</td></tr>
+<tr><td>Extension members keyed <code>x-&lt;namespace&gt;</code> MAY appear on root + Course/Unit/Lesson/Item/Question</td><td>Advisory (schemas do not restrict <code>additionalProperties</code> on those objects)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.1</td><td>§7.1</td></tr>
+<tr><td>Extension members MUST NOT appear on <code>matching.pairs[*]</code>, <code>matching.categories[*]</code>, or <code>placement.placements[*]</code></td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/then/properties/pairs/items/additionalProperties=false</code> etc.; <code>placement.schema.json: /allOf/1/properties/placements/items/additionalProperties=false</code></td><td>§7.1</td></tr>
+<tr><td>Producer MUST NOT introduce a non-extension field beginning with <code>x-</code></td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.1</td><td>§7.1</td></tr>
+<tr><td>Consumer MUST NOT reject documents solely for unknown fields or <code>x-</code> members</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.4, §7.4</td><td>§5.4, §7.4</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="4-course-level"><a class="header" href="#4-course-level">4. Course-level</a></h2>
+<p>Course payload fields on a <code>documentType: "course"</code> document.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>title</code> required, <code>minLength: 1</code></td><td>Schema-enforced + Domain-validator-enforced</td><td><code>course.schema.json: /properties/title</code>, <code>/required[*]="title"</code>; <code>validate_course.py: validate_course_level</code></td><td>§3.2</td></tr>
+<tr><td><code>sourceCourseId</code>, when present, matches the RFC 4122 UUID pattern (any version; shape-only validation)</td><td>Schema-enforced + Domain-validator-enforced (WARN if non-UUID)</td><td><code>course.schema.json: /properties/sourceCourseId/pattern</code>; <code>validate_course.py: validate_course_level</code></td><td>§4.4</td></tr>
+<tr><td><code>sourceCourseId</code> SHOULD be emitted for re-importable or version-tracked courses</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §4.4</td><td>§4.4</td></tr>
+<tr><td><code>version</code>, when present, matches <code>^[0-9]+(\.[0-9]+){0,2}$</code> (1–3 numeric segments)</td><td>Schema-enforced + Domain-validator-enforced (WARN)</td><td><code>course.schema.json: /properties/version/pattern</code>; <code>validate_course.py: validate_course_level</code></td><td>§4.4</td></tr>
+<tr><td>Pre-1.0 identity fields (<code>authorId</code>, <code>authorCourseId</code>) trigger a migration warning</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_course_level</code></td><td>(none — migration aid)</td></tr>
+<tr><td>Course <code>objectives[*].id</code> and <code>objectives[*].text</code> required</td><td>Schema-enforced</td><td><code>course.schema.json: /properties/objectives/items/required</code></td><td>(none)</td></tr>
+<tr><td>Course <code>objectives[*].difficultyBand</code> enum: <code>"Recall"</code>, <code>"Understand"</code>, <code>"Apply"</code>, <code>"Analyze"</code>, null</td><td>Schema-enforced</td><td><code>course.schema.json: /properties/objectives/items/properties/difficultyBand/enum</code></td><td>(none)</td></tr>
+<tr><td><code>courseObjectiveIds[*]</code> reference <code>course.objectives[].id</code></td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py</code> (objective-reference integrity check)</td><td>(none — warning-tier integrity check; unresolved references break signpost auto-rendering)</td></tr>
+<tr><td><code>estimatedDurationMinutes &gt;= 0</code></td><td>Schema-enforced</td><td><code>course.schema.json: /properties/estimatedDurationMinutes/minimum</code></td><td>(none)</td></tr>
+<tr><td>Course <code>tags[*]</code> are strings (Unit/Lesson/Item additionally enforce <code>minLength: 1</code>)</td><td>Schema-enforced</td><td><code>course.schema.json: /properties/tags/items/type="string"</code>; <code>unit.schema.json</code> / <code>lesson.schema.json</code> / <code>item-base.schema.json: /properties/tags/items/minLength=1</code></td><td>(none)</td></tr>
+<tr><td><code>units[]</code> MUST be present at the root (course); is an array when present</td><td>Domain-validator-enforced (ERROR if missing); Schema-enforced (array type when present)</td><td><code>validate_course.py: validate_course</code> (“Missing ‘units’ array at root level”); <code>course.schema.json: /properties/units/type="array"</code> (the schema’s <code>default: []</code> would otherwise admit a missing field)</td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="5-unit-level"><a class="header" href="#5-unit-level">5. Unit-level</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>globalId</code> required</td><td>Schema-enforced + Domain-validator-enforced</td><td><code>unit.schema.json: /required[*]="globalId"</code>; <code>validate_course.py: validate_unit</code></td><td>§4.4</td></tr>
+<tr><td><code>globalId</code> matches the RFC 4122 UUID pattern (any version; shape-only validation)</td><td>Schema-enforced + Domain-validator-enforced (WARN if non-UUID)</td><td><code>unit.schema.json: /properties/globalId/pattern</code>; <code>validate_course.py: validate_unit</code> (via <code>is_valid_uuid</code>)</td><td>§4.4</td></tr>
+<tr><td><code>title</code> required, <code>minLength: 1</code></td><td>Schema-enforced + Domain-validator-enforced</td><td><code>unit.schema.json: /properties/title</code>, <code>/required[*]="title"</code>; <code>validate_course.py: validate_unit</code></td><td>(none)</td></tr>
+<tr><td><code>description</code> defaults to <code>""</code></td><td>Schema-declared (annotation; not enforced — see <a href="#13-conformance-note">§13</a>)</td><td><code>unit.schema.json: /properties/description/default</code></td><td>(none)</td></tr>
+<tr><td><code>tags[*]</code> <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>unit.schema.json: /properties/tags/items/minLength</code></td><td>(none)</td></tr>
+<tr><td><code>sequence &gt;= 0</code></td><td>Schema-enforced</td><td><code>unit.schema.json: /properties/sequence/minimum</code></td><td>(none — import uses array position, not <code>sequence</code>)</td></tr>
+<tr><td><code>sequence</code> duplicates/gaps within siblings</td><td>Domain-validator-enforced (WARN, advisory)</td><td><code>validate_course.py: validate_sequence_order</code></td><td>(none)</td></tr>
+<tr><td><code>objectiveIds[*]</code> reference <code>course.objectives[].id</code></td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py</code> (objective-reference integrity check)</td><td>(none)</td></tr>
+<tr><td><code>lessons[]</code> array (default <code>[]</code> schema-declared)</td><td>Schema-enforced (type)</td><td><code>unit.schema.json: /properties/lessons</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="6-lesson-level"><a class="header" href="#6-lesson-level">6. Lesson-level</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>globalId</code> required + RFC 4122 UUID pattern (any version; shape-only validation)</td><td>Schema-enforced + Domain-validator-enforced (WARN)</td><td><code>lesson.schema.json: /required</code>, <code>/properties/globalId/pattern</code>; <code>validate_course.py: validate_lesson</code></td><td>§4.4</td></tr>
+<tr><td><code>title</code> required, <code>minLength: 1</code></td><td>Schema-enforced + Domain-validator-enforced</td><td><code>lesson.schema.json</code>; <code>validate_course.py: validate_lesson</code></td><td>(none)</td></tr>
+<tr><td><code>items[]</code> is an array of <code>content</code>/<code>exercise</code>/<code>quiz</code>/<code>contentsequence</code>/<code>signpost</code> (<code>oneOf</code> dispatch)</td><td>Schema-enforced</td><td><code>lesson.schema.json: /properties/items/items/oneOf</code></td><td>(none)</td></tr>
+<tr><td><code>items</code> missing or empty — informational</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_lesson</code> (“empty lesson”)</td><td>(none)</td></tr>
+<tr><td><code>sequence</code> duplicates/gaps within siblings (lesson item ordering)</td><td>Domain-validator-enforced (WARN, advisory)</td><td><code>validate_course.py: validate_sequence_order</code></td><td>(none)</td></tr>
+<tr><td><code>objectiveIds[*]</code> reference <code>course.objectives[].id</code></td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py</code> (objective-reference integrity check)</td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="7-item-level--common"><a class="header" href="#7-item-level--common">7. Item-level — common</a></h2>
+<p>Properties inherited by every item type via <code>item-base.schema.json</code>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> required, enum: <code>content</code>, <code>exercise</code>, <code>quiz</code>, <code>contentsequence</code>, <code>signpost</code></td><td>Schema-enforced + Domain-validator-enforced</td><td><code>item-base.schema.json: /properties/type/enum</code>, <code>/required</code>; <code>validate_course.py: validate_item</code></td><td>§4.2, §5.3</td></tr>
+<tr><td>Non-canonical item-type casing (<code>Content</code>, <code>ExerciseItem</code>) rejected</td><td>Schema-enforced (via <code>enum</code>/<code>const</code>) + Domain-validator-enforced (WARN; tolerated via <code>normalize_item_type</code>)</td><td><code>item-base.schema.json</code>; <code>validate_course.py: validate_item</code></td><td>§4.2, §5.3</td></tr>
+<tr><td><code>globalId</code> required + RFC 4122 UUID pattern (any version; shape-only validation)</td><td>Schema-enforced + Domain-validator-enforced (WARN)</td><td><code>item-base.schema.json: /required</code>, <code>/properties/globalId/pattern</code>; <code>validate_course.py: validate_item</code></td><td>§4.4</td></tr>
+<tr><td><code>title</code> required, <code>minLength: 1</code></td><td>Schema-enforced + Domain-validator-enforced (WARN if missing)</td><td><code>item-base.schema.json</code>; <code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>tags[*]</code> <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>item-base.schema.json: /properties/tags/items/minLength</code></td><td>(none)</td></tr>
+<tr><td><code>suggestedTime &gt;= 0</code></td><td>Schema-enforced</td><td><code>item-base.schema.json: /properties/suggestedTime/minimum</code></td><td>(none)</td></tr>
+<tr><td><code>isOptional</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>item-base.schema.json: /properties/isOptional</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="71-contentitem"><a class="header" href="#71-contentitem">7.1 ContentItem</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"content"</code></td><td>Schema-enforced</td><td><code>content-item.schema.json: /allOf/1/properties/type/const="content"</code></td><td>§4.2</td></tr>
+<tr><td><code>html</code> required</td><td>Schema-enforced + Domain-validator-enforced</td><td><code>content-item.schema.json: /allOf/1/required[*]="html"</code>; <code>validate_course.py: validate_item</code> (<code>normalized_type == "content"</code>)</td><td>(none)</td></tr>
+<tr><td>Deprecated <code>body</code> property → use <code>html</code></td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>html</code> content satisfies the HTML safety profile</td><td>Domain-validator-enforced (ERROR / WARN per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8)</td><td><code>validate_course.py: validate_html_content</code></td><td>§11, <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> (see <a href="#12-cross-cutting">§12</a> below)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="72-exerciseitem"><a class="header" href="#72-exerciseitem">7.2 ExerciseItem</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"exercise"</code></td><td>Schema-enforced</td><td><code>exercise-item.schema.json: /allOf/1/properties/type/const="exercise"</code></td><td>§4.2</td></tr>
+<tr><td><code>questions[]</code> required</td><td>Schema-enforced + Domain-validator-enforced</td><td><code>exercise-item.schema.json: /allOf/1/required[*]="questions"</code>; <code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>instructions</code> required (PascalCase <code>Instructions</code> triggers WARN)</td><td>Domain-validator-enforced (ERROR if missing, WARN on PascalCase)</td><td><code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>isGraded</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>exercise-item.schema.json: /allOf/1/properties/isGraded/default=false</code></td><td>§4.3</td></tr>
+<tr><td><code>passMarkPercent</code> is a number <code>0 &lt;= x &lt;= 100</code>, default <code>70.0</code> (schema-declared)</td><td>Schema-enforced (type/range)</td><td><code>exercise-item.schema.json: /allOf/1/properties/passMarkPercent/{minimum,maximum,default}</code></td><td>(none — consumer-policy gated; see <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> §3)</td></tr>
+<tr><td><code>points &gt;= 0</code></td><td>Schema-enforced</td><td><code>exercise-item.schema.json: /allOf/1/properties/points/minimum</code></td><td>(none)</td></tr>
+<tr><td>Producer/consumer MUST NOT infer grading state from item type alone</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §4.3</td><td>§4.3</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="73-quizitem"><a class="header" href="#73-quizitem">7.3 QuizItem</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"quiz"</code></td><td>Schema-enforced</td><td><code>quiz-item.schema.json: /allOf/1/properties/type/const="quiz"</code></td><td>§4.2</td></tr>
+<tr><td><code>questions[]</code> required, <code>isGraded</code> required</td><td>Schema-enforced</td><td><code>quiz-item.schema.json: /allOf/1/required[*]={"questions","isGraded"}</code></td><td>(none)</td></tr>
+<tr><td><code>isGraded</code> boolean, default <code>true</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>quiz-item.schema.json: /allOf/1/properties/isGraded/default=true</code></td><td>§4.3</td></tr>
+<tr><td><code>passMarkPercent</code> is a number <code>0 &lt;= x &lt;= 100</code>, default <code>70.0</code> (schema-declared)</td><td>Schema-enforced (type/range)</td><td><code>quiz-item.schema.json: /allOf/1/properties/passMarkPercent</code></td><td>(none — see <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> §3)</td></tr>
+<tr><td><code>points &gt;= 0</code></td><td>Schema-enforced</td><td><code>quiz-item.schema.json: /allOf/1/properties/points/minimum</code></td><td>(none)</td></tr>
+<tr><td><code>item.points</code> vs <code>sum(question.points)</code> mismatch is intentional weighting</td><td>Domain-validator-enforced (NOTE)</td><td><code>validate_course.py</code> (weighted-points NOTE collection)</td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="74-contentsequenceitem"><a class="header" href="#74-contentsequenceitem">7.4 ContentSequenceItem</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"contentsequence"</code></td><td>Schema-enforced</td><td><code>content-sequence-item.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>contentItemId</code> required; value is a UUID</td><td>Schema-enforced (required) + Domain-validator-enforced (WARN if non-UUID)</td><td><code>content-sequence-item.schema.json: /allOf/1/required</code>, <code>/properties/contentItemId/format="uuid"</code> (annotation — see <a href="#13-conformance-note">§13</a>); <code>validate_course.py: validate_item</code> (via <code>is_valid_uuid</code>)</td><td>(none)</td></tr>
+<tr><td><code>relatedItemIds[*]</code> are UUIDs</td><td>Domain-validator-enforced (WARN); schema declares <code>format: "uuid"</code> as annotation</td><td><code>content-sequence-item.schema.json: /allOf/1/properties/relatedItemIds/items/format="uuid"</code> (annotation); <code>validate_course.py: validate_item</code> (via <code>is_valid_uuid</code>)</td><td>(none)</td></tr>
+<tr><td><code>relatedItemIds</code> non-empty array</td><td>Domain-validator-enforced (ERROR if missing or empty)</td><td><code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>layout</code> enum: <code>"Auto"</code>, <code>"Split"</code>, <code>"Vertical"</code>, default <code>"Auto"</code> (schema-declared)</td><td>Schema-enforced (enum) + Domain-validator-enforced (WARN if other)</td><td><code>content-sequence-item.schema.json: /allOf/1/properties/layout/enum</code>; <code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>contentItemId</code> resolves to a sibling <code>content</code> item declared earlier in the lesson</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_item</code> (CSI branch)</td><td>(none)</td></tr>
+<tr><td>Each <code>relatedItemIds[*]</code> resolves to a sibling <code>exercise</code>/<code>quiz</code> item declared earlier in the lesson</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_item</code> (CSI branch)</td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="75-signpostitem"><a class="header" href="#75-signpostitem">7.5 SignpostItem</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"signpost"</code></td><td>Schema-enforced</td><td><code>signpost-item.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>signpostType</code> required, enum: <code>"intro"</code>, <code>"summary"</code></td><td>Schema-enforced + Domain-validator-enforced (ERROR if missing or other)</td><td><code>signpost-item.schema.json: /allOf/1/required</code>, <code>/properties/signpostType/enum</code>; <code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td><code>scope</code> required, enum: <code>"course"</code>, <code>"unit"</code>, <code>"lesson"</code></td><td>Schema-enforced + Domain-validator-enforced (ERROR if missing or other)</td><td><code>signpost-item.schema.json: /allOf/1/required</code>, <code>/properties/scope/enum</code>; <code>validate_course.py: validate_item</code></td><td>(none)</td></tr>
+<tr><td>Signpost items MUST NOT carry <code>questions</code></td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_item</code> (signpost branch)</td><td>(none)</td></tr>
+<tr><td><code>customHtml</code>, when present, satisfies the HTML safety profile</td><td>Domain-validator-enforced (ERROR / WARN per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8)</td><td><code>validate_course.py: validate_html_content</code></td><td>§11, <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a></td></tr>
+<tr><td>A signpost with no objectives (and no <code>customHtml</code>) renders an empty stub</td><td>Advisory</td><td><a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> §5</td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="8-question-level--common"><a class="header" href="#8-question-level--common">8. Question-level — common</a></h2>
+<p>Properties inherited by every question via <code>question-base.schema.json</code>. Required by NORMATIVE §4.4: every question MUST carry a <code>globalId</code>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> required + enum (19 values: 12 implemented + 7 reserved)</td><td>Schema-enforced + Domain-validator-enforced</td><td><code>question-base.schema.json: /required[*]="type"</code>, <code>/properties/type/enum</code>; <code>validate_course.py: validate_question</code></td><td>§4.2, §5.3, §6.1</td></tr>
+<tr><td>Non-canonical question-type casing (<code>MultipleChoice</code>, <code>simplegapfill</code>) rejected</td><td>Schema-enforced (via <code>enum</code>) + Domain-validator-enforced (ERROR for unknown discriminator)</td><td><code>question-base.schema.json: /properties/type/enum</code>; <code>validate_course.py</code> (per-type question dispatch)</td><td>§4.2, §5.3</td></tr>
+<tr><td><code>globalId</code> required + RFC 4122 UUID pattern (any version; shape-only validation)</td><td>Schema-enforced + Domain-validator-enforced (WARN if non-UUID)</td><td><code>question-base.schema.json: /required[*]="globalId"</code>, <code>/properties/globalId/pattern</code>; <code>validate_course.py: validate_question</code></td><td>§4.4</td></tr>
+<tr><td><code>prompt</code> required, <code>minLength: 0</code> (may be empty); empty/whitespace <code>prompt</code> is an <strong>ERROR</strong> for the 4 real-content types (<code>trueFalseQuestion</code>, <code>multipleChoice</code>, <code>shortAnswer</code>, <code>essay</code>), valid (empty) for the 8 symbolic types, and unconstrained for the 7 reserved types (deferred to v1.1)</td><td>Schema-enforced (<code>required</code>, <code>minLength: 0</code>) + Domain-validator-enforced (ERROR on real-content empty; WARN if missing)</td><td><code>question-base.schema.json: /required[*]="prompt"</code>, <code>/properties/prompt/minLength</code>; <code>validate_course.py: validate_question</code></td><td>(none)</td></tr>
+<tr><td><code>points</code> is a non-negative number, MAY be null, default <code>1.0</code> (schema-declared)</td><td>Schema-enforced (type/range) + Domain-validator-enforced (WARN if missing)</td><td><code>question-base.schema.json: /properties/points/{type,minimum,default}</code>; <code>validate_course.py: validate_question</code></td><td>(none)</td></tr>
+<tr><td><code>difficulty</code> is a number <code>0.0 &lt;= x &lt;= 10.0</code>, default <code>5.0</code> (schema-declared)</td><td>Schema-enforced (type/range)</td><td><code>question-base.schema.json: /properties/difficulty/{minimum,maximum,default}</code></td><td>(none — author estimate; see <a href="question-types-reference.html"><code>question-types-reference.md</code></a> Common Properties)</td></tr>
+<tr><td><code>tags[*]</code> strings</td><td>Schema-enforced</td><td><code>question-base.schema.json: /properties/tags/items/type</code></td><td>(none)</td></tr>
+<tr><td><code>hint</code> is string or null, default null</td><td>Schema-enforced</td><td><code>question-base.schema.json: /properties/hint</code></td><td>(none)</td></tr>
+<tr><td><code>feedback</code> is an object or null; <code>feedback.{correct,incorrect}</code> are strings; <code>feedback.choiceFeedback</code> is <code>{string: string}</code></td><td>Schema-enforced</td><td><code>question-base.schema.json: /properties/feedback</code></td><td>(none)</td></tr>
+<tr><td>Deprecated <code>questionType</code> (instead of <code>type</code>)</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_question</code></td><td>(none — migration aid)</td></tr>
+<tr><td>For non-question fields: producer MUST NOT embed HTML in plain-text fields</td><td>Advisory</td><td><a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §1.1</td><td>§11</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="9-question-level--by-type-12-implemented"><a class="header" href="#9-question-level--by-type-12-implemented">9. Question-level — by type (12 implemented)</a></h2>
+<p>Properties enforced per question-type schema, plus per-type domain-validator rules. The 7 reserved types are covered in <a href="#10-reserved-and-unknown-types">§10</a>.</p>
+<h3 id="91-simplegapfill"><a class="header" href="#91-simplegapfill">9.1 simpleGapFill</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"simpleGapFill"</code></td><td>Schema-enforced</td><td><code>simple-gap-fill.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>sentence</code> required, contains <code>@@@</code>, <code>minLength: 4</code></td><td>Schema-enforced</td><td><code>simple-gap-fill.schema.json: /allOf/1/required</code>, <code>/properties/sentence/{pattern,minLength}</code></td><td>(none)</td></tr>
+<tr><td><code>acceptedAnswers</code> required, <code>minItems: 1</code>, each <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>simple-gap-fill.schema.json: /allOf/1/required</code>, <code>/properties/acceptedAnswers/{minItems,items/minLength}</code></td><td>(none)</td></tr>
+<tr><td><code>caseSensitive</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>simple-gap-fill.schema.json: /allOf/1/properties/caseSensitive</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="92-truefalsequestion"><a class="header" href="#92-truefalsequestion">9.2 trueFalseQuestion</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"trueFalseQuestion"</code></td><td>Schema-enforced</td><td><code>true-false-question.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>correctAnswer</code> required, boolean</td><td>Schema-enforced + Domain-validator-enforced (ERROR if missing both v1 and v2 forms, ERROR if non-boolean, WARN on boolean-ish coercion)</td><td><code>true-false-question.schema.json: /allOf/1/required</code>, <code>/properties/correctAnswer/type</code>; <code>validate_course.py: validate_true_false_question</code></td><td>(none)</td></tr>
+<tr><td>Pre-1.0 TF shape (<code>options</code> / <code>optionsAndPoints</code>) deprecated</td><td>Domain-validator-enforced (WARN; multiple positive-points options WARN; zero positives WARN)</td><td><code>validate_course.py: validate_true_false_question</code></td><td>(none)</td></tr>
+<tr><td><code>displayStyle</code> enum: <code>"TrueFalse"</code>, <code>"CorrectIncorrect"</code>, <code>"CheckmarkX"</code>, default <code>"TrueFalse"</code> (schema-declared)</td><td>Schema-enforced (enum) + Domain-validator-enforced (WARN if other)</td><td><code>true-false-question.schema.json: /allOf/1/properties/displayStyle/enum</code>; <code>validate_course.py: validate_true_false_question</code></td><td>(none)</td></tr>
+<tr><td><code>penalizeIncorrect</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>true-false-question.schema.json: /allOf/1/properties/penalizeIncorrect</code></td><td>(none)</td></tr>
+<tr><td><code>incorrectPenaltyPercent</code> is <code>0..100</code>, default <code>50.0</code> (schema-declared)</td><td>Schema-enforced (type/range) + Domain-validator-enforced (WARN if out of range)</td><td><code>true-false-question.schema.json: /allOf/1/properties/incorrectPenaltyPercent/{minimum,maximum}</code>; <code>validate_course.py: validate_true_false_question</code></td><td>(none)</td></tr>
+<tr><td><code>feedback.choiceFeedback</code> deprecated on TF</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_true_false_question</code></td><td>(none — TF v2 forbids the field; see <a href="question-types-reference.html"><code>question-types-reference.md</code></a>)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="93-multiplechoice"><a class="header" href="#93-multiplechoice">9.3 multipleChoice</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"multipleChoice"</code></td><td>Schema-enforced</td><td><code>multiple-choice.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>options</code> required, <code>minItems: 2</code>, each <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>multiple-choice.schema.json: /allOf/1/required</code>, <code>/properties/options/{minItems,items/minLength}</code></td><td>(none)</td></tr>
+<tr><td><code>optionsAndPoints</code> required, <code>{string: number}</code> map</td><td>Schema-enforced</td><td><code>multiple-choice.schema.json: /allOf/1/required</code>, <code>/properties/optionsAndPoints</code></td><td>(none)</td></tr>
+<tr><td>At least one <code>optionsAndPoints</code> value &gt; 0 (an MCQ MUST have a correct answer)</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_multiple_choice</code></td><td>(none)</td></tr>
+<tr><td><code>optionsAndPoints</code> keys cover every entry in <code>options</code></td><td>Domain-validator-enforced (ERROR if missing; WARN if <code>optionsAndPoints</code> contains extras not in <code>options</code>)</td><td><code>validate_course.py: validate_multiple_choice</code></td><td>(none)</td></tr>
+<tr><td><code>allowMultipleCorrect</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>multiple-choice.schema.json: /allOf/1/properties/allowMultipleCorrect</code></td><td>(none)</td></tr>
+<tr><td><code>allowPartialCredit</code> boolean, default <code>true</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>multiple-choice.schema.json: /allOf/1/properties/allowPartialCredit</code></td><td>(none)</td></tr>
+<tr><td><code>penalizeIncorrect</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>multiple-choice.schema.json: /allOf/1/properties/penalizeIncorrect</code></td><td>(none)</td></tr>
+<tr><td><code>showLetterLabels</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>multiple-choice.schema.json: /allOf/1/properties/showLetterLabels</code></td><td>(none)</td></tr>
+<tr><td><code>shuffleOptions</code> governs per-question option randomization (per-question discretion)</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.6 (multipleChoice is explicitly exempt from the §5.6 randomization MUST)</td><td>§5.6</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="94-wordbankcloze"><a class="header" href="#94-wordbankcloze">9.4 wordBankCloze</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"wordBankCloze"</code></td><td>Schema-enforced</td><td><code>word-bank-cloze.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>passage</code> required, matches <code>@@@\d+</code>, <code>minLength: 4</code></td><td>Schema-enforced</td><td><code>word-bank-cloze.schema.json: /allOf/1/required</code>, <code>/properties/passage/{pattern,minLength}</code></td><td>(none)</td></tr>
+<tr><td><code>wordBank</code> required, <code>minItems: 1</code>, each <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>word-bank-cloze.schema.json: /allOf/1/required</code>, <code>/properties/wordBank</code></td><td>(none)</td></tr>
+<tr><td><code>gapAcceptedAnswers</code> required, <code>{"^[0-9]+$": [string]}</code>, each gap <code>minItems: 1</code>, each accepted answer <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>word-bank-cloze.schema.json: /allOf/1/required</code>, <code>/properties/gapAcceptedAnswers/patternProperties</code></td><td>(none)</td></tr>
+<tr><td><code>passage</code> <code>@@@N</code> marker set MUST equal <code>gapAcceptedAnswers</code> key set</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_word_bank_cloze</code> (cloze gap-consistency check)</td><td>(none)</td></tr>
+<tr><td><code>@@@N</code> marker numbers SHOULD be sequential starting at 1</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_word_bank_cloze</code> (cloze gap-consistency check)</td><td>(none)</td></tr>
+<tr><td><code>allowWordReuse</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>word-bank-cloze.schema.json: /allOf/1/properties/allowWordReuse</code></td><td>(none)</td></tr>
+<tr><td><code>bankPosition</code> enum: <code>"above"</code>, <code>"below"</code>, <code>"side"</code></td><td>Schema-enforced</td><td><code>word-bank-cloze.schema.json: /allOf/1/properties/bankPosition/enum</code></td><td>(none)</td></tr>
+<tr><td><code>gapCaseSensitive</code> / <code>gapFeedback</code> value types</td><td>Schema-enforced</td><td><code>word-bank-cloze.schema.json: /allOf/1/properties/gapCaseSensitive</code>, <code>gapFeedback</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="95-multigapcloze"><a class="header" href="#95-multigapcloze">9.5 multiGapCloze</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"multiGapCloze"</code></td><td>Schema-enforced</td><td><code>multi-gap-cloze.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>passage</code> required, matches <code>@@@\d+</code>, <code>minLength: 4</code></td><td>Schema-enforced</td><td><code>multi-gap-cloze.schema.json: /allOf/1/required</code>, <code>/properties/passage</code></td><td>(none)</td></tr>
+<tr><td><code>gapAcceptedAnswers</code> required</td><td>Schema-enforced</td><td><code>multi-gap-cloze.schema.json: /allOf/1/required</code></td><td>(none)</td></tr>
+<tr><td>Each accepted answer MUST NOT contain <code>,</code> or <code>:</code> (scoring-engine wire format)</td><td>Schema-enforced + Domain-validator-enforced (ERROR)</td><td><code>multi-gap-cloze.schema.json: /allOf/1/properties/gapAcceptedAnswers/patternProperties/.../items/not/pattern="[,:]"</code>; <code>validate_course.py: validate_multi_gap_cloze</code></td><td>(none — wire-format consequence)</td></tr>
+<tr><td>Other punctuation in answers SHOULD be limited to apostrophes and hyphens</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_multi_gap_cloze</code></td><td>(none)</td></tr>
+<tr><td><code>passage</code> <code>@@@N</code> marker set MUST equal <code>gapAcceptedAnswers</code> key set</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_multi_gap_cloze</code> (cloze gap-consistency check)</td><td>(none)</td></tr>
+<tr><td><code>@@@N</code> marker numbers SHOULD be sequential starting at 1</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_multi_gap_cloze</code> (cloze gap-consistency check)</td><td>(none)</td></tr>
+<tr><td><code>allowPartialCredit</code> boolean, default <code>true</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>multi-gap-cloze.schema.json: /allOf/1/properties/allowPartialCredit</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="96-multiplechoicecloze"><a class="header" href="#96-multiplechoicecloze">9.6 multipleChoiceCloze</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"multipleChoiceCloze"</code></td><td>Schema-enforced</td><td><code>multiple-choice-cloze.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>passage</code>, <code>gapOptions</code>, <code>correctAnswers</code> required</td><td>Schema-enforced</td><td><code>multiple-choice-cloze.schema.json: /allOf/1/required</code></td><td>(none)</td></tr>
+<tr><td>Each gap’s <code>gapOptions</code> has <code>minItems: 2</code></td><td>Schema-enforced</td><td><code>multiple-choice-cloze.schema.json: /allOf/1/properties/gapOptions/patternProperties/.../minItems</code></td><td>(none)</td></tr>
+<tr><td><code>correctAnswers[N]</code> is a non-negative integer</td><td>Schema-enforced</td><td><code>multiple-choice-cloze.schema.json: /allOf/1/properties/correctAnswers/patternProperties/.../{type,minimum}</code></td><td>(none)</td></tr>
+<tr><td><code>correctAnswers[N]</code> index in bounds of <code>gapOptions[N]</code></td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_multiple_choice_cloze</code></td><td>(none)</td></tr>
+<tr><td><code>passage</code> <code>@@@N</code> marker set MUST equal <code>gapOptions</code> key set</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_multiple_choice_cloze</code> (cloze gap-consistency check)</td><td>(none)</td></tr>
+<tr><td><code>gapOptions</code> key set MUST equal <code>correctAnswers</code> key set</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_multiple_choice_cloze</code></td><td>(none)</td></tr>
+<tr><td><code>@@@N</code> marker numbers SHOULD be sequential starting at 1</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_multiple_choice_cloze</code> (cloze gap-consistency check)</td><td>(none)</td></tr>
+<tr><td><code>shuffleOptions</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>multiple-choice-cloze.schema.json: /allOf/1/properties/shuffleOptions</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="97-shortanswer"><a class="header" href="#97-shortanswer">9.7 shortAnswer</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"shortAnswer"</code></td><td>Schema-enforced</td><td><code>short-answer.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>acceptedAnswers</code> required, <code>minItems: 1</code>, each <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>short-answer.schema.json: /allOf/1/required</code>, <code>/properties/acceptedAnswers</code></td><td>(none)</td></tr>
+<tr><td><code>acceptedAnswers[0]</code> is the canonical form for display</td><td>Advisory (<a href="question-types-reference.html"><code>question-types-reference.md</code></a> §7)</td><td>(no enforcement)</td><td>(none)</td></tr>
+<tr><td><code>caseSensitive</code> boolean, default <code>false</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>short-answer.schema.json: /allOf/1/properties/caseSensitive</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="98-essay"><a class="header" href="#98-essay">9.8 essay</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"essay"</code></td><td>Schema-enforced</td><td><code>essay.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>expectedAnswer</code> required (string, may be empty)</td><td>Schema-enforced</td><td><code>essay.schema.json: /allOf/1/required</code></td><td>(none)</td></tr>
+<tr><td><code>expectedLines</code>, <code>minWords</code>, <code>maxWords</code> are integers <code>&gt;= 0</code> (0 = no limit)</td><td>Schema-enforced</td><td><code>essay.schema.json: /allOf/1/properties/{expectedLines,minWords,maxWords}</code></td><td>(none)</td></tr>
+<tr><td><code>maxWords &gt;= minWords</code> when both &gt; 0</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_essay</code></td><td>(none)</td></tr>
+<tr><td><code>rubricText</code> is Markdown when present</td><td>Advisory (<a href="question-types-reference.html"><code>question-types-reference.md</code></a> §8)</td><td>(none)</td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="99-sentencetransformation"><a class="header" href="#99-sentencetransformation">9.9 sentenceTransformation</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"sentenceTransformation"</code></td><td>Schema-enforced</td><td><code>sentence-transformation.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>promptSentence</code>, <code>keyword</code>, <code>targetSentence</code>, <code>acceptedChunks</code> required</td><td>Schema-enforced + Domain-validator-enforced (ERROR if missing)</td><td><code>sentence-transformation.schema.json: /allOf/1/required</code>; <code>validate_course.py: validate_sentence_transformation</code></td><td>(none)</td></tr>
+<tr><td><code>targetSentence</code> contains exactly one <code>@@@</code> placeholder (<code>minLength: 4</code>); multiple <code>@@@</code> markers are non-conforming because SentenceTransformation chunks are sequential answer pieces typed at that single position, not separate gaps</td><td>Schema-enforced (pattern requires at least one <code>@@@</code>; <code>minLength</code>) + Domain-validator-enforced (ERROR if more than one <code>@@@</code>; WARN if zero)</td><td><code>sentence-transformation.schema.json: /allOf/1/properties/targetSentence/{pattern,minLength}</code>; <code>validate_course.py: validate_sentence_transformation</code></td><td>(none)</td></tr>
+<tr><td><code>acceptedChunks</code> keys are <code>^[0-9]+$</code>, each value <code>minItems: 1</code>, each chunk <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>sentence-transformation.schema.json: /allOf/1/properties/acceptedChunks/patternProperties</code></td><td>(none)</td></tr>
+<tr><td>Chunk numbers SHOULD be sequential starting at 1</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_sentence_transformation</code></td><td>(none)</td></tr>
+<tr><td><code>keyword</code> SHOULD be uppercase</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_sentence_transformation</code></td><td>(none)</td></tr>
+<tr><td>Deprecated PascalCase chunks/keyword fields (<code>AcceptedChunks</code>, <code>Keyword</code>, …) → camelCase</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_sentence_transformation</code> (<code>deprecated_props</code> map)</td><td>(none)</td></tr>
+<tr><td><code>allOrNothing</code> boolean, default <code>false</code> (schema-declared); <code>chunkCaseSensitive</code> / <code>chunkFeedback</code> typed maps</td><td>Schema-enforced (types) + Domain-validator-enforced (WARN if not boolean / not dict)</td><td><code>sentence-transformation.schema.json</code>; <code>validate_course.py: validate_sentence_transformation</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="910-matching"><a class="header" href="#910-matching">9.10 matching</a></h3>
+<p><code>matching</code> carries an <code>if</code>/<code>then</code>/<code>else</code> branch in the schema, keyed off <code>matchingMode</code>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"matching"</code></td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>matchingMode</code> required, enum: <code>"pairs"</code>, <code>"classification"</code></td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/required</code>, <code>/properties/matchingMode/enum</code></td><td>(none)</td></tr>
+<tr><td><code>pairs</code> mode: <code>pairs[]</code> required, <code>minItems: 2</code>, each <code>{item,match}</code> required, <code>additionalProperties: false</code></td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/then/{required,properties/pairs}</code></td><td>§7.1 (closed object disallows <code>x-</code> extensions inside)</td></tr>
+<tr><td><code>pairs</code> mode: <code>categories</code> MUST NOT be present</td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/then/not/required[*]="categories"</code></td><td>(none)</td></tr>
+<tr><td><code>classification</code> mode: <code>categories[]</code> required, <code>minItems: 2</code>, each <code>{label,items}</code> required (<code>items.minItems: 1</code>), <code>additionalProperties: false</code></td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/else/{required,properties/categories}</code></td><td>§7.1</td></tr>
+<tr><td><code>classification</code> mode: <code>pairs</code> MUST NOT be present</td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/else/not/required[*]="pairs"</code></td><td>(none)</td></tr>
+<tr><td><code>distractors[*]</code> non-empty strings</td><td>Schema-enforced</td><td><code>matching.schema.json: /allOf/1/properties/distractors/items/minLength</code></td><td>(none)</td></tr>
+<tr><td><code>allowPartialCredit</code> boolean, default <code>true</code> (schema-declared)</td><td>Schema-enforced (type)</td><td><code>matching.schema.json: /allOf/1/properties/allowPartialCredit</code></td><td>(none)</td></tr>
+<tr><td>Consumers MUST randomize the choice pool (matches + distractors)</td><td>Advisory + runtime obligation</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.6</td><td>§5.6</td></tr>
+<tr><td>Consumers MUST randomize row order in <code>classification</code> mode</td><td>Advisory + runtime obligation</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.6</td><td>§5.6</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="911-ordering"><a class="header" href="#911-ordering">9.11 ordering</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"ordering"</code></td><td>Schema-enforced</td><td><code>ordering.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>sourceText</code> required, <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>ordering.schema.json: /allOf/1/required</code>, <code>/properties/sourceText/minLength</code></td><td>(none)</td></tr>
+<tr><td><code>items</code> required, <code>minItems: 2</code>, each <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>ordering.schema.json: /allOf/1/required</code>, <code>/properties/items</code></td><td>(none)</td></tr>
+<tr><td><code>distractors[*]</code> non-empty strings, default <code>[]</code> (schema-declared)</td><td>Schema-enforced (item type)</td><td><code>ordering.schema.json: /allOf/1/properties/distractors</code></td><td>(none)</td></tr>
+<tr><td><code>scoringMode</code> enum: <code>"strict"</code>, <code>"kendall"</code> (when present)</td><td>Schema-enforced</td><td><code>ordering.schema.json: /allOf/1/properties/scoringMode/enum</code></td><td>(none)</td></tr>
+<tr><td><code>scoringMode</code> default: <code>"strict"</code> for <code>orderingUnit:"word"</code>, <code>"kendall"</code> for <code>"sentence"</code>/<code>"paragraph"</code></td><td>Advisory (description prose; no JSON Schema literal <code>default</code>)</td><td><code>ordering.schema.json: /allOf/1/properties/scoringMode/description</code></td><td>(none)</td></tr>
+<tr><td><code>orderingUnit</code> enum: <code>"word"</code>, <code>"sentence"</code>, <code>"paragraph"</code>, default <code>"word"</code> (schema-declared; advisory display hint)</td><td>Schema-enforced (enum)</td><td><code>ordering.schema.json: /allOf/1/properties/orderingUnit/{enum,default}</code></td><td>(none)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="912-placement"><a class="header" href="#912-placement">9.12 placement</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code> is <code>"placement"</code></td><td>Schema-enforced</td><td><code>placement.schema.json: /allOf/1/properties/type/const</code></td><td>§4.2</td></tr>
+<tr><td><code>placementUnit</code>, <code>passage</code>, <code>placements</code> required</td><td>Schema-enforced</td><td><code>placement.schema.json: /allOf/1/required</code></td><td>(none)</td></tr>
+<tr><td><code>placementUnit</code> enum: <code>"sentence"</code>, <code>"paragraph"</code>, <code>"sectionLabel"</code>, default <code>"sentence"</code> (schema-declared)</td><td>Schema-enforced (enum)</td><td><code>placement.schema.json: /allOf/1/properties/placementUnit/enum</code></td><td>(none)</td></tr>
+<tr><td><code>passage</code> <code>minLength: 1</code>, MUST contain at least one <code>@@@N</code> marker</td><td>Schema-enforced</td><td><code>placement.schema.json: /allOf/1/properties/passage/{minLength,pattern}</code></td><td>(none)</td></tr>
+<tr><td><code>placements</code> <code>minItems: 1</code>, each <code>{gap &gt;= 1, item.minLength &gt;= 1}</code>, <code>additionalProperties: false</code></td><td>Schema-enforced</td><td><code>placement.schema.json: /allOf/1/properties/placements/items</code></td><td>§7.1 (closed)</td></tr>
+<tr><td>Every <code>placements[*].gap</code> references a <code>@@@N</code> marker present in <code>passage</code></td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_placement</code></td><td>(none)</td></tr>
+<tr><td>No duplicate <code>gap</code> values within <code>placements[]</code></td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: validate_placement</code></td><td>(none)</td></tr>
+<tr><td><code>@@@N</code> markers SHOULD be sequential starting at 1</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_placement</code></td><td>(none)</td></tr>
+<tr><td><code>placementUnit: "paragraph"</code> — marker SHOULD stand alone in its paragraph</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_placement</code></td><td>(none)</td></tr>
+<tr><td><code>placementUnit: "sectionLabel"</code> — marker SHOULD be at the start of a paragraph followed by a space</td><td>Domain-validator-enforced (WARN)</td><td><code>validate_course.py: validate_placement</code></td><td>(none)</td></tr>
+<tr><td>Extra <code>@@@N</code> markers without a <code>placements[]</code> entry are valid decoy gaps (TOEFL Sentence Insertion variant)</td><td>Advisory</td><td><code>placement.schema.json: /allOf/1/properties/placements/description</code>, <a href="question-types-reference.html"><code>question-types-reference.md</code></a> §11</td><td>(none)</td></tr>
+<tr><td><code>distractors[*]</code> non-empty strings</td><td>Schema-enforced</td><td><code>placement.schema.json: /allOf/1/properties/distractors/items/minLength</code></td><td>(none)</td></tr>
+<tr><td>Consumers MUST randomize the choice pool (placements items + distractors)</td><td>Advisory + runtime obligation</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.6</td><td>§5.6</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="10-reserved-and-unknown-types"><a class="header" href="#10-reserved-and-unknown-types">10. Reserved and unknown types</a></h2>
+<p>The 7 reserved question types — <code>association</code>, <code>hotspot</code>, <code>graphicGapMatch</code>, <code>graphicAssociate</code>, <code>graphicOrder</code>, <code>fileUpload</code>, <code>mediaPromptedEssay</code> — are declared in <code>question-base.schema.json</code>’s <code>enum</code> but have no per-type schemas in 1.0. Their handling is normative under <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6 (the fallback contract):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td>Reserved-type discriminator MUST be accepted by consumers</td><td>Schema-enforced</td><td><code>question-base.schema.json: /properties/type/enum</code></td><td>§5.5, §6.1</td></tr>
+<tr><td>Reserved-type question MUST satisfy <code>question-base.schema.json</code> (<code>type</code>, <code>globalId</code>, <code>prompt</code> required; <code>points</code> validated against the base type/range when present, defaulting to <code>1.0</code> schema-declared)</td><td>Schema-enforced (required fields + type/range on <code>points</code>)</td><td><code>question-base.schema.json: /required=["type","globalId","prompt"]</code>, <code>/properties/points/{type,minimum,default}</code>; validator dispatches reserved types to <code>question-base.schema.json</code></td><td>§6.3</td></tr>
+<tr><td>Consumer MUST preserve every member of reserved-type question objects across read/write cycles (semantic preservation; key order is producer-discretion per §6.2)</td><td>Advisory (round-trip preservation — runtime obligation, not document-validity)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.2, §6.4</td><td>§6.2, §6.4</td></tr>
+<tr><td>Consumer MUST NOT silently drop reserved-type questions from <code>questions[]</code></td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.2</td><td>§6.2</td></tr>
+<tr><td>Consumer MUST treat reserved-type earned points as 0 (max still counts)</td><td>Advisory (runtime obligation)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.2</td><td>§6.2</td></tr>
+<tr><td>Consumer MUST report the unsupported question to the user at import (UI banner / log / returned warning)</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.2</td><td>§6.2</td></tr>
+<tr><td>Consumer SHOULD render a non-interactive placeholder naming the type</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.2, <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §7</td><td>§6.2, §12</td></tr>
+<tr><td>Consumer SHOULD disable navigation gating for unsupported questions</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.2</td><td>§6.2</td></tr>
+<tr><td>Producer SHOULD NOT emit reserved types in cross-implementation distribution</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.3</td><td>§6.3</td></tr>
+<tr><td>Producer SHOULD use the published reserved name exactly (<code>hotspot</code>, not <code>Hotspot</code>); SHOULD document tool-specific extensions in IMPLEMENTATIONS.md / README</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.5</td><td>§6.5</td></tr>
+<tr><td><strong>Producer</strong>: emitting a discriminator value not listed in <code>question-base.schema.json</code>’s <code>enum</code> is non-conforming at 1.0 — the schema rejects it; the reference validator surfaces it with a friendlier message naming the allowed values</td><td>Schema-enforced + Domain-validator-enforced (ERROR)</td><td><code>question-base.schema.json: /properties/type/enum</code>; <code>validate_course.py</code> (per-type question dispatch)</td><td>§6.1</td></tr>
+<tr><td><strong>Consumer</strong> (1.0-only) reading a 1.x+ document with a type discriminator unknown to the consumer: apply the §6 fallback (preserve in full, treat earned points as 0, render placeholder, report to user) — do NOT reject the document</td><td>Advisory (runtime / forward-compat obligation, not document-validity)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.1, §6.2, §6.4</td><td>§6.1, §6.2</td></tr>
+</tbody>
+</table>
+</div>
+<p>The two rows above are not in conflict: the producer-validity row describes the 1.0 strict-validator behavior on a document whose <code>type</code> enum is exhausted at 1.0 (the schema and the reference validator agree it’s a malformed 1.0 document). The consumer-import row describes the runtime obligation a 1.0-only consumer carries when it ingests a 1.x+ document whose newer <code>type</code> it does not recognize — there, NORMATIVE §6 binds the consumer to graceful fallback rather than rejection. A 1.0 consumer cannot validate a 1.x+ document under a 1.0 schema and therefore SHOULD NOT use schema validation as the ingest gate when reading future-minor content; consumer-side ingest is governed by §6, not by <code>question-base.schema.json</code>.</p>
+<hr>
+<h2 id="11-question-sets-flat-artifact"><a class="header" href="#11-question-sets-flat-artifact">11. Question Sets (flat artifact)</a></h2>
+<p>A <code>documentType: "questionSet"</code> document is a flat questions list with no course hierarchy. Required root fields apply (see <a href="#3-root-document">§3</a>) plus:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>title</code> required, <code>minLength: 1</code></td><td>Schema-enforced</td><td><code>question-set.schema.json: /required[*]="title"</code>, <code>/properties/title/minLength</code></td><td>§3.2</td></tr>
+<tr><td><code>language</code> required at root</td><td>Schema-enforced</td><td><code>question-set.schema.json: /required[*]="language"</code></td><td>§12.1</td></tr>
+<tr><td><code>questions[]</code> required (may be empty)</td><td>Schema-enforced</td><td><code>question-set.schema.json: /required[*]="questions"</code></td><td>(none)</td></tr>
+<tr><td><code>sourceQuestionSetId</code>, when present, matches the RFC 4122 UUID pattern (any version; shape-only validation)</td><td>Schema-enforced</td><td><code>question-set.schema.json: /properties/sourceQuestionSetId/pattern</code></td><td>(none)</td></tr>
+<tr><td><code>version</code> matches <code>^[0-9]+(\.[0-9]+){0,2}$</code>, default <code>"1.0"</code> (schema-declared)</td><td>Schema-enforced (pattern)</td><td><code>question-set.schema.json: /properties/version/pattern</code></td><td>(none)</td></tr>
+<tr><td>Each <code>questions[*]</code> validates against its per-type schema (per-question dispatch)</td><td>Domain-validator-enforced (ERROR on schema failure or unknown discriminator)</td><td><code>validate_course.py</code> (per-type question dispatch), <code>validate_question_set_flat</code></td><td>§5.1, §5.3</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="12-cross-cutting"><a class="header" href="#12-cross-cutting">12. Cross-cutting</a></h2>
+<h3 id="121-html-safety-profile"><a class="header" href="#121-html-safety-profile">12.1 HTML safety profile</a></h3>
+<p>HTML appears in two fields: <code>ContentItem.html</code> and <code>SignpostItem.customHtml</code>. The full normative profile is in <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a>. The reference validator’s HTML checks live in <code>validate_course.py: validate_html_content</code> and mirror that profile.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Surface</th><th>Severity (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8)</th><th>Validator function</th></tr>
+</thead>
+<tbody>
+<tr><td>Forbidden elements (<code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;base&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;math&gt;</code>, etc.)</td><td>ERROR — consumer MUST reject</td><td><code>validate_html_content</code> (HTML_FORBIDDEN_TAGS)</td></tr>
+<tr><td>Event-handler attributes (<code>onclick</code>, <code>onload</code>, <code>onerror</code>, …)</td><td>ERROR</td><td><code>validate_html_content</code> (<code>attr_name.startswith("on")</code>)</td></tr>
+<tr><td>Form-submission attributes (<code>srcdoc</code>, <code>formaction</code>, …)</td><td>ERROR</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>javascript:</code> or <code>vbscript:</code> URL in any URL-bearing attribute</td><td>ERROR</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>expression(...)</code> / <code>javascript:</code> inside <code>style</code> CSS value</td><td>ERROR</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>data:</code> URL in any URL-bearing attribute (including <code>&lt;img src&gt;</code>)</td><td>WARN</td><td><code>validate_html_content</code></td></tr>
+<tr><td>Other forbidden URL schemes (<code>blob:</code>, <code>file:</code>, <code>chrome:</code>, <code>ftp:</code>, <code>ws:</code>, <code>gopher:</code>, <code>view-source:</code>)</td><td>WARN</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>tel:</code> URL (consumer-policy gated; see <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> §3)</td><td>WARN</td><td><code>validate_html_content</code></td></tr>
+<tr><td>Unknown element (not in <code>HTML_ALLOWED_TAGS</code>, not in forbidden list)</td><td>WARN — strip while preserving text</td><td><code>validate_html_content</code></td></tr>
+<tr><td>Unknown attribute on an allowed element (outside §3 allowlist)</td><td>WARN — strip the attribute</td><td><code>validate_html_content</code></td></tr>
+<tr><td>CSS property outside the <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §3.4 allowlist</td><td>WARN — strip the property</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>&lt;a target="_blank"&gt;</code> without <code>rel="noopener noreferrer"</code></td><td>WARN — consumer MUST normalize</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>&lt;img&gt;</code> without <code>alt</code> attribute</td><td>WARN — empty <code>alt=""</code> permitted for decorative images</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>&lt;video&gt;</code>/<code>&lt;audio&gt;</code> with <code>autoplay</code> or <code>loop</code></td><td>WARN — producer MUST NOT emit; consumer SHOULD ignore</td><td><code>validate_html_content</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>A conforming consumer MUST sanitize HTML before render regardless of producer claims (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §5).</p>
+<h3 id="122-accessibility-preservation"><a class="header" href="#122-accessibility-preservation">12.2 Accessibility preservation</a></h3>
+<p><a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> defines two layers: a base-conformance preservation floor that binds every consumer, and an opt-in Accessibility Profile claim that binds delivery.</p>
+<p>Round-trip preservation (base conformance, <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>alt</code> on <code>&lt;img&gt;</code> MUST round-trip</td><td>Advisory (runtime / round-trip obligation)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1</td><td>§12.1</td></tr>
+<tr><td><code>&lt;track&gt;</code> elements (incl. <code>kind</code>, <code>src</code>, <code>srclang</code>, <code>label</code>, <code>default</code>) MUST round-trip on <code>&lt;video&gt;</code>/<code>&lt;audio&gt;</code></td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1</td><td>§12.1</td></tr>
+<tr><td><code>lang</code> and <code>dir</code> attributes on HTML-bearing elements MUST round-trip</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1</td><td>§12.1</td></tr>
+<tr><td>Document-root <code>language</code> MUST round-trip</td><td>Schema-enforced (required) + runtime preservation obligation</td><td><code>course.schema.json: /required[*]="language"</code>; <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1</td><td>§12.1</td></tr>
+<tr><td>Document-root <code>supportLanguage</code> MUST round-trip when present (including explicit <code>null</code>)</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1</td><td>§12.1</td></tr>
+<tr><td>Reserved-type questions MUST round-trip with any accessibility metadata they carry</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6.4, §12.1</td><td>§6.4, §12.1</td></tr>
+<tr><td>Extension-preserving consumers (§7.4) SHOULD round-trip <code>x-</code>-namespaced extension members carrying accessibility data</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1</td><td>§12.1</td></tr>
+</tbody>
+</table>
+</div>
+<p>Opt-in Accessibility Profile delivery obligations (binding only when claimed): see <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §§2–8. Not duplicated here.</p>
+<p>Validator severity for accessibility issues at the current baseline (<a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §8):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Issue</th><th>Severity</th><th>Validator function</th></tr>
+</thead>
+<tbody>
+<tr><td>Missing <code>alt</code> on <code>&lt;img&gt;</code></td><td>WARN</td><td><code>validate_html_content</code></td></tr>
+<tr><td><code>&lt;video&gt;</code> without <code>&lt;track kind="captions"|"subtitles"&gt;</code></td><td>WARN (current baseline; promotion to ERROR under the <code>--accessibility</code> flag is targeted for 1.0 final)</td><td><code>validate_html_content</code> (post-pass scan for <code>&lt;video&gt;…&lt;/video&gt;</code> blocks)</td></tr>
+<tr><td><code>&lt;iframe&gt;</code>, <code>&lt;script&gt;</code>, event handlers</td><td>ERROR</td><td><code>validate_html_content</code></td></tr>
+<tr><td>Missing <code>language</code> at document root</td><td>ERROR (schema-enforced)</td><td><code>course.schema.json</code> / <code>question-set.schema.json</code> <code>required</code></td></tr>
+<tr><td>Reserved-type question without <code>title</code></td><td>NOTE</td><td>(advisory; not currently surfaced)</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="123-randomization-requirements"><a class="header" href="#123-randomization-requirements">12.3 Randomization requirements</a></h3>
+<p><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.6 binds two surfaces. These are <em>consumer rendering</em> obligations, not document-validity rules — a document is conforming whether or not consumers randomize it. Listed here so implementers know what they MUST do at render time:</p>
+<ul>
+<li><strong>Choice pool</strong> for <code>matching</code> (pairs/classification) and <code>placement</code> MUST be presented in randomized order.</li>
+<li><strong>Row order in <code>matching</code> classification mode</strong> MUST be randomized.</li>
+<li>The randomization algorithm and any seeding strategy are consumer-defined.</li>
+<li>Exemptions: <code>multipleChoice</code> (per-question <code>shuffleOptions</code> instead), <code>matching</code> pairs rows, <code>ordering</code> source tiles.</li>
+</ul>
+<h3 id="124-extensions-x--members"><a class="header" href="#124-extensions-x--members">12.4 Extensions (<code>x-</code> members)</a></h3>
+<p>Extension rules from <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7. Round-trip preservation by extension-preserving consumers is a runtime obligation, not a document-validity rule.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>x-</code> keys MAY appear on root + Course/Unit/Lesson/Item/Question</td><td>Advisory (schemas omit <code>additionalProperties: false</code> on these objects)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.1</td><td>§7.1</td></tr>
+<tr><td><code>x-</code> keys MUST NOT appear on closed objects (<code>matching.pairs[*]</code>, <code>matching.categories[*]</code>, <code>placement.placements[*]</code>)</td><td>Schema-enforced</td><td><code>matching.schema.json</code> / <code>placement.schema.json</code> (<code>additionalProperties: false</code>)</td><td>§7.1</td></tr>
+<tr><td>Producer MUST NOT emit non-extension fields whose name begins with <code>x-</code></td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.1</td><td>§7.1</td></tr>
+<tr><td>Producer MUST NOT emit an extension under a namespace it does not own</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.2</td><td>§7.2</td></tr>
+<tr><td>Extensions are strictly additive — removing every <code>x-</code> member MUST leave a conforming document with equivalent learner-facing meaning</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.3</td><td>§7.3</td></tr>
+<tr><td>Consumer MUST NOT reject documents solely for <code>x-</code> members or interpret members outside its own namespace</td><td>Advisory</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.4</td><td>§7.4</td></tr>
+<tr><td>Extension-preserving consumers SHOULD round-trip unrecognized <code>x-</code> members on the same object</td><td>Advisory (round-trip behavior)</td><td><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7.4</td><td>§7.4</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="125-versioning-and-url-stability"><a class="header" href="#125-versioning-and-url-stability">12.5 Versioning and URL stability</a></h3>
+<p><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §8 binds publication-side guarantees. Not document-validity rules per se, but consumers SHOULD enforce them when resolving <code>$schema</code>:</p>
+<ul>
+<li><code>$schema</code> URL identifies the specific publication; <code>specVersion</code> identifies the contract version (§4.6, §4.7, §8.4).</li>
+<li><code>/X.Y/</code> paths are reserved for accepted final releases; <code>/X.Y-rc.N/</code> paths are immutable once published; rc.N → final adoption is an explicit re-export (§8.1, §8.3).</li>
+<li>A document declaring <code>specVersion: "1.0"</code> with <code>$schema</code> at <code>/1.0-rc.N/</code> validates against <code>/1.0-rc.N/</code> and is not required to validate against <code>/1.0/</code> (§8.4).</li>
+</ul>
+<h3 id="126-discriminator-casing"><a class="header" href="#126-discriminator-casing">12.6 Discriminator casing</a></h3>
+<p>Reiteration of <a href="#3-root-document">§3</a>, <a href="#7-item-level--common">§7</a>, <a href="#8-question-level--common">§8</a>: conforming consumers MUST reject non-canonical casings on <code>documentType</code>, item <code>type</code>, and question <code>type</code> (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §4.2, §5.3). The schemas enforce these via <code>const</code> / <code>enum</code>. The reference validator additionally provides lenient migration paths (PascalCase → camelCase warnings, casing-tolerant <code>documentType</code> dispatch) that are disabled under <code>--strict</code>.</p>
+<h3 id="127-globalid-uniqueness"><a class="header" href="#127-globalid-uniqueness">12.7 globalId uniqueness</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Rule</th><th>Tier</th><th>Source</th><th>NORMATIVE §</th></tr>
+</thead>
+<tbody>
+<tr><td><code>globalId</code> values unique across all entities in a document (Units, Lessons, Items, Questions share one namespace; comparison case-insensitive)</td><td>Domain-validator-enforced (ERROR)</td><td><code>validate_course.py: _collect_duplicate_global_id_errors</code> (course and questionSet paths)</td><td>§4.4</td></tr>
+</tbody>
+</table>
+</div>
+<p>JSON Schema cannot express cross-entity uniqueness across nesting levels, so this rule is domain-validator-only. Reference fields that <em>point at</em> a <code>globalId</code> (<code>contentItemId</code>, <code>relatedItemIds</code>) are references, not declarations, and are exempt. Conformance fixture: <code>tests/invalid/40-duplicate-global-id.json</code>.</p>
+<hr>
+<h2 id="13-conformance-note"><a class="header" href="#13-conformance-note">13. Conformance note</a></h2>
+<p>The catalog tiers describe what the reference validators enforce today under <code>--strict</code> (<a href="#13-strict-mode-and-the-lenient-migration-path">§1.3</a>). A gap between that behavior and the normative sources is a validator defect, not a relaxation of the contract.</p>
+<p><strong>Producers</strong> MUST emit documents that satisfy every <strong>Schema-enforced</strong> rule and every <strong>Domain-validator-enforced (ERROR)</strong> rule. <strong>Producers</strong> SHOULD additionally honor <code>Domain-validator-enforced (WARN)</code> rules; the validator’s warnings flag suspect-but-not-rejected content that authors typically want to fix.</p>
+<p><strong>Consumers</strong> MUST reject documents that fail any <strong>Schema-enforced</strong> or <strong>Domain-validator-enforced (ERROR)</strong> rule, with explicit exceptions where a rule distinguishes producer-emission from consumer-import. This matches <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §3.2’s strict-producer / lenient-consumer split — a producer that omits <code>$schema</code> is non-conforming with respect to that document, but a consumer that rejects an otherwise-valid document on the basis of a missing <code>$schema</code> is overly strict. The producer-emission-vs-consumer-import rules are:</p>
+<ul>
+<li>The <code>$schema</code> rows in <a href="#3-root-document">§3</a> — the canonical example: MUST emit, SHOULD tolerate absence.</li>
+<li>The SubjectCollection <strong>closure</strong> rules SC-6, SC-7, SC-8 (§15) — a producer MUST NOT emit a violating document (ERROR), but a consumer SHOULD (not MUST) reject one, and MAY instead ingest it with the violations surfaced (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.7).</li>
+<li>The alignment-claim vocabulary rule SC-10 (§15) is <strong>producer-tier only</strong>, and its consumer side is <em>not</em> a weakened rejection — it is the opposite. A producer MUST NOT emit a claim outside the 1.1 vocabulary (ERROR). A consumer encountering a claim value outside that set MUST NOT reject the document, MUST NOT interpret the claim, and MUST preserve the entry verbatim across read/write cycles (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §4.10, §5.5). Consumers therefore never apply SC-10 as a rejection criterion at all.</li>
+<li>Identity-less members (SC-3) are <strong>not</strong> in this set — a consumer MUST reject those (§3.4).</li>
+</ul>
+<p><strong>Domain-validator-enforced (WARN)</strong> rules describe sanitization, accessibility, or migration-aid behavior — consumers SHOULD surface them but are not required to reject on their basis. <strong>NOTE-tier</strong> rows are informational only.</p>
+<p><strong>Advisory</strong> rules carry the RFC 2119 weight stated in the cited section (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> <code>MUST</code>/<code>SHOULD</code>/<code>MAY</code>, <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8 severity, <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §8). Consumers that diverge from advisory <code>SHOULD</code>/<code>MAY</code> rules are non-canonical but not non-conforming. Where a rule is enforced in multiple tiers (schema + validator), satisfying the strictest tier suffices.</p>
+<p><strong>A note on JSON Schema <code>format</code> keywords.</strong> Several rows above cite <code>format: "uri"</code> or <code>format: "uuid"</code> from the schemas. Under JSON Schema Draft 7, <code>format</code> is an <em>annotation</em> by default — a validator only enforces it when configured with a <code>FormatChecker</code> (or equivalent). The reference validator’s <code>Draft7Validator</code> instance runs without explicit format assertions, so <code>format</code>-only claims are not guaranteed by the schema pass alone. Rows that depend on these formats also cite a regex <code>pattern</code> (for UUIDs on <code>globalId</code> properties) or a domain-validator backstop (<code>validate_course.py: validate_item</code> via <code>is_valid_uuid</code> for <code>contentItemId</code> / <code>relatedItemIds</code>). Implementers re-implementing the validator in other languages should either enable format-assertion in their JSON Schema library or replicate the regex/domain backstops.</p>
+<p><strong>A note on JSON Schema <code>default</code> keywords.</strong> Several rows above cite a property’s <code>default</code> value (e.g. <code>isGraded</code> defaults to <code>true</code> on <code>quiz</code>, <code>points</code> defaults to <code>1.0</code> on questions, <code>placementUnit</code> defaults to <code>"sentence"</code>). Under JSON Schema Draft 7, <code>default</code> is an <em>annotation</em> — most validators (including <code>jsonschema</code> for Python, AJV with default options, etc.) do not apply or enforce it. A producer that omits the property emits a document that validates; a consumer that reads such a document MUST apply the default itself if it wants the documented behavior. The defaults are listed here so implementers know what the spec intends absent an explicit value — they are <em>schema-declared</em>, not <em>schema-enforced</em>. Consumers SHOULD NOT rely on the validator filling in defaults; producers SHOULD emit explicit values when the documented default does not match their intent.</p>
+<p>Where a reference validator and a normative document disagree, the normative document wins. Discrepancies should be reported as issues against this spec; the validator is updated to track.</p>
+<hr>
+<h2 id="14-forward-looking-deepenings-10-final"><a class="header" href="#14-forward-looking-deepenings-10-final">14. Forward-looking deepenings (1.0 final)</a></h2>
+<p><em>(Historical: this section records the deepenings cataloged during the 1.0 cycle. 1.0 has since shipped and 1.1 is the current publication; the still-open items below carry forward. Rules for the 1.1 artifact types are in <a href="#15-subject-collection-sc">§15</a>–<a href="#19-consumer-side-obligations-not-expressible-as-document-checks">§19</a>.)</em></p>
+<p>The inventory pass that produced this catalog (2026-05-24) surfaced eight documented-but-unenforced rules. All eight were closed in the same rc.1-polish session by extending <code>tools/validate_course.py</code> (no schema changes — the closures land in the domain-validator pass). The corresponding rows in the per-type tables above are tagged <strong>Domain-validator-enforced</strong> rather than <strong>Advisory</strong>; new invalid conformance fixtures (<code>tests/invalid/21-mcq-no-correct-option.json</code>, <code>22-mcq-options-points-missing-entry.json</code>, <code>23-word-bank-cloze-gap-count-mismatch.json</code>, <code>24-multiple-choice-cloze-index-out-of-bounds.json</code>) pin the ERROR-tier checks. The corpus runs 64/64 under <code>python tools/run_corpus.py</code> (the harness invokes <code>validate_course.py --strict</code> internally on every fixture; the 36 fixtures at the time of that rc.1 pass, plus the two <code>prompt</code>-correction fixtures added in rc.2, plus the per-type / referential-integrity / grading-matrix / globalId-uniqueness expansion added in rc.3).</p>
+<p>Three areas remain explicitly forward-looking for <code>1.0</code> final or beyond:</p>
+<ul>
+<li><strong><code>--accessibility</code> validator flag.</strong> The <code>&lt;video&gt;</code> without <code>&lt;track kind="captions"\|"subtitles"&gt;</code> check (§12.2) is WARN at the current baseline. The 1.0-final <code>--accessibility</code> flag promotes it (and related accessibility warnings) to ERROR so tooling that wants to fail-build on accessibility-profile claims can do so.</li>
+<li><strong>Tag namespace conventions.</strong> Optional best-practice tag prefixes (<code>stage:</code>, <code>level:</code>, <code>exam:</code>, …) are described informally in <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> §1. No schema-level constraint, no validator check; left to convention for <code>1.0</code>. Referential-integrity validation on <code>objectiveIds</code> is closed at rc.1 (consumers MUST report unresolved IDs per the validator).</li>
+<li><strong>Reserved-type per-type schemas.</strong> The 7 reserved question types (<code>hotspot</code>, <code>association</code>, etc.) validate against <code>question-base.schema.json</code> only (§10). First-class per-type schemas remain deferred to a future minor version (targeted for 2027) and are not part of 1.1.</li>
+</ul>
+<p>Future deepenings (a new accessibility rule promoted to ERROR, a new cross-document rule added by <code>1.1</code>) will surface as new rows in the per-type tables above or as new entries in this section. The published <code>/1.0-rc.2/</code> and <code>/1.0-rc.3/</code> schema URLs remain immutable per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §8.3; any future closures land at <code>/1.0/</code> or a later version path.</p>
+<hr>
+<h2 id="15-subject-collection-sc-"><a class="header" href="#15-subject-collection-sc-">15. Subject Collection (<code>SC-*</code>)</a></h2>
+<p>Rules for <code>documentType: "subjectCollection"</code> documents.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>#</th><th>Rule</th><th>Source</th><th>Tier</th><th>Severity</th></tr>
+</thead>
+<tbody>
+<tr><td>SC-1</td><td>Root triplet <code>$schema</code>/<code>documentType</code>/<code>specVersion</code> present; <code>documentType == "subjectCollection"</code></td><td>NORMATIVE §3.2</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>SC-2</td><td><code>globalId</code>, <code>version</code>, <code>title</code>, <code>scope</code> present; <code>scope.subject.id</code> non-empty</td><td>NORMATIVE §3.3; schema <code>required</code></td><td>schema</td><td>ERROR</td></tr>
+<tr><td>SC-3</td><td>Every tag and objective carries a non-empty <code>id</code> (identity is not optional)</td><td>NORMATIVE §3.4</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>SC-4</td><td>Member ids unique within the document (tags and objectives separately)</td><td>NORMATIVE §3.4</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>SC-5</td><td>Tag <code>slug</code> present and unique within the document</td><td>schema + domain</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>SC-6</td><td>Every <code>tags[].categoryId</code> resolves within <code>categories[]</code> (closure)</td><td>NORMATIVE §4.9</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>SC-7</td><td>Every <code>tags[].parentId</code>, when present, is the member id of another tag in the document (parents are member ids, never slugs), <strong>and the parent relation is acyclic</strong> — no tag is its own parent, and no chain of <code>parentId</code> links returns to a tag already on that chain. The relation therefore forms a forest</td><td>NORMATIVE §4.9</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>SC-8</td><td>Every <code>objectives[].tagIds</code> entry resolves within the document’s <code>tags[]</code> (closure)</td><td>NORMATIVE §4.9</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>SC-9</td><td><code>difficultyBand</code> within the enum (<code>Recall</code>/<code>Understand</code>/<code>Apply</code>/<code>Analyze</code>/null)</td><td>schema</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>SC-10</td><td><code>externalAlignments[].claim</code> within the 1.1 producer vocabulary (<code>references</code>/<code>alignedTo</code>/<code>covers</code>; <code>assesses</code>/<code>verifiedBy</code> reserved). <strong>Producer-tier by design:</strong> the schema deliberately leaves <code>claim</code> an open string so consumers can satisfy the §5.5 preserve-unknown-claims rule without a schema failure — the vocabulary binds what a 1.1 producer may <em>emit</em>, never what a consumer accepts. <code>scheme</code> and <code>id</code> non-empty (schema)</td><td>NORMATIVE §4.10, §5.5</td><td>domain (producer-tier; the reference vocabulary tooling enforces it as an authoring/emission gate) + schema (<code>scheme</code>/<code>id</code>)</td><td>ERROR (emission)</td></tr>
+<tr><td>SC-11</td><td>Category ids unique within the document</td><td>schema + domain</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>SC-12</td><td><code>aliases</code>, when present, is an array (not a bare string)</td><td>schema</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>SC-13</td><td><code>license</code> populated with a concrete value on documents intended for distribution (<code>"unspecified"</code> only for private drafts)</td><td>NORMATIVE §4.11</td><td>advisory</td><td>WARN</td></tr>
+<tr><td>SC-14</td><td>Objective <code>text</code> reads as a can-do capability (active verb, completes “…be able to:”)</td><td><a href="subject-collection-reference.html"><code>subject-collection-reference.md</code></a> §5</td><td>advisory</td><td>NOTE</td></tr>
+</tbody>
+</table>
+</div>
+<p>Reference implementation note: SC-4…SC-8, SC-11, SC-12 are implemented by the vocabulary-document validator in the reference tooling; SC-1 and SC-2’s root-triplet checks are schema-enforced.</p>
+<hr>
+<h2 id="16-curriculum-pack-cp-"><a class="header" href="#16-curriculum-pack-cp-">16. Curriculum Pack (<code>CP-*</code>)</a></h2>
+<p>Rules for <code>documentType: "curriculumPack"</code> documents.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>#</th><th>Rule</th><th>Source</th><th>Tier</th><th>Severity</th></tr>
+</thead>
+<tbody>
+<tr><td>CP-1</td><td>Root triplet present; <code>documentType == "curriculumPack"</code></td><td>NORMATIVE §3.2</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>CP-2</td><td><code>packMode</code> is <code>"manifest"</code> or <code>"bundle"</code></td><td>schema</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>CP-3</td><td><code>collectionRefs[]</code> entries carry non-empty <code>globalId</code>; <code>contentRefs[]</code> entries carry non-empty <code>type</code> + <code>id</code> (the referenced document’s type-directed identity, NORMATIVE §4.4: course→<code>sourceCourseId</code>, questionSet→<code>sourceQuestionSetId</code>, else root <code>globalId</code>). <strong><code>contentRefs[].type</code> is a producer-closed vocabulary — <code>course</code>, <code>questionSet</code>, or <code>glossary</code></strong> (a SubjectCollection is referenced via <code>collectionRefs</code>; <code>curriculumPack</code> is prohibited — no pack nesting, §4.4). Like alignment <code>claim</code>, it binds producers only and is left schema-open (§5.8): a producer emitting any other value is non-conforming; a consumer MUST NOT reject an unrecognized type (§5.4), treating the ref as unresolvable</td><td>NORMATIVE §4.4, §5.8</td><td>schema (<code>type</code>/<code>id</code> non-empty) + domain (producer type-vocabulary)</td><td>ERROR (emission)</td></tr>
+<tr><td>CP-4</td><td>Step shape: <code>id</code> non-empty and unique within the pack; <code>kind</code> within the five-value enum; <code>label</code> non-empty; <code>year</code>/<code>term</code>/<code>weekOfTerm</code>/<code>durationLessons</code> integers ≥ 1; the <code>contentRef</code> <strong>key</strong> present on every step (null = unauthored slot); <code>selector</code>, when present, uses the node-globalId-bearing grammar <code>unit:</code>/<code>lesson:</code>/<code>item:</code> (interior nodes retain <code>globalId</code>; only the document root’s identity is type-directed)</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.1–§4.3</td><td>schema (per-step) + domain (id uniqueness)</td><td>ERROR</td></tr>
+<tr><td>CP-5</td><td><code>pacing</code> present when <code>sequence[]</code> is non-empty; <code>years</code>/<code>lessonsPerWeek</code> ≥ 1; <code>weeksPerTerm</code>, when declared, has <code>termsPerYear</code> entries ≥ 1; <code>teachingWeeksPerYear</code>, when both present, equals <code>sum(weeksPerTerm)</code></td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §5</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-6</td><td>Position within the frame: <code>year ≤ pacing.years</code>; <code>term ≤ termsPerYear</code>; <code>weekOfTerm</code> within the term; a step’s week span (<code>ceil(durationLessons/lessonsPerWeek)</code> weeks from its start) stays inside its term</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.1, §5</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-7</td><td>Term capacity: per <code>(year, term)</code>, <code>Σ durationLessons ≤ weeksPerTerm[term−1] × lessonsPerWeek</code></td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §5</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-8</td><td><code>dependsOn</code>: ids exist; no self-reference; every edge points at a step strictly earlier in the <code>(year, term, weekOfTerm)</code> timeline, or in the same week and earlier in document order (within a week, document order is the schedule)</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.4</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-9</td><td>Checkpoint presence: a step of kind <code>assessment</code>/<code>mock</code> carries a checkpoint object; any other kind carries <code>null</code> or omits the key</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.2, §4.5</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-10</td><td>Checkpoint shape: <code>kind</code> formative/summative (mock ⇒ summative); <code>format</code> non-empty; <code>scope</code> listed/allTaughtToDate; listed ⇒ <code>assessesObjectiveIds</code> non-empty; allTaughtToDate ⇒ <code>assessesObjectiveIds == []</code></td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.5</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-11</td><td>Taught-before-used: every listed assessed objective, and every objective on a <code>review</code> step, is first taught (a <code>teaching</code> step’s <code>objectiveIds</code>) strictly earlier in the timeline</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.5</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-12</td><td>Bill of materials: every non-null step <code>contentRef</code> appears in root <code>contentRefs[]</code> with a matching <code>type</code></td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §3, §4.3</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>CP-13</td><td>Coverage block: <code>collectionGlobalId</code> non-empty and present in <code>collectionRefs[]</code>; <code>assertions[]</code> within the two-value 1.1 vocabulary (unknown assertion strings are errors)</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §6</td><td>schema + domain</td><td>ERROR</td></tr>
+<tr><td>CP-14</td><td>With the referenced collection available: every <code>objectiveId</code>/<code>tagId</code> used anywhere (steps, checkpoints, exemptions) resolves to a collection member; declared coverage assertions hold over the non-exempt member set. Without it, validators skip these checks visibly rather than fail</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §6</td><td>domain (collection-resolved)</td><td>ERROR</td></tr>
+<tr><td>CP-15</td><td>Bundle closure: a bundle carries <code>embedded {collections, content}</code> and a manifest does not; every ref (root and step-level) resolves to an embedded document of the matching <code>documentType</code>, identity verbatim; a course selector resolves to a node of that kind inside the embedded course</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §2</td><td>domain (bundle)</td><td>ERROR</td></tr>
+<tr><td>CP-16</td><td>A bundle MUST NOT re-mint any embedded document’s <strong>type-directed portable identity</strong> (root <code>globalId</code>, or a course/questionSet’s <code>sourceCourseId</code> / <code>sourceQuestionSetId</code>; NORMATIVE §4.4) or its member ids</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §2</td><td>consumer obligation — an import behavior, not a static-document check; cataloged in <a href="#19-consumer-side-obligations-not-expressible-as-document-checks">§19</a></td><td>(behavioral)</td></tr>
+<tr><td>CP-17</td><td>Advisory hygiene: refs SHOULD pin <code>version</code> (consumers surface mismatches rather than silently substituting); a <code>teaching</code> step SHOULD list objectives; <code>sequence[]</code> SHOULD serialize in timeline order; an unauthored slot SHOULD carry an <code>authoringNote</code> (buffer steps excepted); week occupancy SHOULD stay within <code>lessonsPerWeek</code>; an objective SHOULD meet a formative checkpoint before a summative one; a checkpoint’s effective assessed set SHOULD be non-empty; a review SHOULD revisit no sooner than <code>recyclingPolicy.minSpacingWeeks</code> (default 2) absolute weeks after first teach; a bundle SHOULD embed nothing unreferenced and SHOULD surface pinned-version drift</td><td><a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §2–§7</td><td>advisory</td><td>WARN</td></tr>
+</tbody>
+</table>
+</div>
+<p>Reference implementation note: CP-4…CP-15 and CP-17 are implemented by the pack validator in the reference tooling, whose docstring carries the rule-by-rule list as E01–E15/W01–W10. <strong>Embedded-document validity:</strong> the <code>embedded</code> block’s documents are typed as generic objects in <code>curriculum-pack.schema.json</code>, so the pack schema does not by itself reject a malformed embedded artifact. CP-15 checks each embedded document’s <em>identity</em> (<code>documentType</code> + its type-directed identity per NORMATIVE §4.4 — a course/questionSet by <code>sourceCourseId</code>/<code>sourceQuestionSetId</code>, a collection/glossary by root <code>globalId</code>) and <em>closure</em> (every ref resolves to an embedded document of the matching type; selectors resolve inside embedded courses). Full validation of each embedded document — against its own schema <strong>and</strong> its own domain rules, dispatched on the embedded document’s <code>documentType</code> — is performed by the shared emission gate before a bundle is written. Every writer in the reference tooling runs that gate (the bundle assembler, <code>lc_pack.save()</code>, <code>lc_collection.save()</code>, and the pack validator’s own <code>--validate</code> pass over a bundle), so an embedded artifact that is schema-valid but domain-invalid is rejected on the producer path rather than packaged. This is a producer-path guarantee of the reference tooling, not a constraint the pack schema itself expresses.</p>
+<hr>
+<h2 id="17-glossary-gl-"><a class="header" href="#17-glossary-gl-">17. Glossary (<code>GL-*</code>)</a></h2>
+<p>Rules for <code>documentType: "glossary"</code> documents.</p>
+<p>The declared-inventory rules follow a single severity principle: <strong>a false claim is an ERROR; a missing claim is a WARN.</strong> Gloss-rule and inventory ERRORs are interchange-boundary rules — they gate what a producer may <em>emit</em>, and a work-in-progress document inside an authoring tool may legitimately fail them mid-authoring (<a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2).</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>#</th><th>Rule</th><th>Source</th><th>Tier</th><th>Severity</th></tr>
+</thead>
+<tbody>
+<tr><td>GL-1</td><td>Root triplet present; <code>documentType == "glossary"</code>; <code>globalId</code>/<code>version</code>/<code>title</code>/<code>language</code> non-empty; <code>entries[]</code> present</td><td>NORMATIVE §3.2; schema</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>GL-2</td><td><code>translationLanguages</code>, when present, is an array of unique, non-empty, BCP 47-shaped strings</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §1</td><td>schema + domain</td><td>ERROR</td></tr>
+<tr><td>GL-3</td><td>Entry shape: <code>id</code> non-empty and unique; <code>term</code> non-empty; <code>kind</code> within <code>word</code>/<code>phrase</code>; typed optional fields (strings non-empty incl. <code>firstMention</code>, <code>linkAutomatically</code> boolean, <code>examples[].text</code> non-empty); translation maps (<code>translations</code>, <code>definitionTranslations</code>, example translations) keyed by BCP 47 tags with non-empty values</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2</td><td>schema (per-field) + domain (id uniqueness)</td><td>ERROR</td></tr>
+<tr><td>GL-4</td><td>The gloss rule: every entry carries a <code>definition</code>, or at least one <code>translations</code> value, or at least one <code>definitionTranslations</code> value (interchange-boundary)</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>GL-5</td><td>Inventory membership: when <code>translationLanguages</code> is declared (non-empty), every translation key used anywhere in the document is a member of it. <strong>Language tags are compared case-insensitively</strong> (BCP 47 §2.1.1): a document declaring <code>es</code> and using the key <code>ES</code> satisfies this rule, and satisfies GL-6 as well. <strong>Absent and empty declarations are equivalent — no claim is made, and GL-5/GL-6 are vacuous (GL-8 then applies)</strong></td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §1</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>GL-6</td><td>No false claims: every declared <code>translationLanguages</code> value is used by at least one translation value somewhere in the document, again compared case-insensitively. The same case-insensitive key governs GL-2’s uniqueness check: <code>es</code> and <code>ES</code> in one <code>translationLanguages</code> array are a duplicate declaration, not two languages</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §1</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>GL-7</td><td>Duplicate matching surface (<code>term</code>/<code>otherForms</code>) across entries. Surfaces are compared after Unicode normalization to <strong>NFC</strong> followed by <strong><code>casefold()</code></strong> — the Unicode caseless-matching operation, not simple lowercasing, so German <code>Straße</code> and <code>STRASSE</code> are one surface and canonically equivalent compositions of an accented character do not read as two — legal (senses are separate entries) but auto-linking consumers must disambiguate. <strong>This warning is routinely <em>accepted</em>, not fixed:</strong> two senses of one spelling are the model working as designed, so GL-7 exists to inform disambiguation, not to be driven to zero</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2</td><td>advisory</td><td>WARN</td></tr>
+<tr><td>GL-8</td><td>Translations are present but the document declares no <code>translationLanguages</code> (missing claim — fires on imports; documents authored against the declaration always carry it)</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §1</td><td>advisory</td><td>WARN</td></tr>
+<tr><td>GL-9</td><td>An entry’s <code>otherForms</code> repeats its own term (redundant matching surface)</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2</td><td>advisory</td><td>WARN</td></tr>
+<tr><td>GL-10</td><td>Language-code lint: a declared <code>translationLanguages</code> value (or, absent a declaration, a used key) whose 2-letter primary subtag is not ISO 639-1, or whose 2-letter region subtag is not ISO 3166-1 alpha-2. 3-letter primary subtags and script subtags are shape-checked only</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2</td><td>advisory</td><td>WARN</td></tr>
+<tr><td>GL-11</td><td>Absent <code>firstMention</code> is <strong>legal — never an error or warning</strong> (imported glossaries carry no lesson provenance; the entry renders as course-scoped background vocabulary). Surfaced only as a maturity signal (the validator’s success report counts entries with/without it). A <code>firstMention</code> naming a lesson the importer does not hold is treated as absent</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2.1</td><td>advisory</td><td>NOTE</td></tr>
+</tbody>
+</table>
+</div>
+<p>Reference implementation note: GL-1…GL-10 are implemented by the glossary validator in the reference tooling (rule ids GE01–GE05/GW01–GW04 in its docstring: GL-1↔GE01, GL-2↔GE01, GL-3↔GE02, GL-4↔GE03, GL-5↔GE04, GL-6↔GE05, GL-7↔GW01, GL-8↔GW02, GL-9↔GW03, GL-10↔GW04); GL-11 is NOTE-tier — implemented as the maturity report’s <code>firstMention n/total</code> line, not as a GE/GW rule.</p>
+<hr>
+<h2 id="18-11-deepenings--root-and-course-rd--co-"><a class="header" href="#18-11-deepenings--root-and-course-rd--co-">18. 1.1 deepenings — root and course (<code>RD-*</code>, <code>CO-*</code>)</a></h2>
+<p>Rules that deepen the root document (<a href="#3-root-document">§3</a>) and the course artifact (<a href="#4-course-level">§4</a>) as of 1.1. They add no new fields; they enforce obligations NORMATIVE already carried.</p>
+<h3 id="181-root-document-all-artifact-types"><a class="header" href="#181-root-document-all-artifact-types">18.1 Root document, all artifact types</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>#</th><th>Rule</th><th>Source</th><th>Tier</th><th>Severity</th></tr>
+</thead>
+<tbody>
+<tr><td>RD-1</td><td><code>specVersion</code> ↔ <code>$schema</code> version agreement: when <strong>both</strong> fields are present, <code>specVersion</code> is well-formed <code>1.x</code>, and <code>$schema</code> is an <code>lc-json.org</code> versioned URL, the URL’s version path MUST match <code>specVersion</code> on <strong>major.minor</strong> (patch releases share the minor’s URL per §8.1: <code>1.0.1</code> legitimately pairs with <code>/1.0/</code> or <code>/1.0-rc.N/</code>). Field absence is governed separately by §3.2 and is not re-reported here</td><td>NORMATIVE §8.4</td><td>domain</td><td>ERROR</td></tr>
+<tr><td>RD-2</td><td>Unrecognized non-<code>x-</code> fields are surfaced <strong>informationally</strong>, one line per stray, stating the §5.4 consequence (consumers may ignore; free to drop on re-export; a future spec version may claim the name) and the remedy (<code>x-&lt;vendor&gt;-…</code> for guaranteed preservation, §7.4). <code>x-</code> members are listed separately as extension members with preservation expected. Never rises above NOTE — §5.4 makes these fields legal; this surfaces silent-drop risk and catches typos (<code>titel</code>). Skips: closed objects (already ERROR by contract), members of reserved/unknown-type questions (§6 preserves them wholesale), and the interior of <code>x-</code> subtrees (the namespace owner’s business)</td><td>NORMATIVE §5.4, §7 (explains existing rules; adds none)</td><td>advisory</td><td>NOTE</td></tr>
+</tbody>
+</table>
+</div>
+<p>A document that pins a <code>$schema</code> publication other than the validator’s own is not an error — the reference validator surfaces it as a NOTE, because validating an rc.1 document with an rc.1-tagged validator is the normal case and validating it with a later one is legitimate.</p>
+<h3 id="182-course-level"><a class="header" href="#182-course-level">18.2 Course-level</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>#</th><th>Rule</th><th>Source</th><th>Tier</th><th>Severity</th></tr>
+</thead>
+<tbody>
+<tr><td>CO-1</td><td>Every id in <code>courseObjectiveIds</code> and unit/lesson <code>objectiveIds</code> resolves within the course’s own <code>objectives[]</code> pool (carried copies embedded; no dangling vocabulary references)</td><td>NORMATIVE §4.9</td><td>domain</td><td>WARN for <code>specVersion</code> 1.0 documents (the 1.0 WARN-tier objective-reference-integrity posture, unchanged); <strong>ERROR</strong> for documents declaring <code>specVersion</code> ≥ 1.1 (this restates §4.9’s MUST)</td></tr>
+<tr><td>CO-2</td><td><code>license</code>/<code>canonicalUrl</code>/<code>derivedFrom</code> validate against the shared publication field group</td><td>schema (composed)</td><td>schema</td><td>ERROR</td></tr>
+<tr><td>CO-3</td><td><code>glossaryRefs</code>, when present at course/unit/lesson, is an array of non-empty glossary <code>globalId</code> strings (placement encodes scope; no <code>{globalId, scope}</code> object form; junctions stop at Lesson)</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a>; <code>course.schema.json</code></td><td>schema</td><td>ERROR</td></tr>
+<tr><td>CO-4</td><td>A <code>glossaryRefs</code> entry that resolves to no <code>glossaries[]</code> pool copy and no held document (a dangling ref) — consumers SHOULD surface it, naming the missing <code>globalId</code>, SHOULD preserve it for later binding, and MUST NOT fail the import</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a></td><td>advisory (consumer-surfaced)</td><td>WARN</td></tr>
+<tr><td>CO-5</td><td><code>glossaries[]</code> pool hygiene: a pool entry no <code>glossaryRefs</code> references is a stowaway; the pool SHOULD hold one copy per referenced glossary, deduplicated by <code>globalId</code>. <strong>Per-copy validity is NOT schema-enforced:</strong> the <code>glossaries[]</code> items are typed as generic objects so a carried copy can travel whole (a <code>$ref</code> to the full glossary schema would collide with the pre-port/pool-copy tolerance for an omitted <code>$schema</code>/<code>specVersion</code>). A producer SHOULD ensure each pool copy is a valid glossary; a consumer MAY re-validate copies with the glossary validator. The reference course validator surfaces the dangling-ref (CO-4) and stowaway conditions but does not re-run the GL-* rules on each copy</td><td><a href="glossary-reference.html"><code>glossary-reference.md</code></a>; <code>course.schema.json</code></td><td>advisory (stowaway) + producer-obligation (per-copy validity)</td><td>WARN (stowaway)</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="19-consumer-side-obligations-not-expressible-as-document-checks"><a class="header" href="#19-consumer-side-obligations-not-expressible-as-document-checks">19. Consumer-side obligations not expressible as document checks</a></h2>
+<p>Cataloged for implementers; these are behavioral, tested by round-trip/import tests rather than document validation.</p>
+<ul>
+<li>Member reconciliation by id — no duplication; membership recording for tags; link-never-overwrite for non-owned objectives; verbatim creation of absent members (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.7).</li>
+<li>Display-collision handling never merges members or reassigns ids (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.7).</li>
+<li>Clean rejection of unimplemented <code>documentType</code>s, naming the type (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.1).</li>
+<li>Preservation of unknown alignment-claim values, and of unrecognized <em>fields inside</em> <code>sequence[]</code> steps, across read/write cycles (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.5; <a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4 — the step shape itself is firm as of 1.1).</li>
+<li>Preservation of <code>sequence[]</code> array order — within a week, document order is the schedule (<a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.4).</li>
+<li>Emission of the <code>contentRef</code> key even when null: serializers that drop null values must exempt it (<a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §4.1).</li>
+<li>Glossary entry reconciliation by id on re-import — update, never duplicate; ids preserved verbatim, never re-minted (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §3.4/§5.7 as extended to glossary entries).</li>
+<li><code>firstMention</code> handling on import: a value naming a lesson the importer does not hold is treated as absent (never an error); an importer that regenerates lesson GlobalIds MUST remap <code>firstMention</code> on glossaries imported alongside (<a href="glossary-reference.html"><code>glossary-reference.md</code></a> §2.1).</li>
+<li>Bundle re-mint prohibition (CP-16): a consumer importing a bundle MUST NOT re-mint any embedded document’s identity (root <code>globalId</code> or a course/questionSet’s <code>sourceCourseId</code>/<code>sourceQuestionSetId</code>) or member ids — an import-behavior obligation, not a static-document check (<a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a> §2).</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="LOCALIZATION.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="question-types-reference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="LOCALIZATION.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="question-types-reference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

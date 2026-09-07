@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1-rc.1/publication-fields.schema.json",
+  "title": "LC-JSON Shared Publication Field Group",
+  "description": "The publication-metadata field group shared by the distributable artifact types (course, glossary, subjectCollection, curriculumPack) via allOf composition. Fields are plain optional top-level properties on each document root — there is no nested publication envelope. questionSet is excluded by role: it is a lightweight referencable content resource, not a distribution-governed one.",
+  "type": "object",
+  "properties": {
+    "license": {
+      "type": "string",
+      "description": "License under which this document is distributed. 'unspecified' is appropriate only for private drafts; documents intended for distribution SHOULD carry a concrete license. SPDX identifiers (e.g. 'CC-BY-4.0') are recommended for recognizable licenses; 'mixed' or 'seeComponents' signal that embedded or referenced resources carry their own terms (typical for packs and courses embedding third-party material).",
+      "default": "unspecified"
+    },
+    "canonicalUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri",
+      "description": "URL where the authoritative copy of this document is published, when one exists. Null or absent means no canonical location is asserted.",
+      "default": null
+    },
+    "derivedFrom": {
+      "type": "array",
+      "description": "Provenance chain: the document(s) this one was revised or remixed from. Each entry names a source document by its portable identity. A tool creating a new document by modifying an existing one SHOULD record the source here.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "globalId": {
+            "type": "string",
+            "description": "The source document's globalId.",
+            "minLength": 1
+          },
+          "version": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The source document's version at the time of derivation, when known.",
+            "default": null
+          }
+        },
+        "required": [
+          "globalId"
+        ]
+      },
+      "default": []
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.1/short-answer.schema.json",
+  "title": "ShortAnswer Question Schema",
+  "description": "Free text response with multiple acceptable answers and case sensitivity options",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "shortAnswer"
+        },
+        "acceptedAnswers": {
+          "type": "array",
+          "description": "All acceptable answers. The first entry is treated as the canonical form for display in solutions and feedback.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "caseSensitive": {
+          "type": "boolean",
+          "description": "Whether answer matching is case-sensitive",
+          "default": false
+        }
+      },
+      "required": [
+        "acceptedAnswers"
+      ]
+    }
+  ]
+}

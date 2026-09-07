@@ -1,0 +1,416 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Item patterns (authoring guide) - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/ITEM_PATTERNS.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-item-patterns--authoring-guide"><a class="header" href="#lc-json-item-patterns--authoring-guide">LC-JSON Item Patterns — Authoring Guide</a></h1>
+<p><strong>Status:</strong> Informative. See <a href="NORMATIVE.html">NORMATIVE.md</a> for binding requirements.
+<strong>Spec version:</strong> 1.0
+<strong>Last updated:</strong> 2026-05-02</p>
+<p>This document is a guide for authors and developers working with LC-JSON (Learning Content JSON) items (<code>exercise</code>, <code>quiz</code>). It explains the four policy fields available on each item, names the common combinations teachers use, and surveys how different consumers may interpret them.</p>
+<p>It is <strong>informative</strong>, not normative. Nothing here adds requirements to producers or consumers — it describes the affordances the wire format already gives you, and how to think about composing them.</p>
+<hr>
+<h2 id="1-the-four-policy-fields"><a class="header" href="#1-the-four-policy-fields">1. The four policy fields</a></h2>
+<p>Every Exercise or Quiz item carries four fields that an author composes to express pedagogical intent. They are <strong>independent</strong>: any combination is valid LC-JSON.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>What it is on the wire</th><th>What it isn’t</th></tr>
+</thead>
+<tbody>
+<tr><td><strong><code>type</code></strong></td><td>Structural form: <code>"exercise"</code> or <code>"quiz"</code>. Signals the consumer’s UI rendering (different chrome, different settings panes) and tells the consumer to track points in separate buckets — enabling future weighted-grading schemes (e.g., “exercises = 30%, quizzes = 70%”).</td><td>A grading-policy signal. <code>quiz</code> does not mean graded; <code>exercise</code> does not mean ungraded.</td></tr>
+<tr><td><strong><code>isGraded</code></strong></td><td>Boolean. Whether the score on this item should be recorded against the learner’s grade.</td><td>A navigation signal. Whether the learner can move forward despite a low score is a separate consumer-policy question.</td></tr>
+<tr><td><strong><code>isOptional</code></strong></td><td>Boolean. Whether the learner is required to attempt this item to be considered “done” with the lesson.</td><td>A grading or navigation signal in itself — but consumers often combine it with completion-tracking.</td></tr>
+<tr><td><strong><code>passMarkPercent</code></strong></td><td>Number 0–100. The threshold at which a score counts as “passing.”</td><td>A gating directive. The wire format does not say what the consumer does when a learner falls below the threshold.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>The crucial point:</strong> <code>passMarkPercent</code> is a <em>threshold</em>, not a <em>gate</em>. What happens when a learner scores below it is <strong>consumer policy</strong>, not spec mandate. See §3 below.</p>
+<h3 id="plus-tags-metadata-not-policy"><a class="header" href="#plus-tags-metadata-not-policy">Plus: <code>tags</code> (metadata, not policy)</a></h3>
+<p>Items also carry an optional <code>tags</code> array — taxonomic strings used for filtering, search, gradebook grouping, and similar metadata operations. Tags are <em>not</em> policy fields (they don’t affect grading, navigation, or threshold logic). Conventional namespaces use colons:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Namespace</th><th>Example</th><th>Use</th></tr>
+</thead>
+<tbody>
+<tr><td>Domain hierarchy</td><td><code>history:immigration:united-states</code></td><td>Subject → topic → sub-topic</td></tr>
+<tr><td>Stage</td><td><code>stage:lower-secondary</code>, <code>grade:9</code>, <code>year:9</code>, <code>level:B2</code></td><td>Pick the convention your audience knows; the spec doesn’t impose a single vocabulary</td></tr>
+<tr><td>Cognitive skill</td><td><code>fact-recall</code>, <code>analysis</code>, <code>synthesis</code></td><td>Bloom-style levels</td></tr>
+<tr><td>Exam alignment</td><td><code>exam:cambridge-fce</code>, <code>exam:ap-history</code></td><td>When content is targeted at a specific exam</td></tr>
+</tbody>
+</table>
+</div>
+<p>Item-level tags are <strong>independent</strong> of any tags on inner questions. A <code>quiz</code> with three tagged questions can itself be tagged differently — the quiz’s tags describe the assessment as a whole; the questions’ tags describe each item.</p>
+<h3 id="note-on-contentsequenceitem-csi-tagging"><a class="header" href="#note-on-contentsequenceitem-csi-tagging">Note on ContentSequenceItem (CSI) tagging</a></h3>
+<p>A <code>contentsequence</code> item references a <code>contentItemId</code> plus zero or more <code>relatedItemIds</code> (typically Exercise/Quiz items). Each of those referenced items may carry its own tags. <strong>The wire format does not specify how a consumer should compose tags across the CSI and its referenced items</strong> — that is consumer policy. Reasonable choices include:</p>
+<ul>
+<li><strong>Surface only the CSI’s own tags</strong> in search/filter UIs (treat the CSI as the authoritative metadata source for the bundle)</li>
+<li><strong>Surface the union of CSI tags + related-items’ tags</strong> (the bundle inherits everything contributed)</li>
+<li><strong>Surface only the related items’ tags</strong> when the CSI is being treated as a thin wrapper</li>
+<li><strong>Combine with namespace-aware deduplication</strong> (e.g., union of <code>history:*</code> tags but only the CSI’s own <code>grade:*</code> tag)</li>
+</ul>
+<p>Authors should apply tags to whichever items make sense for their content; consumers should document their composition policy so authors know what to expect.</p>
+<hr>
+<h2 id="2-common-authoring-patterns"><a class="header" href="#2-common-authoring-patterns">2. Common authoring patterns</a></h2>
+<h3 id="question-level-display-hints"><a class="header" href="#question-level-display-hints">Question-level display hints</a></h3>
+<p>A few question types carry advisory display hints that don’t change the wire shape but help consumers pick a fitting layout. The clearest example is <strong>ordering</strong>: an <code>ordering</code> question can carry <code>orderingUnit: "word" | "sentence" | "paragraph"</code>, signalling tile size — inline tokens for word-level, stacked card blocks for sentence- or paragraph-level (see <code>examples/16-ordering.json</code>, <code>16b-sentence-ordering.json</code>, <code>16c-paragraph-ordering.json</code>). The discriminator stays <code>ordering</code> in all three cases; the hint lets the consumer choose layout. Consumers MAY render uniformly regardless. <strong>Placement</strong> carries the parallel <code>placementUnit: "sentence" | "paragraph" | "sectionLabel"</code> hint with the same advisory framing — see <a href="question-types-reference.html"><code>question-types-reference.md</code></a> §11.</p>
+<h3 id="two-mode-shape-matching"><a class="header" href="#two-mode-shape-matching">Two-mode shape: matching</a></h3>
+<p>Matching questions carry a <code>matchingMode: "pairs" | "classification"</code> discriminator, with two distinct sub-shapes underneath: <code>pairs: [{ item, match }]</code> for 1:1 matching and <code>categories: [{ label, items }]</code> for classification (many-to-one). In <code>pairs</code> mode, consumers MAY render two columns with drag-and-drop pairing or a per-row dropdown of candidate matches. In <code>classification</code> mode, consumers MAY render items as draggable chips and category labels (plus distractors) as drop zones. Both modes use the same <code>distractors[]</code> field for extra unmatched values. The two presentations are consumer-defined; the spec describes the structural relationship and hints at the affordance. See <code>examples/15-matching.json</code> (pairs) and <code>examples/15b-matching-classification.json</code> (classification).</p>
+<h3 id="item-level-patterns"><a class="header" href="#item-level-patterns">Item-level patterns</a></h3>
+<p>The four item-level fields generate a wide design space. These patterns are common enough to have names:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Pattern</th><th><code>type</code></th><th><code>isGraded</code></th><th><code>isOptional</code></th><th><code>passMarkPercent</code></th><th>Use case</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Open practice</strong></td><td><code>exercise</code></td><td><code>false</code></td><td><code>false</code></td><td><code>0</code></td><td>Free practice; no stakes. Learners try as much as they want.</td></tr>
+<tr><td><strong>Graded homework</strong></td><td><code>exercise</code></td><td><code>true</code></td><td><code>false</code></td><td><code>70</code> (varies)</td><td>Counts toward grade. Threshold defines “passing the homework.”</td></tr>
+<tr><td><strong>Mastery exercise</strong></td><td><code>exercise</code></td><td><code>true</code></td><td><code>false</code></td><td><code>80–100</code></td><td>Must (typically) demonstrate mastery before continuing — depends on consumer’s gating model.</td></tr>
+<tr><td><strong>Diagnostic pre-test</strong></td><td><code>quiz</code></td><td><code>false</code></td><td><code>false</code></td><td><code>0</code></td><td>“What do you know going in?” Surfaces baseline; never blocks; learner sees their score for self-awareness.</td></tr>
+<tr><td><strong>Typical assessment</strong></td><td><code>quiz</code></td><td><code>true</code></td><td><code>false</code></td><td><code>70</code></td><td>Standard quiz. Counts toward grade.</td></tr>
+<tr><td><strong>Exit ticket</strong></td><td><code>quiz</code></td><td><code>true</code></td><td><code>false</code></td><td><code>0</code></td><td>Quick check at end of lesson. Recorded in gradebook (so the teacher can see attempts), but no threshold gate.</td></tr>
+<tr><td><strong>Bonus / enrichment</strong></td><td><code>exercise</code> or <code>quiz</code></td><td>varies</td><td><code>true</code></td><td>varies</td><td>Skippable. Some teachers grade bonus work, some don’t.</td></tr>
+<tr><td><strong>Self-check</strong></td><td><code>quiz</code></td><td><code>false</code></td><td><code>true</code></td><td><code>0</code></td><td>Optional, ungraded reflection. Pure metacognition.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Pick the row that matches your intent. Or compose your own combination — the spec doesn’t enumerate “valid” patterns; the patterns above just happen to be common.</p>
+<hr>
+<h2 id="3-how-consumers-may-interpret-these-fields"><a class="header" href="#3-how-consumers-may-interpret-these-fields">3. How consumers may interpret these fields</a></h2>
+<p>The wire format describes what the fields <em>are</em>. It does <strong>not</strong> prescribe what a consumer <em>does</em> with them. Different consumers — even different modes of the same consumer — can interpret the same payload differently. Some examples:</p>
+<h3 id="consumer-policy-patterns-illustrative"><a class="header" href="#consumer-policy-patterns-illustrative">Consumer-policy patterns (illustrative)</a></h3>
+<ul>
+<li><strong>Open-navigation LMS:</strong> Learner moves freely between items in any order. <code>passMarkPercent</code> is used for the score-display badge and for the gradebook-column threshold; it doesn’t gate forward progress.</li>
+<li><strong>Sequential-navigation LMS:</strong> Learner moves in order. A graded item below <code>passMarkPercent</code> blocks forward progress until passed; ungraded items always allow forward progress regardless of score. The “is this graded?” question is what determines whether a low score gates anything.</li>
+<li><strong>Mastery-routing LMS:</strong> Scores below <code>passMarkPercent</code> route the learner to remediation content; scores above route to enrichment. Grading is recorded but doesn’t block progress (the routing handles it).</li>
+<li><strong>Reporting-only consumer:</strong> Uses <code>passMarkPercent</code> purely for the gradebook-column display. Doesn’t affect navigation. Ungraded items don’t appear in the gradebook at all.</li>
+<li><strong>Strict-gate consumer:</strong> Gates forward progress on every item with a <code>passMarkPercent &gt; 0</code>, regardless of <code>isGraded</code>. (This is more restrictive than the spec mandates, but it’s a real pattern in some LMS.)</li>
+</ul>
+<p>Many consumers also implement a common <strong>gradebook-semantics</strong> pattern: items where the learner has scored ≥ <code>passMarkPercent</code> (and the item is graded) are reported as <strong>Completed</strong> in the teacher’s gradebook view. Whether “completed” maps to a letter grade is a separate gradebook configuration.</p>
+<p>The point is plurality. <strong>Author intent is portable across consumers only insofar as the author composes it across multiple fields.</strong> Setting <code>passMarkPercent: 0</code> alongside <code>isGraded: false</code> is the most permissive combination — virtually no consumer policy can construct a friction surface from “ungraded + no threshold.”</p>
+<h3 id="consumer-plurality-on-tel-links-html-safety-profile-7"><a class="header" href="#consumer-plurality-on-tel-links-html-safety-profile-7">Consumer plurality on <code>tel:</code> links (HTML safety profile, §7)</a></h3>
+<p>The same consumer-plurality principle governs the HTML safety profile’s URL allowlist. <code>tel:</code> links are permitted in <code>&lt;a href&gt;</code> (per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §4.1), but whether the consumer makes them actionable is consumer-policy:</p>
+<ul>
+<li><strong>K–12 / school-aged-audience consumer:</strong> gates <code>tel:</code> links behind a configuration flag, default off. When the flag is off, the link’s text remains visible but the <code>href</code> is neutralized so taps don’t open the dialer.</li>
+<li><strong>Adult/corporate-training consumer:</strong> typically enables <code>tel:</code> unconditionally — calling a sales contact or support line is a legitimate authoring affordance.</li>
+<li><strong>Print/export consumer:</strong> renders the phone number as plain text; no actionable link.</li>
+<li><strong>Reporting-only consumer:</strong> treats <code>tel:</code> no differently from <code>mailto:</code> — passes through verbatim.</li>
+</ul>
+<p>The safety profile’s domain validator emits a warning (not an error) for <code>tel:</code> links so producers know to verify their target audience before shipping. Consumers MUST NOT reject documents that contain <code>tel:</code> links; the choice of how to render them is consumer policy.</p>
+<h3 id="authored-text-line-break-conventions"><a class="header" href="#authored-text-line-break-conventions">Authored-text line-break conventions</a></h3>
+<p>Plain-text authored-text fields — <code>description</code>, <code>prompt</code>, <code>passage</code>, <code>hint</code>, <code>feedback.correct</code>, <code>feedback.incorrect</code>, etc. — carry literal newline characters as part of the field value (escaped as <code>\n</code> in JSON per RFC 8259). The spec is silent on how consumers should render those characters: a runtime might collapse all whitespace and treat the field as a single block, or honor line breaks, or wrap paragraphs in semantic block elements. The wire format is a string; what consumers do with embedded newlines is consumer policy.</p>
+<p>Where consumers want portable rendering across the ecosystem, a useful convention is:</p>
+<ul>
+<li><strong><code>\n\n</code> (a blank-line boundary) denotes a paragraph break.</strong> Consumers MAY render each paragraph as a block element (e.g. <code>&lt;p&gt;...&lt;/p&gt;</code>).</li>
+<li><strong>A single <code>\n</code> denotes a line break within a paragraph.</strong> Consumers MAY render it as <code>&lt;br&gt;</code> or equivalent.</li>
+</ul>
+<p>Producers using this convention get aligned rendering across consumers that adopt it; producers ignoring it get whatever the consumer chooses.</p>
+<p><strong>Some consumers implement this convention</strong> as: <code>\n\n</code> becomes <code>&lt;p&gt;</code> blocks, single <code>\n</code> becomes <code>&lt;br&gt;</code>, both with HTML-safe encoding of authored content. <strong>Other consumer models</strong> may legitimately:</p>
+<ul>
+<li>Collapse all whitespace and render the field as a single inline block (typical of grid-cell renderers, screen-reader-first consumers).</li>
+<li>Honor single <code>\n</code> as <code>&lt;br&gt;</code> but treat <code>\n\n</code> the same way (line-break-only convention).</li>
+<li>Render the field through a Markdown processor that gives <code>\n\n</code> paragraph semantics plus richer features (lists, emphasis, etc.) — out of scope for this spec but a legitimate consumer choice.</li>
+</ul>
+<p>This convention applies only to plain-text authored fields. Trusted-HTML surfaces (<code>ContentItem.html</code>, <code>SignpostItem.customHtml</code>) carry HTML directly, sanitized per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a>, and use the producer’s chosen block elements (<code>&lt;p&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;blockquote&gt;</code>, etc.) — they do not rely on newline-character conventions.</p>
+<hr>
+<h2 id="4-author-tips"><a class="header" href="#4-author-tips">4. Author tips</a></h2>
+<ul>
+<li>
+<p><strong>For diagnostics, exit tickets, and any item where you don’t want a threshold to matter at all:</strong> set <code>passMarkPercent: 0</code>. Combined with <code>isGraded: false</code> (where appropriate), this is the lowest-friction signal across all consumer models.</p>
+</li>
+<li>
+<p><strong><code>isGraded: false</code> + <code>passMarkPercent: 0</code> is the universal “let-them-through” combination.</strong> No consumer policy can reasonably construct a navigation gate from these values.</p>
+</li>
+<li>
+<p><strong><code>isGraded: true</code> + <code>passMarkPercent: 0</code></strong> is a real pattern (exit ticket): graded for record so the teacher sees attempts, but no threshold gate.</p>
+</li>
+<li>
+<p><strong>If you target multiple consumers, prefer composing intent across multiple fields rather than relying on one alone.</strong> A reading of <code>isGraded: false</code> alone might still be paired by some consumer with a default 70% threshold and friction. Setting <code>passMarkPercent: 0</code> explicitly makes the intent self-evident.</p>
+</li>
+<li>
+<p><strong>Test your content against the consumer you target.</strong> The spec defines the wire format; it doesn’t guarantee navigation behavior. Different consumers — and different navigation modes within a consumer — will produce different learner experiences from the same payload.</p>
+</li>
+<li>
+<p><strong>Document author intent in <code>instructions</code>.</strong> When a learner sees “Your score doesn’t count toward your grade — this is just to help you see where you’re starting from,” they understand the experience regardless of how the consumer chooses to interpret the fields. The wire payload is for the consumer; the prose is for the human.</p>
+</li>
+</ul>
+<hr>
+<hr>
+<h2 id="5-signposts--learning-objectives"><a class="header" href="#5-signposts--learning-objectives">5. Signposts + Learning Objectives</a></h2>
+<p>A <code>signpost</code> item is a structural marker — typically the first or last item in a unit or lesson — that consumers use to orient learners (“In this unit, you will be able to:”) or close a section (“You can now:”).</p>
+<p><strong>The wire format does not bind a specific rendering</strong>, but the field design suggests an expected pattern that any consumer can implement:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Wire-level meaning</th><th>Expected use</th></tr>
+</thead>
+<tbody>
+<tr><td><code>signpostType: "intro"</code> or <code>"summary"</code></td><td>The structural role of the signpost</td><td>Intro signposts open a section; summary signposts close it</td></tr>
+<tr><td><code>scope: "course" / "unit" / "lesson"</code></td><td>Which structural level the signpost belongs to</td><td>Determines which <code>objectiveIds[]</code> set the consumer can read</td></tr>
+<tr><td><code>customHtml</code> (optional)</td><td>Authored prose</td><td>When provided, lets the author add motivational/orientational text beyond the auto-rendered objectives</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>The expected pattern (consumer-defined):</strong></p>
+<p>When a course/unit/lesson has objectives assigned via <code>objectiveIds[]</code>, consuming applications are expected to render them in or near the matching signpost — typically:</p>
+<ul>
+<li><strong>Intro signpost:</strong> a header phrase like “<em>In this unit, you will be able to:</em>” followed by a bulleted list of the unit’s objectives (resolved from <code>course.objectives[]</code> via the unit’s <code>objectiveIds</code>).</li>
+<li><strong>Summary signpost:</strong> a header phrase like “<em>You can now:</em>” followed by a checklist (often with checkmarks) of the same objectives.</li>
+</ul>
+<p>The <code>customHtml</code> field, when set, lets the author add prose ABOVE or alongside this auto-rendered objectives block — typically motivational framing, an evocative image, an applications-of-the-topic list, etc. The author writes the hook; the consumer auto-renders the objectives.</p>
+<p><strong>Implication for authors:</strong></p>
+<ul>
+<li>Don’t restate the objectives in <code>customHtml</code> — the consumer is expected to render them automatically. Doing so creates duplication.</li>
+<li>Don’t open <code>customHtml</code> with phrasing that clashes with the consumer’s likely auto-render header (e.g., “By the end of this unit, you will…” — that’s typically what the consumer prepends to the objectives list).</li>
+<li>Do use <code>customHtml</code> for what the auto-render can’t say: the <em>why</em> of the unit, an opening image or visual, an “applications in:” list, a motivational closing.</li>
+<li>For courses delivered to multiple consumers with different rendering policies, prefer brief <code>customHtml</code> so the consumer’s auto-rendered objectives are always the dominant orientation surface.</li>
+</ul>
+<p><strong>Fallback when there are no objectives:</strong></p>
+<p>If a unit/lesson has no <code>objectiveIds[]</code> and no <code>customHtml</code>, consumers may render nothing, render a generic placeholder, or skip the signpost entirely — that policy is consumer-defined. Authors who include signposts SHOULD also assign objectives or provide <code>customHtml</code>, lest some consumers render an empty stub.</p>
+<hr>
+<h2 id="see-also"><a class="header" href="#see-also">See also</a></h2>
+<ul>
+<li><a href="NORMATIVE.html">NORMATIVE.md</a> — binding producer/consumer requirements</li>
+<li><a href="README-spec.html">README.md</a> — spec overview</li>
+<li><a href="https://lc-json.org/examples/11-exercise-item.json">examples/11-exercise-item.json</a> — graded homework exercise</li>
+<li><a href="https://lc-json.org/examples/12a-graded-quiz-item.json">examples/12a-graded-quiz-item.json</a> — typical graded assessment</li>
+<li><a href="https://lc-json.org/examples/12b-ungraded-quiz-item.json">examples/12b-ungraded-quiz-item.json</a> — ungraded diagnostic pre-test</li>
+<li><a href="https://lc-json.org/1.1/exercise-item.schema.json">schemas/exercise-item.schema.json</a>, <a href="https://lc-json.org/1.1/quiz-item.schema.json">schemas/quiz-item.schema.json</a> — formal schemas</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="glossary-reference.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="GLOSSARY.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="glossary-reference.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="GLOSSARY.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

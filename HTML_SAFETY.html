@@ -1,0 +1,568 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>HTML safety profile (normative) - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/HTML_SAFETY.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-html-safety-profile"><a class="header" href="#lc-json-html-safety-profile">LC-JSON HTML Safety Profile</a></h1>
+<p><strong>Status:</strong> Normative. Referenced from <a href="NORMATIVE.html">NORMATIVE.md</a> §11.
+<strong>Spec version:</strong> 1.0
+<strong>Last updated:</strong> 2026-05-03</p>
+<p>This document defines the HTML subset that LC-JSON (Learning Content JSON) 1.0 documents MAY carry in HTML-bearing fields, the obligations consumers MUST satisfy when rendering it, and the URL-scheme allowlist for embedded references.</p>
+<p>The keywords <strong>MUST</strong>, <strong>MUST NOT</strong>, <strong>SHOULD</strong>, <strong>SHOULD NOT</strong>, <strong>MAY</strong>, and <strong>RECOMMENDED</strong> are to be interpreted as described in <a href="https://www.rfc-editor.org/rfc/rfc2119">RFC 2119</a> and <a href="https://www.rfc-editor.org/rfc/rfc8174">RFC 8174</a>.</p>
+<hr>
+<h2 id="1-scope"><a class="header" href="#1-scope">1. Scope</a></h2>
+<h3 id="11-html-bearing-fields"><a class="header" href="#11-html-bearing-fields">1.1 HTML-bearing fields</a></h3>
+<p>HTML is permitted in the following fields:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Carrier</th><th>Schema reference</th></tr>
+</thead>
+<tbody>
+<tr><td><code>html</code></td><td><code>ContentItem</code></td><td><a href="https://lc-json.org/1.1/content-item.schema.json"><code>schemas/content-item.schema.json</code></a></td></tr>
+<tr><td><code>customHtml</code></td><td><code>SignpostItem</code></td><td><a href="https://lc-json.org/1.1/signpost-item.schema.json"><code>schemas/signpost-item.schema.json</code></a></td></tr>
+</tbody>
+</table>
+</div>
+<p>No other LC-JSON 1.0 field carries HTML. Question prompts, hints, choice text, feedback strings, and similar author-visible prose are plain text. A producer MUST NOT embed HTML in plain-text fields; a consumer MUST treat HTML in plain-text fields as literal text.</p>
+<h3 id="12-why-this-profile-exists"><a class="header" href="#12-why-this-profile-exists">1.2 Why this profile exists</a></h3>
+<p>Without a portable allowlist, every consumer would sanitize against its own subset, and the same document would render differently — sometimes unsafely — across implementations. This profile fixes the contract:</p>
+<ul>
+<li>Producers know what they MAY emit and have rendered consistently.</li>
+<li>Consumers know what they MUST accept, what they MUST sanitize away, and where the line falls between “render-time stripping” and “reject the document.”</li>
+<li>Third-party implementers have a single reference for <code>&lt;script&gt;</code>, event handlers, <code>&lt;iframe&gt;</code>, <code>target="_blank"</code>, <code>data:</code> URLs, and the rest of the long tail.</li>
+</ul>
+<p>The profile is deliberately strict-enough-to-be-safe, lenient-enough-to-author. Decisions throughout favor producer flexibility (any class, an inline-style allowlist that covers real authoring patterns, <code>tel:</code> for adult/corporate audiences) while binding consumer sanitization tightly enough that no conforming consumer can be coerced into XSS by a conforming document.</p>
+<hr>
+<h2 id="2-allowed-elements"><a class="header" href="#2-allowed-elements">2. Allowed elements</a></h2>
+<p>A conforming consumer MUST render the following HTML elements when they appear in HTML-bearing fields, subject to the attribute allowlist in §3 and the URL-scheme allowlist in §4.</p>
+<h3 id="21-block"><a class="header" href="#21-block">2.1 Block</a></h3>
+<p><code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, <code>&lt;h6&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;pre&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;td&gt;</code>, <code>&lt;figure&gt;</code>, <code>&lt;figcaption&gt;</code></p>
+<h3 id="22-inline"><a class="header" href="#22-inline">2.2 Inline</a></h3>
+<p><code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;mark&gt;</code>, <code>&lt;small&gt;</code>, <code>&lt;sub&gt;</code>, <code>&lt;sup&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;span&gt;</code>, <code>&lt;abbr&gt;</code>, <code>&lt;q&gt;</code>, <code>&lt;time&gt;</code></p>
+<h3 id="23-media"><a class="header" href="#23-media">2.3 Media</a></h3>
+<p><code>&lt;img&gt;</code>, <code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code>, <code>&lt;source&gt;</code>, <code>&lt;track&gt;</code></p>
+<h3 id="24-forbidden-elements"><a class="header" href="#24-forbidden-elements">2.4 Forbidden elements</a></h3>
+<p>The following elements MUST NOT be emitted by producers and MUST be stripped (along with their entire subtree) by consumers:</p>
+<p><code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>, <code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;link&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;base&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;math&gt;</code>, <code>&lt;applet&gt;</code>, <code>&lt;frame&gt;</code>, <code>&lt;frameset&gt;</code>, <code>&lt;noframes&gt;</code></p>
+<p><code>&lt;svg&gt;</code> and <code>&lt;math&gt;</code> are forbidden inline (the surface for XSS via SVG sanitization is wide and inconsistently understood across libraries). SVG raster equivalents are permitted via <code>&lt;img src="..."&gt;</code> per §4.1; consumers SHOULD NOT inline-render the contents of an SVG fetched this way (the standard <code>&lt;img&gt;</code> rendering pipeline is sufficient and isolates script).</p>
+<h3 id="25-unknown-elements"><a class="header" href="#25-unknown-elements">2.5 Unknown elements</a></h3>
+<p>When a consumer encounters an element name not listed in §2.1–§2.3 and not in the forbidden list of §2.4, the consumer MUST handle it per §6 (Unknown-element handling). Consumers MUST NOT reject a document on the basis of unknown elements alone.</p>
+<hr>
+<h2 id="3-allowed-attributes"><a class="header" href="#3-allowed-attributes">3. Allowed attributes</a></h2>
+<h3 id="31-universal-attributes"><a class="header" href="#31-universal-attributes">3.1 Universal attributes</a></h3>
+<p>The following attributes MAY appear on every element listed in §2.1–§2.3:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Attribute</th><th>Purpose</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td><code>id</code></td><td>Anchor target</td><td>SHOULD be document-unique; consumers MAY rewrite to namespace within their UI</td></tr>
+<tr><td><code>class</code></td><td>Author-defined CSS hooks</td><td>See §3.2</td></tr>
+<tr><td><code>title</code></td><td>Tooltip / accessible name</td><td></td></tr>
+<tr><td><code>lang</code></td><td>Language override (BCP 47)</td><td></td></tr>
+<tr><td><code>dir</code></td><td>Text direction (<code>ltr</code>, <code>rtl</code>, <code>auto</code>)</td><td></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="32-the-class-attribute"><a class="header" href="#32-the-class-attribute">3.2 The <code>class</code> attribute</a></h3>
+<p>The <code>class</code> attribute is permitted on all allowed elements. Values are author-defined; the spec does not constrain or interpret them. Consumers MUST preserve the <code>class</code> attribute across read/write cycles (§6.4 round-trip preservation in NORMATIVE applies). Consumers MAY style classes they recognize; consumers MUST ignore (without stripping) classes they do not recognize.</p>
+<p>This is intentional. Different consumers ship different stylesheets — <code>img-medium</code> matters to one consumer, <code>lc-callout</code> matters to another, generic Tailwind classes might appear in a third. The wire format does not arbitrate which class system wins; it preserves the author’s intent and lets each consumer apply its own visual policy.</p>
+<h3 id="33-per-element-attribute-table"><a class="header" href="#33-per-element-attribute-table">3.3 Per-element attribute table</a></h3>
+<p>In addition to the universal attributes, the following per-element attributes are allowed.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Element</th><th>Attributes</th><th>URL-scheme constrained?</th></tr>
+</thead>
+<tbody>
+<tr><td><code>&lt;a&gt;</code></td><td><code>href</code>, <code>target</code>, <code>rel</code></td><td><code>href</code> per §4.1</td></tr>
+<tr><td><code>&lt;img&gt;</code></td><td><code>src</code>, <code>alt</code> (REQUIRED), <code>width</code>, <code>height</code></td><td><code>src</code> per §4.1</td></tr>
+<tr><td><code>&lt;video&gt;</code></td><td><code>src</code>, <code>poster</code>, <code>controls</code>, <code>width</code>, <code>height</code>, <code>preload</code></td><td><code>src</code>, <code>poster</code> per §4.1</td></tr>
+<tr><td><code>&lt;audio&gt;</code></td><td><code>src</code>, <code>controls</code>, <code>preload</code></td><td><code>src</code> per §4.1</td></tr>
+<tr><td><code>&lt;source&gt;</code></td><td><code>src</code>, <code>type</code></td><td><code>src</code> per §4.1</td></tr>
+<tr><td><code>&lt;track&gt;</code></td><td><code>src</code>, <code>kind</code>, <code>srclang</code>, <code>label</code>, <code>default</code></td><td><code>src</code> per §4.1</td></tr>
+<tr><td><code>&lt;table&gt;</code></td><td><code>border</code> (<code>"1"</code> or absent only)</td><td>—</td></tr>
+<tr><td><code>&lt;th&gt;</code>, <code>&lt;td&gt;</code></td><td><code>colspan</code>, <code>rowspan</code>, <code>headers</code>, <code>scope</code></td><td>—</td></tr>
+<tr><td><code>&lt;ol&gt;</code></td><td><code>start</code>, <code>reversed</code>, <code>type</code></td><td>—</td></tr>
+<tr><td><code>&lt;li&gt;</code></td><td><code>value</code></td><td>—</td></tr>
+<tr><td><code>&lt;blockquote&gt;</code></td><td><code>cite</code></td><td>URL per §4.1</td></tr>
+<tr><td><code>&lt;q&gt;</code></td><td><code>cite</code></td><td>URL per §4.1</td></tr>
+<tr><td><code>&lt;abbr&gt;</code></td><td>(universal only)</td><td>—</td></tr>
+<tr><td><code>&lt;time&gt;</code></td><td><code>datetime</code></td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong><code>&lt;img alt&gt;</code> is REQUIRED.</strong> Empty <code>alt=""</code> is permitted (and indicates a decorative image — see <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §2). Producers MUST emit <code>alt</code>; consumers SHOULD treat a missing <code>alt</code> as a domain-validation warning and render the image.</p>
+<h3 id="34-inline-style-attribute"><a class="header" href="#34-inline-style-attribute">3.4 Inline <code>style</code> attribute</a></h3>
+<p>The <code>style</code> attribute MAY appear on any element listed in §2.1–§2.3. Consumers MUST sanitize CSS properties against the allowlist below; properties outside the allowlist MUST be stripped (the property only — the element and other style properties are preserved).</p>
+<p><strong>Allowed CSS properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Category</th><th>Properties</th></tr>
+</thead>
+<tbody>
+<tr><td>Sizing</td><td><code>max-width</code>, <code>min-width</code>, <code>width</code>, <code>max-height</code>, <code>min-height</code>, <code>height</code></td></tr>
+<tr><td>Spacing</td><td><code>margin</code>, <code>margin-top</code>, <code>margin-right</code>, <code>margin-bottom</code>, <code>margin-left</code>, <code>padding</code>, <code>padding-top</code>, <code>padding-right</code>, <code>padding-bottom</code>, <code>padding-left</code></td></tr>
+<tr><td>Borders</td><td><code>border</code>, <code>border-top</code>, <code>border-right</code>, <code>border-bottom</code>, <code>border-left</code>, <code>border-collapse</code>, <code>border-spacing</code>, <code>border-style</code>, <code>border-width</code>, <code>border-color</code></td></tr>
+<tr><td>Alignment</td><td><code>text-align</code>, <code>vertical-align</code></td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Property values:</strong></p>
+<ul>
+<li>Lengths in <code>px</code>, <code>em</code>, <code>rem</code>, <code>%</code>, or unitless <code>0</code>. Negative values permitted where the property allows them. <code>vh</code>/<code>vw</code>/<code>vmin</code>/<code>vmax</code> MAY be permitted at consumer discretion; producers SHOULD NOT emit them.</li>
+<li>Color values for <code>border-color</code>: hex (<code>#abc</code>, <code>#aabbcc</code>), <code>rgb()</code>, <code>rgba()</code>, named CSS colors. <code>currentColor</code> permitted.</li>
+<li><code>auto</code> is permitted for sizing properties.</li>
+</ul>
+<p>Consumers MUST NOT execute CSS expressions, <code>url()</code> references to remote stylesheets, <code>@import</code> directives, or any value that resembles a JavaScript expression (<code>expression(...)</code>, <code>behavior:</code>, <code>-moz-binding</code>, etc.). Consumers MUST strip any value that doesn’t lex as a simple length, color, or keyword token.</p>
+<p>The narrow allowlist exists because authors need to size images, set table borders, and align cell content — pragmatic affordances that semantic markup alone doesn’t cover. Anything beyond layout (colors, fonts, animations, positioning, transforms) is consumer-skin territory and belongs on a class hook (§3.2).</p>
+<h3 id="35-forbidden-attributes"><a class="header" href="#35-forbidden-attributes">3.5 Forbidden attributes</a></h3>
+<p>The following attributes MUST NOT appear on any element. Consumers MUST strip them on render:</p>
+<ul>
+<li>All event handler attributes: any attribute matching <code>on*</code> (e.g., <code>onclick</code>, <code>onload</code>, <code>onmouseover</code>, <code>onerror</code>, <code>onfocus</code>, <code>onblur</code>).</li>
+<li><code>srcdoc</code> (on any element).</li>
+<li><code>formaction</code>, <code>formenctype</code>, <code>formmethod</code>, <code>formnovalidate</code>, <code>formtarget</code> (form submission attributes).</li>
+</ul>
+<p><code>data:</code> and other forbidden URL schemes are governed by §4.2; this section does not duplicate that rule.</p>
+<hr>
+<h2 id="4-url-scheme-allowlist"><a class="header" href="#4-url-scheme-allowlist">4. URL scheme allowlist</a></h2>
+<h3 id="41-allowed-schemes"><a class="header" href="#41-allowed-schemes">4.1 Allowed schemes</a></h3>
+<p>For URL-bearing attributes (<code>href</code>, <code>src</code>, <code>poster</code>, <code>cite</code>, <code>&lt;source&gt;.src</code>, <code>&lt;track&gt;.src</code>):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Scheme</th><th>Where allowed</th><th>Notes</th></tr>
+</thead>
+<tbody>
+<tr><td><code>https:</code></td><td>All URL-bearing attributes</td><td>Always allowed.</td></tr>
+<tr><td><code>http:</code></td><td>All URL-bearing attributes</td><td>Allowed but discouraged. Mixed-content rendering on HTTPS pages is consumer-defined; consumers SHOULD warn or upgrade.</td></tr>
+<tr><td><code>mailto:</code></td><td><code>&lt;a href&gt;</code> only</td><td>Standard mail-link behavior.</td></tr>
+<tr><td><code>tel:</code></td><td><code>&lt;a href&gt;</code> only</td><td>See §7. Consumer policy varies by audience.</td></tr>
+<tr><td>Relative URLs</td><td>All URL-bearing attributes</td><td>Resolved against the consumer’s content base for the document. Producers MAY use relative paths to reference media bundled alongside the LC-JSON file (e.g., <code>media/images/foo.jpg</code>).</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="42-forbidden-schemes"><a class="header" href="#42-forbidden-schemes">4.2 Forbidden schemes</a></h3>
+<p>The following schemes MUST NOT appear in any URL-bearing attribute. Consumers MUST reject the URL (either by stripping the attribute or by replacing the attribute with a safe placeholder, e.g., <code>href="#"</code>):</p>
+<p><code>javascript:</code>, <code>vbscript:</code>, <code>data:</code>, <code>blob:</code>, <code>file:</code>, <code>chrome:</code>, <code>chrome-extension:</code>, <code>ftp:</code>, <code>ws:</code>, <code>wss:</code>, <code>gopher:</code>, <code>view-source:</code></p>
+<p><code>data:</code> is forbidden globally — including for <code>&lt;img src&gt;</code>. The XSS surface (SVG-via-data, HTML-via-data, type-confusion attacks via mixed content sniffing) is wider than the authoring convenience justifies. Consumers MUST strip <code>data:</code> URIs even on <code>&lt;img&gt;</code>.</p>
+<p><code>blob:</code> and <code>file:</code> are forbidden because they reference consumer-local memory or filesystem state; their meaning is not portable.</p>
+<h3 id="43-url-validation"><a class="header" href="#43-url-validation">4.3 URL validation</a></h3>
+<p>Consumers SHOULD validate URLs against <a href="https://www.rfc-editor.org/rfc/rfc3986">RFC 3986</a> before rendering. Malformed URLs (whitespace in the middle, control characters, embedded null bytes) MUST be treated as invalid and stripped.</p>
+<hr>
+<h2 id="5-sanitization-obligation"><a class="header" href="#5-sanitization-obligation">5. Sanitization obligation</a></h2>
+<p>A consumer MUST sanitize HTML from LC-JSON documents before rendering. The HTML in an LC-JSON document is untrusted input from the consumer’s perspective, regardless of the document source.</p>
+<p>A producer’s claim of LC-JSON conformance does NOT exempt the consumer from sanitization. Producers can be misconfigured, compromised, or simply buggy; consumers stand alone as the last line of defense.</p>
+<h3 id="51-sanitization-rules-summary"><a class="header" href="#51-sanitization-rules-summary">5.1 Sanitization rules summary</a></h3>
+<p>A conforming consumer MUST:</p>
+<ul>
+<li>Strip every element not listed in §2.1–§2.3, preserving its inner text content per §6.</li>
+<li>Strip every attribute not listed in §3, preserving the element.</li>
+<li>Strip every event handler attribute (<code>on*</code>).</li>
+<li>Strip every URL with a scheme outside §4.1.</li>
+<li>Strip every CSS property in inline <code>style</code> outside the §3.4 allowlist.</li>
+<li>Normalize <code>&lt;a target="_blank"&gt;</code> to include <code>rel="noopener noreferrer"</code> per §6.1, even when the producer omitted it.</li>
+<li>Reject the entire document if it contains any element from the §2.4 forbidden list (<code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, etc.) <strong>or</strong> any <code>on*</code> event-handler attribute <strong>or</strong> any <code>javascript:</code> / <code>vbscript:</code> URL. See §8 for validator severity.</li>
+</ul>
+<h3 id="52-reference-implementations-informative"><a class="header" href="#52-reference-implementations-informative">5.2 Reference implementations (informative)</a></h3>
+<p>The following sanitizer configurations are known to align with this profile:</p>
+<ul>
+<li><a href="https://github.com/cure53/DOMPurify">DOMPurify</a> (JavaScript) — configure <code>ALLOWED_TAGS</code> and <code>ALLOWED_ATTR</code> from §2.1–§2.3 and §3.</li>
+<li><a href="https://github.com/mozilla/bleach">Bleach</a> (Python) — <code>bleach.clean(text, tags=..., attributes=..., protocols=['http','https','mailto','tel'])</code>.</li>
+<li><a href="https://github.com/mganss/HtmlSanitizer">HtmlSanitizer</a> (.NET) — equivalent allowlist configuration.</li>
+</ul>
+<p>These are reference points only. Conformance is judged against the rules in this document, not against any specific library’s defaults.</p>
+<hr>
+<h2 id="6-link-safety-link-normalization-and-unknown-element-handling"><a class="header" href="#6-link-safety-link-normalization-and-unknown-element-handling">6. Link safety, link normalization, and unknown-element handling</a></h2>
+<h3 id="61-target_blank-rel-normalization"><a class="header" href="#61-target_blank-rel-normalization">6.1 <code>target="_blank"</code> rel-normalization</a></h3>
+<p>A producer that emits <code>&lt;a target="_blank"&gt;</code> SHOULD also emit <code>rel="noopener noreferrer"</code>.</p>
+<p>A consumer MUST normalize <code>&lt;a target="_blank"&gt;</code> to include <code>rel="noopener noreferrer"</code> on render, adding the tokens if the producer omitted them. This applies even to documents that otherwise satisfy producer conformance — the consumer has the last word on render.</p>
+<p>The reverse-tabnabbing risk that this mitigates is well-documented; the cost of producing <code>rel="noopener noreferrer"</code> is zero. Producers SHOULD save consumers the work, but consumers cannot rely on producers to do so.</p>
+<h3 id="62-unknown-element-handling"><a class="header" href="#62-unknown-element-handling">6.2 Unknown-element handling</a></h3>
+<p>When a consumer encounters an HTML element whose name is not in §2.1–§2.3 and not in the §2.4 forbidden list, the consumer:</p>
+<ul>
+<li><strong>MUST</strong> strip the element while preserving its text content. <code>&lt;unknown&gt;hello world&lt;/unknown&gt;</code> becomes <code>hello world</code>.</li>
+<li><strong>SHOULD</strong> log a warning (form is consumer-defined).</li>
+<li><strong>MUST NOT</strong> reject the document for unknown elements alone. Forward-compatibility for HTML extensions is preserved by graceful degradation, not by strict rejection.</li>
+</ul>
+<p>This mirrors NORMATIVE §6’s handling of reserved/unknown question types: degrade gracefully, never fail-closed on names you don’t recognize. The contract is symmetrical across both surfaces.</p>
+<h3 id="63-unknown-attribute-handling"><a class="header" href="#63-unknown-attribute-handling">6.3 Unknown-attribute handling</a></h3>
+<p>When a consumer encounters an attribute not listed in §3, the consumer MUST strip the attribute while preserving the element. Unknown attributes are not grounds for rejecting the document.</p>
+<h3 id="64-unknown-css-properties"><a class="header" href="#64-unknown-css-properties">6.4 Unknown CSS properties</a></h3>
+<p>When a consumer encounters a CSS property in <code>style="..."</code> not listed in §3.4, the consumer MUST strip the property while preserving the element and the other (allowed) properties. Unknown properties are not grounds for rejecting the document.</p>
+<hr>
+<h2 id="7-media-handling"><a class="header" href="#7-media-handling">7. Media handling</a></h2>
+<h3 id="71-video"><a class="header" href="#71-video">7.1 <code>&lt;video&gt;</code></a></h3>
+<ul>
+<li><code>src</code> MUST be <code>https:</code>, <code>http:</code>, or relative.</li>
+<li>Consumers MUST NOT auto-play. Producers MUST NOT emit <code>autoplay</code> or <code>loop</code>. Consumers SHOULD ignore these attributes if a non-conforming producer emits them.</li>
+<li><code>controls</code> SHOULD be present (consumer policy MAY hide them, but the wire intent is “user-driven playback”).</li>
+<li>Inner <code>&lt;source&gt;</code> elements MAY appear; consumers MUST process them per the same URL-scheme allowlist (§4.1).</li>
+<li>Inner <code>&lt;track&gt;</code> elements with <code>kind="captions"</code> or <code>kind="subtitles"</code> SHOULD be present for video content. Accessibility requirements for captions are codified separately in <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §3.</li>
+<li><code>poster</code> URL MUST satisfy §4.1.</li>
+</ul>
+<h3 id="72-audio"><a class="header" href="#72-audio">7.2 <code>&lt;audio&gt;</code></a></h3>
+<ul>
+<li><code>src</code> MUST be <code>https:</code>, <code>http:</code>, or relative.</li>
+<li>Consumers MUST NOT auto-play. Producers MUST NOT emit <code>autoplay</code> or <code>loop</code>.</li>
+<li><code>controls</code> SHOULD be present.</li>
+<li>Inner <code>&lt;source&gt;</code> elements MAY appear.</li>
+</ul>
+<h3 id="73-bandwidth-and-preload"><a class="header" href="#73-bandwidth-and-preload">7.3 Bandwidth and preload</a></h3>
+<p><code>preload</code> accepts <code>"none"</code>, <code>"metadata"</code>, <code>"auto"</code>. Consumers SHOULD respect the producer’s <code>preload</code> hint but MAY override for bandwidth, storage, or accessibility reasons.</p>
+<h3 id="74-format-compatibility"><a class="header" href="#74-format-compatibility">7.4 Format compatibility</a></h3>
+<p>LC-JSON does not mandate specific media codecs. Producers SHOULD use widely-compatible formats (H.264 + AAC in MP4 for video; MP3, AAC, or Opus for audio) and SHOULD provide multiple <code>&lt;source&gt;</code> fallbacks where format compatibility matters.</p>
+<h3 id="75-track-for-captions-and-subtitles"><a class="header" href="#75-track-for-captions-and-subtitles">7.5 <code>&lt;track&gt;</code> for captions and subtitles</a></h3>
+<p><code>&lt;track src&gt;</code> MUST satisfy §4.1. <code>kind</code> accepts <code>"subtitles"</code>, <code>"captions"</code>, <code>"descriptions"</code>, <code>"chapters"</code>, <code>"metadata"</code>. <code>srclang</code> is a BCP 47 language tag (RECOMMENDED for <code>subtitles</code> and <code>captions</code>).</p>
+<hr>
+<h2 id="8-validator-severity"><a class="header" href="#8-validator-severity">8. Validator severity</a></h2>
+<p>A reference validator (or any consumer’s pre-render validation pass) SHOULD classify HTML profile violations as follows.</p>
+<h3 id="81-errors-validator-must-reject"><a class="header" href="#81-errors-validator-must-reject">8.1 Errors (validator MUST reject)</a></h3>
+<p>These violations indicate a security-critical XSS surface or a structural violation that no consumer can render safely:</p>
+<ul>
+<li>Any forbidden element listed in §2.4.</li>
+<li>Any event handler attribute (<code>onclick</code>, <code>onload</code>, <code>onmouseover</code>, etc.).</li>
+<li>Any URL with scheme <code>javascript:</code> or <code>vbscript:</code>.</li>
+</ul>
+<h3 id="82-warnings-validator-may-accept-consumer-should-strip"><a class="header" href="#82-warnings-validator-may-accept-consumer-should-strip">8.2 Warnings (validator MAY accept; consumer SHOULD strip)</a></h3>
+<p>These violations are sanitizable and not security-critical. The validator reports them so producers can fix their output, but the document is still useful:</p>
+<ul>
+<li>Unknown elements (per §2.5, §6.2).</li>
+<li>Unknown attributes (per §3.5, §6.3).</li>
+<li>CSS properties outside the §3.4 allowlist (per §6.4).</li>
+<li>URL schemes outside §4.1 but not listed in §4.2 (rare; mostly relative-URL edge cases).</li>
+<li><code>tel:</code> URLs (per §7 — consumer-policy gated; some audiences disable them).</li>
+<li>Missing <code>rel="noopener noreferrer"</code> on <code>&lt;a target="_blank"&gt;</code> (per §6.1 — consumer auto-normalizes).</li>
+<li>Missing <code>alt</code> on <code>&lt;img&gt;</code> (cross-references <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §2).</li>
+<li><code>data:</code> URLs (forbidden per §4.2, but a warning rather than an error because the consumer-side mitigation — strip the <code>data:</code> URL before rendering — degrades gracefully to a broken image, not an XSS surface. The forbidden-scheme rule still binds; the validator severity choice is “tell the author the image won’t render anywhere,” not “reject this otherwise-fine document.”)</li>
+</ul>
+<h3 id="83-why-this-split"><a class="header" href="#83-why-this-split">8.3 Why this split</a></h3>
+<p>Errors fail the build. Warnings notify the author but don’t break interop. The line between them is “could a consumer render this document safely if it tried?” — yes for warnings, no for errors. Producers SHOULD treat warnings as actionable; consumers MUST sanitize regardless.</p>
+<hr>
+<h2 id="9-round-trip-preservation"><a class="header" href="#9-round-trip-preservation">9. Round-trip preservation</a></h2>
+<p>NORMATIVE §6.4 requires consumers to preserve every member of reserved-type questions across read/write cycles (semantic preservation; key order is producer-discretion per §6.2). The same principle applies to HTML content with one important softening: a consumer that re-exports an LC-JSON document MAY emit the <em>sanitized</em> HTML rather than the input HTML, provided that:</p>
+<ul>
+<li>No allowed elements, attributes, or CSS properties (per §2 and §3) are lost.</li>
+<li>Element classes (per §3.2) are preserved verbatim.</li>
+<li>Authored text content is preserved.</li>
+<li>Semantic structure (heading levels, list nesting, table rows/cells) is preserved.</li>
+</ul>
+<p>In other words: consumers MAY drop content the spec requires them to strip anyway (<code>&lt;script&gt;</code>, <code>onclick</code>, <code>data:</code> URLs). Consumers MUST NOT drop content they’re not required to strip. This protects authors from silent edit-on-import without forcing consumers to round-trip security-critical violations.</p>
+<p>A consumer that imports a document containing forbidden content under §8.1 MUST report the violation to the user; the consumer MAY refuse to round-trip such a document at all.</p>
+<hr>
+<h2 id="10-examples"><a class="header" href="#10-examples">10. Examples</a></h2>
+<h3 id="101-minimal-conforming-html"><a class="header" href="#101-minimal-conforming-html">10.1 Minimal conforming HTML</a></h3>
+<pre><code class="language-json">{
+  "type": "content",
+  "globalId": "...",
+  "title": "Reading",
+  "html": "&lt;h2&gt;Section 1&lt;/h2&gt;\n&lt;p&gt;Some text with &lt;strong&gt;emphasis&lt;/strong&gt; and &lt;a href=\"https://example.org\"&gt;a link&lt;/a&gt;.&lt;/p&gt;"
+}
+</code></pre>
+<h3 id="102-image-with-class-hook"><a class="header" href="#102-image-with-class-hook">10.2 Image with class hook</a></h3>
+<pre><code class="language-json">{
+  "html": "&lt;p&gt;The diagram below shows the cycle:&lt;/p&gt;\n&lt;img src=\"media/cycle.png\" alt=\"Carbon cycle diagram\" class=\"img-medium\" /&gt;"
+}
+</code></pre>
+<h3 id="103-video-with-captions"><a class="header" href="#103-video-with-captions">10.3 Video with captions</a></h3>
+<pre><code class="language-json">{
+  "html": "&lt;video src=\"media/lecture.mp4\" controls poster=\"media/lecture-thumb.jpg\" preload=\"metadata\" width=\"640\"&gt;\n  &lt;track src=\"media/lecture.vtt\" kind=\"captions\" srclang=\"en\" label=\"English\" default /&gt;\n&lt;/video&gt;"
+}
+</code></pre>
+<h3 id="104-table-with-allowed-inline-styles"><a class="header" href="#104-table-with-allowed-inline-styles">10.4 Table with allowed inline styles</a></h3>
+<pre><code class="language-json">{
+  "html": "&lt;table border=\"1\" style=\"border-collapse: collapse; width: 100%;\"&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;&lt;th style=\"padding: 8px; text-align: left;\"&gt;Country&lt;/th&gt;&lt;th style=\"padding: 8px;\"&gt;Capital&lt;/th&gt;&lt;/tr&gt;\n  &lt;/thead&gt;\n  &lt;tbody&gt;\n    &lt;tr&gt;&lt;td style=\"padding: 8px;\"&gt;France&lt;/td&gt;&lt;td style=\"padding: 8px;\"&gt;Paris&lt;/td&gt;&lt;/tr&gt;\n  &lt;/tbody&gt;\n&lt;/table&gt;"
+}
+</code></pre>
+<h3 id="105-link-with-target_blank-and-rel"><a class="header" href="#105-link-with-target_blank-and-rel">10.5 Link with <code>target="_blank"</code> and <code>rel</code></a></h3>
+<pre><code class="language-json">{
+  "html": "&lt;p&gt;Read more on &lt;a href=\"https://en.wikipedia.org/wiki/Photosynthesis\" target=\"_blank\" rel=\"noopener noreferrer\"&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;"
+}
+</code></pre>
+<h3 id="106-what-to-avoid"><a class="header" href="#106-what-to-avoid">10.6 What to avoid</a></h3>
+<pre><code class="language-html">&lt;!-- ✗ &lt;script&gt; is forbidden — validator MUST reject --&gt;
+&lt;script&gt;alert("hi")&lt;/script&gt;
+
+&lt;!-- ✗ event handler — validator MUST reject --&gt;
+&lt;a href="https://example.com" onclick="track()"&gt;click&lt;/a&gt;
+
+&lt;!-- ✗ javascript: URL — validator MUST reject --&gt;
+&lt;a href="javascript:void(0)"&gt;click&lt;/a&gt;
+
+&lt;!-- ✗ data: URL — consumer strips, validator warns --&gt;
+&lt;img src="data:image/png;base64,..." alt="..." /&gt;
+
+&lt;!-- ✗ inline-rendered SVG — element forbidden --&gt;
+&lt;svg&gt;&lt;circle cx="50" cy="50" r="40" /&gt;&lt;/svg&gt;
+
+&lt;!-- ✓ SVG raster reference is fine --&gt;
+&lt;img src="https://example.org/logo.svg" alt="Example logo" /&gt;
+</code></pre>
+<hr>
+<h2 id="11-cross-references"><a class="header" href="#11-cross-references">11. Cross-references</a></h2>
+<ul>
+<li><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §11 — normative reference to this document</li>
+<li><a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> §3 — <code>tel:</code> consumer policy as one example of consumer plurality</li>
+<li><a href="https://lc-json.org/1.1/content-item.schema.json"><code>schemas/content-item.schema.json</code></a> — <code>html</code> field</li>
+<li><a href="https://lc-json.org/1.1/signpost-item.schema.json"><code>schemas/signpost-item.schema.json</code></a> — <code>customHtml</code> field</li>
+<li><a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> — <code>alt</code>, captions, keyboard alternatives, language/direction, placeholder accessibility for reserved types, WCAG 2.1 AA cross-references, recommended ARIA patterns (rc.1 release; additive deepenings — per-criterion normative table, expanded ARIA patterns, conformance fixtures — land in 1.0 final)</li>
+<li><a href="tests/"><code>tests/</code></a> — conformance fixtures including <code>valid/06-html-with-video-track.json</code> and <code>invalid/13-html-with-script.json</code></li>
+</ul>
+<hr>
+<h2 id="12-summary-table"><a class="header" href="#12-summary-table">12. Summary table</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Category</th><th>Producer MUST</th><th>Producer SHOULD</th><th>Consumer MUST</th><th>Consumer SHOULD</th></tr>
+</thead>
+<tbody>
+<tr><td>Allowed elements</td><td>Stay within §2.1–§2.3</td><td>Use semantic markup</td><td>Render allowed elements; strip forbidden (§2.4); strip-while-preserving-text for unknown (§6.2)</td><td>Log warnings on unknown</td></tr>
+<tr><td>Forbidden elements</td><td>Not emit <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;form&gt;</code>, etc.</td><td>—</td><td>Reject document if forbidden present (§8.1)</td><td>Surface error to user</td></tr>
+<tr><td>Attributes</td><td>Stay within §3</td><td>Use semantic attributes</td><td>Strip unknown attributes (§6.3); strip event handlers always</td><td>—</td></tr>
+<tr><td>Inline <code>style</code></td><td>Stay within §3.4 allowlist</td><td>Prefer class hooks</td><td>Strip out-of-allowlist properties (§6.4)</td><td>—</td></tr>
+<tr><td>URL schemes</td><td>Use <code>https:</code>, <code>http:</code>, <code>mailto:</code>, <code>tel:</code>, or relative</td><td>Prefer <code>https:</code></td><td>Reject <code>javascript:</code>/<code>vbscript:</code>; strip <code>data:</code>/<code>blob:</code>/<code>file:</code>/etc.</td><td>Warn on <code>http:</code>, <code>tel:</code></td></tr>
+<tr><td><code>target="_blank"</code></td><td>Emit <code>rel="noopener noreferrer"</code></td><td>—</td><td>Normalize to add <code>rel="noopener noreferrer"</code> if missing (§6.1)</td><td>—</td></tr>
+<tr><td><code>&lt;img alt&gt;</code></td><td>Emit <code>alt</code></td><td>Use empty <code>alt=""</code> for decorative</td><td>—</td><td>Treat missing <code>alt</code> as warning</td></tr>
+<tr><td><code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code> autoplay</td><td>Not emit <code>autoplay</code>, <code>loop</code></td><td>—</td><td>Not auto-play</td><td>Ignore <code>autoplay</code> if a non-conforming producer emits it</td></tr>
+<tr><td>Sanitization</td><td>—</td><td>—</td><td>Sanitize before render, every time</td><td>Use a vetted reference implementation (§5.2)</td></tr>
+</tbody>
+</table>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="NORMATIVE.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="ACCESSIBILITY.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="NORMATIVE.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="ACCESSIBILITY.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

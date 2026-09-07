@@ -1,0 +1,22 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "MultiGapCloze — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "multiGapCloze",
+      "globalId": "17171717-0000-4000-8000-000000000001",
+      "title": "Open cloze — prepositions",
+      "points": 2.0,
+      "difficulty": 4.0,
+      "prompt": "",
+      "passage": "She walked @@@1 the park and arrived @@@2 noon.",
+      "gapAcceptedAnswers": {
+        "1": ["through", "across"],
+        "2": ["at", "by"]
+      }
+    }
+  ]
+}

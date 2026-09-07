@@ -1,0 +1,29 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Placement — sentence-mode conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "placement",
+      "globalId": "22222222-2222-4222-8222-222222222201",
+      "title": "Sentence placement",
+      "points": 4.0,
+      "difficulty": 5.0,
+      "prompt": "Place each missing sentence into the gap where it best fits.",
+      "placementUnit": "sentence",
+      "passage": "The experiment began with a simple question. @@@1 The results surprised the team. @@@2 Subsequent replications confirmed the pattern.",
+      "placements": [
+        { "gap": 1, "item": "Could the bacteria survive freezing for forty-eight hours?" },
+        { "gap": 2, "item": "Almost half the colonies regrew when the samples were thawed." }
+      ],
+      "distractors": ["The lab had been built in 1972."],
+      "allowPartialCredit": true,
+      "feedback": {
+        "correct": "Yes.",
+        "incorrect": "Re-read the surrounding sentences."
+      }
+    }
+  ]
+}

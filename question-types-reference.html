@@ -1,0 +1,1190 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Question types reference - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/question-types-reference.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-question-types--format-reference"><a class="header" href="#lc-json-question-types--format-reference">LC-JSON Question Types — Format Reference</a></h1>
+<p><strong>Spec version:</strong> 1.0
+<strong>Purpose:</strong> Per-type property reference for LC-JSON (Learning Content JSON) — the 12 implemented question types and the 7 reserved-for-2027 types.</p>
+<hr>
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#common-properties">Common Properties</a></li>
+<li><a href="#phase-1-core-foundation">Phase 1: Core Foundation</a></li>
+<li><a href="#phase-2-cloze-family">Phase 2: Cloze Family</a></li>
+<li><a href="#phase-3-text-entry">Phase 3: Text Entry</a></li>
+<li><a href="#phase-4-structured-tasks-implemented">Phase 4: Structured Tasks (Implemented)</a></li>
+<li><a href="#reserved-types">Reserved Types</a></li>
+<li><a href="#validation-rules">Validation Rules</a></li>
+</ol>
+<hr>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>LC-JSON questions are tagged-union objects. Every question carries a <code>type</code> field whose value selects the per-type schema that applies. Consumers dispatch on <code>type</code> to validate and render.</p>
+<p><strong>Key requirements:</strong></p>
+<ul>
+<li>The <code>type</code> discriminator value uses canonical <strong>camelCase</strong> (<code>simpleGapFill</code>, <code>multipleChoice</code>, …). Conforming consumers MUST reject non-canonical casings (<code>NORMATIVE.md</code> §5.3).</li>
+<li>All property names use camelCase.</li>
+<li>Every question carries a <code>globalId</code> in RFC 4122 UUID form (any version; shape-only validation against the 8-4-4-4-12 hex pattern).</li>
+<li>See <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> for the full conformance requirements.</li>
+</ul>
+<p><strong>Supported Question Types (19 total):</strong></p>
+<p><strong>Phase 1 - Core Foundation:</strong></p>
+<ol>
+<li><code>simpleGapFill</code> - Single gap with free text entry</li>
+<li><code>trueFalseQuestion</code> - Binary choice questions</li>
+<li><code>multipleChoice</code> - Single or multiple correct answers</li>
+</ol>
+<p><strong>Phase 2 - Cloze Family:</strong>
+4. <code>wordBankCloze</code> - Gap fill from word bank
+5. <code>multiGapCloze</code> - Multiple free-text gaps
+6. <code>multipleChoiceCloze</code> - Multiple dropdown gaps</p>
+<p><strong>Phase 3 - Text Entry:</strong>
+7. <code>shortAnswer</code> - Free text response
+8. <code>essay</code> - Long-form text with word limits</p>
+<p><strong>Phase 4 - Structured tasks (implemented):</strong>
+9. <code>matching</code> - Pair items 1:1, or classify items into categories
+10. <code>ordering</code> - Sequence items (word / sentence / paragraph variants)
+11. <code>placement</code> - Place items into anchored gaps in a structured passage (sentence / paragraph / sectionLabel variants; supports decoy gaps for TOEFL Sentence Insertion)
+12. <code>sentenceTransformation</code> - Cambridge exam-style controlled paraphrase</p>
+<p><strong>Reserved types (per <code>NORMATIVE.md</code> §6 — preserved on round-trip; per-type schemas targeted for 2027):</strong>
+13. <code>association</code> - Group items into categories
+14. <code>hotspot</code> - Click regions on image
+15. <code>graphicGapMatch</code> - Visual drag-and-drop
+16. <code>graphicAssociate</code> - Associate items with images
+17. <code>graphicOrder</code> - Order items based on images
+18. <code>fileUpload</code> - Submit documents
+19. <code>mediaPromptedEssay</code> - Record audio/video</p>
+<hr>
+<h2 id="common-properties"><a class="header" href="#common-properties">Common Properties</a></h2>
+<p>All question types inherit these base properties:</p>
+<pre><code class="language-json">{
+  "type": "simpleGapFill",
+  "globalId": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Question title",
+  "prompt": "",
+  "tags": ["tag1", "tag2"],
+  "difficulty": 5.0,
+  "points": 1.0,
+  "hint": "Optional hint text",
+  "feedback": {
+    "correct": "Feedback shown when the answer is correct",
+    "incorrect": "Feedback shown when the answer is incorrect",
+    "choiceFeedback": {
+      "choice1": "Per-choice feedback (where applicable)"
+    }
+  }
+}
+</code></pre>
+<p><strong>Property Details:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code></td><td>string</td><td>✅ Yes</td><td>-</td><td>Question type discriminator. Canonical camelCase form.</td></tr>
+<tr><td><code>globalId</code></td><td>string (UUID)</td><td>✅ Yes</td><td>-</td><td>RFC 4122 UUID (any version; shape-only validation); stable across versions of the question.</td></tr>
+<tr><td><code>title</code></td><td>string</td><td>❌ No</td><td><code>""</code></td><td>Short title for editorial/list views.</td></tr>
+<tr><td><code>prompt</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Main question text. Required for every type; <strong>may be empty</strong> (<code>""</code>). Authoritative for the real-content types (true/false, multiple choice, short answer, essay), where it <em>is</em> the question. Non-authoritative for the symbolic types, whose structured fields carry the meaning — there it MAY be empty or MAY carry a brief producer-derived readable summary (see the symbolic-type note below).</td></tr>
+<tr><td><code>tags</code></td><td>string[]</td><td>❌ No</td><td><code>[]</code></td><td>Tag array for categorization.</td></tr>
+<tr><td><code>difficulty</code></td><td>number</td><td>❌ No</td><td><code>5.0</code></td><td>Estimated difficulty for the intended learners (0.0 = extremely easy, 10.0 = extremely difficult).</td></tr>
+<tr><td><code>points</code></td><td>number</td><td>❌ No</td><td><code>1.0</code></td><td>Points awarded for a correct answer.</td></tr>
+<tr><td><code>hint</code></td><td>string</td><td>❌ No</td><td><code>null</code></td><td>Optional hint shown to the learner.</td></tr>
+<tr><td><code>feedback</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Optional feedback bundle (see <em>FeedbackBundle</em> below).</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>difficulty</code> is an author estimate, not a subject level, grade level, CEFR level, or Bloom band. It estimates how challenging the question is for its intended learners. Applications SHOULD display it in teacher-readable form, commonly rounded to the nearest whole number on the 0-10 scale, and MAY later compare it with observed first-attempt success rates.</p>
+<hr>
+<h2 id="phase-1-core-foundation"><a class="header" href="#phase-1-core-foundation">Phase 1: Core Foundation</a></h2>
+<h3 id="1-simplegapfill"><a class="header" href="#1-simplegapfill">1. SimpleGapFill</a></h3>
+<p><strong>Description:</strong> Single gap with free text entry and multiple acceptable answers.</p>
+<p><strong>Use Case:</strong> Simple fill-in-the-blank questions.</p>
+<p><strong>Example:</strong> “The capital of France is ___.”</p>
+<pre><code class="language-json">{
+  "type": "simpleGapFill",
+  "globalId": "550e8400-e29b-41d4-a716-446655440001",
+  "prompt": "",
+  "title": "Capital of France",
+  "tags": ["geography", "level:A1"],
+  "difficulty": 2.0,
+  "points": 1.0,
+  "sentence": "The capital of France is @@@.",
+  "acceptedAnswers": ["Paris", "paris"],
+  "caseSensitive": false
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>sentence</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Sentence with <code>@@@</code> marking gap position</td></tr>
+<tr><td><code>acceptedAnswers</code></td><td>string[]</td><td>✅ Yes</td><td><code>[]</code></td><td>List of acceptable answers</td></tr>
+<tr><td><code>caseSensitive</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Whether answer matching is case-sensitive</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h3 id="2-truefalsequestion"><a class="header" href="#2-truefalsequestion">2. TrueFalseQuestion</a></h3>
+<p><strong>Description:</strong> Binary choice question with boolean <code>correctAnswer</code> as single source of truth. Supports configurable display styles and penalty system.</p>
+<p><strong>Use Case:</strong> True/False, Correct/Incorrect, or visual checkmark/X questions.</p>
+<p><strong>Example:</strong> “Water boils at 100°C at sea level. True or False?”</p>
+<pre><code class="language-json">{
+  "type": "trueFalseQuestion",
+  "globalId": "550e8400-e29b-41d4-a716-446655440002",
+  "prompt": "Water boils at 100°C at sea level.",
+  "title": "Boiling Point",
+  "tags": ["science", "level:A2"],
+  "difficulty": 1.0,
+  "points": 1.0,
+  "correctAnswer": true,
+  "displayStyle": "TrueFalse",
+  "penalizeIncorrect": false,
+  "incorrectPenaltyPercent": 50.0
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>correctAnswer</code></td><td>boolean</td><td>✅ Yes</td><td>-</td><td>The correct answer (<code>true</code> or <code>false</code>). Single source of truth for scoring.</td></tr>
+<tr><td><code>displayStyle</code></td><td>string</td><td>❌ No</td><td><code>"TrueFalse"</code></td><td>UI label style: “TrueFalse”, “CorrectIncorrect”, “CheckmarkX”. Presentation only — does not affect scoring.</td></tr>
+<tr><td><code>penalizeIncorrect</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Whether to apply a point penalty for a wrong answer. Independent of item type and <code>isGraded</code> — author’s choice. Common: <code>false</code> when you want learners to try without risk; <code>true</code> when guessing should cost something.</td></tr>
+<tr><td><code>incorrectPenaltyPercent</code></td><td>number</td><td>❌ No</td><td><code>50.0</code></td><td>Penalty percentage (0-100). 0%=no penalty, 50%=partial, 100%=full penalty.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Import normalization (pre-1.0 lenient migration affordance — NOT conforming behavior).</strong> Some authoring tools historically emitted non-boolean <code>correctAnswer</code> values for True/False questions. A consumer MAY accept and normalize the following on read, <strong>purely as a migration aid for ingesting pre-1.0 documents</strong>:</p>
+<ul>
+<li><code>true</code>, <code>"true"</code>, <code>"True"</code>, <code>"correct"</code>, <code>"tick"</code>, <code>"✓"</code>, <code>1</code> → normalized to <code>true</code></li>
+<li><code>false</code>, <code>"false"</code>, <code>"False"</code>, <code>"incorrect"</code>, <code>"cross"</code>, <code>"✗"</code>, <code>0</code> → normalized to <code>false</code></li>
+</ul>
+<p><strong>Conforming behavior under LC-JSON 1.0 is unambiguous:</strong> the schema requires <code>correctAnswer</code> to be a JSON boolean (<code>true</code> / <code>false</code>). Conforming producers MUST emit it as a boolean. Conforming consumers in strict mode MUST reject non-boolean values per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.1 — the reference validator’s <code>--strict</code> mode (which <code>tools/run_corpus.py</code> invokes on every fixture) does so. Tools relying on the normalization above should treat it as a transitional ingestion aid that does not survive into a <code>--strict</code>-conforming document on re-export.</p>
+<p><strong>Note:</strong> For True/False/Not Mentioned questions (3 options), use MultipleChoice instead.</p>
+<hr>
+<h3 id="3-multiplechoice"><a class="header" href="#3-multiplechoice">3. MultipleChoice</a></h3>
+<p><strong>Description:</strong> Single or multiple correct answers with optional partial credit and shuffling.</p>
+<p><strong>Use Case:</strong> Traditional multiple-choice questions (MCQ).</p>
+<p><strong>Example:</strong> “Which of the following are programming languages? (Select all that apply)”</p>
+<pre><code class="language-json">{
+  "type": "multipleChoice",
+  "globalId": "550e8400-e29b-41d4-a716-446655440003",
+  "prompt": "Which of the following are programming languages?",
+  "title": "Programming Languages",
+  "tags": ["programming", "level:B1"],
+  "difficulty": 3.0,
+  "points": 2.0,
+  "options": ["Python", "HTML", "Java", "CSS"],
+  "optionsAndPoints": {
+    "Python": 1.0,
+    "HTML": 0.0,
+    "Java": 1.0,
+    "CSS": 0.0
+  },
+  "allowMultipleCorrect": true,
+  "allowPartialCredit": true,
+  "penalizeIncorrect": false,
+  "shuffleOptions": true,
+  "showLetterLabels": true
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>options</code></td><td>string[]</td><td>✅ Yes</td><td><code>[]</code></td><td>Array of answer choices</td></tr>
+<tr><td><code>optionsAndPoints</code></td><td>object</td><td>✅ Yes</td><td><code>{}</code></td><td>Dictionary mapping options to points (&gt;0 = correct)</td></tr>
+<tr><td><code>allowMultipleCorrect</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Allow selecting multiple answers</td></tr>
+<tr><td><code>allowPartialCredit</code></td><td>boolean</td><td>❌ No</td><td><code>true</code></td><td>Award partial credit for partially correct answers</td></tr>
+<tr><td><code>penalizeIncorrect</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Deduct points for incorrect selections</td></tr>
+<tr><td><code>shuffleOptions</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Randomize option order for each student</td></tr>
+<tr><td><code>showLetterLabels</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Display A, B, C, D labels</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="phase-2-cloze-family"><a class="header" href="#phase-2-cloze-family">Phase 2: Cloze Family</a></h2>
+<h3 id="4-wordbankcloze"><a class="header" href="#4-wordbankcloze">4. WordBankCloze</a></h3>
+<p><strong>Description:</strong> Passage with gaps filled from a shared word pool (includes distractors).</p>
+<p><strong>Use Case:</strong> Cambridge FCE/CAE, vocabulary exercises.</p>
+<p><strong>Example:</strong> “Fill in the blanks using words from the word bank.”</p>
+<pre><code class="language-json">{
+  "type": "wordBankCloze",
+  "globalId": "550e8400-e29b-41d4-a716-446655440004",
+  "prompt": "",
+  "title": "Word Bank Exercise",
+  "tags": ["grammar:articles", "level:B1"],
+  "difficulty": 5.0,
+  "points": 5.0,
+  "passage": "I saw @@@1 cat and @@@2 dog in @@@3 park yesterday. @@@4 cat was chasing @@@5 dog.",
+  "wordBank": ["a", "an", "the", "some"],
+  "gapAcceptedAnswers": {
+    "1": ["a"],
+    "2": ["a"],
+    "3": ["the"],
+    "4": ["The"],
+    "5": ["the"]
+  },
+  "gapCaseSensitive": {
+    "4": true
+  },
+  "allowWordReuse": true,
+  "bankPosition": "above",
+  "gapFeedback": {
+    "1": "Remember: 'a' is used before consonants"
+  },
+  "allowPartialCredit": true
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>passage</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Text with numbered <code>@@@1</code>, <code>@@@2</code>, etc. marking gaps (1-based)</td></tr>
+<tr><td><code>wordBank</code></td><td>string[]</td><td>✅ Yes</td><td><code>[]</code></td><td>Pool of words to choose from (includes distractors)</td></tr>
+<tr><td><code>gapAcceptedAnswers</code></td><td>object</td><td>✅ Yes</td><td><code>{}</code></td><td>Dictionary: gap number (1-based) → array of accepted answers</td></tr>
+<tr><td><code>gapCaseSensitive</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: gap number → boolean (default: false)</td></tr>
+<tr><td><code>allowWordReuse</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Can same word be used multiple times?</td></tr>
+<tr><td><code>bankPosition</code></td><td>string</td><td>❌ No</td><td><code>"above"</code></td><td>Word bank position: “above”, “below”, “side”</td></tr>
+<tr><td><code>gapFeedback</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: gap number → feedback string</td></tr>
+<tr><td><code>allowPartialCredit</code></td><td>boolean</td><td>❌ No</td><td><code>true</code></td><td>Award partial credit for some correct answers</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h3 id="5-multigapcloze"><a class="header" href="#5-multigapcloze">5. MultiGapCloze</a></h3>
+<p><strong>Description:</strong> Passage with multiple gaps, each accepting free text with multiple valid answers.</p>
+<p><strong>Use Case:</strong> Cambridge FCE/CAE Reading Part 2 (Open Cloze).</p>
+<p><strong>Example:</strong> “Fill in the blanks (no word bank provided).”</p>
+<pre><code class="language-json">{
+  "type": "multiGapCloze",
+  "globalId": "550e8400-e29b-41d4-a716-446655440005",
+  "prompt": "",
+  "title": "Open Cloze Exercise",
+  "tags": ["grammar:prepositions", "exam:fce", "level:B2"],
+  "difficulty": 6.0,
+  "points": 8.0,
+  "passage": "She walked @@@1 the park and sat @@@2 a bench @@@3 the lake.",
+  "gapAcceptedAnswers": {
+    "1": ["through", "in", "into"],
+    "2": ["on"],
+    "3": ["by", "near", "beside"]
+  },
+  "gapCaseSensitive": {
+    "1": false,
+    "2": false,
+    "3": false
+  },
+  "gapFeedback": {
+    "2": "We use 'on' with bench"
+  },
+  "allowPartialCredit": true
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>passage</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Text with numbered <code>@@@1</code>, <code>@@@2</code>, etc. marking gaps (1-based)</td></tr>
+<tr><td><code>gapAcceptedAnswers</code></td><td>object</td><td>✅ Yes</td><td><code>{}</code></td><td>Dictionary: gap number (1-based) → array of accepted answers</td></tr>
+<tr><td><code>gapCaseSensitive</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: gap number → boolean (default: false)</td></tr>
+<tr><td><code>gapFeedback</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: gap number → feedback string</td></tr>
+<tr><td><code>allowPartialCredit</code></td><td>boolean</td><td>❌ No</td><td><code>true</code></td><td>Award partial credit for some correct answers</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h3 id="6-multiplechoicecloze"><a class="header" href="#6-multiplechoicecloze">6. MultipleChoiceCloze</a></h3>
+<p><strong>Description:</strong> Passage with multiple gaps, each gap has 3-4 discrete options (dropdown).</p>
+<p><strong>Use Case:</strong> Cambridge FCE/CAE Reading Part 1.</p>
+<p><strong>Example:</strong> “Choose the correct word for each gap from the dropdown.”</p>
+<pre><code class="language-json">{
+  "type": "multipleChoiceCloze",
+  "globalId": "550e8400-e29b-41d4-a716-446655440006",
+  "prompt": "",
+  "title": "Multiple Choice Cloze",
+  "tags": ["vocabulary", "exam:fce", "level:B2"],
+  "difficulty": 7.0,
+  "points": 6.0,
+  "passage": "The weather was @@@1 cold that we decided to stay indoors. We @@@2 a movie instead.",
+  "gapOptions": {
+    "1": ["so", "such", "very", "too"],
+    "2": ["watched", "saw", "looked", "viewed"]
+  },
+  "correctAnswers": {
+    "1": 0,
+    "2": 0
+  },
+  "gapOptionFeedback": {
+    "1": {
+      "0": "Correct! 'so' is used before adjectives",
+      "1": "'such' is used before nouns",
+      "2": "'very' doesn't fit with 'that'",
+      "3": "'too' suggests excess"
+    }
+  },
+  "allowPartialCredit": true,
+  "shuffleOptions": false
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>passage</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Text with numbered <code>@@@1</code>, <code>@@@2</code>, etc. marking gaps (1-based)</td></tr>
+<tr><td><code>gapOptions</code></td><td>object</td><td>✅ Yes</td><td><code>{}</code></td><td>Dictionary: gap number (1-based) → array of options</td></tr>
+<tr><td><code>correctAnswers</code></td><td>object</td><td>✅ Yes</td><td><code>{}</code></td><td>Dictionary: gap number (1-based) → correct option index (0-based)</td></tr>
+<tr><td><code>gapOptionFeedback</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: gap number → option index → feedback</td></tr>
+<tr><td><code>allowPartialCredit</code></td><td>boolean</td><td>❌ No</td><td><code>true</code></td><td>Award partial credit for some correct answers</td></tr>
+<tr><td><code>shuffleOptions</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Randomize option order within each gap</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="phase-3-text-entry"><a class="header" href="#phase-3-text-entry">Phase 3: Text Entry</a></h2>
+<h3 id="7-shortanswer"><a class="header" href="#7-shortanswer">7. ShortAnswer</a></h3>
+<p><strong>Description:</strong> Free text response with multiple acceptable answers and case sensitivity options.</p>
+<p><strong>Use Case:</strong> Short answer questions, name/term identification.</p>
+<p><strong>Example:</strong> “What is the largest planet in our solar system?”</p>
+<pre><code class="language-json">{
+  "type": "shortAnswer",
+  "globalId": "550e8400-e29b-41d4-a716-446655440007",
+  "prompt": "What is the largest planet in our solar system?",
+  "title": "Largest Planet",
+  "tags": ["science:astronomy", "stage:lower-secondary"],
+  "difficulty": 2.0,
+  "points": 1.0,
+  "acceptedAnswers": ["Jupiter"],
+  "caseSensitive": false
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>acceptedAnswers</code></td><td>string[]</td><td>✅ Yes</td><td><code>[]</code></td><td>All acceptable answers. The first entry is treated as the canonical form shown in solutions and feedback.</td></tr>
+<tr><td><code>caseSensitive</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>Whether answer matching is case-sensitive</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h3 id="8-essay"><a class="header" href="#8-essay">8. Essay</a></h3>
+<p><strong>Description:</strong> Long-form text response with optional word limits and grading rubric.</p>
+<p><strong>Use Case:</strong> Essay questions, extended writing tasks.</p>
+<p><strong>Example:</strong> “Write a 250-word essay about climate change.”</p>
+<pre><code class="language-json">{
+  "type": "essay",
+  "globalId": "550e8400-e29b-41d4-a716-446655440008",
+  "prompt": "Write an essay discussing the impact of climate change on global ecosystems.",
+  "title": "Climate Change Essay",
+  "tags": ["writing", "exam:ielts", "level:C1"],
+  "difficulty": 8.0,
+  "points": 20.0,
+  "expectedAnswer": "Sample model answer...",
+  "expectedLines": 15,
+  "minWords": 200,
+  "maxWords": 300,
+  "rubricText": "## Grading Criteria\n- Task Response (25%)\n- Coherence &amp; Cohesion (25%)\n- Lexical Resource (25%)\n- Grammatical Range (25%)"
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>expectedAnswer</code></td><td>string</td><td>❌ No</td><td><code>""</code></td><td>Model answer / sample response</td></tr>
+<tr><td><code>expectedLines</code></td><td>integer</td><td>❌ No</td><td><code>0</code></td><td>Suggested number of lines in text area</td></tr>
+<tr><td><code>minWords</code></td><td>integer</td><td>❌ No</td><td><code>0</code></td><td>Minimum word count (0 = no limit)</td></tr>
+<tr><td><code>maxWords</code></td><td>integer</td><td>❌ No</td><td><code>0</code></td><td>Maximum word count (0 = no limit)</td></tr>
+<tr><td><code>rubricText</code></td><td>string</td><td>❌ No</td><td><code>null</code></td><td>Markdown-formatted grading rubric</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="phase-4-structured-tasks-implemented"><a class="header" href="#phase-4-structured-tasks-implemented">Phase 4: Structured Tasks (Implemented)</a></h2>
+<h3 id="9-matching"><a class="header" href="#9-matching">9. Matching</a></h3>
+<p><strong>Description:</strong> Match items to their corresponding match (1:1) or classify items into categories (many-to-one). The shape branches by an explicit <code>matchingMode</code> discriminator: <code>"pairs"</code> for 1:1 matching where each item has one correct match, and <code>"classification"</code> for many-to-one where each item belongs to one category and multiple items may share a category. <code>distractors</code> carries decoys in either mode (extra match values in pairs mode; extra category labels in classification mode).</p>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li><strong><code>pairs</code></strong> — Vocabulary ↔ definition, country ↔ capital, author ↔ work, thinker ↔ idea, cause ↔ effect. Any 1:1 association where the pedagogical meaning lives in the pairing.</li>
+<li><strong><code>classification</code></strong> — Time expressions ↔ tense, foods ↔ food group, animals ↔ habitat, sentences ↔ register, examples ↔ argument-role. Any sort where multiple items share each category.</li>
+</ul>
+<h4 id="common-properties-both-modes"><a class="header" href="#common-properties-both-modes">Common properties (both modes)</a></h4>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>matchingMode</code></td><td>string (<code>"pairs"</code> | <code>"classification"</code>)</td><td>✅ Yes</td><td>Selects the sub-shape. No default — the schema can’t validate the shape without it.</td></tr>
+<tr><td><code>distractors</code></td><td>string[]</td><td>❌ No</td><td>Pairs mode: extra match values with no correct item. Classification mode: extra category labels that don’t own any item. Default <code>[]</code>.</td></tr>
+<tr><td><code>allowPartialCredit</code></td><td>boolean</td><td>❌ No</td><td>If <code>true</code> (default), score per correct row; if <code>false</code>, all-or-nothing.</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="pairs-mode--properties"><a class="header" href="#pairs-mode--properties"><code>pairs</code> mode — properties</a></h4>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>pairs</code></td><td>object[]</td><td>✅ Yes</td><td>Each entry is one item-and-match row: <code>{ "item": string, "match": string }</code>. Both fields required, <code>minLength: 1</code>. Minimum 2 pairs.</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="classification-mode--properties"><a class="header" href="#classification-mode--properties"><code>classification</code> mode — properties</a></h4>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>categories</code></td><td>object[]</td><td>✅ Yes</td><td>Each entry is one category: <code>{ "label": string, "items": string[] }</code>. <code>label</code> required, <code>minLength: 1</code>. <code>items</code> required, <code>minItems: 1</code> (an empty category is meaningless — list it as a <code>distractors[]</code> entry instead). Minimum 2 categories. Consumers MUST randomize the row order at render time per <a href="NORMATIVE.html">NORMATIVE §5.6</a> — source order is grouped by category and would directly expose the answer.</td></tr>
+</tbody>
+</table>
+</div>
+<p>A document that mixes shapes (both <code>pairs</code> and <code>categories</code> present, or <code>matchingMode</code> omitted) fails validation.</p>
+<h4 id="example--pairs-mode"><a class="header" href="#example--pairs-mode">Example — <code>pairs</code> mode</a></h4>
+<pre><code class="language-json">{
+  "type": "matching",
+  "globalId": "550e8400-e29b-41d4-a716-446655441502",
+  "title": "Roots of Democracy — Match the Thinker",
+  "tags": ["politics:enlightenment", "philosophy:political"],
+  "points": 8.0,
+  "difficulty": 5.0,
+  "prompt": "",
+  "matchingMode": "pairs",
+  "pairs": [
+    { "item": "John Locke",         "match": "Government derives its authority from the consent of the governed." },
+    { "item": "Jean-Jacques Rousseau", "match": "Citizens form a 'social contract' that creates the legitimate state." },
+    { "item": "Baron de Montesquieu", "match": "Power should be divided across separate branches of government." },
+    { "item": "John Stuart Mill",   "match": "Liberty is the freedom to act, limited only by harm to others." }
+  ],
+  "distractors": [
+    "The state should own the means of production.",
+    "Tradition is the safest guide to political reform."
+  ]
+}
+</code></pre>
+<p><strong>See <code>examples/15-matching.json</code> for the full canonical pairs example.</strong></p>
+<h4 id="example--classification-mode"><a class="header" href="#example--classification-mode">Example — <code>classification</code> mode</a></h4>
+<pre><code class="language-json">{
+  "type": "matching",
+  "globalId": "550e8400-e29b-41d4-a716-446655441550",
+  "title": "Time Expressions — Classify by Tense",
+  "tags": ["grammar:tenses:past-simple", "grammar:tenses:present-perfect", "level:B1"],
+  "points": 6.0,
+  "difficulty": 4.0,
+  "prompt": "",
+  "matchingMode": "classification",
+  "categories": [
+    { "label": "past simple",     "items": ["a year ago", "yesterday", "in May 2019"] },
+    { "label": "present perfect", "items": ["all my life", "never", "since 2020"] }
+  ],
+  "distractors": ["future continuous"]
+}
+</code></pre>
+<p><strong>See <code>examples/15b-matching-classification.json</code> for the full canonical classification example.</strong></p>
+<h4 id="renderer-expectation"><a class="header" href="#renderer-expectation">Renderer expectation</a></h4>
+<p>In <code>pairs</code> mode, consumers MAY render two columns with drag-and-drop pairing (or a per-row dropdown of choosable matches). In <code>classification</code> mode, consumers MAY render the items as draggable chips and the category labels (plus distractors) as drop zones. Both presentations are consumer-defined; the wire format describes the structural relationship and hints at the affordance.</p>
+<h4 id="scoring"><a class="header" href="#scoring">Scoring</a></h4>
+<p>Per-row scoring. In <code>pairs</code> mode, each row is one item↔match comparison. In <code>classification</code> mode, each item is compared against its category’s label (the row is correct if the learner placed the item under the correct label). <code>allowPartialCredit: true</code> (default) awards partial credit per correct row; <code>false</code> requires every row correct for any credit.</p>
+<hr>
+<h3 id="10-ordering"><a class="header" href="#10-ordering">10. Ordering</a></h3>
+<p><strong>Description:</strong> Sequence items correctly. Students arrange shuffled tiles into the teacher-defined correct order.</p>
+<p><strong>Use Case:</strong> Sentence word-order unscrambling, ordering process steps in a paragraph, ordering paragraphs of an essay, chronological ordering — any task where pedagogical meaning lives in the sequence.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>sourceText</code></td><td>string</td><td>Yes</td><td>The original sentence or passage shown for context (the correct ordering when items are joined)</td></tr>
+<tr><td><code>items</code></td><td>string[]</td><td>Yes</td><td>Tiles in correct order. <code>items[i]</code> is the correct tile at position <code>i</code></td></tr>
+<tr><td><code>distractors</code></td><td>string[]</td><td>No</td><td>Extra tiles that do not belong in the sequence (mixed into the tile bank as decoys)</td></tr>
+<tr><td><code>scoringMode</code></td><td>string</td><td>No</td><td>Scoring policy hint: <code>"strict"</code> = all-or-nothing exact match; <code>"kendall"</code> = partial credit via Kendall tau distance. When omitted, the recommended default is <code>"strict"</code> for <code>orderingUnit: "word"</code> and <code>"kendall"</code> for <code>"sentence"</code> / <code>"paragraph"</code>. See Scoring below</td></tr>
+<tr><td><code>orderingUnit</code></td><td>string</td><td>No</td><td>Display granularity hint: <code>"word"</code> (default), <code>"sentence"</code>, or <code>"paragraph"</code>. See variants below</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="display-variants-orderingunit"><a class="header" href="#display-variants-orderingunit">Display variants (<code>orderingUnit</code>)</a></h4>
+<p><code>orderingUnit</code> is an advisory hint — the same <code>ordering</code> discriminator covers all three variants and consumers MAY render uniformly. The hint lets a consumer choose layout that fits the chunk size:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>orderingUnit</code></th><th>Typical chunk size</th><th>Typical layout</th><th>Example use</th></tr>
+</thead>
+<tbody>
+<tr><td><code>"word"</code></td><td>one word or short phrase</td><td>inline draggable tokens on one line</td><td>Unscramble a sentence — see <a href="https://lc-json.org/examples/16-ordering.json"><code>16-ordering.json</code></a></td></tr>
+<tr><td><code>"sentence"</code></td><td>one sentence (10–30 words)</td><td>stacked card blocks, vertical</td><td>Order steps of a process, narrative beats — see <a href="https://lc-json.org/examples/16b-sentence-ordering.json"><code>16b-sentence-ordering.json</code></a></td></tr>
+<tr><td><code>"paragraph"</code></td><td>one paragraph (50–100 words)</td><td>stacked block cards, vertical, larger</td><td>Order paragraphs of an essay — see <a href="https://lc-json.org/examples/16c-paragraph-ordering.json"><code>16c-paragraph-ordering.json</code></a></td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="word-level-example"><a class="header" href="#word-level-example">Word-level example</a></h4>
+<pre><code class="language-json">{
+  "type": "ordering",
+  "globalId": "550e8400-e29b-41d4-a716-446655440010",
+  "prompt": "",
+  "title": "Word Order",
+  "sourceText": "She went shopping yesterday.",
+  "items": ["She", "went", "shopping", "yesterday"],
+  "distractors": ["quickly"],
+  "points": 1.0,
+  "tags": ["grammar", "level:A2"]
+}
+</code></pre>
+<p>(<code>orderingUnit</code> is omitted — the default <code>"word"</code> applies. <code>scoringMode</code> is also omitted; consumers default to <code>"strict"</code> for word-level — see Scoring below.)</p>
+<h4 id="sentence-level-example"><a class="header" href="#sentence-level-example">Sentence-level example</a></h4>
+<pre><code class="language-json">{
+  "type": "ordering",
+  "globalId": "550e8400-e29b-41d4-a716-446655441620",
+  "prompt": "",
+  "title": "Cellular Respiration — Order the Stages",
+  "sourceText": "Glucose enters the cell and is split into two pyruvate molecules… (full passage)",
+  "items": [
+    "Glucose enters the cell and is split into two pyruvate molecules in the cytoplasm during glycolysis…",
+    "Each pyruvate is then transported into the mitochondrion and converted to acetyl-CoA…",
+    "…"
+  ],
+  "scoringMode": "kendall",
+  "orderingUnit": "sentence",
+  "points": 4.0,
+  "tags": ["biology:cell-biology:respiration"]
+}
+</code></pre>
+<p>See <a href="https://lc-json.org/examples/16b-sentence-ordering.json"><code>16b-sentence-ordering.json</code></a> for the full example.</p>
+<h4 id="paragraph-level-example"><a class="header" href="#paragraph-level-example">Paragraph-level example</a></h4>
+<p>Same shape, with <code>orderingUnit: "paragraph"</code> and longer items. See <a href="https://lc-json.org/examples/16c-paragraph-ordering.json"><code>16c-paragraph-ordering.json</code></a> — a four-paragraph essay-structure reorder.</p>
+<h4 id="scoring-1"><a class="header" href="#scoring-1">Scoring</a></h4>
+<p>Two modes selected by <code>scoringMode</code>:</p>
+<ul>
+<li><strong><code>"strict"</code></strong> — all items must be in their correct positions AND no distractors placed in the answer area. Any deviation = 0 points.</li>
+<li><strong><code>"kendall"</code></strong> — partial credit by Kendall tau distance over the learner’s permutation: each discordant pair (one item placed before another that should follow it) reduces the score. With <em>N</em> items and <em>k</em> discordant pairs, the score is <code>points × (1 − k / (N × (N−1) / 2))</code>. Useful when the chunks have a single defensible order but partial credit reflects partial understanding (e.g., process narratives, essay structure).</li>
+</ul>
+<p>When <code>scoringMode</code> is omitted, the recommended default is <code>"strict"</code> for <code>orderingUnit: "word"</code> (where pairwise inversions don’t have pedagogical meaning — a sentence either reads correctly or it doesn’t) and <code>"kendall"</code> for <code>orderingUnit: "sentence"</code> and <code>"paragraph"</code> (where partial credit reflects partial understanding of the discourse structure). Consumers that don’t support partial credit MAY collapse <code>"kendall"</code> to <code>"strict"</code>.</p>
+<hr>
+<h3 id="11-placement"><a class="header" href="#11-placement">11. Placement</a></h3>
+<p><strong>Description:</strong> Place items into anchored gaps in a structured passage. Each placement entry pairs a 1-based gap-marker number (<code>@@@N</code> in the passage) with the item that belongs in that gap. Distractors are extra items with no correct gap; passage gap-markers without a corresponding placement entry are decoy positions — a TOEFL-style variant where one item must be placed into one of several candidate positions. The shape mirrors the matching-redesign principle: for structured tasks where the relationship between items and slots is the data, the relationship is encoded explicitly per row.</p>
+<p><strong>Use Cases:</strong></p>
+<ul>
+<li><strong>Cambridge B2 First Part 6</strong> — sentence-level “missing sentences” tasks where 6 short sentences must be placed back into a 6-gap article. Use <code>placementUnit: "sentence"</code>. See <code>examples/17a-sentence-placement.json</code>.</li>
+<li><strong>Cambridge C1 Advanced Part 7</strong> — paragraph-level reordering of a 6-gap essay. Use <code>placementUnit: "paragraph"</code>. See <code>examples/17b-paragraph-placement.json</code>.</li>
+<li><strong>IELTS Matching Headings</strong> — short headings labeled to sections of a passage. Use <code>placementUnit: "sectionLabel"</code>. The same shape covers analytical meta-labels (e.g., labeling each paragraph ‘thesis’, ‘counter-argument’, ‘evidence’) — both real headings and analytical labels share the wire format. See <code>examples/17c-section-label-placement.json</code>.</li>
+<li><strong>TOEFL Sentence Insertion</strong> — a single missing sentence with multiple candidate positions; only one is correct. Author 4 <code>@@@N</code> markers in <code>passage</code> and a single <code>placements[]</code> entry whose <code>gap</code> is the correct position. The unanswered markers are decoy gaps. Use <code>placementUnit: "sentence"</code> and <code>allowPartialCredit: false</code> (single-gap → all-or-nothing). See <code>examples/17d-toefl-insertion-placement.json</code>.</li>
+</ul>
+<p><strong>Word-level placement</strong> is covered by <a href="#5-wordbankcloze"><code>wordBankCloze</code></a> — placement does not include <code>"word"</code> in the <code>placementUnit</code> enum.</p>
+<p><strong>Symbolic-type <code>prompt</code> convention.</strong> On the eight symbolic question types (the gap-fill family, sentence transformation, matching, ordering, placement) the structured fields carry the question’s meaning, so <code>prompt</code> is <strong>non-authoritative</strong>. It remains required but <strong>MAY be empty</strong> (<code>""</code>); equally, a producer MAY populate it with a brief human-readable summary derived from the question’s content — a readable preview, not authored framing. See <code>examples/01b-simple-gap-fill-readable-prompt.json</code>, which shows <code>"I saw ___ elephant at the zoo yesterday."</code> as one valid form, with <code>""</code> (as in <code>examples/01-simple-gap-fill.json</code>) equally valid. Consumers MUST NOT rely on a symbolic <code>prompt</code>’s content for scoring, rendering, equality, or deduplication.</p>
+<p><strong>Framing instructions</strong> for the exercise (e.g., <em>“Place these sentences in the gaps where they best fit. Some markers are decoys.”</em>) belong on the parent <code>exerciseItem.instructions</code> (or <code>quizItem.instructions</code>) field, not duplicated into each question’s <code>prompt</code>. Consumers typically render the parent item’s <code>instructions</code> once at the top of the exercise — above all its questions — so per-question framing would be redundant. This applies symmetrically to all eight symbolic question types.</p>
+<h4 id="properties"><a class="header" href="#properties">Properties</a></h4>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>placementUnit</code></td><td>string</td><td>✅ Yes</td><td>Display granularity hint: <code>"sentence"</code>, <code>"paragraph"</code>, or <code>"sectionLabel"</code>. Default <code>"sentence"</code>. Each value carries a different marker-placement convention — see the table below.</td></tr>
+<tr><td><code>passage</code></td><td>string</td><td>✅ Yes</td><td>Structured text with <code>@@@1</code>, <code>@@@2</code>, … gap markers (1-based). Must contain at least one marker (the schema’s <code>pattern</code> keyword enforces this). Plain text only — no HTML.</td></tr>
+<tr><td><code>placements</code></td><td>object[]</td><td>✅ Yes</td><td>Each entry: <code>{ "gap": int, "item": string }</code>. Both required; <code>gap</code> ≥ 1; <code>item.minLength</code> 1. Order is author-free. <code>minItems: 1</code> — permits the TOEFL variant (1 item, multiple candidate gaps).</td></tr>
+<tr><td><code>distractors</code></td><td>string[]</td><td>❌ No</td><td>Extra <strong>items</strong> with no correct gap. Default <code>[]</code>. Distinct from decoy gaps (extra <code>@@@N</code> markers without a corresponding <code>placements[].gap</code> entry).</td></tr>
+<tr><td><code>allowPartialCredit</code></td><td>boolean</td><td>❌ No</td><td>Award partial credit per correct gap instead of all-or-nothing. Default <code>true</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="display-variants-placementunit"><a class="header" href="#display-variants-placementunit">Display variants (<code>placementUnit</code>)</a></h4>
+<p><code>placementUnit</code> is an advisory hint and a marker-placement convention. The same <code>placement</code> discriminator covers all three variants and consumers MAY render uniformly.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th><code>placementUnit</code></th><th>Typical render</th><th>Marker-placement convention</th><th>Example use</th></tr>
+</thead>
+<tbody>
+<tr><td><code>"sentence"</code></td><td>Inline drop slot at each marker</td><td>Marker appears mid-prose; surrounding whitespace and punctuation are the author’s choice.</td><td>Cambridge B2 missing-sentences (17a) and TOEFL Sentence Insertion (17d).</td></tr>
+<tr><td><code>"paragraph"</code></td><td>Block-level drop slot between paragraphs</td><td>Marker is the entire content of its paragraph — surrounded by <code>\n\n</code> or at start/end of passage.</td><td>Cambridge C1 paragraph-reordering (17b).</td></tr>
+<tr><td><code>"sectionLabel"</code></td><td>Label slot above / leading edge of a paragraph</td><td>Marker at the start of the section it labels (first non-whitespace token of a paragraph), followed by a space and then the section’s content.</td><td>IELTS Matching Headings and analytical meta-labels (17c).</td></tr>
+</tbody>
+</table>
+</div>
+<h4 id="marker-placement-conventions"><a class="header" href="#marker-placement-conventions">Marker-placement conventions</a></h4>
+<p><code>passage</code> is plain text. Consumers detect paragraph boundaries by <code>\n\n</code> (double newline). The conventions above are documented in the schema’s <code>placementUnit</code> description and given side-by-side here:</p>
+<pre><code class="language-text">sentence:
+  "The experiment began with a simple question. @@@1 The results surprised the team."
+
+paragraph:
+  "Coined money had served European trade for centuries.\n\n@@@1\n\nWhat converted private bills into public currency was the cost of seventeenth-century war."
+
+sectionLabel:
+  "@@@1 Paper currency did not spread simply because it was convenient.\n\n@@@2 Before paper notes, European trade depended mainly on metal coin."
+</code></pre>
+<h4 id="decoy-gaps-toefl-sentence-insertion-variant"><a class="header" href="#decoy-gaps-toefl-sentence-insertion-variant">Decoy gaps (TOEFL Sentence Insertion variant)</a></h4>
+<p>A <code>passage</code> with N <code>@@@N</code> markers and fewer than N <code>placements[]</code> entries is valid: the unanswered markers are <strong>decoy gaps</strong> — candidate positions where the missing item could plausibly fit but doesn’t. This natively expresses TOEFL Sentence Insertion: 4 candidate positions, 1 correct placement. See <code>examples/17d-toefl-insertion-placement.json</code>.</p>
+<p>This is distinct from <strong>decoy items</strong> (<code>distractors[]</code>) — extra content the learner has but should not place anywhere.</p>
+<h4 id="validator-policy"><a class="header" href="#validator-policy">Validator policy</a></h4>
+<p>Hard errors (validation fails):</p>
+<ul>
+<li>Every <code>placements[].gap</code> MUST reference a <code>@@@N</code> marker present in <code>passage</code>. Orphan placement entries fail.</li>
+<li>No duplicate <code>gap</code> values within <code>placements[]</code>.</li>
+<li><code>gap</code> must be a positive integer (≥ 1).</li>
+<li><code>passage</code> MUST contain at least one <code>@@@N</code> marker (enforced by the schema’s <code>pattern</code> keyword).</li>
+</ul>
+<p>Soft warnings (NOTE-tier, not blocking):</p>
+<ul>
+<li><code>@@@N</code> markers SHOULD be sequential starting at 1 (<code>1, 2, 3, …</code>). Inherits the <code>wordBankCloze</code> convention.</li>
+<li>Per-<code>placementUnit</code> marker-placement convention violations: <code>paragraph</code> markers that sit mid-prose alongside other text rather than alone on a paragraph; <code>sectionLabel</code> markers that don’t appear at the start of a paragraph. <code>sentence</code> mode has no positional rule.</li>
+<li>A <code>@@@N</code> marker without a corresponding <code>placements[].gap</code> entry is <strong>not</strong> a warning — it is a valid decoy gap. The validator distinguishes intentional decoys from authoring errors only by inference.</li>
+</ul>
+<h4 id="scoring-2"><a class="header" href="#scoring-2">Scoring</a></h4>
+<p>Per-gap scoring against the authored <code>placements[]</code>. With <code>allowPartialCredit: true</code> (default), each gap whose chosen item matches the authored item is worth <code>points / placements.length</code>; remaining gaps contribute zero. With <code>allowPartialCredit: false</code>, every gap must be correct for any credit. Decoy gaps (markers without a <code>placements[]</code> entry) are unscored — placing an item into one is a “wrong gap” event whose treatment is consumer-defined; placing nothing into one is the expected case.</p>
+<hr>
+<h3 id="12-sentencetransformation"><a class="header" href="#12-sentencetransformation">12. SentenceTransformation</a></h3>
+<p><strong>Description:</strong> Cambridge exam-style controlled paraphrase tasks.</p>
+<p><strong>Use Case:</strong> Cambridge FCE/CAE Use of English Part 4 (Key Word Transformation).</p>
+<p><strong>Example:</strong> Transform sentence using given keyword.</p>
+<pre><code class="language-json">{
+  "type": "sentenceTransformation",
+  "globalId": "550e8400-e29b-41d4-a716-446655440018",
+  "prompt": "",
+  "title": "Key Word Transformation",
+  "tags": ["grammar", "exam:fce", "level:B2"],
+  "difficulty": 8.0,
+  "points": 2.0,
+  "promptSentence": "I haven't seen John for three weeks.",
+  "keyword": "LAST",
+  "targetSentence": "The @@@ was three weeks ago.",
+  "allOrNothing": false,
+  "acceptedChunks": {
+    "1": ["last time"],
+    "2": ["I saw John"]
+  },
+  "chunkFeedback": {
+    "1": "Use 'LAST' + 'time'. The fixed phrase is 'the last time'.",
+    "2": "Past simple 'saw' is needed here, not present perfect 'have seen'."
+  }
+}
+</code></pre>
+<p><strong>Type-Specific Properties:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Property</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>promptSentence</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Original sentence to transform</td></tr>
+<tr><td><code>keyword</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Word that MUST be used (uppercase)</td></tr>
+<tr><td><code>targetSentence</code></td><td>string</td><td>✅ Yes</td><td><code>""</code></td><td>Template with <code>@@@</code> for answer chunks</td></tr>
+<tr><td><code>allOrNothing</code></td><td>boolean</td><td>❌ No</td><td><code>false</code></td><td>All chunks correct or zero points</td></tr>
+<tr><td><code>acceptedChunks</code></td><td>object</td><td>✅ Yes</td><td><code>{}</code></td><td>Dictionary: chunk index → array of accepted answers</td></tr>
+<tr><td><code>chunkCaseSensitive</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: chunk index → boolean (default: false)</td></tr>
+<tr><td><code>chunkFeedback</code></td><td>object</td><td>❌ No</td><td><code>null</code></td><td>Dictionary: chunk index → feedback string</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="reserved-types"><a class="header" href="#reserved-types">Reserved Types</a></h2>
+<p>The seven question types in this section are reserved in the <code>question-base.schema.json</code> discriminator enum but do not yet have per-type schemas; full implementation is targeted for 2027. Per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6, conforming consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. Producers SHOULD NOT emit reserved types in cross-implementation distribution.</p>
+<h3 id="13-association"><a class="header" href="#13-association">13. Association</a></h3>
+<p><strong>Description:</strong> Group items into categories (Categorization).</p>
+<p><strong>Use Case:</strong> Classify items, group by category.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "association",
+  "globalId": "550e8400-e29b-41d4-a716-446655440011",
+  "prompt": "Group these words by part of speech",
+  "title": "Parts of Speech",
+  "tags": ["grammar", "level:B1"],
+  "difficulty": 5.0,
+  "points": 4.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h3 id="14-hotspot"><a class="header" href="#14-hotspot">14. Hotspot</a></h3>
+<p><strong>Description:</strong> Click regions on image (HotspotImage).</p>
+<p><strong>Use Case:</strong> Image-based identification, anatomy diagrams.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "hotspot",
+  "globalId": "550e8400-e29b-41d4-a716-446655440012",
+  "prompt": "Click on the heart in the diagram",
+  "title": "Anatomy Hotspot",
+  "tags": ["science:biology", "level:B1"],
+  "difficulty": 4.0,
+  "points": 2.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h3 id="15-graphicgapmatch"><a class="header" href="#15-graphicgapmatch">15. GraphicGapMatch</a></h3>
+<p><strong>Description:</strong> Visual arrangement (DragAndDrop).</p>
+<p><strong>Use Case:</strong> Drag-and-drop activities, visual matching.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "graphicGapMatch",
+  "globalId": "550e8400-e29b-41d4-a716-446655440013",
+  "prompt": "Drag the labels to the correct positions on the diagram",
+  "title": "Label Diagram",
+  "tags": ["science", "level:B2"],
+  "difficulty": 6.0,
+  "points": 5.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h3 id="16-graphicassociate"><a class="header" href="#16-graphicassociate">16. GraphicAssociate</a></h3>
+<p><strong>Description:</strong> Associate items with images.</p>
+<p><strong>Use Case:</strong> Match text with images.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "graphicAssociate",
+  "globalId": "550e8400-e29b-41d4-a716-446655440014",
+  "prompt": "Match each animal with its habitat",
+  "title": "Animal Habitats",
+  "tags": ["science:biology", "level:A2"],
+  "difficulty": 4.0,
+  "points": 3.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h3 id="17-graphicorder"><a class="header" href="#17-graphicorder">17. GraphicOrder</a></h3>
+<p><strong>Description:</strong> Order items based on images.</p>
+<p><strong>Use Case:</strong> Sequence images, visual ordering.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "graphicOrder",
+  "globalId": "550e8400-e29b-41d4-a716-446655440015",
+  "prompt": "Put these images in the correct order to show the life cycle",
+  "title": "Life Cycle Order",
+  "tags": ["science:biology", "level:B1"],
+  "difficulty": 5.0,
+  "points": 4.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h3 id="18-fileupload"><a class="header" href="#18-fileupload">18. FileUpload</a></h3>
+<p><strong>Description:</strong> Submit documents.</p>
+<p><strong>Use Case:</strong> Assignment submission, file uploads.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "fileUpload",
+  "globalId": "550e8400-e29b-41d4-a716-446655440016",
+  "prompt": "Upload your completed assignment (PDF format)",
+  "title": "Assignment Submission",
+  "tags": ["assignment", "level:C1"],
+  "difficulty": 0.0,
+  "points": 50.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h3 id="19-mediapromptedessay"><a class="header" href="#19-mediapromptedessay">19. MediaPromptedEssay</a></h3>
+<p><strong>Description:</strong> Record audio/video answer.</p>
+<p><strong>Use Case:</strong> Speaking tasks, oral presentations.</p>
+<p><strong>Status:</strong> 🔒 Reserved (per <code>NORMATIVE.md</code> §6) — discriminator name is reserved in 1.0; per-type schema is targeted for 2027. Producers SHOULD NOT emit reserved types in cross-implementation distribution; consumers MUST preserve them in full across read/write cycles (every field, value, and nested structure — per §6.2/§6.4), MUST treat earned points as 0, and SHOULD render a non-interactive placeholder. The example below shows only the <code>question-base</code> fields any reserved-type instance must carry.</p>
+<pre><code class="language-json">{
+  "type": "mediaPromptedEssay",
+  "globalId": "550e8400-e29b-41d4-a716-446655440017",
+  "prompt": "Record a 2-minute audio response describing your favorite place",
+  "title": "Speaking Task",
+  "tags": ["speaking", "exam:ielts", "level:B2"],
+  "difficulty": 7.0,
+  "points": 10.0
+}
+</code></pre>
+<p><strong>Note:</strong> Per-type properties are not defined in 1.0; tool-specific extension fields MAY be carried (consumers MUST preserve them per <code>NORMATIVE.md</code> §6.4 round-trip preservation).</p>
+<hr>
+<h2 id="validation-rules"><a class="header" href="#validation-rules">Validation Rules</a></h2>
+<h3 id="type-discriminator"><a class="header" href="#type-discriminator">Type Discriminator</a></h3>
+<ul>
+<li>✅ <code>"type"</code> value MUST match one of the supported types in canonical <strong>camelCase</strong>: <code>simpleGapFill</code>, <code>multipleChoice</code>, <code>trueFalseQuestion</code>, etc.</li>
+<li>❌ Non-conforming: <code>"type": "SimpleGapFill"</code> (pre-1.0 PascalCase). Conforming consumers MUST reject per <code>NORMATIVE.md</code> §5.3.</li>
+<li>❌ Non-conforming: <code>"type": "simplegapfill"</code> (wrong case). Conforming consumers MUST reject.</li>
+<li>❌ Invalid: <code>"type": "GapFill"</code> — not a recognized discriminator.</li>
+</ul>
+<h3 id="common-properties-1"><a class="header" href="#common-properties-1">Common Properties</a></h3>
+<ul>
+<li>✅ <code>globalId</code> must be a valid RFC 4122 UUID (any version; shape-only validation against the 8-4-4-4-12 hex pattern); required per <code>NORMATIVE.md</code> §4.4.</li>
+<li>✅ <code>difficulty</code> must be 0.0 to 10.0.</li>
+<li>✅ <code>points</code> must be a non-negative number (minimum <code>0.0</code>); MAY be <code>null</code> to inherit a consumer-default scoring weight. Use <code>0</code> for ungraded questions; positive values for graded.</li>
+<li>✅ <code>tags</code> must be array of strings (can be empty; per the empty-default-strip rule in spec examples, omit when empty).</li>
+</ul>
+<h3 id="type-specific-validation"><a class="header" href="#type-specific-validation">Type-Specific Validation</a></h3>
+<p><strong>SimpleGapFill:</strong></p>
+<ul>
+<li>✅ <code>sentence</code> must contain exactly one <code>@@@</code> marker</li>
+<li>✅ <code>acceptedAnswers</code> must have at least one answer</li>
+</ul>
+<p><strong>TrueFalseQuestion:</strong></p>
+<ul>
+<li>✅ <code>correctAnswer</code> must be a boolean (<code>true</code> or <code>false</code>)</li>
+<li>✅ <code>displayStyle</code> if present must be one of: “TrueFalse”, “CorrectIncorrect”, “CheckmarkX”</li>
+</ul>
+<p><strong>MultipleChoice:</strong></p>
+<ul>
+<li>✅ <code>options</code> must have at least 2 items</li>
+<li>✅ <code>optionsAndPoints</code> must have entries for all options</li>
+<li>✅ At least one option must have points &gt; 0</li>
+</ul>
+<p><strong>WordBankCloze / MultiGapCloze:</strong></p>
+<ul>
+<li>✅ Numbered <code>@@@1</code>, <code>@@@2</code>, etc. in <code>passage</code> must match <code>gapAcceptedAnswers</code> count</li>
+<li>✅ Gap numbers must be sequential starting at 1 (1, 2, 3, …)</li>
+<li>✅ Each gap must have at least one accepted answer</li>
+</ul>
+<p><strong>MultipleChoiceCloze:</strong></p>
+<ul>
+<li>✅ Numbered <code>@@@1</code>, <code>@@@2</code>, etc. in <code>passage</code> must match <code>gapOptions</code> and <code>correctAnswers</code> count</li>
+<li>✅ <code>correctAnswers</code> indices must be valid (within option array bounds)</li>
+</ul>
+<p><strong>SentenceTransformation:</strong></p>
+<ul>
+<li>✅ <code>keyword</code> must appear in student’s answer (validated by renderer)</li>
+<li>✅ <code>targetSentence</code> must contain <strong>exactly one</strong> <code>@@@</code> placeholder — chunks are sequential answer pieces typed at that single position, not separate gaps. Multiple <code>@@@</code> markers are ambiguous and non-conforming.</li>
+<li>✅ Chunk indices in <code>acceptedChunks</code> must be sequential starting from 1 (<code>"1"</code>, <code>"2"</code>, <code>"3"</code>, …)</li>
+</ul>
+<hr>
+<h2 id="complete-example-exerciseitem-with-mixed-questions"><a class="header" href="#complete-example-exerciseitem-with-mixed-questions">Complete Example: ExerciseItem with Mixed Questions</a></h2>
+<pre><code class="language-json">{
+  "type": "exercise",
+  "globalId": "550e8400-e29b-41d4-a716-446655440100",
+  "title": "Grammar Practice Exercise",
+  "sequence": 0,
+  "instructions": "Complete all questions to the best of your ability.",
+  "suggestedTime": 15,
+  "isOptional": false,
+  "isGraded": true,
+  "points": 10.0,
+  "passMarkPercent": 70.0,
+  "questions": [
+    {
+      "type": "simpleGapFill",
+      "globalId": "550e8400-e29b-41d4-a716-446655440101",
+      "prompt": "",
+      "title": "Articles",
+      "tags": ["grammar:articles"],
+      "difficulty": 3.0,
+      "points": 2.0,
+      "sentence": "I saw @@@ elephant at the zoo.",
+      "acceptedAnswers": ["an"],
+      "caseSensitive": false
+    },
+    {
+      "type": "multipleChoice",
+      "globalId": "550e8400-e29b-41d4-a716-446655440102",
+      "prompt": "Which sentence is grammatically correct?",
+      "title": "Correct Sentence",
+      "tags": ["grammar:tenses"],
+      "difficulty": 5.0,
+      "points": 3.0,
+      "options": [
+        "She go to school every day.",
+        "She goes to school every day.",
+        "She going to school every day.",
+        "She is go to school every day."
+      ],
+      "optionsAndPoints": {
+        "She go to school every day.": 0.0,
+        "She goes to school every day.": 1.0,
+        "She going to school every day.": 0.0,
+        "She is go to school every day.": 0.0
+      },
+      "allowMultipleCorrect": false,
+      "allowPartialCredit": false,
+      "penalizeIncorrect": false,
+      "shuffleOptions": true,
+      "showLetterLabels": true
+    },
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "550e8400-e29b-41d4-a716-446655440103",
+      "prompt": "The past tense of 'go' is 'went'.",
+      "title": "Past Tense",
+      "tags": ["grammar:irregular-verbs"],
+      "difficulty": 2.0,
+      "points": 1.0,
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "penalizeIncorrect": false,
+      "incorrectPenaltyPercent": 0.0
+    }
+  ]
+}
+</code></pre>
+<hr>
+<h2 id="related-documentation"><a class="header" href="#related-documentation">Related Documentation</a></h2>
+<ul>
+<li><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> — Conformance requirements (RFC 2119 keywords, producer/consumer roles).</li>
+<li><a href="README-spec.html"><code>README.md</code></a> — Specification overview.</li>
+<li><a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a> — JSON Schema files (the contract for each type).</li>
+<li><a href="https://github.com/lc-json/specification/tree/main/examples"><code>examples/</code></a> — Per-type example files (<code>01-simple-gap-fill.json</code> … <code>16c-paragraph-ordering.json</code>).</li>
+<li><a href="tests/"><code>tests/</code></a> — Conformance test corpus.</li>
+</ul>
+<hr>
+<p><strong>Version history:</strong></p>
+<ul>
+<li>1.0-rc.1 (2026-05-25) — initial release candidate; internal, never publicly announced.</li>
+<li>1.0-rc.2 (2026-05-30) — first publicly announced release candidate; <code>prompt</code>-field correction.</li>
+<li>1.0-rc.3 (2026-06-13) — localization model, corpus expansion; <code>sentenceTransformation</code> schema drops two prototype-era fields.</li>
+<li>1.0 (target 2026-06-30) — final release.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="VALIDATION.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="subject-collection-reference.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="VALIDATION.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="subject-collection-reference.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

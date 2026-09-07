@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.1/word-bank-cloze.schema.json",
+  "title": "WordBankCloze Question Schema",
+  "description": "Passage with gaps filled from a shared word pool",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "question-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "wordBankCloze"
+        },
+        "passage": {
+          "type": "string",
+          "description": "Text with numbered @@@1, @@@2, etc. marking gaps (1-based)",
+          "pattern": "@@@\\d+",
+          "minLength": 4
+        },
+        "wordBank": {
+          "type": "array",
+          "description": "Pool of words to choose from (includes distractors)",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "gapAcceptedAnswers": {
+          "type": "object",
+          "description": "Dictionary: gap number (1-based, as string) → array of accepted answers",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "gapCaseSensitive": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Dictionary: gap number → boolean (default: false)",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "boolean"
+            }
+          },
+          "default": null
+        },
+        "allowWordReuse": {
+          "type": "boolean",
+          "description": "Can same word be used multiple times?",
+          "default": false
+        },
+        "bankPosition": {
+          "type": "string",
+          "description": "Word bank position",
+          "enum": [
+            "above",
+            "below",
+            "side"
+          ],
+          "default": "above"
+        },
+        "gapFeedback": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Dictionary: gap number → feedback string",
+          "patternProperties": {
+            "^[0-9]+$": {
+              "type": "string"
+            }
+          },
+          "default": null
+        },
+        "allowPartialCredit": {
+          "type": "boolean",
+          "description": "Award partial credit for some correct answers",
+          "default": true
+        }
+      },
+      "required": [
+        "passage",
+        "wordBank",
+        "gapAcceptedAnswers"
+      ]
+    }
+  ]
+}

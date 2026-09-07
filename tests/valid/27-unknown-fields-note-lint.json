@@ -1,0 +1,31 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Unrecognized fields and extension members (RD-2 NOTE lint)",
+  "language": "en",
+  "supportLanguage": null,
+  "x-acme-catalogRef": "ACME-2026-114",
+  "units": [
+    {
+      "globalId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+      "title": "Unit 1",
+      "sequence": 0,
+      "x-acme-tracking": {
+        "campaign": "spring",
+        "nested": {
+          "not": "our business"
+        }
+      },
+      "lessons": [
+        {
+          "globalId": "6ba7b811-9dad-11d1-80b4-00c04fd430c8",
+          "title": "Lesson 1.1",
+          "sequence": 0,
+          "estimatedMinutes": 12,
+          "items": []
+        }
+      ]
+    }
+  ]
+}

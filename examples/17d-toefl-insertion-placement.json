@@ -1,0 +1,25 @@
+{
+  "type": "placement",
+  "globalId": "550e8400-e29b-41d4-a716-446655441760",
+  "title": "Photosynthesis — Where Does the Sentence Fit?",
+  "tags": [
+    "exam:toefl-ibt-reading",
+    "biology:plant-biology:photosynthesis",
+    "qualification:b2-first"
+  ],
+  "points": 2.0,
+  "difficulty": 6.0,
+  "prompt": "",
+  "placementUnit": "sentence",
+  "passage": "Photosynthesis is the process by which plants, algae, and certain bacteria convert sunlight, water, and carbon dioxide into sugars. @@@1 The reaction takes place mostly in the chloroplasts of leaf cells, where green pigments called chlorophylls absorb light in the red and blue parts of the spectrum and reflect green — which is why most plant tissue looks the colour it does. @@@2 The captured light energy is then used to split water molecules, releasing oxygen as a by-product and freeing electrons that the cell can put to work. @@@3 Those electrons drive a chain of reactions whose final result is the assembly of carbon dioxide into glucose, the simple sugar that the rest of the organism — and, ultimately, the rest of the food chain — depends on. @@@4 Without that final step, the captured sunlight would simply dissipate as heat, and the elaborate machinery of pigments and electron carriers would be biologically useless.",
+  "placements": [
+    {
+      "gap": 3,
+      "item": "That step is what links the energy of sunlight to the chemistry of every meal we eat."
+    }
+  ],
+  "feedback": {
+    "correct": "Position @@@3 is correct. The missing sentence is a generalising claim about the importance of 'that step', and it follows naturally after the description of how light energy splits water and frees electrons (the step it refers to). The next sentence then begins 'Those electrons drive a chain of reactions…', so placing the missing sentence at @@@3 gives a clean: mechanism → significance → continuation. At @@@1 it would be too early — the mechanism hasn't been described yet. At @@@2 it would interrupt the description of chlorophylls. At @@@4 it would arrive after the food-chain payoff has already been delivered, making it redundant.",
+    "incorrect": "Re-read the missing sentence carefully: 'That step is what links the energy of sunlight to the chemistry of every meal we eat.' The phrase 'That step' is a back-reference — it must follow a sentence that has just described a specific step in photosynthesis. Position @@@1 is too early (no step has been mentioned yet). Position @@@2 sits in the middle of the chlorophylls description. Position @@@3 sits right after the water-splitting and electron-release sentence — exactly the step the missing sentence refers to. Position @@@4 is too late: by then the article has already explained how the electrons assemble glucose, and the generalising claim has nothing left to introduce."
+  }
+}

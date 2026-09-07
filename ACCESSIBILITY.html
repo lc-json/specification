@@ -1,0 +1,504 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Accessibility profile (normative) - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/ACCESSIBILITY.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-accessibility-profile"><a class="header" href="#lc-json-accessibility-profile">LC-JSON Accessibility Profile</a></h1>
+<p><strong>Status:</strong> Released for <code>1.0</code>. This is the stable accessibility contract carried forward unchanged from <code>1.0-rc.3</code>; <code>1.0</code> is a pure rebase of rc.3. Further deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader timing guidance, <code>--accessibility</code> validator flag + fixtures) are <strong>post-1.0, additive, and informative or opt-in</strong> — none change the base-vs-Profile contract; see §11. Obligations stated here will not be retracted or contradicted.
+<strong>Spec version:</strong> 1.0
+<strong>Last updated:</strong> 2026-06-30</p>
+<p>This document collects the accessibility expectations for LC-JSON (Learning Content JSON) producers and consumers. The keywords <strong>MUST</strong>, <strong>MUST NOT</strong>, <strong>SHOULD</strong>, <strong>SHOULD NOT</strong>, <strong>MAY</strong>, and <strong>RECOMMENDED</strong> are to be interpreted as in <a href="https://www.rfc-editor.org/rfc/rfc2119">RFC 2119</a> and <a href="https://www.rfc-editor.org/rfc/rfc8174">RFC 8174</a>. RFC 2119 language binds wire-format obligations; ARIA-pattern guidance is informative — the spec hints at affordances rather than mandating a single canonical UI (see <a href="README-spec.html"><code>README.md</code></a> §“Wire Format”). This two-layer split — wire-format affordances versus the duties of the consumer that ultimately delivers the content — is the organizing principle of this document.</p>
+<hr>
+<h2 id="1-scope"><a class="header" href="#1-scope">1. Scope</a></h2>
+<p>LC-JSON is a portable interchange format. The wire format does not render anything itself — accessibility outcomes depend on consumer rendering. The role of this document is to:</p>
+<ul>
+<li>Specify <strong>producer obligations</strong> that make accessible rendering possible (alt text, captions, language tags).</li>
+<li>Specify <strong>consumer obligations</strong> for rendering that don’t drop accessibility affordances the producer already provided.</li>
+<li>Cross-reference <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> where HTML-bearing fields constrain accessibility-bearing markup (<code>&lt;img alt&gt;</code>, <code>&lt;track&gt;</code>, <code>lang</code>, <code>dir</code>).</li>
+</ul>
+<p>Accessibility for the <strong>authoring tools</strong> that produce LC-JSON, and for the <strong>delivery surfaces</strong> that render it, is the responsibility of those tools — not the wire format. This document binds the wire-format obligations only.</p>
+<h3 id="11-the-two-layer-duty-informative"><a class="header" href="#11-the-two-layer-duty-informative">1.1 The two-layer duty (informative)</a></h3>
+<p>Accessibility is achievable downstream <strong>if and only if</strong> the format can carry the affordances a renderer needs, <em>and</em> the rendering consumer surfaces them correctly. These are two distinct, non-interchangeable layers:</p>
+<ol>
+<li><strong>The wire format (LC-JSON).</strong> Cannot produce an accessible experience on its own; it can only <em>enable</em> one — by carrying alt text, captions, language/direction signals, textual feedback, and position semantics for structured tasks. If the format cannot represent an affordance, no conforming consumer can ever deliver it.</li>
+<li><strong>The consumer (the renderer).</strong> Where a disabled end-user actually meets the content, and therefore where every accessibility law attaches. The consumer’s duty is to surface the affordances the producer provided.</li>
+</ol>
+<p>A perfectly capable format rendered by a non-conformant consumer is still inaccessible. A conformant consumer cannot rescue a format that never carried the affordance. Both layers must hold.</p>
+<h3 id="12-legal-context-informative"><a class="header" href="#12-legal-context-informative">1.2 Legal context (informative)</a></h3>
+<p>WCAG governs rendered user experiences; LC-JSON governs portability and metadata preservation. These layers are complementary but distinct — see <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.3.</p>
+<p>The technical accessibility target for educational and commercial delivery in the EU and US converges on <strong>WCAG 2.1 Level AA</strong>:</p>
+<ul>
+<li><strong>EU — European Accessibility Act, Directive (EU) 2019/882</strong> (applicable since 28 June 2025): points at the harmonized standard <strong>EN 301 549</strong>, which references WCAG 2.1 AA.</li>
+<li><strong>EU — Web Accessibility Directive (EU) 2016/2102</strong>: binds public-sector bodies (public universities, schools) to <strong>EN 301 549 → WCAG 2.1 AA</strong>.</li>
+<li><strong>US — DOJ ADA Title II final rule</strong> (April 2024): explicitly adopts <strong>WCAG 2.1 AA</strong> for state/local government, including public schools and universities, with compliance deadlines in <strong>April 2026 / April 2027</strong>.</li>
+<li><strong>US — Section 508 / Section 504</strong>: WCAG-based conformance for federal procurement and recipients of federal financial assistance.</li>
+</ul>
+<p>LC-JSON supports WCAG 2.1 AA by carrying the wire-format affordances a conforming renderer needs (alt text, captions, <code>lang</code>/<code>dir</code> signals, textual feedback, position semantics for structured tasks). The delivering consumer remains responsible for the full WCAG conformance claim under its applicable jurisdiction.</p>
+<h3 id="13-atag-vs-wcag-producers-vs-consumers"><a class="header" href="#13-atag-vs-wcag-producers-vs-consumers">1.3 ATAG vs WCAG (producers vs consumers)</a></h3>
+<ul>
+<li><strong>Web consumers</strong> (the renderers that display LC-JSON content to learners) fall under <strong>WCAG</strong>. The obligations in §§2–7 are written from this perspective.</li>
+<li><strong>Authoring tools</strong> that produce LC-JSON (whether browser-based editors, desktop applications, AI-assisted authoring scripts, or import converters) fall under W3C <strong><a href="https://www.w3.org/TR/ATAG20/">ATAG 2.0</a></strong>, not WCAG. ATAG covers two things: (a) making the authoring environment itself accessible to author-users (ATAG Part A), and (b) supporting authors in producing accessible content — e.g. prompting for <code>alt</code> text, captions, transcripts (ATAG Part B). Producer obligations in this document map to ATAG Part B: the authoring tool’s job is to make the affordances easy to author and hard to forget.</li>
+<li><strong>Desktop authoring tools</strong> are additionally outside WCAG’s scope entirely — WCAG governs web content. Desktop accessibility is governed by platform standards (e.g. UIAutomation on Windows; Section 508 / EN 301 549 <em>software</em> clauses).</li>
+</ul>
+<h3 id="14-five-conformance-requirements-for-a-wcag-21-aa-claim-informative"><a class="header" href="#14-five-conformance-requirements-for-a-wcag-21-aa-claim-informative">1.4 Five conformance requirements for a WCAG 2.1 AA claim (informative)</a></h3>
+<p>A WCAG 2.1 AA claim by a delivering consumer is valid only if <strong>all five</strong> hold; failing any one voids the claim independent of per-criterion passes:</p>
+<ol>
+<li><strong>Conformance level</strong> — all Level A and Level AA criteria are met (50 criteria total: 30 A + 20 AA).</li>
+<li><strong>Full pages</strong> — conformance is claimed for complete pages, including dynamically loaded states; partial-page exclusions are not permitted.</li>
+<li><strong>Complete processes</strong> — every page in a multi-step process must conform (e.g. login → course → item → submission → results). A conformant results page after a non-conformant quiz flow does not pass.</li>
+<li><strong>Accessibility-supported technologies</strong> — reliance only on technologies that work with assistive technology (HTML + ARIA + native form controls is the baseline).</li>
+<li><strong>Non-interference</strong> — even non-relied-on content must not break 1.4.2 (Audio Control), 2.1.2 (No Keyboard Trap), 2.2.2 (Pause, Stop, Hide), or 2.3.1 (Three Flashes or Below Threshold).</li>
+</ol>
+<p>This document specifies what LC-JSON producers and consumers must do to make the per-criterion items achievable. The five claim-level gates are properties of a delivering consumer, not of the wire format.</p>
+<h3 id="15-versions-targeted"><a class="header" href="#15-versions-targeted">1.5 Versions targeted</a></h3>
+<p>This profile targets <strong>WCAG 2.1 Level AA</strong> as the primary claim baseline. Selected criteria from <strong>WCAG 2.2</strong> are designed-in for new interactive components to avoid near-term rework:</p>
+<ul>
+<li><strong>2.5.7 Dragging Movements</strong> (2.2, A) — every drag interaction MUST ship a single-pointer, non-drag alternative. Governs structured-task question types in §4.</li>
+<li><strong>2.5.8 Target Size (Minimum)</strong> (2.2, AA) — interactive targets SHOULD be ≥ 24×24 CSS px.</li>
+</ul>
+<p>Other WCAG 2.2 additions are out of the 2.1 claim baseline. <strong>4.1.1 Parsing</strong> is treated as satisfied-by-default (modern browsers/AT; W3C errata; obsolete in WCAG 2.2).</p>
+<hr>
+<h2 id="2-image-alt-text--wcag-111"><a class="header" href="#2-image-alt-text--wcag-111">2. Image alt text — WCAG 1.1.1</a></h2>
+<h3 id="21-producer-obligations"><a class="header" href="#21-producer-obligations">2.1 Producer obligations</a></h3>
+<p>When <strong>claiming Accessibility Profile conformance</strong>, a producer <strong>MUST</strong> emit an <code>alt</code> attribute on every <code>&lt;img&gt;</code> element in HTML-bearing fields (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §3.3). This satisfies WCAG <strong>1.1.1 Non-text Content</strong> at Level A.</p>
+<p>Outside an Accessibility Profile claim, authoring <code>alt</code> is <strong>not</strong> a base-conformance requirement: a producer that omits <code>alt</code> is still a conforming LC-JSON producer (the reference validator emits a non-blocking <code>WARN</code> per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8.2). What base conformance <em>does</em> require is preservation — a consumer MUST NOT strip an <code>alt</code> that is present (<code>NORMATIVE.md</code> §12.1). The distinction is deliberate: a small producer is never blocked for an <code>alt</code>-less image, but accessibility information, once authored, is never silently dropped.</p>
+<ul>
+<li>For <strong>informative</strong> images (diagrams, screenshots, photographs that carry meaning), <code>alt</code> MUST be a meaningful textual description.</li>
+<li>For <strong>decorative</strong> images (visual flourishes, spacers, redundant illustrations of adjacent text), <code>alt=""</code> (empty string) is RECOMMENDED. An empty <code>alt</code> is a positive signal to assistive technology that the image carries no content; it is not a missing attribute.</li>
+</ul>
+<p>Question types that carry image references in tool-specific extension fields (e.g. reserved-type <code>hotspot</code>, <code>graphicGapMatch</code>) SHOULD include an alt-text-equivalent property when those types are promoted to first-class schemas (see §11).</p>
+<h3 id="22-consumer-obligations"><a class="header" href="#22-consumer-obligations">2.2 Consumer obligations</a></h3>
+<p>A consumer MUST render the <code>alt</code> text exposed to assistive technology when an image is rendered. A consumer that strips <code>&lt;img&gt;</code> (e.g. when sanitization fails) MUST surface the <code>alt</code> text as fallback content rather than silently dropping the image entirely.</p>
+<p>A missing <code>alt</code> attribute SHOULD trigger a domain-validation warning per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8.2; the consumer MUST still render the image (the failure mode is a warning to the author, not a refused document).</p>
+<hr>
+<h2 id="3-video-and-audio-captions-transcripts-descriptions--wcag-121-122-123-125"><a class="header" href="#3-video-and-audio-captions-transcripts-descriptions--wcag-121-122-123-125">3. Video and audio: captions, transcripts, descriptions — WCAG 1.2.1, 1.2.2, 1.2.3, 1.2.5</a></h2>
+<h3 id="31-producer-obligations"><a class="header" href="#31-producer-obligations">3.1 Producer obligations</a></h3>
+<p>For <strong>prerecorded instructional video that contains speech or meaningful audio</strong>, producers <strong>MUST</strong> emit at least one <code>&lt;track kind="captions"&gt;</code> or <code>&lt;track kind="subtitles"&gt;</code> element with a valid <code>src</code> and <code>srclang</code> when claiming Accessibility Profile conformance. This satisfies WCAG <strong>1.2.2 Captions (Prerecorded)</strong> at Level A. WebVTT is the RECOMMENDED caption format (broad browser support; AT-compatible).</p>
+<p>For all other <code>&lt;video&gt;</code> content (decorative, non-speech, ambient), producers SHOULD emit a <code>&lt;track kind="captions"&gt;</code> or <code>&lt;track kind="subtitles"&gt;</code> element where the content carries any information the learner is expected to receive (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §7.5).</p>
+<p>When claiming Accessibility Profile conformance, producers <strong>MUST</strong> provide a <strong>transcript</strong> for prerecorded instructional content that carries speech — either as adjacent <code>ContentItem.html</code> prose or as a linked resource:</p>
+<ul>
+<li>For <strong>audio-only</strong> instructional content (e.g. a <code>&lt;audio&gt;</code> listening passage), the transcript is the text alternative required by WCAG <strong>1.2.1 Audio-only (Prerecorded)</strong> at Level A.</li>
+<li>For <strong>instructional video</strong>, the transcript is required <em>in addition to</em> the captions above; it satisfies WCAG <strong>1.2.3 (media alternative)</strong> and serves learners who cannot use synchronized captions (deafblind users on a braille display, users who need to read at their own pace).</li>
+</ul>
+<p>Outside an Accessibility Profile claim, a transcript is RECOMMENDED but not required — base conformance never compels a small producer to author one. As with <code>alt</code> (§2.1), the base floor is preservation, not production: a transcript or <code>&lt;track&gt;</code> already present MUST round-trip (<code>NORMATIVE.md</code> §12.1).</p>
+<p><code>&lt;track kind="descriptions"&gt;</code> (audio descriptions of visual-only information) is RECOMMENDED for video where visual content is essential to the pedagogy and not redundantly narrated. This pairs with WCAG <strong>1.2.5 Audio Description (Prerecorded)</strong> at AA.</p>
+<h3 id="32-consumer-obligations"><a class="header" href="#32-consumer-obligations">3.2 Consumer obligations</a></h3>
+<p>A consumer that renders <code>&lt;video&gt;</code> or <code>&lt;audio&gt;</code> MUST surface caption/subtitle controls when <code>&lt;track&gt;</code> elements are present. A consumer MUST NOT auto-play media (<a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §7.1, §7.2) — the <code>&lt;video&gt;</code> rendering pipeline is user-driven, which is itself an accessibility requirement (motion-sensitivity, screen-reader interruption, bandwidth control). Auto-play would also violate WCAG <strong>1.4.2 Audio Control</strong>.</p>
+<p>A consumer SHOULD render <code>&lt;track kind="descriptions"&gt;</code> as either a switchable audio track or a synchronized text alternative.</p>
+<hr>
+<h2 id="4-keyboard-alternatives-for-structured-task-question-types--wcag-211-251-252-253-257-22-designed-in-412-131"><a class="header" href="#4-keyboard-alternatives-for-structured-task-question-types--wcag-211-251-252-253-257-22-designed-in-412-131">4. Keyboard alternatives for structured-task question types — WCAG 2.1.1, 2.5.1, 2.5.2, 2.5.3, 2.5.7 (2.2 designed-in), 4.1.2, 1.3.1</a></h2>
+<p>Three implemented question types involve drag-and-drop or pointer-driven interaction — <code>matching</code>, <code>ordering</code>, and <code>placement</code>. The cloze family (<code>wordBankCloze</code>, <code>multiGapCloze</code>) is structurally similar; <code>multipleChoiceCloze</code> is dropdown-based and inherently keyboard-accessible. The reserved-for-2027 <code>hotspot</code>, <code>graphicGapMatch</code>, <code>graphicAssociate</code>, and <code>graphicOrder</code> types compound the same pattern with image regions.</p>
+<h3 id="41-consumer-obligations"><a class="header" href="#41-consumer-obligations">4.1 Consumer obligations</a></h3>
+<p>A consumer that renders these types MUST provide a fully keyboard-navigable interaction. Pointer-only implementations are non-conforming for accessibility purposes regardless of LC-JSON conformance. Per WCAG <strong>2.5.7 (designed-in from 2.2)</strong>, every drag interaction MUST additionally ship a single-pointer, non-drag alternative.</p>
+<p>Concretely:</p>
+<ul>
+<li><code>matching</code> (<code>pairs</code> mode) — Tab-to-item, Enter-to-select, Tab-to-match, Enter-to-pair (or equivalent two-step keyboard model) MUST work without a pointer. Native <code>&lt;select&gt;</code> per item is the simplest conforming pattern (see §4.2.2).</li>
+<li><code>matching</code> (<code>classification</code> mode) — Tab through the item pool, Enter-to-select an item, Tab-to-category, Enter-to-place. Many items can target the same category.</li>
+<li><code>ordering</code> — Up/Down (or Left/Right for <code>orderingUnit: "word"</code>) keys MUST move a focused tile within the sequence. The interaction model SHOULD be discoverable from focus state alone. See §4.2.1 for a recommended ARIA pattern.</li>
+<li><code>placement</code> — Tab through the distractor pool and the gap targets; Enter-to-select an item, Tab-to-gap, Enter-to-place. The interaction MUST work without a pointer regardless of <code>placementUnit</code> mode. A labeled <code>&lt;select&gt;</code> per gap is the simplest conforming pattern.</li>
+<li><code>wordBankCloze</code>, <code>multiGapCloze</code> — Bank-token selection and gap-placement MUST be reachable by keyboard. <code>multipleChoiceCloze</code>’s <code>&lt;select&gt;</code> rendering is inherently keyboard-accessible and is the RECOMMENDED fallback pattern when richer drag-and-drop interactions cannot be made keyboard-equivalent.</li>
+</ul>
+<p>Focus indicators on interactive elements MUST be visible (WCAG <strong>2.4.7 Focus Visible</strong>) and SHOULD meet 3:1 contrast against adjacent backgrounds (WCAG <strong>1.4.11 Non-text Contrast</strong>).</p>
+<h3 id="411-the-accessible-alternative-is-expressible-from-the-document-data"><a class="header" href="#411-the-accessible-alternative-is-expressible-from-the-document-data">4.1.1 The accessible alternative is expressible from the document data</a></h3>
+<p>The position/target semantics a consumer needs to render a keyboard- and AT-navigable alternative are already carried by the schemas, so the accessible path is expressible from the document rather than improvised at render time: <code>ordering</code> by item <strong>position</strong> (<code>items[i]</code> is the tile for position <code>i</code>); <code>placement</code> by <strong>gap number</strong> (<code>@@@N</code> markers correspond to <code>placements[].gap</code>); <code>matching</code> by <strong>item↔match</strong> value (<code>pairs</code>) or <strong>item→category</strong> value (<code>classification</code>). Element identity is positional or by value rather than a durable token — sufficient for rendering and for scoring, including repeated values, which are disambiguated by position. A consumer that needs durable per-element identity across systems (for example, portable response or analytics interchange) supplies it at its own layer; the wire format intentionally does not carry it.</p>
+<h3 id="42-recommended-aria-patterns-informative"><a class="header" href="#42-recommended-aria-patterns-informative">4.2 Recommended ARIA patterns (informative)</a></h3>
+<p>The following patterns are RECOMMENDED for consumers; they satisfy 4.1.2 (Name, Role, Value), 1.3.1 (Info and Relationships), and 2.5.3 (Label in Name) for the structured-task question types. They are informative — a consumer that satisfies the §4.1 obligations through a different ARIA pattern is conforming.</p>
+<h4 id="421-ordering"><a class="header" href="#421-ordering">4.2.1 Ordering</a></h4>
+<ul>
+<li><strong>Bank</strong> — <code>role="group"</code> with <code>aria-labelledby</code> pointing at a visible label (“Available tiles” or equivalent).</li>
+<li><strong>Answer area</strong> — <code>role="listbox"</code> with <code>aria-orientation="horizontal"</code> for <code>orderingUnit: "word"</code> and <code>aria-orientation="vertical"</code> for <code>sentence</code>/<code>paragraph</code>; <code>aria-labelledby</code> for the answer label; <code>aria-describedby</code> pointing at visible keyboard-and-pointer instructions.</li>
+<li><strong>Slots inside the listbox</strong> — <code>role="presentation"</code> so the listbox→option relationship is preserved across intervening layout elements.</li>
+<li><strong>Tiles</strong> — <code>tabindex="0"</code> on every tile so all tiles are reachable while arrow keys remain available for movement. Each tile’s accessible name (<code>aria-label</code>) carries the content <strong>and</strong> position information when placed (e.g. <em>“goes, position 2 of 5”</em>). When a tile is placed, set <code>aria-selected="true"</code>.</li>
+<li><strong>Live region</strong> — a visually-hidden <code>aria-live="polite" aria-atomic="true"</code> element for movement announcements (tile picked up, tile moved, tile returned to bank). This satisfies WCAG <strong>4.1.3 Status Messages</strong> for the interaction’s transient state.</li>
+<li><strong>Single-pointer alternative</strong> — click-to-place from the bank, click-to-pick-up from a placed tile, click-to-place at another position. Distinct visual indication when a tile is “picked up” (separate from the focus indicator, since both can show simultaneously).</li>
+<li><strong>Discoverable instructions</strong> — keyboard-and-pointer instructions SHOULD be visible (not buried in <code>aria-label</code>) and referenced by <code>aria-describedby</code> on the listbox.</li>
+</ul>
+<p>An alternative satisfying the same obligations is the <strong>WAI-ARIA Authoring Practices</strong> grab/drop model: Space to “grab,” arrows move only while grabbed, single-roving <code>tabindex</code>. The pattern above (per-tile <code>tabindex</code>) is the recommended baseline for short sequences; the grab/drop model scales better for long sequences at the cost of a mode step.</p>
+<h4 id="422-matching-placement"><a class="header" href="#422-matching-placement">4.2.2 Matching, Placement</a></h4>
+<p>The simplest conforming pattern is <strong>native form controls</strong>:</p>
+<ul>
+<li><strong><code>matching</code> (<code>pairs</code>)</strong> — one <code>&lt;select&gt;</code> per item, options drawn from <code>match</code> values + <code>distractors</code> (shuffled per §5.6 of <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a>). Each <code>&lt;select&gt;</code> is labeled with the item text via a visible <code>&lt;label&gt;</code> or <code>aria-labelledby</code>.</li>
+<li><strong><code>matching</code> (<code>classification</code>)</strong> — one <code>&lt;select&gt;</code> per item, options drawn from the category labels.</li>
+<li><strong><code>placement</code></strong> — one <code>&lt;select&gt;</code> per <code>@@@N</code> gap, options drawn from <code>placements[].item</code> values + <code>distractors</code>. Each <code>&lt;select&gt;</code> is labeled with surrounding-passage context or a gap label.</li>
+</ul>
+<p>Native <code>&lt;select&gt;</code> is inherently keyboard-accessible, satisfies 2.5.3 by carrying its visible label as its accessible name, and avoids the ARIA-listbox complexity of §4.2.1. Richer drag-and-drop renderings are permitted but MUST ship the keyboard and single-pointer alternatives per §4.1.</p>
+<h4 id="423-cloze-family"><a class="header" href="#423-cloze-family">4.2.3 Cloze family</a></h4>
+<p><code>simpleGapFill</code>, <code>wordBankCloze</code>, <code>multiGapCloze</code>, <code>multipleChoiceCloze</code> MAY be rendered with native text inputs (<code>&lt;input type="text"&gt;</code>) or selects (<code>&lt;select&gt;</code>). Each gap MUST have a programmatic label — either an associated <code>&lt;label&gt;</code> element, or <code>aria-label</code>, or <code>aria-labelledby</code> pointing at adjacent gap-context prose.</p>
+<h3 id="43-producer-obligations"><a class="header" href="#43-producer-obligations">4.3 Producer obligations</a></h3>
+<p>Producers MAY include hint text guiding learners who use keyboard or assistive technology, as <code>hint</code> strings on the question or as adjacent <code>ContentItem.html</code> prose. The wire format does not currently carry interaction-specific accessibility hints; this is intentional (consumer-defined affordance), but producers SHOULD assume diverse interaction modalities when authoring.</p>
+<blockquote>
+<p><em>A post-1.0 accessibility guidance update may deepen this with: an <code>aria-grabbed</code>/<code>aria-dropeffect</code> deprecation note, modern <code>aria-activedescendant</code> patterns as an alternative to per-tile <code>tabindex</code>, focus-management requirements during placement, and screen-reader announcement timing requirements for partial-credit feedback.</em></p>
+</blockquote>
+<hr>
+<h2 id="5-feedback-not-by-color-alone--wcag-141-413"><a class="header" href="#5-feedback-not-by-color-alone--wcag-141-413">5. Feedback: not by color alone — WCAG 1.4.1, 4.1.3</a></h2>
+<p>Question types that emit feedback (<a href="question-types-reference.html"><code>question-types-reference.md</code></a>, Common Properties — <code>feedback</code>, <code>choiceFeedback</code>) carry textual content. Consumers MUST render this textual feedback in addition to any visual indicators of correctness (green/red highlighting, check/cross icons).</p>
+<p>A consumer MUST NOT convey correctness solely through color or icon. Conformant rendering provides at minimum:</p>
+<ul>
+<li>An accessible textual indicator (“Correct”, “Incorrect”, or the producer-supplied feedback string) — WCAG <strong>1.4.1 Use of Color</strong>.</li>
+<li>A non-color visual indicator (icon, position, label) for sighted users with color-vision differences.</li>
+<li>An assistive-technology-readable announcement when feedback updates dynamically — WCAG <strong>4.1.3 Status Messages</strong>.</li>
+</ul>
+<p>This binds <strong>consumer rendering</strong>. The wire format already carries the textual indicators; the obligation is to render them.</p>
+<h3 id="51-recommended-live-region-pattern-informative"><a class="header" href="#51-recommended-live-region-pattern-informative">5.1 Recommended live-region pattern (informative)</a></h3>
+<p>Per-question feedback that updates dynamically (without a page reload) SHOULD be exposed to assistive technology via an ARIA live region:</p>
+<ul>
+<li>Routine feedback (per-question correct/incorrect, score updates): <code>aria-live="polite"</code> so the announcement does not interrupt the learner’s current speech.</li>
+<li>Critical feedback (final score, submission confirmation, error states): <code>role="alert"</code> (implicit <code>aria-live="assertive"</code>).</li>
+<li>Score summaries that change after submission: live region MUST contain the textual indicator before any visual transition begins.</li>
+</ul>
+<p>Status-message regions SHOULD NOT receive focus; focus management for status announcements is governed by 4.1.3 — <em>expose to AT without moving focus</em>.</p>
+<hr>
+<h2 id="6-language-and-direction--wcag-311-312"><a class="header" href="#6-language-and-direction--wcag-311-312">6. Language and direction — WCAG 3.1.1, 3.1.2</a></h2>
+<p>The <code>language</code> field requirement is also tied to <strong>EN 301 549 5.4</strong> (Closed functionality) for educational content delivery.</p>
+<h3 id="61-producer-obligations"><a class="header" href="#61-producer-obligations">6.1 Producer obligations</a></h3>
+<p>Every Course or QuestionSet carries a <code>language</code> field (a BCP 47 tag, commonly a bare ISO 639-1 code; see <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a> §3) at the document root. Producers MUST set <code>language</code> to the primary delivery language. When the document carries content in a secondary language (typically the learner’s L1 for <code>[L1:]</code> translation/support tags), producers SHOULD also set <code>supportLanguage</code>.</p>
+<p>Within HTML-bearing fields, producers MAY use the <code>lang</code> attribute to mark spans of content in a different language than the document default (per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §3.1). Producers SHOULD use <code>lang</code> for any in-line foreign-language quotation or term — this satisfies WCAG <strong>3.1.2 Language of Parts</strong>.</p>
+<p>Producers MUST set the root <code>language</code> to the document’s primary delivery language. If the primary delivery language is a right-to-left language (Arabic, Hebrew, Persian, Urdu, etc.), producers SHOULD indicate document-level direction where the consumer supports it. For embedded RTL passages inside an LTR document — for example, an English lesson that quotes Arabic, Hebrew, Persian, or Urdu in the body — producers SHOULD mark the relevant HTML span or block with local <code>lang</code> and <code>dir</code> attributes (per <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §3.1). See <code>examples/course-rtl-writing-systems.json</code> for a worked LTR-document-with-embedded-RTL example.</p>
+<h3 id="62-consumer-obligations"><a class="header" href="#62-consumer-obligations">6.2 Consumer obligations</a></h3>
+<p>A consumer MUST honor the document-level <code>language</code> field when setting the rendering surface’s <code>lang</code> attribute. For web consumers, this means setting <code>&lt;html lang&gt;</code> from the document <code>language</code> rather than hardcoding a single locale. This satisfies WCAG <strong>3.1.1 Language of Page</strong>.</p>
+<p>A consumer MUST honor the <code>dir</code> attribute on HTML-bearing elements when rendering RTL content; failure to do so produces unintelligible bidirectional text. For RTL document languages (<code>ar</code>, <code>he</code>, <code>fa</code>, <code>ur</code>), a web consumer SHOULD additionally emit <code>&lt;html dir="rtl"&gt;</code> so the browser’s bidirectional algorithm is engaged for the whole rendering surface.</p>
+<p>A consumer MUST NOT strip <code>lang</code> or <code>dir</code> attributes during sanitization. Both attributes are explicitly allowed on every element class in <a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §3.1.</p>
+<h3 id="63-screen-reader-pronunciation--what-lang-can-and-cannot-promise-informative"><a class="header" href="#63-screen-reader-pronunciation--what-lang-can-and-cannot-promise-informative">6.3 Screen-reader pronunciation — what <code>lang</code> can and cannot promise (informative)</a></h3>
+<p>Emitting <code>lang</code> on a foreign-language span is <strong>necessary but not sufficient</strong> for that span to be <em>pronounced</em> correctly by a screen reader. <code>lang</code> is an instruction; whether it is acted on depends on the end user’s environment, which the format and the consumer cannot control: the reader must support automatic language switching and have it enabled (support varies — screen readers such as NVDA and JAWS switch reliably, Windows Narrator’s automatic switching is comparatively limited, VoiceOver sits in between), and the matching voice must be installed (a reader with only an English voice reads a correct <code>lang="es"</code> span in English, mispronouncing it). The producer/consumer duty is therefore to emit and preserve <code>lang</code>/<code>dir</code> faithfully; correct pronunciation is completed by the user’s assistive technology. This does not make <code>lang</code> optional — without it no reader can switch at all. See <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a> §7 for the fuller discussion.</p>
+<blockquote>
+<p><em>The localization model promised here — the distinct roles of <code>language</code> / <code>lang</code> / <code>supportLanguage</code>, BCP 47 language-tag rules, the single-document-per-language boundary, and the pronunciation-expectations framing above — is specified in <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a>. What remains for a later iteration: explicit RTL rendering tests in the conformance corpus.</em></p>
+</blockquote>
+<hr>
+<h2 id="7-reserved-and-unknown-question-types-placeholder-accessibility--wcag-131-412"><a class="header" href="#7-reserved-and-unknown-question-types-placeholder-accessibility--wcag-131-412">7. Reserved and unknown question types: placeholder accessibility — WCAG 1.3.1, 4.1.2</a></h2>
+<p>Per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6, consumers MUST preserve reserved/unknown question types in full (every field, value, and nested structure) and SHOULD render a non-interactive placeholder for them.</p>
+<p>The placeholder MUST be accessible:</p>
+<ul>
+<li>Surfaced to assistive technology with a meaningful description (at minimum: the question’s <code>title</code>, the type name, and the fact that the consumer cannot render this question).</li>
+<li>Distinguishable from rendered questions (so a screen-reader user understands the question is informational, not interactive) — WCAG <strong>1.3.1 Info and Relationships</strong>.</li>
+<li>Not announced as “interactive” or “form control” when no interaction is possible — WCAG <strong>4.1.2 Name, Role, Value</strong>.</li>
+</ul>
+<p>A consumer MUST NOT silently skip the placeholder for assistive-technology users; the §6 round-trip-preservation philosophy applies equally to the rendering surface.</p>
+<h3 id="71-recommended-placeholder-pattern-informative"><a class="header" href="#71-recommended-placeholder-pattern-informative">7.1 Recommended placeholder pattern (informative)</a></h3>
+<p>A conforming placeholder SHOULD use:</p>
+<ul>
+<li><code>role="region"</code> — surfaces the placeholder as a labeled landmark, distinguishable from form controls.</li>
+<li><code>aria-label</code> carrying the question’s <code>title</code>, the unsupported <code>type</code> discriminator, and an indication that the renderer can’t display this type. Recommended template: <em>“Unsupported question: <code>&lt;title&gt;</code>. This question type (<code>&lt;type&gt;</code>) can’t be displayed by this viewer.”</em></li>
+<li>A visible visual treatment that signals “informational, not interactive” (e.g. a warning or info alert styling).</li>
+<li>No interactive children (<code>&lt;input&gt;</code>, <code>&lt;button&gt;</code>, <code>&lt;select&gt;</code>) — the placeholder is announced as a region, not a form control.</li>
+</ul>
+<blockquote>
+<p><em>A post-1.0 accessibility guidance update may deepen this with: example placeholder text in multiple languages and producer guidance for emitting accessibility metadata on tool-specific extensions to reserved types.</em></p>
+</blockquote>
+<hr>
+<h2 id="8-validator-severity-current-baseline-established-in-rc1"><a class="header" href="#8-validator-severity-current-baseline-established-in-rc1">8. Validator severity (current baseline, established in rc.1)</a></h2>
+<p>The reference validator surfaces accessibility issues at the following severities. WCAG SC references are cross-references — accessibility violations in producer output are content-validation issues, not just renderer concerns.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Issue</th><th>Severity</th><th>WCAG SC</th><th>Cross-reference</th></tr>
+</thead>
+<tbody>
+<tr><td>Missing <code>alt</code> on <code>&lt;img&gt;</code></td><td>warning</td><td>1.1.1</td><td><a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8.2; §2 above</td></tr>
+<tr><td><code>&lt;video&gt;</code> without <code>&lt;track kind="captions"&gt;</code> or <code>kind="subtitles"</code></td><td>warning</td><td>1.2.2</td><td>§3.1</td></tr>
+<tr><td><code>&lt;iframe&gt;</code>, <code>&lt;script&gt;</code>, event handlers (inaccessible regardless)</td><td>error</td><td>4.1.2 (would-be)</td><td><a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> §8.1</td></tr>
+<tr><td>Missing <code>language</code> at document root</td><td>error (schema-enforced)</td><td>3.1.1</td><td>§6.1</td></tr>
+<tr><td>Reserved-type question without a <code>title</code></td><td>informational note (recommended for placeholder)</td><td>1.3.1, 4.1.2</td><td>§7</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><em>A post-1.0 accessibility tooling update may deepen this with: an <code>--accessibility</code> validator flag (analogous to <code>--strict</code>) for tooling that wants to fail-build on warnings, additional severity entries for the reserved-type placeholder surface, and conformance fixtures exercising accessibility-related warnings/errors.</em></p>
+</blockquote>
+<hr>
+<h2 id="9-wcag-21-aa-mapping-informative"><a class="header" href="#9-wcag-21-aa-mapping-informative">9. WCAG 2.1 AA mapping (informative)</a></h2>
+<p>The table below indexes which sections of this document cover which Success Criteria. This is an informative cross-reference; per-criterion normative obligations live in the section bodies.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>WCAG 2.1 AA SC</th><th>Level</th><th>Topic</th><th>This profile</th></tr>
+</thead>
+<tbody>
+<tr><td>1.1.1 Non-text Content</td><td>A</td><td>Alt text on images</td><td>§2</td></tr>
+<tr><td>1.2.1 Audio-only/Video-only</td><td>A</td><td>Transcript or alt media</td><td>§3</td></tr>
+<tr><td>1.2.2 Captions (Prerecorded)</td><td>A</td><td><code>&lt;track kind="captions"&gt;</code></td><td>§3</td></tr>
+<tr><td>1.2.3 Audio Desc. or Media Alt.</td><td>A</td><td>Description track or transcript</td><td>§3</td></tr>
+<tr><td>1.2.5 Audio Description (Prerecorded)</td><td>AA</td><td><code>&lt;track kind="descriptions"&gt;</code></td><td>§3</td></tr>
+<tr><td>1.3.1 Info and Relationships</td><td>A</td><td>ARIA roles/labels, structured-task semantics, placeholder landmark</td><td>§4, §7</td></tr>
+<tr><td>1.4.1 Use of Color</td><td>A</td><td>Textual + non-color correctness cues</td><td>§5</td></tr>
+<tr><td>1.4.2 Audio Control</td><td>A</td><td>No autoplay</td><td>§3.2</td></tr>
+<tr><td>1.4.11 Non-text Contrast</td><td>AA</td><td>Focus indicator contrast</td><td>§4.1</td></tr>
+<tr><td>2.1.1 Keyboard</td><td>A</td><td>Keyboard alternatives for structured tasks</td><td>§4</td></tr>
+<tr><td>2.4.7 Focus Visible</td><td>AA</td><td>Visible focus indicators</td><td>§4.1</td></tr>
+<tr><td>2.5.1 Pointer Gestures</td><td>A</td><td>Single-pointer alternatives</td><td>§4</td></tr>
+<tr><td>2.5.2 Pointer Cancellation</td><td>A</td><td>Activation on up-event</td><td>§4 (consumer behavior)</td></tr>
+<tr><td>2.5.3 Label in Name</td><td>A</td><td>Accessible name contains visible label</td><td>§4.2</td></tr>
+<tr><td><strong>2.5.7 Dragging Movements</strong></td><td><strong>A (2.2 — designed-in)</strong></td><td>Single-pointer alternative for every drag</td><td>§4</td></tr>
+<tr><td><strong>2.5.8 Target Size (Minimum)</strong></td><td><strong>AA (2.2 — designed-in)</strong></td><td>≥ 24×24 px interactive targets</td><td>§1.5</td></tr>
+<tr><td>3.1.1 Language of Page</td><td>A</td><td>Document <code>language</code> → <code>&lt;html lang&gt;</code></td><td>§6</td></tr>
+<tr><td>3.1.2 Language of Parts</td><td>AA</td><td>Inline <code>lang</code> on foreign-language spans</td><td>§6</td></tr>
+<tr><td>4.1.2 Name, Role, Value</td><td>A</td><td>ARIA semantics on custom widgets and placeholders</td><td>§4, §7</td></tr>
+<tr><td>4.1.3 Status Messages</td><td>AA</td><td>Live regions for dynamic feedback</td><td>§5</td></tr>
+</tbody>
+</table>
+</div>
+<p>Criteria not listed (e.g. 1.3.2, 2.4.1, 3.2.2, 3.3.x) are properties of a delivering consumer rather than wire-format affordances. A delivering consumer’s full WCAG 2.1 AA claim covers them per its own conformance plan.</p>
+<hr>
+<h2 id="10-cross-references"><a class="header" href="#10-cross-references">10. Cross-references</a></h2>
+<ul>
+<li><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> — RFC 2119 conformance requirements; <code>language</code> field requirement; reserved-type round-trip; randomization requirements (§5.6).</li>
+<li><a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> — <code>&lt;img alt&gt;</code>, <code>&lt;track&gt;</code>, <code>lang</code>, <code>dir</code>, validator severity.</li>
+<li><a href="question-types-reference.html"><code>question-types-reference.md</code></a> — per-type feedback fields and structured-task definitions.</li>
+<li><a href="GLOSSARY.html"><code>GLOSSARY.md</code></a> — terminology.</li>
+<li><strong>WCAG 2.1</strong> — <a href="https://www.w3.org/TR/WCAG21/">https://www.w3.org/TR/WCAG21/</a></li>
+<li><strong>WCAG 2.1 Quick Reference (filterable SC list)</strong> — <a href="https://www.w3.org/WAI/WCAG21/quickref/">https://www.w3.org/WAI/WCAG21/quickref/</a></li>
+<li><strong>WAI-ARIA Authoring Practices Guide (APG)</strong> — <a href="https://www.w3.org/WAI/ARIA/apg/">https://www.w3.org/WAI/ARIA/apg/</a> — pattern recommendations (listbox, grab/drop, status messages).</li>
+<li><strong>ATAG 2.0</strong> — <a href="https://www.w3.org/TR/ATAG20/">https://www.w3.org/TR/ATAG20/</a> — authoring-tool obligations referenced in §1.3.</li>
+<li><strong>EN 301 549</strong> — <a href="https://www.etsi.org/deliver/etsi_en/301500_301599/301549/">https://www.etsi.org/deliver/etsi_en/301500_301599/301549/</a> — EU harmonized standard pointing at WCAG 2.1 AA.</li>
+</ul>
+<hr>
+<h2 id="11-from-10-onward"><a class="header" href="#11-from-10-onward">11. From 1.0 onward</a></h2>
+<p>This document is the <code>1.0</code> accessibility profile. Its obligations are the <strong>stable accessibility contract</strong>: the base-conformance preservation floor (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §12.1) and the opt-in Accessibility Profile authoring MUSTs (§12.2 — <code>alt</code>, captions, transcripts) were settled as of rc.3 and carry into <code>1.0</code> unchanged. <strong><code>1.0</code> is a pure rebase of rc.3</strong> — it adds no new obligations and tightens nothing.</p>
+<p>The deepenings below are <strong>post-1.0, additive, and either informative or opt-in</strong>: none change the base-vs-Profile contract above, none gate <code>1.0</code>. They are listed so implementers can see the intended direction.</p>
+<ul>
+<li><strong>Per-criterion cross-reference table</strong> — a presentation of §9 mapping each WCAG SC to the obligation already stated in §§2–7. Clarity, not new obligation.</li>
+<li><strong>Expanded ARIA patterns</strong> — patterns for <code>matching</code> <code>classification</code> mode, richer announcement guidance for partial-credit feedback (§4), per-language placeholder text examples (§7). Informative.</li>
+<li><strong>Screen-reader timing guidance</strong> — announcement timing for auto-grading flows (§5). Informative.</li>
+<li><strong><code>--accessibility</code> validator flag</strong> — analogous to <code>--strict</code>; opt-in tooling that promotes accessibility warnings (missing <code>alt</code>, missing <code>&lt;track&gt;</code> on speech-bearing video) to errors for teams that want to fail-build on them. Opt-in; changes no document’s conformance.</li>
+<li><strong>Conformance fixtures for accessibility</strong> — an <code>a11y/</code> corpus suite exercising the <code>--accessibility</code> flag, beyond the round-trip and missing-language fixtures already in the baseline.</li>
+<li><strong>Reserved-type accessibility metadata schema</strong> — guidance for emitting accessibility metadata on <code>hotspot</code>, <code>graphicGapMatch</code>, and the other graphic types when their per-type schemas land (tied to the 1.1 promotion of the reserved types).</li>
+<li><strong>Multilingual accessibility metadata shape</strong> — localized alt text / transcripts / accessible-name fields per locale; bounded by the single-language-per-document decision in <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a> §2.4.</li>
+</ul>
+<blockquote>
+<p><strong>Resolved in rc.3 (no longer pending):</strong> the authoring obligations for <code>alt</code>, captions, and transcripts were settled as <strong>Accessibility Profile</strong> MUSTs (§12.2), deliberately <em>not</em> promoted into base <code>NORMATIVE.md</code> — base conformance stays preservation-only so a small or non-institutional producer is never blocked. The BCP 47 / ISO 639-1 language-tag reconciliation also shipped in rc.3 (see <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a> §3).</p>
+</blockquote>
+<p>Implementers building against <code>1.0</code> can rely on the obligations stated above. Implementers already built against <code>1.0-rc.3</code> have the same accessibility obligations under <code>1.0</code>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="HTML_SAFETY.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="LOCALIZATION.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="HTML_SAFETY.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="LOCALIZATION.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

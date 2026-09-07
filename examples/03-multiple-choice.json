@@ -1,0 +1,44 @@
+{
+  "type": "multipleChoice",
+  "globalId": "550e8400-e29b-41d4-a716-446655440003",
+  "title": "Programming Languages vs Markup",
+  "tags": [
+    "programming:concepts",
+    "level:Beginner",
+    "skill:categorization"
+  ],
+  "points": 5.0,
+  "difficulty": 3.0,
+  "hint": "Think about which languages can execute loops, conditionals, and functions. Markup and styling languages are declarative, not imperative.",
+  "prompt": "Which of the following are programming languages used primarily for writing executable code? (Select all that apply)",
+  "options": [
+    "Python",
+    "HTML",
+    "Java",
+    "CSS",
+    "JavaScript"
+  ],
+  "optionsAndPoints": {
+    "Python": 1.0,
+    "HTML": 0.0,
+    "Java": 1.0,
+    "CSS": 0.0,
+    "JavaScript": 1.0
+  },
+  "allowMultipleCorrect": true,
+  "allowPartialCredit": true,
+  "penalizeIncorrect": false,
+  "shuffleOptions": true,
+  "showLetterLabels": true,
+  "feedback": {
+    "correct": "Excellent! You correctly identified all three programming languages (Python, Java, JavaScript) and excluded the markup language (HTML) and style sheet language (CSS). You understand the distinction between these different types of languages.",
+    "incorrect": "Review your selections. Programming languages can execute logic and algorithms. HTML is a markup language (structures content), and CSS is a style sheet language (defines presentation). Both are declarative, not imperative like programming languages.",
+    "choiceFeedback": {
+      "Python": "✓ Correct! Python is a high-level, interpreted programming language widely used for web development, data science, and automation.",
+      "HTML": "✗ HTML (HyperText Markup Language) is a markup language, not a programming language. It structures content but doesn't execute logic or algorithms.",
+      "Java": "✓ Correct! Java is a compiled, object-oriented programming language used for enterprise applications, Android development, and more.",
+      "CSS": "✗ CSS (Cascading Style Sheets) is a style sheet language used for presentation. It describes how HTML elements should be displayed but doesn't execute code.",
+      "JavaScript": "✓ Correct! JavaScript is a programming language that runs in browsers and on servers (Node.js). Despite the name, it's unrelated to Java."
+    }
+  }
+}

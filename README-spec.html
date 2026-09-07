@@ -1,0 +1,827 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Overview - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/README-spec.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-specification"><a class="header" href="#lc-json-specification">LC-JSON Specification</a></h1>
+<p><strong>Spec version:</strong> 1.1
+<strong>Last updated:</strong> 2026-09-07</p>
+<p>This directory contains the LC-JSON (Learning Content JSON) specification for structured learning content, covering the complete hierarchy from Course structure down to individual Question types.</p>
+<blockquote>
+<p><strong>Implementing LC-JSON?</strong> See <a href="NORMATIVE.html">NORMATIVE.md</a> for the conformance requirements (RFC 2119 keywords, producer/consumer roles, versioning rules, URL stability promises). This README is descriptive; NORMATIVE.md is authoritative. For terminology, see <a href="GLOSSARY.html">GLOSSARY.md</a>.</p>
+</blockquote>
+<p><strong>Complete Coverage:</strong></p>
+<ul>
+<li>Five artifact types sharing a common flat root format: three content documents
+(Course, QuestionSet, Glossary), a vocabulary document (SubjectCollection), and an
+arrangement document (CurriculumPack)</li>
+<li>Course Hierarchy (Course → Units → Lessons → Items)</li>
+<li>5 Lesson Item Types (Content, Exercise, Quiz, ContentSequence, Signpost)</li>
+<li>19 Question Types (12 fully implemented + schema-validated; 7 reserved for a future minor version)</li>
+<li>JSON Schemas (27) for validation — strictly enforced by the reference validator</li>
+<li>Minimal + detailed examples (35 files, all schema-clean)</li>
+</ul>
+<hr>
+<h2 id="design-principles"><a class="header" href="#design-principles">Design Principles</a></h2>
+<p><strong>LC-JSON is machine-validatable, but human-inspectable.</strong></p>
+<p>The documents are validated automatically against <a href="https://json-schema.org/draft-07/schema">JSON Schema Draft 7</a>, but they are also designed so that authored content remains visible in the file. A teacher, curriculum designer, or teacher-developer can recognize <strong>courses, units, lessons, items, questions, prompts, choices, answers, and feedback</strong> without proprietary tooling — opening a course <code>.json</code> in any text editor should be enough to inspect what the course actually contains.</p>
+<p>Technical fields such as <code>$schema</code>, <code>specVersion</code>, and <code>globalId</code> exist to make documents portable across tools and stable across re-imports, but they should not bury the pedagogical content. Where this trade-off arises in spec evolution — naming, structure, ordering of fields — the spec favors the form that keeps pedagogical content recognizable.</p>
+<p>This is a deliberate stance against formats whose meaning only emerges through tooling. It is offered without promise of zero technical fields, because portability requires some; the promise is that the pedagogical structure stays inspectable to the people who authored it.</p>
+<hr>
+<h2 id="wire-format"><a class="header" href="#wire-format">Wire Format</a></h2>
+<p>LC-JSON uses a <strong>flat root</strong> with a <code>documentType</code> discriminator (no enclosing envelope around the document). Every conforming document carries <code>$schema</code>, <code>documentType</code>, and <code>specVersion</code> as root-level siblings. The course content itself is hierarchical — Course → Units → Lessons → Items → Questions — and reflects how teachers structure their material.</p>
+<h3 id="five-artifact-types"><a class="header" href="#five-artifact-types">Five artifact types</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Artifact</th><th><code>documentType</code></th><th>Schema</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>Course</td><td><code>"course"</code></td><td><a href="https://lc-json.org/1.1/course.schema.json"><code>course.schema.json</code></a></td><td>Hierarchical course (Units → Lessons → Items). The usual shape for a full course.</td></tr>
+<tr><td>Question Set</td><td><code>"questionSet"</code></td><td><a href="https://lc-json.org/1.1/question-set.schema.json"><code>question-set.schema.json</code></a></td><td>Flat list of questions for question-bank exchange and packaged delivery — no hierarchy.</td></tr>
+<tr><td>Glossary</td><td><code>"glossary"</code></td><td><a href="https://lc-json.org/1.1/glossary.schema.json"><code>glossary.schema.json</code></a></td><td>Flat list of terms — pronunciation, translations, examples, inflected forms. Study material that attaches to a course, unit, or lesson.</td></tr>
+<tr><td>Subject Collection</td><td><code>"subjectCollection"</code></td><td><a href="https://lc-json.org/1.1/subject-collection.schema.json"><code>subject-collection.schema.json</code></a></td><td>A reusable classification vocabulary: the tags and learning objectives for one subject at one level, as a portable document.</td></tr>
+<tr><td>Curriculum Pack</td><td><code>"curriculumPack"</code></td><td><a href="https://lc-json.org/1.1/curriculum-pack.schema.json"><code>curriculum-pack.schema.json</code></a></td><td>An arrangement: sequence, pacing, and assessment checkpoints referencing a Subject Collection plus content documents.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="required-root-fields-all-artifact-types"><a class="header" href="#required-root-fields-all-artifact-types">Required root fields (all artifact types)</a></h3>
+<pre><code class="language-json">{
+  "$schema": "https://lc-json.org/1.1/&lt;artifact&gt;.schema.json",
+  "documentType": "course",      // or "questionSet", "glossary",
+                                 // "subjectCollection", "curriculumPack"
+  "specVersion": "1.1",
+  "title": "...",
+  ...
+}
+</code></pre>
+<p>The <code>$schema</code> URL serves as a stable, versioned identifier and is used
+by integrated development environments (IDEs such as VS Code) for schema
+autocomplete. <code>specVersion</code> is
+forward-compatible across the <code>1.x</code> series — conforming consumers MUST
+accept any <code>1.x</code> value and reject <code>2.x+</code> cleanly.</p>
+<h3 id="reserved-question-types-targeted-for-2027"><a class="header" href="#reserved-question-types-targeted-for-2027">Reserved question types (targeted for 2027)</a></h3>
+<p>Seven question types are reserved in the polymorphic discriminator
+set but do not yet have per-type schemas — full authoring and consumer
+support is targeted for 2027:</p>
+<p><code>association</code>, <code>hotspot</code>, <code>graphicGapMatch</code>, <code>graphicAssociate</code>,
+<code>graphicOrder</code>, <code>fileUpload</code>, <code>mediaPromptedEssay</code></p>
+<p>The 12 question types with full per-type schemas — <code>simpleGapFill</code>,
+<code>trueFalseQuestion</code>, <code>multipleChoice</code>, <code>wordBankCloze</code>, <code>multiGapCloze</code>,
+<code>multipleChoiceCloze</code>, <code>shortAnswer</code>, <code>essay</code>, <code>sentenceTransformation</code>,
+<code>matching</code>, <code>ordering</code>, <code>placement</code> — are the spec’s stable surface as of 1.0.</p>
+<p><strong>Consumer obligations for reserved (and unknown) types</strong> are normative under <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §6: consumers MUST preserve them verbatim across read/write cycles, MUST NOT silently drop them, MUST treat their earned points as zero, and SHOULD render a non-interactive placeholder. The intent is round-trip preservation: a teacher exporting from a consumer that does not support <code>hotspot</code> can take the file back to a consumer that does, without losing the question. Producers SHOULD NOT emit reserved types in 1.0 documents intended for cross-implementation distribution; reserved types are tool-specific extensions until promoted.</p>
+<h3 id="discriminator-casing"><a class="header" href="#discriminator-casing">Discriminator casing</a></h3>
+<p>Conforming producers emit <strong>camelCase</strong> question discriminators
+(<code>simpleGapFill</code>, <code>multipleChoice</code>, etc.). All examples in this
+directory strictly validate against the schemas in their canonical
+casing. Non-canonical casings are non-conforming; consumers MUST
+reject them.</p>
+<hr>
+<h2 id="what-v11-adds--vocabularies-arrangements-and-glossaries"><a class="header" href="#what-v11-adds--vocabularies-arrangements-and-glossaries">What v1.1 adds — vocabularies, arrangements, and glossaries</a></h2>
+<p>LC-JSON 1.0 moved <strong>content</strong>: courses and question sets that survive the trip between
+tools. Version 1.1 adds the documents that sit <em>around</em> content — the classification it
+is organized by, the plan it is taught on, and the vocabulary students study alongside
+it. All three are ordinary LC-JSON files: flat root, stable ids, readable in a text
+editor.</p>
+<p><strong>A Subject Collection is a curriculum’s working vocabulary as a file.</strong> It holds the
+tags and learning objectives for one scope — <em>B2 adult general English</em>, <em>KS3
+mathematics</em> — with two properties free-text tagging cannot offer. First, every tag and
+objective has a permanent id, so two courses classified with the same member are
+<em>comparably</em> classified: search, curriculum mapping, and progress reporting can line
+them up without guessing that “conditionals” and “if-clauses” mean the same thing.
+Second, a collection can state precisely what external framework it tracks
+(<code>externalAlignments</code> — a national curriculum section, an official training catalog
+entry, an exam specification) without re-publishing that framework’s content. For an
+educational authority or awarding body, this is the piece that makes publishing an
+official vocabulary practical: author the objectives once, point at the official
+register, and let any number of course authors reference the same members rather than
+re-typing them. For a content author, it means the expensive work — writing good can-do
+objectives — is done once per scope and reused, and a course built against a collection
+says so in a form other tools can verify. See
+<a href="subject-collection-reference.html"><code>subject-collection-reference.md</code></a>.</p>
+<p><strong>A Curriculum Pack is a scheme of work that a machine can check.</strong> Where a collection
+says <em>what the objectives are</em>, a pack says <em>how a program covers them</em>: an ordered
+sequence of steps on a calendar-relative timeline (year / term / week — never real
+dates, so any institution’s calendar fits), each step teaching, revisiting, or assessing
+listed objectives, with pacing capacity and assessment checkpoints declared in the
+document. Because steps reference objective ids rather than prose, a validator can
+verify the claims a scheme of work usually only implies: nothing is assessed before it
+is taught, spaced revisits actually have spacing, term plans fit term capacity, and —
+against the referenced collection — every in-scope objective is taught and assessed at
+least once (<code>coverage</code>, a declared contract with explicit exemptions). A pack can start
+as a <strong>blueprint</strong> (the plan alone, every content slot empty), grow into a working
+<strong>manifest</strong> as courses are bound, and ship as a self-contained <strong>bundle</strong> — one
+document type at three depths of completion. For curriculum leads and inspectors, the
+pack is the difference between “the scheme of work says so” and “any conforming
+curriculum-pack validator holding the referenced collection can re-verify the claim.” See
+<a href="curriculum-pack-reference.html"><code>curriculum-pack-reference.md</code></a>.</p>
+<p><strong>A Glossary is the vocabulary students study, as a portable document.</strong> Terms with
+pronunciation (IPA, a friendly respelling, audio), translations, example sentences, and
+inflected forms — designed language-education-first but serving any subject’s key
+words. A glossary attaches to a course, unit, or lesson (<code>glossaryRefs</code>), and consumers
+can auto-link its terms in content, render study lists, or drive flashcards. It is the
+one v1.1 type that is <em>content</em> rather than structure: where a collection classifies
+what courses teach, a glossary <strong>is</strong> learning material. See
+<a href="glossary-reference.html"><code>glossary-reference.md</code></a>.</p>
+<p>The three documents compose: a collection scopes a pack; the pack sequences courses,
+question sets, and glossaries; every reference is by stable id, so the set travels
+between tools without losing its joins. Consumers adopt at any depth — a tool that only
+reads courses ignores the rest and loses nothing (<a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.1
+scopes conformance per artifact type).</p>
+<hr>
+<h2 id="directory-structure"><a class="header" href="#directory-structure">Directory Structure</a></h2>
+<pre><code>specification/
+├── README.md                          # This file
+├── NORMATIVE.md                       # RFC 2119 conformance requirements (authoritative)
+├── HTML_SAFETY.md                     # Normative HTML allowlist + sanitization profile
+├── ACCESSIBILITY.md                   # Producer/consumer accessibility profile
+├── LOCALIZATION.md                    # Language model: language / lang / supportLanguage; BCP 47; pronunciation
+├── VALIDATION.md                      # Rule catalog — schema / validator / advisory tiers
+├── ITEM_PATTERNS.md                   # Informative authoring guide
+├── question-types-reference.md        # Complete reference for all 19 question types
+├── subject-collection-reference.md    # Complete reference for the SubjectCollection type
+├── curriculum-pack-reference.md       # Complete reference for the CurriculumPack type
+├── glossary-reference.md              # Complete reference for the Glossary type
+├── GLOSSARY.md                        # Terminology
+├── schemas/                           # JSON Schema validation files
+│   ├── course.schema.json             # Course (top level)
+│   ├── question-set.schema.json       # QuestionSet (flat artifact)
+│   ├── glossary.schema.json           # Glossary (flat artifact)
+│   ├── subject-collection.schema.json # SubjectCollection (vocabulary artifact)
+│   ├── curriculum-pack.schema.json    # CurriculumPack (arrangement artifact)
+│   ├── publication-fields.schema.json # Shared publication field group (§4.11)
+│   ├── unit.schema.json               # Unit (within Course)
+│   ├── lesson.schema.json             # Lesson (within Unit)
+│   ├── item-base.schema.json          # Base schema for all Items
+│   ├── content-item.schema.json       # ContentItem type
+│   ├── exercise-item.schema.json      # ExerciseItem type
+│   ├── quiz-item.schema.json          # QuizItem type
+│   ├── content-sequence-item.schema.json  # ContentSequenceItem type
+│   ├── signpost-item.schema.json      # SignpostItem type (intro/summary navigation)
+│   ├── question-base.schema.json      # Base schema for all Questions
+│   ├── simple-gap-fill.schema.json    # SimpleGapFill validation
+│   ├── true-false-question.schema.json # TrueFalseQuestion validation
+│   ├── multiple-choice.schema.json    # MultipleChoice validation
+│   ├── word-bank-cloze.schema.json    # WordBankCloze validation
+│   ├── multi-gap-cloze.schema.json    # MultiGapCloze validation
+│   ├── multiple-choice-cloze.schema.json  # MultipleChoiceCloze validation
+│   ├── short-answer.schema.json       # ShortAnswer validation
+│   ├── essay.schema.json              # Essay validation
+│   ├── sentence-transformation.schema.json  # SentenceTransformation validation
+│   ├── matching.schema.json           # Matching validation
+│   ├── ordering.schema.json           # Ordering validation
+│   └── placement.schema.json          # Placement type validation
+└── examples/                          # Example JSON files (35 total)
+    ├── course-minimal.json            # Minimal Course example
+    ├── question-set-minimal.json      # Minimal QuestionSet example
+    ├── glossary-minimal.json          # Minimal Glossary example
+    ├── subject-collection-minimal.json # Minimal SubjectCollection example
+    ├── curriculum-pack-manifest.json  # Minimal CurriculumPack example (manifest depth)
+    ├── question-set-10-true-false.json # Richer QuestionSet showcase
+    ├── unit-minimal.json              # Minimal Unit example
+    ├── lesson-minimal.json            # Minimal Lesson example
+    ├── 10-content-item.json           # ContentItem with HTML
+    ├── 11-exercise-item.json          # ExerciseItem (graded homework example)
+    ├── 12a-graded-quiz-item.json      # QuizItem, isGraded:true (typical assessment)
+    ├── 12b-ungraded-quiz-item.json    # QuizItem, isGraded:false (diagnostic pre-test)
+    ├── 13-content-sequence-item.json  # ContentSequenceItem
+    ├── 14-signpost-item.json          # SignpostItem
+    ├── 01-simple-gap-fill.json        # Per-question examples (01-09)
+    ├── ...                            # 09-sentence-transformation.json
+    ├── 15-matching.json               # Matching example
+    ├── 16-ordering.json               # Ordering example (word-level)
+    ├── 16b-sentence-ordering.json     # Ordering example (sentence-level — process narrative)
+    ├── 16c-paragraph-ordering.json    # Ordering example (paragraph-level — essay structure)
+    ├── 17a-sentence-placement.json    # Placement example (sentence-mode — Cambridge B2 First Part 6 style)
+    ├── 17b-paragraph-placement.json   # Placement example (paragraph-mode — IELTS Reading Matching Information style)
+    ├── 17c-section-label-placement.json # Placement example (sectionLabel-mode — IELTS Matching Headings)
+    ├── 17d-toefl-insertion-placement.json # Placement example (TOEFL Sentence Insertion — decoy-gaps variant)
+    └── sample-course-with-questions.json    # Full course example
+</code></pre>
+<p><strong>Total:</strong> 27 schemas (7 root/structural [course, questionSet, glossary, subjectCollection, curriculumPack, unit, lesson] + 1 publication-fields group + 1 item-base + 5 item types + 1 question-base + 12 question types).</p>
+<blockquote>
+<p><strong>Source layout vs. published layout.</strong> The tree above is the <em>source</em> directory, where the schemas sit in a single flat <code>schemas/</code>. The published specification does <strong>not</strong> use that layout: it serves each publication from its own versioned directory, so the files appear as</p>
+<pre><code>schemas/
+├── 1.1/             # the current publication — 27 schemas
+├── 1.1-rc.1/        # frozen release candidate
+├── 1.0/             # frozen final release
+├── 1.0-rc.1/        # frozen release candidates
+├── 1.0-rc.2/
+└── 1.0-rc.3/
+</code></pre>
+<p>and each schema is served at an immutable versioned URL — <code>https://lc-json.org/1.1/&lt;name&gt;.schema.json</code> for the current publication, with the frozen <code>/1.1-rc.1/</code>, <code>/1.0/</code>, and <code>/1.0-rc.N/</code> publications alongside it forever (NORMATIVE §8.3). That versioned URL is the value every document’s <code>$schema</code> field carries, and it is the only citable form.</p>
+<p>This is why schema links differ between the two: the source documents use a relative <code>schemas/&lt;name&gt;.schema.json</code> so contributors browsing the source tree can follow them, and the publication step rewrites every one of those links to its absolute versioned URL. <strong>A published schema link is always immutable</strong> — there is deliberately no mutable “current” alias to cite by mistake.</p>
+</blockquote>
+<hr>
+<h2 id="course-hierarchy"><a class="header" href="#course-hierarchy">Course Hierarchy</a></h2>
+<p>A Course document has the following nested structure:</p>
+<pre><code>Course (top level)
+└─ Units[] (array of units)
+   └─ Lessons[] (array of lessons)
+      └─ Items[] (array of items - 5 types)
+         ├─ ContentItem (reading/content pages)
+         ├─ ExerciseItem (questions; structural form, grading via isGraded)
+         ├─ QuizItem (questions; structural form, grading via isGraded)
+         ├─ ContentSequenceItem (grouped content)
+         └─ SignpostItem (intro/summary with objectives)
+            └─ Questions[] (only for ExerciseItem and QuizItem)
+</code></pre>
+<p><strong>Minimal Examples for Quick Reference:</strong></p>
+<ul>
+<li><a href="https://lc-json.org/examples/course-minimal.json">course-minimal.json</a> - Bare minimum Course structure</li>
+<li><a href="https://lc-json.org/examples/unit-minimal.json">unit-minimal.json</a> - Bare minimum Unit</li>
+<li><a href="https://lc-json.org/examples/lesson-minimal.json">lesson-minimal.json</a> - Bare minimum Lesson</li>
+</ul>
+<hr>
+<h2 id="lesson-item-types"><a class="header" href="#lesson-item-types">Lesson Item Types</a></h2>
+<p>Every Lesson contains an <code>items</code> array with one or more of these 5 item types:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Item Type</th><th>Schema</th><th>Example</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>ContentItem</strong></td><td><a href="https://lc-json.org/1.1/content-item.schema.json">content-item.schema.json</a></td><td><a href="https://lc-json.org/examples/10-content-item.json">10-content-item.json</a></td><td>Reading/content pages with HTML content (subject to <a href="HTML_SAFETY.html">HTML_SAFETY.md</a>)</td></tr>
+<tr><td><strong>ExerciseItem</strong></td><td><a href="https://lc-json.org/1.1/exercise-item.schema.json">exercise-item.schema.json</a></td><td><a href="https://lc-json.org/examples/11-exercise-item.json">11-exercise-item.json</a></td><td>Exercise-shaped questions container. Grading independent (<code>isGraded</code>).</td></tr>
+<tr><td><strong>QuizItem</strong> (graded)</td><td><a href="https://lc-json.org/1.1/quiz-item.schema.json">quiz-item.schema.json</a></td><td><a href="https://lc-json.org/examples/12a-graded-quiz-item.json">12a-graded-quiz-item.json</a></td><td>Quiz-shaped, <code>isGraded: true</code> — typical assessment.</td></tr>
+<tr><td><strong>QuizItem</strong> (ungraded)</td><td><a href="https://lc-json.org/1.1/quiz-item.schema.json">quiz-item.schema.json</a></td><td><a href="https://lc-json.org/examples/12b-ungraded-quiz-item.json">12b-ungraded-quiz-item.json</a></td><td>Quiz-shaped, <code>isGraded: false</code> — diagnostic pre-test, self-check. Same schema, different policy.</td></tr>
+<tr><td><strong>ContentSequenceItem</strong></td><td><a href="https://lc-json.org/1.1/content-sequence-item.schema.json">content-sequence-item.schema.json</a></td><td><a href="https://lc-json.org/examples/13-content-sequence-item.json">13-content-sequence-item.json</a></td><td>Grouped content with layout options (carousel, tabs, accordion)</td></tr>
+<tr><td><strong>SignpostItem</strong></td><td><a href="https://lc-json.org/1.1/signpost-item.schema.json">signpost-item.schema.json</a></td><td><a href="https://lc-json.org/examples/14-signpost-item.json">14-signpost-item.json</a></td><td>Structural navigation (intro/summary) with objectives and stats; <code>customHtml</code> subject to <a href="HTML_SAFETY.html">HTML_SAFETY.md</a></td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Exercise vs. Quiz.</strong> These are structural distinctions only. They render differently in the UI and contribute to separate point buckets (enabling weighted grading). Whether the score counts toward a learner’s grade is the <code>isGraded</code> flag, set independently. The examples model this: <a href="https://lc-json.org/examples/11-exercise-item.json"><code>11-exercise-item.json</code></a> is a graded homework exercise (<code>isGraded: true</code>); <a href="https://lc-json.org/examples/12a-graded-quiz-item.json"><code>12a-graded-quiz-item.json</code></a> and <a href="https://lc-json.org/examples/12b-ungraded-quiz-item.json"><code>12b-ungraded-quiz-item.json</code></a> use the same content under the same schema to show that quiz can be either graded or ungraded. The fourth combination (ungraded exercise / open practice) is conventional and not given its own example.</p>
+<p>For an authoring guide that walks through the full design space of <code>type</code> × <code>isGraded</code> × <code>isOptional</code> × <code>passMarkPercent</code> — common patterns (graded homework, diagnostic pre-test, exit ticket, etc.) and how different consumers may interpret each combination — see <a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a>.</p>
+</blockquote>
+<p><strong>Key Properties (all items inherit from <a href="https://lc-json.org/1.1/item-base.schema.json">item-base.schema.json</a>):</strong></p>
+<ul>
+<li><code>type</code> (required) - Discriminator: “content”, “exercise”, “quiz”, “contentsequence”, or “signpost”</li>
+<li><code>title</code> (required) - Display title for the item</li>
+<li><code>sequence</code> - Display order within lesson (0-based)</li>
+<li><code>instructions</code> - Instructions shown to learner</li>
+<li><code>suggestedTime</code> - Estimated time in minutes</li>
+<li><code>isOptional</code> - Whether item can be skipped</li>
+</ul>
+<p><strong>Questions Array:</strong></p>
+<ul>
+<li>Only <strong>ExerciseItem</strong> and <strong>QuizItem</strong> have a <code>questions</code> array</li>
+<li>ContentItem, ContentSequenceItem, and SignpostItem do NOT contain questions</li>
+</ul>
+<p><strong>SignpostItem Properties:</strong></p>
+<ul>
+<li><code>signpostType</code> (required) - “intro” or “summary”</li>
+<li><code>scope</code> (required) - “course”, “unit”, or “lesson”</li>
+<li><code>customHtml</code> (optional) - Custom HTML content to override auto-generated message</li>
+</ul>
+<hr>
+<h2 id="documentation-files"><a class="header" href="#documentation-files">Documentation Files</a></h2>
+<h3 id="1-question-types-referencemd"><a class="header" href="#1-question-types-referencemd">1. <a href="./question-types-reference.html">question-types-reference.md</a></a></h3>
+<p><strong>Complete JSON Format Reference</strong></p>
+<ul>
+<li><strong>All 19 Question Types</strong> with detailed specifications</li>
+<li><strong>Property tables</strong> showing required/optional fields</li>
+<li><strong>Examples</strong> for each question type</li>
+<li><strong>Validation rules</strong> and best practices</li>
+<li><strong>Common properties</strong> inherited by all questions</li>
+<li><strong>Complete course example</strong> showing nested structure</li>
+</ul>
+<p><strong>When to use:</strong></p>
+<ul>
+<li>Creating new course JSON files</li>
+<li>Understanding question type requirements</li>
+<li>Troubleshooting import errors</li>
+</ul>
+<hr>
+<h3 id="1b-artifact-type-references"><a class="header" href="#1b-artifact-type-references">1b. Artifact type references</a></h3>
+<p><strong>Complete JSON Format References for the v1.1 artifact types</strong></p>
+<ul>
+<li><a href="./subject-collection-reference.html">subject-collection-reference.md</a> — SubjectCollection: scope, members (tags and objectives), <code>externalAlignments</code>, carried copies in course documents.</li>
+<li><a href="./curriculum-pack-reference.html">curriculum-pack-reference.md</a> — CurriculumPack: <code>sequence[]</code> steps on the calendar-relative timeline, pacing, assessment checkpoints, the <code>coverage</code> contract, and the blueprint / manifest / bundle depths.</li>
+<li><a href="./glossary-reference.html">glossary-reference.md</a> — Glossary: terms, pronunciation, the declared <code>translationLanguages</code> inventory, <code>definitionTranslations</code>, <code>firstMention</code>, and <code>glossaryRefs</code> attachment.</li>
+</ul>
+<p><strong>When to use:</strong></p>
+<ul>
+<li>Authoring or consuming a collection, pack, or glossary document</li>
+<li>Understanding how the v1.1 types reference each other by stable id</li>
+</ul>
+<hr>
+<h3 id="2-json-schema-files-schemas"><a class="header" href="#2-json-schema-files-schemas">2. JSON Schema Files (<code>schemas/</code>)</a></h3>
+<p><strong>Machine-Readable Validation</strong></p>
+<p>JSON Schema files for automated validation using tools like <code>ajv</code>, <code>jsonschema</code>, or IDE validators.</p>
+<p><strong>Root Artifact Schemas:</strong></p>
+<ul>
+<li><code>course.schema.json</code> - Course (top level)</li>
+<li><code>question-set.schema.json</code> - QuestionSet (flat artifact)</li>
+<li><code>glossary.schema.json</code> - Glossary (flat artifact)</li>
+<li><code>subject-collection.schema.json</code> - SubjectCollection (vocabulary artifact)</li>
+<li><code>curriculum-pack.schema.json</code> - CurriculumPack (arrangement artifact)</li>
+<li><code>publication-fields.schema.json</code> - Shared publication field group, composed via <code>allOf</code> (NORMATIVE §4.11)</li>
+</ul>
+<p><strong>Course Hierarchy Schemas:</strong></p>
+<ul>
+<li><code>unit.schema.json</code> - Unit (within Course)</li>
+<li><code>lesson.schema.json</code> - Lesson (within Unit)</li>
+</ul>
+<p><strong>Item Type Schemas:</strong></p>
+<ul>
+<li><code>item-base.schema.json</code> - Base schema for all Items</li>
+<li><code>content-item.schema.json</code> - ContentItem type</li>
+<li><code>exercise-item.schema.json</code> - ExerciseItem type</li>
+<li><code>quiz-item.schema.json</code> - QuizItem type</li>
+<li><code>content-sequence-item.schema.json</code> - ContentSequenceItem type</li>
+<li><code>signpost-item.schema.json</code> - SignpostItem type (intro/summary navigation)</li>
+</ul>
+<p><strong>Question Type Schemas:</strong></p>
+<ul>
+<li><code>question-base.schema.json</code> - Base properties for all questions</li>
+<li><code>simple-gap-fill.schema.json</code> - SimpleGapFill type validation</li>
+<li><code>true-false-question.schema.json</code> - TrueFalseQuestion type validation</li>
+<li><code>multiple-choice.schema.json</code> - MultipleChoice type validation</li>
+<li><code>word-bank-cloze.schema.json</code> - WordBankCloze type validation</li>
+<li><code>multi-gap-cloze.schema.json</code> - MultiGapCloze type validation</li>
+<li><code>multiple-choice-cloze.schema.json</code> - MultipleChoiceCloze type validation</li>
+<li><code>short-answer.schema.json</code> - ShortAnswer type validation</li>
+<li><code>essay.schema.json</code> - Essay type validation</li>
+<li><code>sentence-transformation.schema.json</code> - SentenceTransformation type validation</li>
+<li><code>matching.schema.json</code> - Matching type validation</li>
+<li><code>ordering.schema.json</code> - Ordering type validation</li>
+<li><code>placement.schema.json</code> - Placement type validation</li>
+</ul>
+<p><strong>Strict enforcement:</strong> the reference validator (<code>validate_course.py</code>) runs every document through these schemas as a primary pass via the <code>jsonschema</code> package (≥4.18, modern <code>referencing</code> Registry API). Per-question type-specific dispatch keys off the <code>type</code> discriminator. Install dependencies with <code>pip install -r tools/requirements.txt</code>.</p>
+<p><strong>Usage Example (Node.js with ajv):</strong></p>
+<pre><code class="language-javascript">const Ajv = require('ajv');
+const ajv = new Ajv();
+
+const baseSchema = require('./schemas/question-base.schema.json');
+const simpleGapFillSchema = require('./schemas/simple-gap-fill.schema.json');
+
+const validate = ajv.compile(simpleGapFillSchema);
+const valid = validate(questionData);
+
+if (!valid) {
+  console.error(validate.errors);
+}
+</code></pre>
+<hr>
+<h3 id="3-example-files-examples"><a class="header" href="#3-example-files-examples">3. Example Files (<code>examples/</code>)</a></h3>
+<p><strong>Ready-to-Use Templates</strong></p>
+<h4 id="minimal-hierarchy-examples---quick-format-reference"><a class="header" href="#minimal-hierarchy-examples---quick-format-reference">Minimal Hierarchy Examples - <strong>Quick Format Reference</strong></a></h4>
+<p>Ultra-minimal examples for quick consultation when creating courses:</p>
+<ul>
+<li><strong>course-minimal.json</strong> - Bare minimum Course structure with required properties</li>
+<li><strong>unit-minimal.json</strong> - Minimal Unit within a course</li>
+<li><strong>lesson-minimal.json</strong> - Minimal Lesson within a unit</li>
+</ul>
+<p>Use these as exact-format references (e.g., a unit on Travel + present perfect).</p>
+<h4 id="item-type-examples-10-13---item-structure-reference"><a class="header" href="#item-type-examples-10-13---item-structure-reference">Item Type Examples (10-13) - <strong>Item Structure Reference</strong></a></h4>
+<p>Individual examples for each of the Lesson Item types:</p>
+<ul>
+<li><strong>10-content-item.json</strong> — ContentItem with rich HTML content (Declaration of Independence reading)</li>
+<li><strong>11-exercise-item.json</strong> — ExerciseItem framed as graded homework (5 T/F world-rivers questions; <code>isGraded: true</code>)</li>
+<li><strong>12a-graded-quiz-item.json</strong> — QuizItem as a graded assessment (<code>isGraded: true</code>, <code>passMarkPercent: 70</code>); same content as 11</li>
+<li><strong>12b-ungraded-quiz-item.json</strong> — QuizItem as an ungraded diagnostic pre-test (<code>isGraded: false</code>); same content as 11 and 12a — demonstrates that quiz vs. exercise is structural, grading is policy</li>
+<li><strong>13-content-sequence-item.json</strong> — ContentSequenceItem with carousel layout</li>
+</ul>
+<h4 id="individual-question-examples-01-09---recommended"><a class="header" href="#individual-question-examples-01-09---recommended">Individual Question Examples (01-09) - <strong>RECOMMENDED</strong></a></h4>
+<p>Standalone JSON files for each implemented question type with <strong>complete feedback bundles</strong>:</p>
+<ol>
+<li><strong>01-simple-gap-fill.json</strong> - Articles with indefinite article rule</li>
+<li><strong>02-true-false-question.json</strong> - Science fact with per-choice feedback</li>
+<li><strong>03-multiple-choice.json</strong> - Programming languages with detailed choiceFeedback</li>
+<li><strong>04-word-bank-cloze.json</strong> - Articles in context with per-gap feedback</li>
+<li><strong>05-multi-gap-cloze.json</strong> - Prepositions open cloze (FCE Part 2 style, 8 gaps)</li>
+<li><strong>06-multiple-choice-cloze.json</strong> - Vocabulary with nested gapOptionFeedback</li>
+<li><strong>07-short-answer.json</strong> - Astronomy fact recall</li>
+<li><strong>08-essay.json</strong> - IELTS Task 2 with comprehensive rubric</li>
+<li><strong>09-sentence-transformation.json</strong> - FCE Part 4 with chunk feedback</li>
+</ol>
+<p><strong>Features Demonstrated:</strong></p>
+<ul>
+<li>Complete feedback bundle (correct, incorrect, choiceFeedback)</li>
+<li>Strategic hints that guide without revealing answers</li>
+<li>Multi-level tagging (grammar:articles:indefinite, exam:fce, level:B2)</li>
+<li>Realistic educational content</li>
+<li>Production-ready quality</li>
+</ul>
+<p><strong>Use these as templates</strong> - they showcase all features including feedback mechanisms that are integral to effective course design.</p>
+<p>The 7 reserved-for-2027 graphic types (association, hotspot,
+graphicGapMatch, graphicAssociate, graphicOrder, fileUpload,
+mediaPromptedEssay) are declared in <code>question-base.schema.json</code>’s
+<code>enum</code> for forward compatibility, but no example payloads ship — full
+authoring and rendering support is targeted for 2027.</p>
+<h4 id="sample-course-with-questionsjson"><a class="header" href="#sample-course-with-questionsjson"><code>sample-course-with-questions.json</code></a></h4>
+<p>Complete course JSON showing:</p>
+<ul>
+<li><strong>Full hierarchy</strong>: Course → Units → Lessons → Items → Questions</li>
+<li><strong>Mixed item types</strong>: ContentItem, ExerciseItem, QuizItem</li>
+<li><strong>Real-world structure</strong>: Lessons with intro content + exercises and quizzes</li>
+<li><strong>Cambridge FCE alignment</strong>: Exam-style questions with proper tags</li>
+<li><strong>Best practices</strong>: Proper tagging, feedback, hints, difficulty levels</li>
+</ul>
+<hr>
+<h2 id="quick-start-guide"><a class="header" href="#quick-start-guide">Quick Start Guide</a></h2>
+<h3 id="for-content-creators"><a class="header" href="#for-content-creators">For Content Creators</a></h3>
+<p><strong>Creating a Simple Course:</strong></p>
+<ol>
+<li>
+<p><strong>Start with a template:</strong></p>
+<pre><code class="language-bash">cp examples/sample-course-with-questions.json my-course.json
+</code></pre>
+</li>
+<li>
+<p><strong>Modify the course metadata:</strong></p>
+<pre><code class="language-json">{
+  "title": "Your Course Title",
+  "subtitle": "Your subtitle",
+  "description": "Course description",
+  "tags": ["level:B1", "grammar"]
+}
+</code></pre>
+</li>
+<li>
+<p><strong>Add or modify questions</strong> using the per-type example files (<code>01-simple-gap-fill.json</code> through <code>09-sentence-transformation.json</code>, plus <code>15-matching.json</code> and the <code>16…</code> ordering family).</p>
+</li>
+<li>
+<p><strong>Validate the result</strong> with any conforming consumer or the reference validator:</p>
+<pre><code class="language-bash">python ../tools/validate_course.py --course-path my-course.json
+</code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="for-developers"><a class="header" href="#for-developers">For Developers</a></h3>
+<p><strong>Validating LC-JSON in code:</strong></p>
+<p>Implementations may use any JSON Schema (Draft 7) validator. The earlier <code>ajv</code> snippet (Node.js) is one example; common alternatives:</p>
+<ul>
+<li><strong>Python:</strong> <code>pip install jsonschema</code> (≥ 4.18) → <code>Draft7Validator</code></li>
+<li><strong>Java:</strong> <code>everit-org/json-schema</code> or <code>networknt/json-schema-validator</code></li>
+<li><strong>Go:</strong> <code>santhosh-tekuri/jsonschema</code></li>
+<li><strong>Rust:</strong> <code>Stranger6667/jsonschema</code></li>
+<li><strong>Ruby:</strong> <code>voxpupuli/json-schema</code></li>
+</ul>
+<p>The reference Python validator (<code>tools/validate_course.py</code> in this repository) layers domain checks (HTML allowlist, gap-marker counts, points consistency, signpost-without-objectives) on top of schema validation. Re-implementations are welcome.</p>
+<p><strong>Adding a new question type to the spec</strong> (PR-driven contributions):</p>
+<ol>
+<li>Create a JSON schema in <code>schemas/</code> for the new type.</li>
+<li>Add the discriminator value to <code>question-base.schema.json</code>’s <code>enum</code>.</li>
+<li>Add a per-type example file under <code>examples/</code> (e.g. <code>17-new-type.json</code>).</li>
+<li>Document in <code>question-types-reference.md</code>.</li>
+<li>Add positive and negative test cases under <code>tests/</code>.</li>
+</ol>
+<hr>
+<h2 id="question-types--implementation-status"><a class="header" href="#question-types--implementation-status">Question Types — Implementation Status</a></h2>
+<p><strong>Implemented</strong> (12 types, fully schema-validated as of 1.0-rc.3):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Question Type</th><th>Example</th><th>Use Case</th></tr>
+</thead>
+<tbody>
+<tr><td><code>simpleGapFill</code></td><td>01-simple-gap-fill.json</td><td>Single gap fill-in-the-blank</td></tr>
+<tr><td><code>trueFalseQuestion</code></td><td>02-true-false-question.json</td><td>Binary choice (True/False, Yes/No)</td></tr>
+<tr><td><code>multipleChoice</code></td><td>03-multiple-choice.json</td><td>Single or multiple selection MCQ</td></tr>
+<tr><td><code>wordBankCloze</code></td><td>04-word-bank-cloze.json</td><td>Gap fill from word pool</td></tr>
+<tr><td><code>multiGapCloze</code></td><td>05-multi-gap-cloze.json</td><td>Open cloze (FCE Reading Part 2)</td></tr>
+<tr><td><code>multipleChoiceCloze</code></td><td>06-multiple-choice-cloze.json</td><td>Dropdown cloze (FCE Reading Part 1)</td></tr>
+<tr><td><code>shortAnswer</code></td><td>07-short-answer.json</td><td>Free text short response</td></tr>
+<tr><td><code>essay</code></td><td>08-essay.json</td><td>Long-form writing with rubric</td></tr>
+<tr><td><code>sentenceTransformation</code></td><td>09-sentence-transformation.json</td><td>FCE Use of English Part 4</td></tr>
+<tr><td><code>matching</code></td><td>15-matching.json</td><td>Term-definition matching</td></tr>
+<tr><td><code>ordering</code></td><td>16-ordering.json</td><td>Sequence/chronological ordering</td></tr>
+<tr><td><code>placement</code></td><td>17a-sentence-placement.json</td><td>Place items into anchored gaps in a structured passage (sentence / paragraph / sectionLabel; supports decoy gaps for TOEFL Sentence Insertion)</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Reserved</strong> (7 types declared in the discriminator enum for forward compatibility; per-type schemas and authoring/consumer support targeted for 2027):</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Question Type</th><th>Use Case</th></tr>
+</thead>
+<tbody>
+<tr><td><code>association</code></td><td>Categorization/grouping</td></tr>
+<tr><td><code>hotspot</code></td><td>Click regions on image</td></tr>
+<tr><td><code>graphicGapMatch</code></td><td>Drag-and-drop on image</td></tr>
+<tr><td><code>graphicAssociate</code></td><td>Match text with images</td></tr>
+<tr><td><code>graphicOrder</code></td><td>Order images sequentially</td></tr>
+<tr><td><code>fileUpload</code></td><td>Document submission</td></tr>
+<tr><td><code>mediaPromptedEssay</code></td><td>Audio/video recording</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Status definitions:</strong></p>
+<ul>
+<li><strong>Implemented</strong> — per-type schema, example, and conformance fixtures present.</li>
+<li><strong>Reserved</strong> — declared in the <code>question-base.schema.json</code> discriminator enum for forward compatibility; no per-type schema or example ships yet.</li>
+</ul>
+<p>The 12 implemented types are the entire user-facing surface as of 1.0. The 7 reserved types are targeted for 2027.</p>
+<hr>
+<h2 id="common-validation-errors"><a class="header" href="#common-validation-errors">Common Validation Errors</a></h2>
+<h3 id="error-number-of-gaps-doesnt-match-accepted-answers"><a class="header" href="#error-number-of-gaps-doesnt-match-accepted-answers">Error: “Number of gaps doesn’t match accepted answers”</a></h3>
+<p><strong>Cause:</strong> Mismatch between numbered <code>@@@N</code> markers in <code>passage</code> and entries in <code>gapAcceptedAnswers</code>.
+<strong>Fix:</strong> Count <code>@@@1</code>, <code>@@@2</code>, … markers in the passage and ensure <code>gapAcceptedAnswers</code> has matching string keys (<code>"1"</code>, <code>"2"</code>, …).</p>
+<h3 id="error-unknown-question-type-simplegapfill"><a class="header" href="#error-unknown-question-type-simplegapfill">Error: “Unknown question type: simplegapfill”</a></h3>
+<p><strong>Cause:</strong> Type discriminator uses non-canonical casing.
+<strong>Fix:</strong> Use camelCase: <code>"simpleGapFill"</code>, not <code>"SimpleGapFill"</code> or <code>"simplegapfill"</code>. Per <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §5.3, conforming consumers MUST reject non-canonical casings.</p>
+<h3 id="error-globalid-does-not-match-uuid-pattern"><a class="header" href="#error-globalid-does-not-match-uuid-pattern">Error: “globalId does not match UUID pattern”</a></h3>
+<p><strong>Cause:</strong> <code>globalId</code> is missing or not in RFC 4122 UUID form (any version; shape-only validation against the 8-4-4-4-12 hex pattern).
+<strong>Fix:</strong> Generate a UUID for every Unit, Lesson, Item, and Question. Use any standard UUID library; v4 is recommended.</p>
+<h3 id="error-unsupported-specversion-20"><a class="header" href="#error-unsupported-specversion-20">Error: “Unsupported specVersion ‘2.0’”</a></h3>
+<p><strong>Cause:</strong> The document declares a <code>specVersion</code> whose major version exceeds 1.
+<strong>Fix:</strong> This validator implements LC-JSON 1.x. Either update the validator or correct the <code>specVersion</code> to a 1.x value.</p>
+<hr>
+<h2 id="related-documentation"><a class="header" href="#related-documentation">Related Documentation</a></h2>
+<ul>
+<li><a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> — RFC 2119 conformance requirements (the authoritative source for what implementations must do)</li>
+<li><a href="HTML_SAFETY.html"><code>HTML_SAFETY.md</code></a> — Normative HTML allowlist for <code>ContentItem.html</code> and <code>SignpostItem.customHtml</code> (elements, attributes, URL schemes, sanitization)</li>
+<li><a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> — Producer/consumer accessibility obligations (alt text, captions, keyboard, language/direction) with WCAG 2.1 AA cross-references and recommended ARIA patterns; the opt-in Accessibility Profile claim binds these as MUSTs per NORMATIVE.md §12</li>
+<li><a href="VALIDATION.html"><code>VALIDATION.md</code></a> — Catalog of every documented validation rule, tagged schema-enforced / domain-validator-enforced / advisory, with citations to the enforcing site (schemas, <code>validate_course.py</code>, or prose). One-map view for implementers building consumers, validators, or round-trip tests.</li>
+<li><a href="ITEM_PATTERNS.html"><code>ITEM_PATTERNS.md</code></a> — Informative authoring guide for items + signposts + objectives</li>
+<li><a href="IMPLEMENTATIONS.html"><code>IMPLEMENTATIONS.md</code></a> — Directory of tools that produce, consume, or validate LC-JSON</li>
+<li><a href="CONTRIBUTORS.html"><code>CONTRIBUTORS.md</code></a> — Acknowledgments</li>
+<li><a href="https://github.com/lc-json/specification/tree/main/schemas"><code>schemas/</code></a> — JSON Schema files (the contract)</li>
+<li><a href="https://github.com/lc-json/specification/tree/main/examples"><code>examples/</code></a> — Example documents for every artifact and question type</li>
+<li><a href="tests/"><code>tests/</code></a> — Conformance test corpus (valid and invalid cases)</li>
+<li><a href="question-types-reference.html"><code>question-types-reference.md</code></a> — Per-type property reference</li>
+</ul>
+<hr>
+<h2 id="version-history"><a class="header" href="#version-history">Version History</a></h2>
+<h3 id="v10-rc3-2026-06-13--second-public-release-candidate"><a class="header" href="#v10-rc3-2026-06-13--second-public-release-candidate">v1.0-rc.3 (2026-06-13) — second public release candidate</a></h3>
+<ul>
+<li>Adds <a href="LOCALIZATION.html"><code>LOCALIZATION.md</code></a>: the language model (<code>language</code> / <code>lang</code> / <code>supportLanguage</code>), the single-language-per-document boundary, BCP 47 tags, and screen-reader pronunciation expectations. Bound by new <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §13.</li>
+<li>Adds a positioning page (<a href="RATIONALE.html"><code>RATIONALE.md</code></a>) explaining where LC-JSON sits among adjacent standards.</li>
+<li>Conformance corpus expanded to 64 cases (per-type valid + invalid coverage, grading matrix, globalId-uniqueness).</li>
+<li><strong>Schema change requiring a new immutable path:</strong> the prototype-era <code>allowedFillerWords</code> and <code>prohibitExtraWordsBetweenChunks</code> fields are dropped from <code>sentence-transformation.schema.json</code>. Because <code>/1.0-rc.2/</code> is immutable, this lands at <code>/1.0-rc.3/</code>. Backwards-compatible — every rc.2-valid document remains valid under rc.3 (the removed fields were optional and are ignored on import).</li>
+<li>Schemas published as <strong>immutable</strong> at <code>https://lc-json.org/1.0-rc.3/*.schema.json</code>; <code>/1.0-rc.1/</code> and <code>/1.0-rc.2/</code> stay served and frozen; the <code>https://lc-json.org/1.0/*.schema.json</code> URL space is reserved for the accepted final release.</li>
+</ul>
+<h3 id="v10-rc2-2026-05-30--first-publicly-announced-release-candidate"><a class="header" href="#v10-rc2-2026-05-30--first-publicly-announced-release-candidate">v1.0-rc.2 (2026-05-30) — first publicly announced release candidate</a></h3>
+<ul>
+<li>Two artifact types under a common flat root: <code>course</code> (hierarchical) and <code>questionSet</code> (flat).</li>
+<li>12 user-facing question types fully implemented and schema-validated; 7 graphic/upload types reserved for a 2027 minor version.</li>
+<li>23 JSON Schemas (Draft 7) covering every artifact, item type, and question type.</li>
+<li>32 example files; conformance test corpus under <a href="tests/"><code>tests/</code></a> (13 valid + 25 invalid = 38 cases).</li>
+<li>Reference validator (<code>tools/validate_course.py</code>) and conformance corpus harness (<code>tools/run_corpus.py</code>).</li>
+<li><strong><code>prompt</code> field correction (the rc.1 → rc.2 change):</strong> <code>prompt</code> remains required but <code>minLength</code> is <code>0</code>, so an empty string <code>""</code> is valid. <code>prompt</code> is defined as <strong>non-authoritative</strong> for the eight symbolic question types (gap-fill family, sentence transformation, matching, ordering, placement), whose structured fields carry the question’s meaning; for those types it MAY be empty or MAY carry a brief producer-derived readable summary. A reference-validator domain rule still flags an empty <code>prompt</code> on the four real-content types (true/false, multiple choice, short answer, essay), where it <em>is</em> the question. Backwards-compatible widening — every rc.1-valid document remains valid under rc.2.</li>
+<li>Apache 2.0 throughout. Release-candidate schemas are published as <strong>immutable</strong> at <code>https://lc-json.org/1.0-rc.2/*.schema.json</code>; the <code>https://lc-json.org/1.0/*.schema.json</code> URL space is reserved for the accepted final release.</li>
+</ul>
+<h3 id="v10-rc1--internal-release-candidate-superseded-never-announced"><a class="header" href="#v10-rc1--internal-release-candidate-superseded-never-announced">v1.0-rc.1 — internal release candidate (superseded, never announced)</a></h3>
+<ul>
+<li>Frozen and served at <code>https://lc-json.org/1.0-rc.1/*.schema.json</code> for transparency, but never publicly announced; rc.2 is the first announced prerelease. The only substantive difference is the backwards-compatible <code>prompt</code> <code>minLength</code> <code>1</code> → <code>0</code> correction above; the <code>/1.0-rc.1/</code> schema URLs remain immutable and any document valid under rc.1 is valid under rc.2.</li>
+</ul>
+<h3 id="v10-2026-06-30--accepted-final-release"><a class="header" href="#v10-2026-06-30--accepted-final-release">v1.0 (2026-06-30) — accepted final release</a></h3>
+<ul>
+<li>Publishes the rc.3 schema set unchanged at immutable <code>https://lc-json.org/1.0/*.schema.json</code> — a pure URL rebase of rc.3 with <strong>zero wire/content delta</strong> (only the version pointer, the <code>$id</code>/<code>$schema</code> URL strings, and doc version labels change).</li>
+<li>Further accessibility deepenings (per-criterion cross-reference table, expanded ARIA patterns, screen-reader announcement timing, accessibility-conformance fixtures) are <strong>post-1.0, additive, and informative or opt-in</strong> — they do not change the 1.0 base contract (see <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a> §11).</li>
+<li>Any future non-breaking wire refinement lands in a new immutable minor-version path, not by mutating <code>1.0</code>.</li>
+</ul>
+<blockquote>
+<p><em>LC-JSON’s public history begins with the 1.0 release-candidate line — <code>1.0-rc.2</code> (2026-05-30) was its first publicly announced release. Internal iteration before the candidate line is not reflected in the version history.</em></p>
+</blockquote>
+<hr>
+<h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
+<p>PRs welcome. To propose a new question type or modify an existing one, see <a href="#for-developers"><code>Adding a new question type</code></a> above. For non-trivial changes, open an issue first to discuss the proposal.</p>
+<p>See <a href="CONTRIBUTORS.html"><code>CONTRIBUTORS.md</code></a> for acknowledgments.</p>
+<hr>
+<h2 id="support"><a class="header" href="#support">Support</a></h2>
+<ul>
+<li><strong>GitHub Issues:</strong> open an issue on the spec repository.</li>
+<li><strong>Conformance questions:</strong> consult <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a>; it is the authoritative source for implementer requirements.</li>
+</ul>
+<hr>
+<p><strong>LC-JSON Specification v1.0</strong></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="RATIONALE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="RATIONALE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

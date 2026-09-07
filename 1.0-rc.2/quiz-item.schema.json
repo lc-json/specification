@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.2/quiz-item.schema.json",
+  "title": "QuizItem Schema",
+  "description": "Item with questions, distinct from `exercise` to allow for different UI rendering and a separate points bucket. Grading is an independent policy via `isGraded`.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "item-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "quiz"
+        },
+        "questions": {
+          "type": "array",
+          "description": "Array of Question objects (polymorphic)",
+          "items": {
+            "$ref": "question-base.schema.json"
+          },
+          "default": []
+        },
+        "isGraded": {
+          "type": "boolean",
+          "description": "Whether this quiz contributes to the gradebook. Defaults to true for typical assessments; set to false for diagnostic pre-tests, self-checks, or other ungraded uses.",
+          "default": true
+        },
+        "points": {
+          "type": "number",
+          "description": "Total points available for this quiz. Authoring tools may auto-sum from child Question.points or accept an explicit weighted total; the value here is the resolved total either way.",
+          "minimum": 0,
+          "default": 0
+        },
+        "passMarkPercent": {
+          "type": "number",
+          "description": "Threshold percentage (0-100) at which a score counts as passing. Consumer policy varies: some use this for grading display only, others gate forward navigation, others route to remediation/enrichment paths. Authors compose intent by combining this with `isGraded` and `isOptional`. See ITEM_PATTERNS.md for common combinations.",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 70.0
+        }
+      },
+      "required": [
+        "questions",
+        "isGraded"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://lc-json.org/1.1/glossary.schema.json",
+  "documentType": "glossary",
+  "specVersion": "1.1",
+  "globalId": "a1-food-vocabulary-en-es",
+  "version": "1.0.0",
+  "title": "A1 Food Vocabulary (English for Spanish speakers)",
+  "description": "Unit vocabulary for the food topic, with Spanish support.",
+  "language": "en",
+  "translationLanguages": [
+    "es"
+  ],
+  "license": "unspecified",
+  "authors": [
+    "Example Vocabulary Project"
+  ],
+  "entries": [
+    {
+      "id": "0a1b2c3d-1111-4a4a-8b8b-000000000009",
+      "term": "menu",
+      "kind": "word",
+      "partOfSpeech": "noun"
+    },
+    {
+      "id": "0a1b2c3d-1111-4a4a-8b8b-000000000002",
+      "term": "would like",
+      "kind": "phrase",
+      "partOfSpeech": "verb phrase",
+      "definition": "A polite way to say you want something.",
+      "translations": {
+        "es": "quisiera / me gustaría"
+      },
+      "otherForms": [
+        "'d like"
+      ],
+      "examples": [
+        {
+          "text": "I would like a coffee, please.",
+          "translations": {
+            "es": "Quisiera un café, por favor."
+          }
+        }
+      ],
+      "audioUrl": "audio/en/a1/would-like.mp3",
+      "tags": [
+        "topic:food",
+        "function:requests"
+      ]
+    },
+    {
+      "id": "0a1b2c3d-1111-4a4a-8b8b-000000000003",
+      "term": "bill",
+      "kind": "word",
+      "partOfSpeech": "noun",
+      "definition": "The piece of paper that shows how much you must pay.",
+      "definitionTranslations": {
+        "es": "El papel que muestra cuánto hay que pagar."
+      },
+      "translations": {
+        "es": "la cuenta"
+      },
+      "examples": [
+        {
+          "text": "Could we have the bill, please?"
+        }
+      ],
+      "linkAutomatically": false,
+      "tags": [
+        "topic:food"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,486 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1/curriculum-pack.schema.json",
+  "title": "LC-JSON Curriculum Pack Document Schema",
+  "description": "Top-level LC-JSON curriculumPack document: an arrangement — sequence, pacing, and checkpoints — referencing a SubjectCollection plus content documents. One type, two serializations via packMode: 'manifest' (references by id) and 'bundle' (references resolved and embedded, preserving every embedded document's identity). The sequence[] entry shape is FIRM as of 1.1-rc.1; cross-field semantics (checkpoint-iff-kind, taught-before-assessed, term capacity, dependency direction, bill of materials, bundle closure) are domain-validated — see the CP-* rules in VALIDATION.md.",
+  "allOf": [
+    {
+      "$ref": "publication-fields.schema.json"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "documentRef": {
+      "type": "object",
+      "properties": {
+        "globalId": {
+          "type": "string",
+          "description": "The referenced document's globalId.",
+          "minLength": 1
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The referenced document's version this pack was authored against. A consumer holding a newer version MAY offer it but SHOULD surface the mismatch rather than silently substituting.",
+          "default": null
+        }
+      },
+      "required": [
+        "globalId"
+      ]
+    },
+    "contentRef": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The referenced content document's documentType. Producer-closed vocabulary: a producer MUST emit one of 'course', 'questionSet', or 'glossary'. It MUST NOT be 'curriculumPack' (a pack is an arrangement, not embeddable content — 1.1 defines no pack-in-pack nesting) or any other value; a SubjectCollection is referenced via collectionRefs, not here. Like the alignment-claim vocabulary, this binds producers only and is deliberately left schema-open (NORMATIVE Section 5.8), so a consumer meeting an unrecognized type preserves the reference rather than rejecting the document; the reference validator enforces the closed set as a producer/domain rule.",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "description": "The referenced document's portable identity for its type (NORMATIVE §4.4, 'Document identity by artifact type'): a course's sourceCourseId, a questionSet's sourceQuestionSetId, or a glossary's root globalId. Type-directed so a pack can reference any conforming content document; a course or questionSet lacking its source-side id cannot be referenced (a pack that names one is non-conforming).",
+          "minLength": 1
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Version pin; SHOULD carry the version the pack was authored against.",
+          "default": null
+        },
+        "selector": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Optional pointer inside the referenced document, meaningful on step-level refs. The referenced NODE is addressed by its node globalId (Unit/Lesson/Item retain globalId — only the document root's identity is type-directed): schema-enforced grammar 'unit:<globalId>' | 'lesson:<globalId>' | 'item:<globalId>' for courses, the node's existence domain-validated — never title or position, so the selector survives re-ordering and renaming. Omitted/null = the whole document.",
+          "default": null,
+          "pattern": "^(unit|lesson|item):.+$"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ]
+    },
+    "checkpoint": {
+      "type": "object",
+      "description": "An assessment checkpoint, carried only by steps of kind 'assessment' or 'mock' (domain-validated). The assessment content itself is the step's contentRef — checkpoints carry no second content slot.",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "formative",
+            "summative"
+          ],
+          "description": "'formative' informs teaching (low stakes); 'summative' measures attainment. A mock step's checkpoint must be summative (domain-validated)."
+        },
+        "format": {
+          "type": "string",
+          "description": "Display text describing the instrument (e.g. '12-mark question', 'full Paper 1 (100 marks, 3 hours)'). Display, not identity — consumers MUST NOT parse it.",
+          "minLength": 1
+        },
+        "assessesObjectiveIds": {
+          "type": "array",
+          "description": "Collection objective member ids this checkpoint measures. With scope 'listed': non-empty, every id first taught strictly earlier in the timeline (domain-validated). With scope 'allTaughtToDate': MUST be [] — the effective set is computed, never stated.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "listed",
+            "allTaughtToDate"
+          ],
+          "description": "'listed' (default): assessesObjectiveIds is the assessed set. 'allTaughtToDate': the checkpoint assesses every objective first taught by any strictly earlier step — the terminal-mock semantic.",
+          "default": "listed"
+        }
+      },
+      "required": [
+        "kind",
+        "format",
+        "assessesObjectiveIds"
+      ]
+    },
+    "step": {
+      "type": "object",
+      "description": "One unit of work on the calendar-relative timeline. Step ids are document-local plan labels, never vocabulary member ids. Within a week, sequence[] document order is the schedule and consumers MUST preserve it. Unrecognized fields inside a step are preserved verbatim across read/write cycles.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Document-local step id, unique within the pack. A 'y{year}.t{term}.{slot}' convention is common but carries no meaning.",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "teaching",
+            "review",
+            "assessment",
+            "mock",
+            "buffer"
+          ],
+          "description": "teaching = first-teach (or deliberate re-teach); review = spaced revisit of already-taught objectives; assessment = a checkpoint event; mock = a full-exam rehearsal (summative checkpoint in exam format); buffer = slack (catch-up, spillover, induction/administrative weeks)."
+        },
+        "label": {
+          "type": "string",
+          "description": "Plan display label; not learner-facing prose.",
+          "minLength": 1
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-based year within pacing.years."
+        },
+        "term": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-based term within pacing.termsPerYear."
+        },
+        "weekOfTerm": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1-based teaching week within the term. Calendar-relative — packs never carry real dates."
+        },
+        "durationLessons": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The step's length in lessons."
+        },
+        "objectiveIds": {
+          "type": "array",
+          "description": "Collection objective member ids. Semantics vary by kind: teaching = first-teach or re-teach; review = revisit (must be already taught; domain-validated); assessment/mock = context for the checkpoint.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "tagIds": {
+          "type": "array",
+          "description": "Collection tag member ids (topic/skill focus).",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "contentRef": {
+          "description": "null = an unauthored slot (blueprint posture; the step SHOULD carry an authoringNote). The KEY must be present even when null — a null slot is meaningful, so producers whose serializers drop null values must exempt this key. When filled, the referenced document must also appear in root contentRefs[] with a matching type (domain-validated).",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/contentRef"
+            }
+          ]
+        },
+        "authoringNote": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Author-facing guidance, typically what belongs in an unfilled slot; never learner-visible.",
+          "default": null
+        },
+        "dependsOn": {
+          "type": "array",
+          "description": "Step ids of prerequisites. Every edge must point at an existing step that is strictly earlier in the (year, term, weekOfTerm) timeline, or in the same week and earlier in document order (domain-validated). Acyclicity follows: (sort key, document position) is a strict total order.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "checkpoint": {
+          "description": "MUST be an object when kind is 'assessment'/'mock'; MUST be null or absent otherwise (null and an absent key are equivalent here) — domain-validated.",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/definitions/checkpoint"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "year",
+        "term",
+        "weekOfTerm",
+        "durationLessons",
+        "objectiveIds",
+        "contentRef"
+      ]
+    },
+    "pacing": {
+      "type": "object",
+      "description": "The calendar-relative frame that makes pacing arithmetic mechanical: a term's capacity is weeksPerTerm[term-1] * lessonsPerWeek. Required at the document level whenever sequence[] is non-empty (domain-validated).",
+      "properties": {
+        "years": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "termsPerYear": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 3
+        },
+        "weeksPerTerm": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "description": "Teaching weeks per term; length must equal termsPerYear (domain-validated). Applies to every year — uniform years is the deliberate 1.1 simplification.",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "default": null
+        },
+        "lessonsPerWeek": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "teachingWeeksPerYear": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "description": "When both this and weeksPerTerm are present, must equal sum(weeksPerTerm) (domain-validated).",
+          "default": null
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "years",
+        "lessonsPerWeek"
+      ]
+    },
+    "coverage": {
+      "type": "object",
+      "description": "The pack's declared, machine-checkable coverage contract against the referenced collection. Declared, not implied: packs legitimately vary (a one-term taster pack should not fail 'everything taught'), and declaring the claim in-document makes it portable — any consumer holding the collection can re-verify it.",
+      "properties": {
+        "collectionGlobalId": {
+          "type": "string",
+          "description": "Must appear in collectionRefs[] (domain-validated).",
+          "minLength": 1
+        },
+        "assertions": {
+          "type": "array",
+          "description": "The 1.1 assertion vocabulary is exactly these two values; unknown assertion strings are an error — a contract that cannot be checked is not a contract.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "everyObjectiveTaughtAtLeastOnce",
+              "everyObjectiveAssessedAtLeastOnce"
+            ]
+          },
+          "default": []
+        },
+        "exemptObjectiveIds": {
+          "type": "array",
+          "description": "Objectives deliberately out of the pack's scope (e.g. a half-course pack over a full collection). Exemptions apply to every assertion.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "collectionGlobalId",
+        "assertions"
+      ]
+    },
+    "recyclingPolicy": {
+      "type": "object",
+      "description": "Tunes the spaced-revisit advisory: a review step revisiting an objective first taught fewer than minSpacingWeeks absolute weeks earlier is flagged (default 2 when this block is absent). Absolute weeks are positions on the whole-pack week line, so spacing is measured across term and year boundaries.",
+      "properties": {
+        "minSpacingWeeks": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "minSpacingWeeks"
+      ]
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL of this schema. Producers MUST emit it; consumers SHOULD tolerate its absence."
+    },
+    "documentType": {
+      "type": "string",
+      "const": "curriculumPack",
+      "description": "Artifact discriminator. Always the literal string \"curriculumPack\" (camelCase)."
+    },
+    "specVersion": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+(\\.[0-9]+)?$",
+      "description": "LC-JSON spec version. This document type first appears in v1.1."
+    },
+    "globalId": {
+      "type": "string",
+      "description": "Portable document identity. Immutable; preserved verbatim on import.",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "description": "Content version of this pack. Numeric, dotted, 1 to 3 segments.",
+      "pattern": "^[0-9]+(\\.[0-9]+){0,2}$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Pack title.",
+      "minLength": 1
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "default": null
+    },
+    "packMode": {
+      "type": "string",
+      "enum": [
+        "manifest",
+        "bundle"
+      ],
+      "description": "Serialization mode. 'manifest': references by id only (authoring/source form; resolvable only where the referenced documents are available). 'bundle': references resolved and embedded for distribution/offline use — every embedded resource preserves its own identity (root globalId, or a course/questionSet's sourceCourseId/sourceQuestionSetId), version, and provenance; bundling never re-mints identity."
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "collectionRefs": {
+      "type": "array",
+      "description": "The SubjectCollection(s) providing this pack's vocabulary. At least one is expected in practice; a pure sequencing pack over already-classified content is representable with none.",
+      "items": {
+        "$ref": "#/definitions/documentRef"
+      },
+      "default": []
+    },
+    "contentRefs": {
+      "type": "array",
+      "description": "The pack's bill of materials: every content document any step binds, in one place to resolve, version-pin, and license-audit. Every non-null step contentRef must appear here with a matching type (domain-validated). Each ref carries the referenced document's type-directed identity in its 'id' field (course->sourceCourseId, questionSet->sourceQuestionSetId, else root globalId; NORMATIVE §4.4). A pack MAY reference a questionSet this way: question sets remain lightweight referencable content resources, not distribution-governed ones.",
+      "items": {
+        "$ref": "#/definitions/contentRef"
+      },
+      "default": []
+    },
+    "pacing": {
+      "description": "The calendar frame; required whenever sequence[] is non-empty (domain-validated).",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/pacing"
+        }
+      ],
+      "default": null
+    },
+    "coverage": {
+      "description": "The declared coverage contract; null = no claim.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/coverage"
+        }
+      ],
+      "default": null
+    },
+    "recyclingPolicy": {
+      "description": "Spaced-revisit policy; null = the default spacing advisory applies.",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/definitions/recyclingPolicy"
+        }
+      ],
+      "default": null
+    },
+    "sequence": {
+      "type": "array",
+      "description": "The pack's ordered plan. Present (possibly empty — an empty plan is a valid, if immature, pack; validators SHOULD report completeness rather than treat emptiness as an error). Serialized in timeline order by convention (advisory); within a week, document order is the schedule and MUST be preserved.",
+      "items": {
+        "$ref": "#/definitions/step"
+      },
+      "default": []
+    },
+    "embedded": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Bundle payload: the resolved resources for every reference. Carried by packMode 'bundle' only — a manifest MUST NOT carry it (domain-validated). Every collectionRef resolves to an embedded subjectCollection and every contentRef (root and step-level) to an embedded document of the matching documentType; embedded documents keep their own identity verbatim.",
+      "properties": {
+        "collections": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "default": []
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "default": []
+        }
+      },
+      "default": null
+    }
+  },
+  "required": [
+    "$schema",
+    "documentType",
+    "specVersion",
+    "globalId",
+    "version",
+    "title",
+    "packMode",
+    "collectionRefs",
+    "contentRefs",
+    "sequence"
+  ]
+}

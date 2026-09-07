@@ -1,0 +1,15 @@
+{
+  "type": "signpost",
+  "globalId": "550e8400-e29b-41d4-a716-446655440014",
+  "sequence": 0,
+  "title": "Welcome to Unit 7: How Proteins Become Living Machines!",
+  "tags": [
+    "biology:biochemistry:protein-folding",
+    "stage:tertiary"
+  ],
+  "instructions": "",
+  "isOptional": false,
+  "signpostType": "intro",
+  "scope": "unit",
+  "customHtml": "<p>Inside every one of your cells, thousands of <strong>proteins</strong> are folding from linear chains of amino acids into precise three-dimensional shapes — and they're doing it in milliseconds, without instructions. The shape determines everything: whether a protein becomes a muscle fiber, an oxygen carrier, an enzyme that breaks down sugar, or an antibody that fights infection. Get the shape wrong, and the protein doesn't just fail — it can cause <strong>disease</strong>.</p>\n\n<img src=\"media/images/protein-folding.jpg\" alt=\"Three-dimensional ribbon diagram of a folded protein, showing alpha helices coiled around beta sheets to form a compact, functional structure\" class=\"cg-img-md\" />\n\n<p>This unit explores one of biology's deepest puzzles: how does a one-dimensional string of amino acids \"know\" which three-dimensional shape to take? You'll meet the principles behind <strong>protein folding</strong>, learn why some proteins <strong>misfold</strong>, and see how scientists have started predicting and designing protein structures from sequence alone.</p>\n\n<p>The science you're about to study has applications in:</p>\n\n<ul>\n  <li>Designing new medicines — almost every modern drug works by binding to a precisely-shaped pocket on a protein</li>\n  <li>Understanding diseases of misfolding — Alzheimer's, Parkinson's, ALS, and prion diseases all involve proteins that take the wrong shape</li>\n  <li>Vaccine development — mRNA vaccines work by instructing your cells to produce a precisely-folded viral protein for your immune system to recognise</li>\n  <li>Enzyme engineering for industry — laundry detergents, biofuels, even removing CO₂ from the atmosphere</li>\n  <li>AI and structural biology — AlphaFold's breakthrough showed that machine learning can predict protein structures from sequence with near-experimental accuracy</li>\n</ul>\n\n<p>You'll see that proteins are not just static cartoons in a textbook, but the dynamic, <strong>shape-shifting machines</strong> that make life work.</p>"
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://lc-json.org/1.1/glossary.schema.json",
+  "documentType": "glossary",
+  "specVersion": "1.1",
+  "globalId": "b1-travel-vocabulary-en-mixed-case",
+  "version": "1.0.0",
+  "title": "B1 Travel Vocabulary (mixed-case language tags)",
+  "description": "Declares 'es' and 'pt-BR' but writes the usage keys as 'ES' and 'pt-br'. BCP 47 tags are case-insensitive, so the declared inventory matches exactly.",
+  "language": "en",
+  "translationLanguages": [
+    "es",
+    "pt-BR"
+  ],
+  "license": "unspecified",
+  "authors": [
+    "Example Vocabulary Project"
+  ],
+  "entries": [
+    {
+      "id": "1b2c3d4e-2222-4b4b-9c9c-000000000001",
+      "term": "departure lounge",
+      "kind": "phrase",
+      "partOfSpeech": "noun phrase",
+      "definition": "The area where passengers wait before boarding.",
+      "translations": {
+        "ES": "sala de embarque",
+        "pt-br": "sala de embarque"
+      },
+      "examples": [
+        {
+          "text": "We waited in the departure lounge for an hour.",
+          "translations": {
+            "ES": "Esperamos en la sala de embarque durante una hora."
+          }
+        }
+      ]
+    },
+    {
+      "id": "1b2c3d4e-2222-4b4b-9c9c-000000000002",
+      "term": "boarding pass",
+      "kind": "phrase",
+      "partOfSpeech": "noun phrase",
+      "definition": "The document that lets you board the aircraft.",
+      "translations": {
+        "Es": "tarjeta de embarque",
+        "PT-BR": "cartao de embarque"
+      }
+    }
+  ]
+}

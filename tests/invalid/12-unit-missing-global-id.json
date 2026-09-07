@@ -1,0 +1,15 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "sourceCourseId": "550e8400-e29b-41d4-a716-446655441299",
+  "version": "1.0",
+  "title": "Unit missing globalId — must be rejected",
+  "language": "en",
+  "units": [
+    {
+      "title": "Unit without an identifier",
+      "lessons": []
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Reserved type — round-trip preservation across consumers that don't render it",
+  "language": "en",
+  "questions": [
+    {
+      "type": "hotspot",
+      "globalId": "33333333-3333-4333-8333-333333333333",
+      "title": "Identify the cell nucleus",
+      "tags": ["subject:biology"],
+      "points": 2.0,
+      "difficulty": 4.0,
+      "prompt": "Click the cell nucleus in the diagram.",
+      "imageUrl": "https://example.com/cell-diagram.png",
+      "regions": [
+        {"id": "nucleus", "shape": "circle", "cx": 200, "cy": 150, "r": 40},
+        {"id": "mitochondria", "shape": "ellipse", "cx": 100, "cy": 220, "rx": 30, "ry": 18}
+      ],
+      "correctRegionId": "nucleus"
+    }
+  ]
+}

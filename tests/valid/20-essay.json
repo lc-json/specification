@@ -1,0 +1,20 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Essay — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "essay",
+      "globalId": "20202020-0000-4000-8000-000000000001",
+      "title": "Email to a colleague",
+      "points": 10.0,
+      "difficulty": 6.0,
+      "prompt": "Write an email (120-180 words) to a colleague explaining why next week's planning meeting should be moved, and propose two alternative times.",
+      "expectedAnswer": "A model answer opens with the reason for the change, proposes two concrete alternative slots, and closes with a polite request for confirmation.",
+      "minWords": 120,
+      "maxWords": 180
+    }
+  ]
+}

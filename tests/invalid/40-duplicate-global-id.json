@@ -1,0 +1,59 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Invalid: two entities share a globalId",
+  "language": "en",
+  "units": [
+    {
+      "globalId": "40404040-0000-4000-8000-000000000001",
+      "title": "Unit 1",
+      "sequence": 1,
+      "lessons": [
+        {
+          "globalId": "40404040-0000-4000-8000-000000000002",
+          "title": "Lesson 1.1",
+          "sequence": 1,
+          "items": [
+            {
+              "type": "exercise",
+              "globalId": "40404040-0000-4000-8000-000000000003",
+              "title": "Practice A",
+              "sequence": 1,
+              "instructions": "Answer the question.",
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "40404040-0000-4000-8000-00000000000d",
+                  "title": "Q1",
+                  "points": 1.0,
+                  "prompt": "Every entity in a document has its own globalId.",
+                  "correctAnswer": true,
+                  "feedback": { "correct": "Yes.", "incorrect": "It must." }
+                }
+              ]
+            },
+            {
+              "type": "exercise",
+              "globalId": "40404040-0000-4000-8000-000000000004",
+              "title": "Practice B",
+              "sequence": 2,
+              "instructions": "Answer the question.",
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "40404040-0000-4000-8000-00000000000D",
+                  "title": "Q1 (duplicate globalId, case-varied)",
+                  "points": 1.0,
+                  "prompt": "Two entities may share a globalId.",
+                  "correctAnswer": false,
+                  "feedback": { "correct": "Right — they may not.", "incorrect": "They may not." }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

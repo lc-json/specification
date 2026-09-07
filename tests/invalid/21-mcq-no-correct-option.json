@@ -1,0 +1,23 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Invalid: MultipleChoice with no positive-points option",
+  "language": "en",
+  "questions": [
+    {
+      "type": "multipleChoice",
+      "globalId": "33333333-3333-4333-8333-333333333321",
+      "title": "MCQ with no correct answer",
+      "points": 1.0,
+      "difficulty": 5.0,
+      "prompt": "Pick an answer.",
+      "options": ["alpha", "beta", "gamma"],
+      "optionsAndPoints": {
+        "alpha": 0,
+        "beta": 0,
+        "gamma": 0
+      }
+    }
+  ]
+}

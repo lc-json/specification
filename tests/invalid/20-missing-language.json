@@ -1,0 +1,23 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "QuestionSet missing required root language",
+  "questions": [
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "11111111-2222-4333-8444-555555555555",
+      "title": "Test question",
+      "tags": [],
+      "points": 1.0,
+      "difficulty": 1.0,
+      "prompt": "The Earth orbits the Sun.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Yes.",
+        "incorrect": "Actually true."
+      }
+    }
+  ]
+}

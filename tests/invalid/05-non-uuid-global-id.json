@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "Non-UUID globalId — invalid per §4.3",
+  "language": "en",
+  "questions": [
+    {
+      "type": "trueFalseQuestion",
+      "globalId": "not-a-uuid",
+      "title": "Identifier format test",
+      "tags": [],
+      "points": 1.0,
+      "difficulty": 1.0,
+      "prompt": "globalId MUST be an RFC 4122 UUID. The string 'not-a-uuid' fails the schema's pattern check.",
+      "correctAnswer": true,
+      "displayStyle": "TrueFalse",
+      "feedback": {
+        "correct": "Y",
+        "incorrect": "N"
+      }
+    }
+  ]
+}

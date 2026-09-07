@@ -1,0 +1,9 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "one-point-zero",
+  "title": "Malformed specVersion string — invalid per §3.2",
+  "language": "en",
+  "supportLanguage": null,
+  "units": []
+}

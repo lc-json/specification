@@ -1,0 +1,371 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.1-rc.1/subject-collection.schema.json",
+  "title": "LC-JSON Subject Collection Document Schema",
+  "description": "Top-level LC-JSON subjectCollection document: a reusable classification vocabulary — tags and learning objectives — for a structured (subject, level, audience, purpose, jurisdiction) scope. The root carries $schema, documentType ('subjectCollection'), and specVersion, with the vocabulary payload as flat siblings (no enclosing envelope). Identity rules per NORMATIVE 3.4: every member carries a stable immutable id; display text is never identity. Self-containment rules per NORMATIVE 4.9 (closure) are domain-validated — JSON Schema cannot express cross-array reference resolution.",
+  "allOf": [
+    {
+      "$ref": "publication-fields.schema.json"
+    }
+  ],
+  "type": "object",
+  "definitions": {
+    "scopeField": {
+      "type": "object",
+      "description": "One structured scope value. scheme names the namespace the id comes from (e.g. 'CEFR', 'US-grade', an exam board, a ministry catalogue); null scheme means a local/common-usage value. There are no closed global enums — local categories are always representable.",
+      "properties": {
+        "scheme": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Namespace of the id, or null for a local value.",
+          "default": null
+        },
+        "id": {
+          "type": "string",
+          "description": "The value's identifier within its scheme (or the local value itself).",
+          "minLength": 1
+        },
+        "label": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Display text for the value.",
+          "default": null
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL of this schema. Producers MUST emit this field pointing at the published canonical schema. Consumers SHOULD tolerate documents that omit it (re-import scenarios where producers were lenient)."
+    },
+    "documentType": {
+      "type": "string",
+      "const": "subjectCollection",
+      "description": "Artifact discriminator. For a subject-collection document this is always the literal string \"subjectCollection\" (camelCase). Conforming consumers MUST reject other casings or separator variations."
+    },
+    "specVersion": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+(\\.[0-9]+)?$",
+      "description": "LC-JSON spec version. This document type first appears in v1.1. Forward-compatible: any 1.x value is accepted by 1.x importers; 2.x or higher is rejected cleanly."
+    },
+    "globalId": {
+      "type": "string",
+      "description": "Portable document identity. Immutable: consumers preserve it verbatim on import and never re-mint it. Opaque string; stable human-readable slugs and UUIDs are both conventional.",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "description": "Content version of this vocabulary. Numeric, dotted, 1 to 3 segments (e.g., '1', '1.2', '1.2.0'). Revisions — rewording members, adding members, reorganizing categories — bump version; they never change globalId or member ids.",
+      "pattern": "^[0-9]+(\\.[0-9]+){0,2}$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Collection title.",
+      "minLength": 1
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "What this vocabulary covers and who it is for.",
+      "default": null
+    },
+    "scope": {
+      "type": "object",
+      "description": "Structured scope: the (subject, level, audience, purpose, jurisdiction) coordinates this vocabulary serves. subject is required; level and jurisdiction are optional single values; audience and purpose are optional arrays. Consumers SHOULD treat scope as the discovery surface; scope fields are never member identity.",
+      "properties": {
+        "subject": {
+          "$ref": "#/definitions/scopeField"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/scopeField"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "audience": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/scopeField"
+          },
+          "default": []
+        },
+        "purpose": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/scopeField"
+          },
+          "default": []
+        },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/scopeField"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "subject"
+      ]
+    },
+    "authors": {
+      "type": "array",
+      "description": "Display credits for the vocabulary's authors or maintainers.",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "externalAlignments": {
+      "type": "array",
+      "description": "Typed claims connecting this collection to external frameworks and registries. External registries are referenced, never re-implemented: an entry points at an external identifier; it does not embed the framework's content. Consumers MUST NOT reject a document for an unrecognized scheme and MUST preserve entries across read/write cycles.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim": {
+            "type": "string",
+            "description": "Claim type. Deliberately NOT schema-closed, so consumers can satisfy the preserve-unknown-claims rule (NORMATIVE 5.5) without failing schema validation. The 1.1 producer vocabulary is exactly 'references' (weakest: informed this collection), 'alignedTo' (organized to track the external item), and 'covers' (members span the external item's content); 'assesses' and 'verifiedBy' are reserved for a future version. A 1.1 producer emitting any other value is non-conforming (domain-validated, producer tier — SC-10); consumers preserve unknown claim values verbatim without interpreting them.",
+            "minLength": 1
+          },
+          "scheme": {
+            "type": "string",
+            "description": "The external namespace the id belongs to (a standards body, a national curriculum register, an official catalogue, an exam board).",
+            "minLength": 1
+          },
+          "id": {
+            "type": "string",
+            "description": "The external item's identifier within its scheme.",
+            "minLength": 1
+          },
+          "label": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Display text for the external item.",
+            "default": null
+          }
+        },
+        "required": [
+          "claim",
+          "scheme",
+          "id"
+        ]
+      },
+      "default": []
+    },
+    "categories": {
+      "type": "array",
+      "description": "Display buckets for tags. Category ids are stable slugs; consumers merge categories from different documents by id — they are shared display structure, not identity. Must cover every categoryId referenced by tags[] (closure; domain-validated).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Stable category slug (e.g. 'grammar').",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name.",
+            "minLength": 1
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "sortOrder": {
+            "type": "integer",
+            "default": 0
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Display icon hint (consumer-defined rendering).",
+            "default": null
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "default": []
+    },
+    "tags": {
+      "type": "array",
+      "description": "The collection's tag members. A tag listed here is a MEMBER of this collection, not exclusively owned by it: the same member id may appear in any number of collections, and consumers reconcile by id (NORMATIVE 5.7). Identity is the immutable id; slug/name are mutable display and lookup.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Immutable member id (NORMATIVE 3.4). Opaque; RFC 4122 UUID recommended. Never re-minted across document versions.",
+            "minLength": 1
+          },
+          "slug": {
+            "type": "string",
+            "description": "Mutable human-readable lookup key, unique within the document. Convention: lowercase colon-separated path (e.g. 'grammar:conditionals:second'). Never identity.",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name.",
+            "minLength": 1
+          },
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "categoryId": {
+            "type": "string",
+            "description": "Display bucket; must resolve within this document's categories[] (closure; domain-validated).",
+            "minLength": 1
+          },
+          "parentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Member id (never the slug) of this tag's parent, which must be a tag in this document. Hierarchy is per-document display structure; members themselves are flat and portable.",
+            "default": null
+          },
+          "level": {
+            "type": "integer",
+            "description": "Depth implied by the parent chain (0 for roots). Display hint.",
+            "minimum": 0,
+            "default": 0
+          },
+          "sortOrder": {
+            "type": "integer",
+            "default": 0
+          },
+          "aliases": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "description": "Alternative lookup strings (search affordance).",
+            "items": {
+              "type": "string"
+            },
+            "default": null
+          },
+          "color": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": null
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "False retires the tag from pickers without deleting the member (its id and any content links remain valid).",
+            "default": true
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "name",
+          "categoryId"
+        ]
+      },
+      "default": []
+    },
+    "objectives": {
+      "type": "array",
+      "description": "The collection's learning-objective members. Unlike tags, an objective has exactly one owning document (its wording is scope-specific): other documents reference it and carry read-only copies (NORMATIVE 4.9/5.7); only the owner revises the wording. To adapt wording for a different scope, fork: mint a new member id and record provenance.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Immutable member id (NORMATIVE 3.4).",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string",
+            "description": "The can-do statement. Convention: completes '…be able to:' — an active-verb capability, not a topic name.",
+            "minLength": 1
+          },
+          "difficultyBand": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "Recall",
+              "Understand",
+              "Apply",
+              "Analyze",
+              null
+            ],
+            "description": "Difficulty band: Recall (remember), Understand (explain), Apply (use), Analyze (higher-order).",
+            "default": null
+          },
+          "tagIds": {
+            "type": "array",
+            "description": "Member ids of this document's tags that the objective exercises. Every entry must resolve within this document's tags[] (closure; domain-validated).",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ]
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "$schema",
+    "documentType",
+    "specVersion",
+    "globalId",
+    "version",
+    "title",
+    "scope",
+    "categories",
+    "tags",
+    "objectives"
+  ]
+}

@@ -1,0 +1,598 @@
+{
+  "specVersion": "1.1",
+  "description": "LC-JSON 1.1 conformance test corpus. Conforming consumers MUST pass every valid case and fail every invalid case.",
+  "valid": [
+    {
+      "file": "valid/01-course-minimal.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "§3.2 root fields",
+        "§3.3 course artifact",
+        "§4.5 camelCase property naming"
+      ]
+    },
+    {
+      "file": "valid/02-question-set-minimal.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": [
+        "§3.2 root fields",
+        "§3.3 questionSet artifact",
+        "§4.2 canonical camelCase question discriminator"
+      ]
+    },
+    {
+      "file": "valid/03-unknown-optional-field.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "§5.4 unknown fields ignored — forward-compat reservation"
+      ]
+    },
+    {
+      "file": "valid/04-reserved-question-type.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": [
+        "§5.5 reserved enum values accepted on import",
+        "§6 Reserved and unknown types — base case"
+      ]
+    },
+    {
+      "file": "valid/05-reserved-type-with-extensions.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": [
+        "§6.4 round-trip preservation — reserved type with tool-specific extension fields (imageUrl, regions, correctRegionId) MUST be preserved in full across consumer read/write cycles (semantic preservation; key order is producer-discretion per §6.2)"
+      ]
+    },
+    {
+      "file": "valid/06-html-with-video-track.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "§11 + HTML_SAFETY.md §7 — <video> with captions <track>, conforming media handling (controls, poster, preload, no autoplay/loop)"
+      ]
+    },
+    {
+      "file": "valid/07-placement-sentence.json",
+      "schema": "placement.schema.json",
+      "demonstrates": [
+        "placement.schema.json — sentence-mode placement with placements:[{gap, item}] and a distractor item"
+      ]
+    },
+    {
+      "file": "valid/08-placement-paragraph.json",
+      "schema": "placement.schema.json",
+      "demonstrates": [
+        "placement.schema.json — paragraph-mode placement with @@@N markers alone on their paragraphs"
+      ]
+    },
+    {
+      "file": "valid/09-placement-section-label.json",
+      "schema": "placement.schema.json",
+      "demonstrates": [
+        "placement.schema.json — sectionLabel-mode placement with markers at section starts (IELTS Matching Headings / analytical meta-labels)"
+      ]
+    },
+    {
+      "file": "valid/10-placement-toefl-decoy-gaps.json",
+      "schema": "placement.schema.json",
+      "demonstrates": [
+        "placement.schema.json — TOEFL Sentence Insertion variant: 4 @@@N markers in passage but a single placements[] entry; the unanswered markers are valid decoy positions"
+      ]
+    },
+    {
+      "file": "valid/11-rtl-writing-systems.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "ACCESSIBILITY.md §6.2 — `language` propagation and `dir` preservation on HTML-bearing fields",
+        "HTML_SAFETY.md §3.1 — universal `lang`/`dir` attributes on inline (span) and block (blockquote) elements",
+        "mixed-direction content: LTR document with embedded RTL spans + per-block RTL blockquotes across four major RTL writing systems (Arabic, Urdu, Persian, Hebrew)"
+      ]
+    },
+    {
+      "file": "valid/12-accessibility-round-trip.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "NORMATIVE §12.1 — base-conformance accessibility-preservation floor: `alt` on `<img>`, `<track>` on `<video>`, `lang`/`dir` on HTML spans, document-root `language`/`supportLanguage`, and `x-`-namespaced accessibility metadata on a reserved-type question MUST all round-trip through any conforming consumer"
+      ]
+    },
+    {
+      "file": "valid/13-symbolic-empty-prompt.json",
+      "schema": "question-set.schema.json",
+      "demonstrates": [
+        "`prompt` is non-authoritative for symbolic types: a simpleGapFill with `prompt: \"\"` is valid (minLength 0), meaning carried by the structured `sentence`/`acceptedAnswers` fields"
+      ]
+    },
+    {
+      "file": "valid/14-simple-gap-fill.json",
+      "schema": "simple-gap-fill.schema.json",
+      "demonstrates": [
+        "simple-gap-fill.schema.json — per-type valid case: single @@@ marker in `sentence`, non-empty `acceptedAnswers`"
+      ]
+    },
+    {
+      "file": "valid/15-multiple-choice.json",
+      "schema": "multiple-choice.schema.json",
+      "demonstrates": [
+        "multiple-choice.schema.json — per-type valid case: `options` fully covered by `optionsAndPoints` with exactly one positive-points entry (VALIDATION.md §9.3)"
+      ]
+    },
+    {
+      "file": "valid/16-word-bank-cloze.json",
+      "schema": "word-bank-cloze.schema.json",
+      "demonstrates": [
+        "word-bank-cloze.schema.json — per-type valid case: @@@N marker set equals `gapAcceptedAnswers` key set (VALIDATION.md §9.4), word bank includes a distractor"
+      ]
+    },
+    {
+      "file": "valid/17-multi-gap-cloze.json",
+      "schema": "multi-gap-cloze.schema.json",
+      "demonstrates": [
+        "multi-gap-cloze.schema.json — per-type valid case: free-text gaps, multiple accepted answers per gap, no commas/colons in answers (VALIDATION.md §9.5)"
+      ]
+    },
+    {
+      "file": "valid/18-multiple-choice-cloze.json",
+      "schema": "multiple-choice-cloze.schema.json",
+      "demonstrates": [
+        "multiple-choice-cloze.schema.json — per-type valid case: `gapOptions` and `correctAnswers` key sets equal the @@@N marker set, indices in bounds (VALIDATION.md §9.6)"
+      ]
+    },
+    {
+      "file": "valid/19-short-answer.json",
+      "schema": "short-answer.schema.json",
+      "demonstrates": [
+        "short-answer.schema.json — per-type valid case: non-empty `acceptedAnswers`, first entry canonical"
+      ]
+    },
+    {
+      "file": "valid/20-essay.json",
+      "schema": "essay.schema.json",
+      "demonstrates": [
+        "essay.schema.json — per-type valid case: `expectedAnswer` model answer present, maxWords >= minWords (VALIDATION.md §9.8)"
+      ]
+    },
+    {
+      "file": "valid/21-sentence-transformation.json",
+      "schema": "sentence-transformation.schema.json",
+      "demonstrates": [
+        "sentence-transformation.schema.json — per-type valid case: exactly one @@@ in `targetSentence`, sequential 1-based `acceptedChunks` keys, uppercase `keyword` (VALIDATION.md §9.9)"
+      ]
+    },
+    {
+      "file": "valid/22-matching-pairs.json",
+      "schema": "matching.schema.json",
+      "demonstrates": [
+        "matching.schema.json — pairs sub-shape: matchingMode:'pairs' with `pairs[]` (and no `categories[]`), distractor in the match pool (NORMATIVE §5.6 randomization applies on render)"
+      ]
+    },
+    {
+      "file": "valid/23-matching-classification.json",
+      "schema": "matching.schema.json",
+      "demonstrates": [
+        "matching.schema.json — classification sub-shape: matchingMode:'classification' with `categories[]` (and no `pairs[]`), many-to-one item-into-category"
+      ]
+    },
+    {
+      "file": "valid/24-ordering-kendall.json",
+      "schema": "ordering.schema.json",
+      "demonstrates": [
+        "ordering.schema.json — per-type valid case: orderingUnit:'sentence' with scoringMode:'kendall' partial credit"
+      ]
+    },
+    {
+      "file": "valid/25-grading-combination-matrix.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "exercise-item.schema.json + quiz-item.schema.json — grading combination matrix: all four graded/ungraded × exercise/quiz combinations are valid (`isGraded` is policy, item type is structure — see ITEM_PATTERNS.md)",
+        "VALIDATION.md §4 — objectives pool with resolvable courseObjectiveIds/objectiveIds references"
+      ]
+    },
+    {
+      "file": "valid/27-unknown-fields-note-lint.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "NORMATIVE.md §5.4 — unknown fields are LEGAL: `estimatedMinutes` on a lesson is not a spec field, and a consumer MUST NOT reject the document for it. The document is VALID; the reference validator surfaces it as a NOTE only (RD-2), never an error or warning.",
+        "NORMATIVE.md §7.4 — `x-acme-catalogRef` (root) and `x-acme-tracking` (unit) are extension members: reported approvingly, with preservation expected across read/write cycles. The lint does not descend into an x- subtree — the namespace owner's interior is not the spec's business, so `x-acme-tracking.nested` draws no note of its own.",
+        "RD-2 tiering — NOTEs do not affect the exit code: this fixture exits 0. Assert on validator OUTPUT (expect one §5.4 note for `estimatedMinutes` and two §7.4 extension-member notes), not on pass/fail."
+      ]
+    },
+    {
+      "file": "valid/28-subject-collection-minimal.json",
+      "schema": "subject-collection.schema.json",
+      "demonstrates": [
+        "§3.2/§3.3 subjectCollection artifact — root triplet, scope, members (tags + objectives) with immutable ids (SC-1…SC-3).",
+        "§4.9 closure — every tag's categoryId resolves in categories[], every objective tagId resolves in tags[], every parentId is a member id (SC-6…SC-8).",
+        "§4.10 typed externalAlignments — an alignedTo claim pointing at an external framework by scheme + id, without embedding it (SC-10).",
+        "Dispatched to lc_collection.py; exits 0."
+      ]
+    },
+    {
+      "file": "valid/29-curriculum-pack-manifest.json",
+      "schema": "curriculum-pack.schema.json",
+      "validator": "lc_pack.py",
+      "validatorArgs": [
+        "--collection",
+        "28-subject-collection-minimal.json"
+      ],
+      "demonstrates": [
+        "§3.3 curriculumPack artifact in manifest mode — calendar-relative sequence[], pacing frame, checkpoints on assessment/mock steps (CP-1…CP-10).",
+        "Taught-before-used sequencing and term-capacity checks (CP-6, CP-7, CP-11).",
+        "CROSS-VALIDATION (checklist step 6): run with --collection against valid/28 — coverage assertions hold over the non-exempt objective set (CP-13, CP-14) and the pair validates 0-errors. The manifest entry pins the --collection argument via validatorArgs."
+      ]
+    },
+    {
+      "file": "valid/30-glossary-minimal.json",
+      "schema": "glossary.schema.json",
+      "demonstrates": [
+        "§3.3 glossary artifact — flat entries with immutable ids, pronunciation, translations, examples, otherForms (GL-1…GL-3).",
+        "The gloss rule — every entry carries a definition, a translations value, or a definitionTranslations value (GL-4).",
+        "Declared translation inventory — translationLanguages lists exactly the keys used (es); every declared key is used and every used key is declared (GL-5, GL-6).",
+        "Dispatched to lc_glossary.py; exits 0."
+      ]
+    },
+    {
+      "file": "valid/31-course-with-glossary-pool.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "NORMATIVE §4.9 / VALIDATION §18.2 (CO-3, CO-5) — glossary attachment: a course carries glossaryRefs (CO-3) and a root glossaries[] pool holding a carried copy of the referenced glossary, identity verbatim (CO-5).",
+        "The ref resolves against the pool: the document is self-contained (one .json file carries the whole course, glossary included).",
+        "Dispatched to validate_course.py --strict; schema-validates with the composed publication-fields group and the glossary fields; exits 0."
+      ]
+    },
+    {
+      "file": "valid/32-curriculum-pack-bundle.json",
+      "schema": "curriculum-pack.schema.json",
+      "validator": "lc_pack.py",
+      "demonstrates": [
+        "VALIDATION §16 (CP-15) / curriculum-pack-reference §2 — bundle mode: packMode: bundle with an embedded {collections, content} block; the referenced Subject Collection is embedded identity-verbatim (CP-15).",
+        "packMode: bundle with an embedded Subject Collection AND an embedded Course + QuestionSet, each referenced by its type-directed identity (course by sourceCourseId, questionSet by sourceQuestionSetId; §4.4) — exercises the type-directed contentRef path end to end. The embedded content documents are minimal inline artifacts authored for this fixture, not published standalone examples, so the bundle is illustrative rather than byte-reproducible from shipped inputs.",
+        "Dispatched to lc_pack.py --validate (no --collection): a bundle is self-contained, so it validates standalone; exits 0."
+      ]
+    },
+    {
+      "file": "valid/33-course-dangling-glossary-ref.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "NORMATIVE §4.9 / VALIDATION §18.2 (CO-4) — dangling glossaryRef: a course references a glossary globalId it does not yet hold (no pool copy, no bundled document). This is VALID-with-surfaced-warning, NOT an error: the document stays portable and a consumer preserves the ref for later binding, MUST NOT fail the import.",
+        "The reference validator does not fail the document; exits 0. Consumers SHOULD surface the unbound ref by globalId."
+      ],
+      "expectWarning": "dangling reference (CO-4)"
+    },
+    {
+      "file": "valid/34-glossary-mixed-case-language-tags.json",
+      "validator": "lc_glossary.py",
+      "clause": "VALIDATION §17 (GL-5 / GL-6) — BCP 47 tags are case-insensitive",
+      "note": "Declares 'es' and 'pt-BR'; entries use 'ES', 'Es', 'pt-br' and 'PT-BR'. The declared inventory matches the used inventory exactly, so neither GL-5 (used-but-undeclared) nor GL-6 (declared-but-unused) fires. A case-sensitive comparison would have raised BOTH for this conforming document."
+    },
+    {
+      "file": "valid/35-glossary-casefold-surface-collision.json",
+      "validator": "lc_glossary.py",
+      "clause": "VALIDATION §17 (GL-7) — matching-surface collision under Unicode case folding",
+      "expectWarning": "matching surface",
+      "note": "Entries 'Straße' and 'STRASSE' are the same surface under Unicode case folding (casefold() expands the sharp s; .lower() does not). Legal — two senses — so the document is valid, but GL-7 warns that auto-link needs disambiguation."
+    },
+    {
+      "file": "valid/36-course-duplicate-glossary-pool-copy.json",
+      "clause": "VALIDATION §18 (CO-5) — one pool copy per referenced Glossary, deduplicated by globalId",
+      "expectWarning": "carries 2 copies of",
+      "note": "The glossaries[] pool carries the same Glossary twice. CO-5 is a hygiene rule at WARN tier, so the document stays valid (exit 0) and the duplicate is surfaced. The validator previously collapsed the pool to an identity set before counting, so this condition produced no warning at all."
+    }
+  ],
+  "invalid": [
+    {
+      "file": "invalid/01-missing-document-type.json",
+      "violatedClause": "§3.2",
+      "violation": "Missing required root field: documentType"
+    },
+    {
+      "file": "invalid/02-missing-spec-version.json",
+      "violatedClause": "§3.2",
+      "violation": "Missing required root field: specVersion"
+    },
+    {
+      "file": "invalid/04-pascal-case-question-type.json",
+      "violatedClause": "§4.2",
+      "violation": "Question type discriminator emitted in PascalCase ('TrueFalseQuestion') instead of canonical camelCase ('trueFalseQuestion')"
+    },
+    {
+      "file": "invalid/05-non-uuid-global-id.json",
+      "violatedClause": "§4.4",
+      "violation": "Question globalId is not a valid RFC 4122 UUID"
+    },
+    {
+      "file": "invalid/06-pascal-case-property.json",
+      "violatedClause": "§4.5",
+      "violation": "Property name emitted in PascalCase ('Title') instead of canonical camelCase ('title')"
+    },
+    {
+      "file": "invalid/07-spec-version-2-0.json",
+      "violatedClause": "§5.2",
+      "violation": "specVersion '2.0' has major version > 1; consumer MUST reject"
+    },
+    {
+      "file": "invalid/08-spec-version-malformed.json",
+      "violatedClause": "§3.2",
+      "violation": "specVersion 'one-point-zero' does not match the required pattern ^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
+    },
+    {
+      "file": "invalid/09-uppercase-item-type.json",
+      "violatedClause": "§4.2",
+      "violation": "Item type discriminator emitted in uppercase ('CONTENT') instead of canonical lowercase ('content')"
+    },
+    {
+      "file": "invalid/10-wrapped-envelope.json",
+      "violatedClause": "§4.1",
+      "violation": "Document uses a wrapped envelope ({\"course\":{...}}) instead of the canonical flat root"
+    },
+    {
+      "file": "invalid/11-bare-payload.json",
+      "violatedClause": "§4.1",
+      "violation": "Document uses a bare payload (no documentType, no $schema) instead of the canonical flat root"
+    },
+    {
+      "file": "invalid/12-unit-missing-global-id.json",
+      "violatedClause": "§4.4",
+      "violation": "Unit is missing the required globalId field — every Unit/Lesson/Item/Question MUST carry a globalId for stable identity across re-imports"
+    },
+    {
+      "file": "invalid/13-html-with-script.json",
+      "violatedClause": "§11 + HTML_SAFETY.md §2.4 + §3.5",
+      "violation": "ContentItem.html contains a forbidden <script> element and an onclick event handler — both are XSS-class violations the consumer MUST reject"
+    },
+    {
+      "file": "invalid/14-placement-missing-placements.json",
+      "violatedClause": "placement.schema.json (required: placements)",
+      "violation": "placement question is missing the required placements[] array"
+    },
+    {
+      "file": "invalid/15-placement-empty-placements.json",
+      "violatedClause": "placement.schema.json (placements.minItems: 1)",
+      "violation": "placement.placements[] is an empty array; minItems is 1 (the TOEFL variant still requires at least one placement entry — the unanswered markers are decoy gaps, not zero placements)"
+    },
+    {
+      "file": "invalid/16-placement-orphan-gap.json",
+      "violatedClause": "placement domain rule (validate_course.py)",
+      "violation": "placements[].gap = 7 references a marker (@@@7) that is not present in passage; orphan placement entries fail validation"
+    },
+    {
+      "file": "invalid/17-placement-duplicate-gap.json",
+      "violatedClause": "placement domain rule (validate_course.py)",
+      "violation": "placements[] contains duplicate gap value (gap: 1 appears twice); each gap may only have one placement entry"
+    },
+    {
+      "file": "invalid/18-placement-bad-placement-unit.json",
+      "violatedClause": "placement.schema.json (placementUnit.enum)",
+      "violation": "placementUnit value 'word' is outside the enum — placement supports only 'sentence', 'paragraph', and 'sectionLabel'; word-level placement is covered by wordBankCloze"
+    },
+    {
+      "file": "invalid/19-placement-gap-as-string.json",
+      "violatedClause": "placement.schema.json (placements[].gap.type: integer)",
+      "violation": "placements[].gap is a string ('1') rather than an integer (1); the @@@N marker convention is integer-keyed"
+    },
+    {
+      "file": "invalid/20-missing-language.json",
+      "violatedClause": "question-set.schema.json (required: language) + ACCESSIBILITY.md §6.1 / WCAG 3.1.1 Language of Page",
+      "violation": "QuestionSet root is missing the required `language` field. As of rc.1, `language` is in the required[] list of both course.schema.json and question-set.schema.json because a delivering consumer needs it to set the rendering surface's `lang` attribute (WCAG 3.1.1) and to drive RTL detection. A document without root `language` cannot be rendered accessibly."
+    },
+    {
+      "file": "invalid/21-mcq-no-correct-option.json",
+      "violatedClause": "VALIDATION.md §9.3 (closure) — multipleChoice domain rule (validate_course.py: validate_multiple_choice)",
+      "violation": "MultipleChoice with all-zero `optionsAndPoints` values. An MCQ MUST have at least one option with points > 0; otherwise no submission can earn credit. Surfaced as an ERROR by validate_course.py's validate_multiple_choice domain pass."
+    },
+    {
+      "file": "invalid/22-mcq-options-points-missing-entry.json",
+      "violatedClause": "VALIDATION.md §9.3 (closure) — multipleChoice domain rule (validate_course.py: validate_multiple_choice)",
+      "violation": "MultipleChoice `optionsAndPoints` is missing an entry for the third option (`gamma`). Every value in `options` MUST appear as a key in `optionsAndPoints` so the consumer can score it deterministically."
+    },
+    {
+      "file": "invalid/23-word-bank-cloze-gap-count-mismatch.json",
+      "violatedClause": "VALIDATION.md §9.4 (closure) — wordBankCloze domain rule (validate_course.py: validate_word_bank_cloze + _check_cloze_gap_consistency)",
+      "violation": "wordBankCloze passage contains @@@1, @@@2, @@@3 but `gapAcceptedAnswers` only has keys for gaps 1 and 2. The marker set in `passage` MUST equal the key set in `gapAcceptedAnswers`; otherwise the third gap has no accepted answer and the question cannot be graded."
+    },
+    {
+      "file": "invalid/24-multiple-choice-cloze-index-out-of-bounds.json",
+      "violatedClause": "VALIDATION.md §9.6 (closure) — multipleChoiceCloze domain rule (validate_course.py: validate_multiple_choice_cloze)",
+      "violation": "multipleChoiceCloze `correctAnswers['1']` is 5 but `gapOptions['1']` has only 2 options (valid indices 0..1). The correctAnswers index MUST be within the bounds of the corresponding gapOptions array; otherwise no submission can match the correct answer."
+    },
+    {
+      "file": "invalid/25-sentence-transformation-multiple-markers.json",
+      "violatedClause": "VALIDATION.md §9.9 — sentenceTransformation domain rule (validate_course.py: validate_sentence_transformation)",
+      "violation": "SentenceTransformation `targetSentence` contains two `@@@` markers ('The @@@ was three @@@ ago.'). The convention is exactly one `@@@` regardless of `acceptedChunks` count — chunks are sequential answer pieces typed at that single position, not separate gaps. Multiple markers are ambiguous (which chunk goes where?) and are rejected with an ERROR."
+    },
+    {
+      "file": "invalid/26-real-content-empty-prompt.json",
+      "violatedClause": "VALIDATION.md (question-base prompt rule) — real-content empty-prompt domain rule (validate_course.py: validate_question)",
+      "violation": "trueFalseQuestion with `prompt: \"\"`. The schema permits an empty prompt (minLength 0), but for the four real-content types (trueFalseQuestion, multipleChoice, shortAnswer, essay) the prompt IS the question, so an empty prompt is an authoring error caught by the validator's domain pass with an ERROR. (The same empty prompt on a symbolic type — see valid/13 — is valid.)"
+    },
+    {
+      "file": "invalid/27-true-false-non-boolean-answer.json",
+      "violatedClause": "true-false-question.schema.json (correctAnswer.type: boolean)",
+      "violation": "trueFalseQuestion `correctAnswer` is the string 'absolutely' rather than a JSON boolean. `correctAnswer` is the single source of truth for scoring and MUST be a boolean."
+    },
+    {
+      "file": "invalid/28-simple-gap-fill-no-marker.json",
+      "violatedClause": "simple-gap-fill.schema.json (sentence.pattern: @@@)",
+      "violation": "simpleGapFill `sentence` contains no `@@@` gap marker, so there is no gap for the learner to fill. The schema requires the marker via the `@@@` pattern."
+    },
+    {
+      "file": "invalid/29-simple-gap-fill-missing-accepted-answers.json",
+      "violatedClause": "simple-gap-fill.schema.json (required: acceptedAnswers)",
+      "violation": "simpleGapFill is missing the required `acceptedAnswers` array — without it no submission can be scored."
+    },
+    {
+      "file": "invalid/30-multi-gap-cloze-comma-in-answer.json",
+      "violatedClause": "VALIDATION.md §9.5 — multiGapCloze domain rule (validate_course.py: validate_multi_gap_cloze)",
+      "violation": "multiGapCloze accepted answer 'bread, butter and jam' contains a comma. Some consuming applications encode multi-gap submissions as 'gap:answer,gap:answer' on the wire, so commas or colons inside an answer can be silently truncated during scoring — a learner typing the exact accepted answer would be marked wrong. ERROR-tier."
+    },
+    {
+      "file": "invalid/31-short-answer-missing-accepted-answers.json",
+      "violatedClause": "short-answer.schema.json (required: acceptedAnswers)",
+      "violation": "shortAnswer is missing the required `acceptedAnswers` array — without it no submission can be scored."
+    },
+    {
+      "file": "invalid/32-essay-missing-expected-answer.json",
+      "violatedClause": "essay.schema.json (required: expectedAnswer)",
+      "violation": "essay is missing the required `expectedAnswer` (model answer / sample response) field."
+    },
+    {
+      "file": "invalid/33-matching-pairs-missing-pairs.json",
+      "violatedClause": "matching.schema.json (if matchingMode:'pairs' then required: pairs)",
+      "violation": "matching with matchingMode:'pairs' but no `pairs[]` array. The matchingMode discriminator selects the required sub-shape: 'pairs' requires `pairs[]`, 'classification' requires `categories[]`."
+    },
+    {
+      "file": "invalid/34-matching-mode-shape-collision.json",
+      "violatedClause": "matching.schema.json (then.not.required: categories)",
+      "violation": "matching carries BOTH `pairs[]` and `categories[]`. The two sub-shapes are mutually exclusive — a document carrying both is ambiguous about which one scores, and the schema's conditional `not` clauses reject the collision."
+    },
+    {
+      "file": "invalid/35-ordering-single-item.json",
+      "violatedClause": "ordering.schema.json (items.minItems: 2)",
+      "violation": "ordering `items` has a single tile; with fewer than two tiles there is no ordering task. minItems is 2."
+    },
+    {
+      "file": "invalid/36-ordering-bad-scoring-mode.json",
+      "violatedClause": "ordering.schema.json (scoringMode.enum)",
+      "violation": "ordering `scoringMode` is 'lenient', outside the enum — only 'strict' (exact-order, all-or-nothing) and 'kendall' (Kendall tau partial credit) are defined."
+    },
+    {
+      "file": "invalid/37-content-sequence-orphan-related-id.json",
+      "violatedClause": "VALIDATION.md §7.4 — ContentSequence referential-integrity domain rule (validate_course.py: validate_item)",
+      "violation": "ContentSequence `relatedItemIds` references a globalId that does not exist in the lesson. Every relatedItemId MUST resolve to an exercise/quiz item declared earlier in the same lesson; orphan references are an ERROR. (Note: objectiveIds referential integrity is deliberately WARN-tier and therefore exercised by valid/25, not by an invalid fixture.)"
+    },
+    {
+      "file": "invalid/38-word-bank-cloze-empty-word-bank.json",
+      "violatedClause": "word-bank-cloze.schema.json (wordBank.minItems: 1)",
+      "violation": "wordBankCloze `wordBank` is an empty array — the learner has no words to choose from. minItems is 1."
+    },
+    {
+      "file": "invalid/39-question-missing-global-id.json",
+      "violatedClause": "§4.4 + question-base.schema.json (required: globalId)",
+      "violation": "Question is missing the required `globalId` field — every Unit/Lesson/Item/Question MUST carry a globalId for stable identity across re-imports. Complements invalid/12 (unit-level) at the question level."
+    },
+    {
+      "file": "invalid/40-duplicate-global-id.json",
+      "violatedClause": "§4.4 — globalId uniqueness domain rule (validate_course.py: _collect_duplicate_global_id_errors)",
+      "violation": "Two questions in different items carry the same globalId (case-varied: ...000d vs ...000D). Within a single document, globalId values MUST be unique across all entities; comparison is case-insensitive. A consumer keyed on globalId cannot tell the entities apart, so re-import matching breaks."
+    },
+    {
+      "file": "invalid/41-spec-version-schema-disagreement.json",
+      "violatedClause": "§8.4 — specVersion ↔ $schema version agreement (RD-1; validate_course.py: check_spec_version_schema_agreement)",
+      "violation": "The document declares specVersion \"1.0\" while pinning $schema at the /1.1/ publication. §8.4 requires the two to agree on major.minor: a specVersion \"1.0\" document MUST point $schema at /1.0/ or a /1.0-rc.N/ path. This is the seam between two enforcement regimes — §5.8 dispatches schemas from $schema while CO-1 gates its severity on specVersion, so a disagreeing document validates its 1.1 content against the 1.1 schemas while claiming the more lenient 1.0 contract."
+    },
+    {
+      "file": "invalid/42-objective-id-unresolved.json",
+      "violatedClause": "§4.9 / CO-1 — objective-reference integrity at ERROR tier for specVersion >= 1.1 (validate_course.py: _collect_objective_id_violations)",
+      "violation": "A unit's objectiveIds references \"obj-9999\", which does not resolve within the course's own objectives[] pool. At specVersion 1.0 this is WARN-tier (unresolved references break signpost objective rendering but do not block import); at specVersion >= 1.1, NORMATIVE §4.9 makes carried-copy self-containment a MUST and the same violation is ERROR-tier. The error message MUST name §4.9 / CO-1."
+    },
+    {
+      "file": "invalid/43-collection-closure-violation.json",
+      "violatedClause": "§4.9 / SC-6 — subjectCollection closure (lc_collection.py)",
+      "violation": "A tag's categoryId is \"no-such-category\", which is not carried in the document's categories[]. §4.9 requires a conforming collection to be self-contained: every tag categoryId MUST resolve in-document. Dispatched to lc_collection.py; exits non-zero."
+    },
+    {
+      "file": "invalid/44-collection-identity-less-member.json",
+      "violatedClause": "§3.4 / SC-3 — member identity is not optional (lc_collection.py)",
+      "violation": "A tag carries no id. §3.4 makes a stable immutable member id mandatory (slug/name/label are display, never identity). A member without an id cannot be referenced across documents. Dispatched to lc_collection.py; exits non-zero."
+    },
+    {
+      "file": "invalid/45-collection-reserved-claim.json",
+      "violatedClause": "§4.10 / SC-10 — reserved alignment claim emitted (producer-tier; lc_collection.py)",
+      "violation": "An externalAlignments entry emits claim \"assesses\", which is reserved (the 1.1 producer vocabulary is references/alignedTo/covers). SC-10 is producer-tier: the reference validator gates what a producer may EMIT. A consumer, by contrast, MUST preserve an unknown claim value per §5.5 — this fixture pins the emission gate, not consumer rejection. Dispatched to lc_collection.py; exits non-zero."
+    },
+    {
+      "file": "invalid/46-glossary-gloss-rule-violation.json",
+      "violatedClause": "VALIDATION §17 (GL-4) — the gloss rule (lc_glossary.py)",
+      "violation": "An entry (\"menu\") carries none of definition, translations, or definitionTranslations — so it glosses nothing. GL-4 requires every entry to carry at least one. This is an interchange-boundary rule: a producer MUST NOT emit a violating document. Dispatched to lc_glossary.py; exits non-zero."
+    },
+    {
+      "file": "invalid/47-glossary-undeclared-translation-language.json",
+      "violatedClause": "VALIDATION §17 (GL-5) — undeclared translation language (lc_glossary.py)",
+      "violation": "An entry carries a \"fr\" translation, but translationLanguages declares only [\"es\"]. When the inventory is declared, every translation key used anywhere MUST be a member of it — an undeclared key in use is an over-claim mismatch (ERROR). Dispatched to lc_glossary.py; exits non-zero."
+    },
+    {
+      "file": "invalid/48-glossary-declared-unused-language.json",
+      "violatedClause": "VALIDATION §17 (GL-6) — declared-but-unused translation language, a false claim (lc_glossary.py)",
+      "violation": "translationLanguages declares [\"es\", \"de\"] but no entry carries a \"de\" translation. A declared language nothing uses is a false claim about the document's contents (ERROR) — distinct from translations present with no declaration, which is only a warning (GL-8). Dispatched to lc_glossary.py; exits non-zero."
+    },
+    {
+      "file": "invalid/49-collection-self-parent-cycle.json",
+      "violatedClause": "§4.9 / SC-7 — subjectCollection tag hierarchy acyclicity (lc_collection.py)",
+      "violation": "A tag's parentId points at its own member id. SC-7 requires the parent relation to form a hierarchy (a forest); a tag may not be its own ancestor. A self-cycle makes depth computation and traversal non-terminating. Dispatched to lc_collection.py; exits non-zero."
+    },
+    {
+      "file": "invalid/50-collection-parent-cycle.json",
+      "violatedClause": "§4.9 / SC-7 — subjectCollection tag hierarchy acyclicity (lc_collection.py)",
+      "violation": "Two tags are each other's parent (A→B→A). SC-7 forbids cycles of any length in the parentId relation. Dispatched to lc_collection.py; exits non-zero."
+    },
+    {
+      "file": "invalid/51-collection-missing-schema.json",
+      "violatedClause": "§3.2 / schema-required — subjectCollection (lc_collection.py schema front-stage)",
+      "violation": "The root `$schema` field is removed. It is schema-required for every artifact type (§3.2); the Draft-07 front-stage catches it even though the domain rules do not check $schema. Proves the new-type validators perform schema validation, not domain checks alone. Exits non-zero."
+    },
+    {
+      "file": "invalid/52-collection-rd1-mismatch.json",
+      "violatedClause": "§8.4 / RD-1 — subjectCollection specVersion↔$schema agreement (lc_collection.py)",
+      "violation": "specVersion is '1.1' but $schema points at the /1.0/ path. RD-1 requires the two to agree on major.minor. Exits non-zero."
+    },
+    {
+      "file": "invalid/53-pack-missing-spec-version.json",
+      "violatedClause": "§3.2 / schema-required — curriculumPack (lc_pack.py schema front-stage)",
+      "violation": "The root `specVersion` field is removed (schema-required, §3.2). Caught by the Draft-07 front-stage, not the domain rules. Exits non-zero."
+    },
+    {
+      "file": "invalid/54-pack-rd1-mismatch.json",
+      "violatedClause": "§8.4 / RD-1 — curriculumPack specVersion↔$schema agreement (lc_pack.py)",
+      "violation": "specVersion '1.1' with a /1.0/ $schema path. RD-1 violation. Exits non-zero."
+    },
+    {
+      "file": "invalid/55-glossary-missing-schema.json",
+      "violatedClause": "§3.2 / schema-required — glossary (lc_glossary.py schema front-stage)",
+      "violation": "The root `$schema` field is removed (schema-required, §3.2). Caught by the Draft-07 front-stage. Exits non-zero."
+    },
+    {
+      "file": "invalid/56-glossary-rd1-mismatch.json",
+      "violatedClause": "§8.4 / RD-1 — glossary specVersion↔$schema agreement (lc_glossary.py)",
+      "violation": "specVersion '1.1' with a /1.0/ $schema path. RD-1 violation. Exits non-zero."
+    },
+    {
+      "file": "invalid/57-pack-bundle-malformed-embedded.json",
+      "validator": "lc_pack.py",
+      "violatedClause": "§16 / CP-15 — curriculumPack bundle embedded-document integrity (lc_pack.py)",
+      "violation": "A bundle's embedded.content carries a document with no documentType/globalId, and a contentRef points at a glossary that is therefore not embedded. CP-15 requires every ref to resolve to a well-formed embedded document of the matching type. Dispatched to lc_pack.py; exits non-zero. (The assembler additionally schema-validates every embedded document before writing a bundle, so a copy that is well-formed at this level but not a valid document of its type is caught at assembly time.)"
+    },
+    {
+      "file": "invalid/58-collection-wrong-artifact-schema.json",
+      "validator": "lc_collection.py",
+      "violatedClause": "§4.7 / §8.4 — canonical $schema identity (the declared schema must be the one for this document's documentType)",
+      "violation": "A subjectCollection whose root $schema declares glossary.schema.json. The publication path is correct, so RD-1's major.minor comparison passes, and the document is otherwise a valid collection — but §4.7 requires a producer to declare the canonical schema for its own documentType, and §8.4 makes the declared URL the binding validation target. Exits non-zero."
+    },
+    {
+      "file": "invalid/59-pack-bundle-course-missing-source-id.json",
+      "validator": "lc_pack.py",
+      "violatedClause": "§4.4 / CP-15 — a Curriculum Pack MUST NOT reference (or embed) a Course lacking its type-directed identity (sourceCourseId)",
+      "violation": "A bundle embeds a course with no sourceCourseId while a contentRef and a step selector point at it. Per NORMATIVE §4.4 a course's portable identity is its sourceCourseId (a producer-emission rule, like §4.9 closure): a pack that references a course carrying no sourceCourseId is non-conforming. CP-15 checks embedded-document identity by the type-directed field, so the pack validator reports 'embedded course ... missing its identity (sourceCourseId)' and the now-unresolvable ref. Dispatched to lc_pack.py; exits non-zero. Complements fixture 57, which covers an id-less glossary (root globalId)."
+    },
+    {
+      "file": "invalid/60-pack-contentref-targets-pack.json",
+      "validator": "lc_pack.py",
+      "violatedClause": "§4.4 / CP-3 — contentRef.type is a producer-closed vocabulary; curriculumPack (no pack nesting) is rejected at the domain tier",
+      "violation": "An otherwise-conforming manifest whose one contentRef (and its bound step w04) names type 'curriculumPack'. §4.4: contentRefs bind content documents only (course/questionSet/glossary); a pack is not embeddable content and 1.1 has no pack nesting. The schema leaves type OPEN (§5.8 — the vocabulary binds producers only), so this is caught purely at the domain/producer tier by lc_pack.py: remove that check and the corpus goes red. Exit 1."
+    },
+    {
+      "file": "invalid/61-pack-contentref-targets-collection.json",
+      "validator": "lc_pack.py",
+      "violatedClause": "§4.4 / CP-3 — a SubjectCollection is referenced via collectionRefs, not contentRefs (producer-closed content vocabulary)",
+      "violation": "An otherwise-conforming manifest whose one contentRef (and its bound step) names type 'subjectCollection' — a known NON-content type going through the content channel. contentRefs target course/questionSet/glossary; collections are referenced through collectionRefs. Schema-open (§5.8), rejected at the domain/producer tier. Exit 1. Companion to fixture 60 (curriculumPack) — together they guard both a self-referential and a wrong-channel violation of the closed vocabulary."
+    }
+  ],
+  "compatibility": [
+    {
+      "file": "valid/26-spec-version-1-0-backcompat.json",
+      "schema": "course.schema.json",
+      "demonstrates": [
+        "NORMATIVE.md §8.2 — additive minor bump: a conforming 1.0 document validates unchanged under the 1.1 schemas, with unchanged meaning. This fixture is the mechanical guard on that claim; any future tightening of a 1.1 schema breaks it.",
+        "NORMATIVE.md §8.4 — a document declaring specVersion \"1.0\" legitimately pins $schema at a /1.0-rc.N/ publication path; the two agree on the version, so RD-1 stays silent.",
+        "NORMATIVE.md §8.1 / §8.3 — documents do not auto-promote across publications: adopting 1.1 is an explicit re-export, not an automatic upgrade."
+      ],
+      "note": "A conforming 1.0 course declaring the /1.0-rc.2/ publication. Asserts only that a 1.1 validator never REJECTS it (exit != 1) — NOT that it exits 0. NORMATIVE Section 8.4 makes the declared $schema URL the binding validation target, so the honest outcome depends on whether this tree carries /1.0-rc.2/: the published tree does (exit 0, a real conformance statement about that publication), the flat source tree does not (exit 3, indeterminate). Validating it against 1.1 schemas and exiting 0 would claim a conformance never checked."
+    }
+  ]
+}

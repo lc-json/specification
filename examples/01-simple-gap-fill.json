@@ -1,0 +1,23 @@
+{
+  "type": "simpleGapFill",
+  "globalId": "550e8400-e29b-41d4-a716-446655440001",
+  "title": "Articles - Indefinite Article with Vowel Sounds",
+  "tags": [
+    "grammar:articles:indefinite",
+    "level:A1",
+    "skill:accuracy"
+  ],
+  "points": 1.0,
+  "difficulty": 2.0,
+  "hint": "Say the word 'elephant' aloud. Does it start with a vowel sound or a consonant sound?",
+  "prompt": "",
+  "sentence": "I saw @@@ elephant at the zoo yesterday.",
+  "acceptedAnswers": [
+    "an"
+  ],
+  "caseSensitive": false,
+  "feedback": {
+    "correct": "Excellent! 'An' is correct because 'elephant' starts with a vowel sound. You've mastered the indefinite article rule for vowel sounds.",
+    "incorrect": "Not quite. The word 'elephant' starts with a vowel sound /e/, so we use 'an' (not 'a'). Try saying the word aloud - if it starts with a vowel sound, use 'an'."
+  }
+}

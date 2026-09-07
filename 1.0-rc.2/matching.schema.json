@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.2/matching.schema.json",
+  "title": "Matching Question Schema",
+  "description": "Match items to their corresponding match (1:1 pairs) or classify items into categories (many-to-one). The matchingMode discriminator selects the sub-shape.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "question-base.schema.json" },
+    {
+      "properties": {
+        "type": { "const": "matching" },
+        "matchingMode": {
+          "type": "string",
+          "description": "Selects the matching sub-shape. 'pairs' for 1:1 matching (each item has one correct match); 'classification' for many-to-one (each item belongs to one category, multiple items may share a category).",
+          "enum": ["pairs", "classification"]
+        },
+        "distractors": {
+          "type": "array",
+          "description": "Extra match values (pairs mode) or category labels (classification mode) that don't belong to any item. The choice pool a consumer presents to a learner is the union of authored match values (or category labels) and these distractors; consumers MUST randomise the order of that pool when rendering — see NORMATIVE §5.6.",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "allowPartialCredit": {
+          "type": "boolean",
+          "description": "Award partial credit per correct row instead of all-or-nothing.",
+          "default": true
+        }
+      },
+      "required": ["matchingMode"],
+      "if": {
+        "properties": { "matchingMode": { "const": "pairs" } }
+      },
+      "then": {
+        "properties": {
+          "pairs": {
+            "type": "array",
+            "description": "Each entry is one item-and-match row.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item": { "type": "string", "minLength": 1 },
+                "match": { "type": "string", "minLength": 1 }
+              },
+              "required": ["item", "match"],
+              "additionalProperties": false
+            },
+            "minItems": 2
+          }
+        },
+        "required": ["pairs"],
+        "not": { "required": ["categories"] }
+      },
+      "else": {
+        "properties": {
+          "categories": {
+            "type": "array",
+            "description": "Each entry is one category with its label and items belonging to it. The order in which items render to a learner is consumer-defined; consumers MUST randomise the row order at render time so that the source-JSON category grouping does not expose the answer (NORMATIVE §5.6).",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "minLength": 1 },
+                "items": {
+                  "type": "array",
+                  "items": { "type": "string", "minLength": 1 },
+                  "minItems": 1
+                }
+              },
+              "required": ["label", "items"],
+              "additionalProperties": false
+            },
+            "minItems": 2
+          }
+        },
+        "required": ["categories"],
+        "not": { "required": ["pairs"] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "WordBankCloze — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "wordBankCloze",
+      "globalId": "16161616-0000-4000-8000-000000000001",
+      "title": "Articles from a word bank",
+      "points": 2.0,
+      "difficulty": 2.0,
+      "prompt": "",
+      "passage": "I saw @@@1 owl and @@@2 fox on the walk home.",
+      "wordBank": ["a", "an", "the", "some"],
+      "gapAcceptedAnswers": {
+        "1": ["an"],
+        "2": ["a"]
+      },
+      "allowWordReuse": false
+    }
+  ]
+}

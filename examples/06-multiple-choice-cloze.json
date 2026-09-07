@@ -1,0 +1,78 @@
+{
+  "type": "multipleChoiceCloze",
+  "globalId": "550e8400-e29b-41d4-a716-446655440006",
+  "title": "Vocabulary in Context (FCE Reading Part 1 Style)",
+  "tags": [
+    "exam:fce-reading-part1",
+    "level:B2"
+  ],
+  "points": 8.0,
+  "difficulty": 7.0,
+  "hint": "Gap 1: 'so/such/very/too' - which works with 'adjective + that'? Gap 2: Which verb collocates with 'movie'? Gap 3: Which verb means 'to prepare popcorn'? Gap 4: Phrasal verb for 'continue watching'.",
+  "prompt": "",
+  "passage": "The weather was @@@1 cold that we decided to stay indoors. We @@@2 a movie and @@@3 some popcorn. The film was so interesting that we @@@4 watching until midnight.",
+  "gapOptions": {
+    "1": [
+      "so",
+      "such",
+      "very",
+      "too"
+    ],
+    "2": [
+      "watched",
+      "saw",
+      "looked",
+      "viewed"
+    ],
+    "3": [
+      "made",
+      "did",
+      "cooked",
+      "prepared"
+    ],
+    "4": [
+      "kept",
+      "continued",
+      "went",
+      "stayed"
+    ]
+  },
+  "correctAnswers": {
+    "1": 0,
+    "2": 0,
+    "3": 0,
+    "4": 0
+  },
+  "gapOptionFeedback": {
+    "1": {
+      "0": "✓ Correct! 'SO + adjective + THAT' is the correct pattern for result clauses. Example: 'so tired that I fell asleep'.",
+      "1": "✗ 'SUCH' is used with noun phrases, not adjectives. Example: 'such cold weather' (not 'such cold').",
+      "2": "✗ 'VERY' is an intensifier but doesn't work with 'that' result clauses. You can say 'very cold' but not 'very cold that'.",
+      "3": "✗ 'TOO' implies excess and typically uses 'to' (infinitive), not 'that'. Example: 'too cold to go out'."
+    },
+    "2": {
+      "0": "✓ Correct! 'WATCH' is the standard verb for movies and TV. We actively watch screens.",
+      "1": "✗ 'SAW' can be used (saw a movie = went to cinema) but 'watched' is more natural for this context (staying home).",
+      "2": "✗ 'LOOKED' needs a preposition: 'looked AT a movie' - awkward and unnatural.",
+      "3": "✗ 'VIEWED' is too formal and often implies professional or critical viewing ('film critics viewed...')."
+    },
+    "3": {
+      "0": "✓ Correct! 'MAKE' collocates with popcorn. Fixed collocation: 'make popcorn' (prepare it).",
+      "1": "✗ 'DID' doesn't collocate with food preparation. We 'do homework', 'do exercise', not 'do popcorn'.",
+      "2": "✗ 'COOKED' implies elaborate preparation with heat. Popcorn is 'made', not 'cooked'.",
+      "3": "✗ 'PREPARED' is grammatically possible but unnatural. 'Make' is the standard collocation."
+    },
+    "4": {
+      "0": "✓ Correct! 'KEPT + -ing' = continued doing something. Example: 'kept working', 'kept talking'.",
+      "1": "✗ 'CONTINUED' needs a different structure: 'continued TO watch' or 'continued watching' (not just 'continued watching' without context).",
+      "2": "✗ 'WENT watching' is incorrect. 'Went on watching' would work, but not 'went watching' alone.",
+      "3": "✗ 'STAYED watching' is awkward. We 'stay home' or 'stay awake', but 'kept watching' is more natural."
+    }
+  },
+  "allowPartialCredit": true,
+  "shuffleOptions": true,
+  "feedback": {
+    "correct": "Outstanding! You've demonstrated excellent vocabulary knowledge and understanding of word choice in context. You correctly identified all collocations and contextually appropriate words.",
+    "incorrect": "Review each gap carefully. Consider: Does the word fit the meaning? Does it collocate (go together naturally) with surrounding words? Is the grammar correct?"
+  }
+}

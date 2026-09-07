@@ -1,0 +1,396 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rationale and positioning - LC-JSON Specification</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="An open learning-content interchange specification.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-2069662c.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-198579cc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">LC-JSON Specification</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/lc-json/specification/edit/main/src/src/RATIONALE.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                            <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="lc-json-rationale-and-positioning"><a class="header" href="#lc-json-rationale-and-positioning">LC-JSON Rationale and Positioning</a></h1>
+<p><strong>Status:</strong> Informative<br><strong>Spec version context:</strong> LC-JSON 1.1<br><strong>Last updated:</strong> 2026-09-07<br><strong>Audience:</strong> teachers, curriculum designers, institutional reviewers, educational software developers, and implementers evaluating LC-JSON for adoption.</p>
+<p>This document is <strong>informative</strong>, not normative. It explains the design rationale and positioning behind LC-JSON. Conformance requirements remain in <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a>.</p>
+<p>LC-JSON describes itself as an <strong>open learning-content interchange specification</strong> rather than an “industry standard.” That word is reserved for formats whose acceptance has been ratified by a recognized body or by long ecosystem use. LC-JSON has neither yet, and overclaiming would invite reasonable skepticism.</p>
+<h2 id="the-problem"><a class="header" href="#the-problem">The Problem</a></h2>
+<p>Teachers and institutions create large amounts of learning content: courses, lessons, readings, exercises, quizzes, feedback, and assessments. Too often, that content becomes tied to the tool that created it.</p>
+<p>Common problems include:</p>
+<ul>
+<li>A course can be exported, but the export is difficult for another tool to understand.</li>
+<li>Question banks lose feedback, scoring intent, tags, or structure during transfer.</li>
+<li>Teachers cannot inspect their own course files without proprietary tooling.</li>
+<li>Institutions cannot easily preserve or migrate teacher-authored content across platforms.</li>
+<li>Accessibility metadata can be lost when content is exported, imported, edited, or repackaged.</li>
+</ul>
+<p>LC-JSON exists to make learning content portable in a way that is both technically reliable and inspectable by the people who own the content.</p>
+<h2 id="what-lc-json-is"><a class="header" href="#what-lc-json-is">What LC-JSON Is</a></h2>
+<p>LC-JSON is an <strong>open learning-content interchange specification</strong>.</p>
+<p>For teachers, it can be understood as a <strong>portable course file format</strong>: a way to store courses, lessons, questions, answers, feedback, and related teaching material in a file that compatible tools can read.</p>
+<p>For developers, LC-JSON defines a schema-validated JSON wire format plus producer/consumer conformance rules for exchanging learning content.</p>
+<p>LC-JSON 1.1 defines five artifact types:</p>
+<ul>
+<li><strong>Course</strong> — hierarchical learning content: Course -&gt; Units -&gt; Lessons -&gt; Items -&gt; Questions.</li>
+<li><strong>QuestionSet</strong> — a flat list of questions for question-bank exchange and packaged delivery.</li>
+<li><strong>Glossary</strong> — a flat list of terms (definitions, pronunciation, translations, examples, etc.) that attaches to a course, unit, or lesson.</li>
+<li><strong>SubjectCollection</strong> — a reusable classification vocabulary: the tags and learning objectives for one subject at one level.</li>
+<li><strong>CurriculumPack</strong> — an arrangement: sequence, pacing, and assessment checkpoints over a collection plus content documents.</li>
+</ul>
+<p>The first two (added in 1.0) carry learning content; the last three (added in 1.1) carry the vocabulary, arrangement, and study material that sit around it.</p>
+<p>The practical goal is to preserve teacher-authored instructional intent: sequence, explanations, questions, distractors, feedback, objectives, tags, rubrics, and grading intent.</p>
+<h2 id="design-principles"><a class="header" href="#design-principles">Design Principles</a></h2>
+<h3 id="machine-validatable-human-inspectable"><a class="header" href="#machine-validatable-human-inspectable">Machine-Validatable, Human-Inspectable</a></h3>
+<p>LC-JSON documents validate against published JSON Schemas, but they are also designed so that authored content remains visible in the file.</p>
+<p>A teacher, curriculum designer, or teacher-developer should be able to open a course JSON file and recognize courses, units, lessons, items, prompts, choices, answers, and feedback without proprietary tooling.</p>
+<p>This is a deliberate stance against formats whose meaning only emerges through tooling. It is offered without promise of zero technical fields — portability requires some, and <code>$schema</code>, <code>specVersion</code>, and <code>globalId</code> exist for that reason. The promise is that the pedagogical structure stays inspectable to the people who authored it. Where field-naming or structural trade-offs arise during spec evolution, the spec favors the form that keeps pedagogical content recognizable.</p>
+<h3 id="hierarchy-follows-pedagogy"><a class="header" href="#hierarchy-follows-pedagogy">Hierarchy Follows Pedagogy</a></h3>
+<p>LC-JSON uses the structure teachers already recognize:</p>
+<pre><code class="language-text">Course -&gt; Unit -&gt; Lesson -&gt; Item -&gt; Question
+</code></pre>
+<p>This is not a database-first shape. It is a teaching-content shape.</p>
+<h3 id="plain-property-names"><a class="header" href="#plain-property-names">Plain Property Names</a></h3>
+<p>LC-JSON favors readable property names where technically possible:</p>
+<ul>
+<li><code>prompt</code>, not <code>p</code>.</li>
+<li><code>acceptedAnswers</code>, not <code>accAns</code>.</li>
+<li><code>passMarkPercent</code>, not <code>pmp</code>.</li>
+<li><code>feedback</code>, not an opaque metadata bundle.</li>
+</ul>
+<p>The goal is not to remove every technical term. The goal is to keep teaching intent visible.</p>
+<h3 id="no-envelope-tricks"><a class="header" href="#no-envelope-tricks">No Envelope Tricks</a></h3>
+<p>LC-JSON uses a flat document root with <code>$schema</code>, <code>documentType</code>, and <code>specVersion</code> as root-level siblings. The course or question-set payload lives beside those fields, not hidden inside an extra wrapper.</p>
+<p>This keeps schema dispatch explicit while avoiding unnecessary nesting.</p>
+<h3 id="accessibility-metadata-must-survive-transformation"><a class="header" href="#accessibility-metadata-must-survive-transformation">Accessibility Metadata Must Survive Transformation</a></h3>
+<p>Learning content often moves through multiple tools before it reaches learners. LC-JSON therefore treats accessibility metadata as something that must survive import/export cycles.</p>
+<p>Base LC-JSON consumer conformance includes a preservation floor for accessibility-relevant data such as image <code>alt</code>, media <code>&lt;track&gt;</code>, <code>lang</code>, <code>dir</code>, <code>language</code>, <code>supportLanguage</code>, and reserved-type accessibility metadata. Tools that additionally claim the LC-JSON Accessibility Profile take on the rendering obligations defined in <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a>.</p>
+<h2 id="where-lc-json-fits"><a class="header" href="#where-lc-json-fits">Where LC-JSON Fits</a></h2>
+<p>LC-JSON is not trying to replace every educational specification or format.</p>
+<p>It focuses on a specific problem: portable teacher-authored courses and questions in a JSON-native format that tools can validate, exchange, preserve, and inspect.</p>
+<p>LC-JSON is most useful when a team needs:</p>
+<ul>
+<li>portable course files,</li>
+<li>question-bank exchange,</li>
+<li>schema validation before import,</li>
+<li>preservation of feedback and scoring intent,</li>
+<li>round-trip preservation of unsupported future question types,</li>
+<li>a format that teacher-developers and technical curriculum teams can inspect directly.</li>
+</ul>
+<p>Runtime delivery, gradebook integration, learner analytics, roster sync, and LMS-specific workflows remain implementation concerns unless a future LC-JSON version explicitly adds a portable contract for them.</p>
+<p>A typical adoption path is to author or preserve content in LC-JSON, then export or map selected surfaces to delivery, package, or analytics layers such as QTI, Common Cartridge, H5P, xAPI, or Caliper where needed.</p>
+<p>The 1.1 vocabulary and arrangement types sit alongside existing work rather than
+replacing it. Machine-readable standards frameworks already exist — <strong>1EdTech® CASE®</strong><sup class="footnote-reference" id="fr-case-1"><a href="#footnote-case">1</a></sup>
+is the established way authorities publish competency frameworks — and LC-JSON
+collections do not compete with those registers: a collection <em>points at</em> them
+(<code>externalAlignments</code>) while carrying the working tags and objectives that course
+files actually reference. What LC-JSON has lacked is the connective layer in
+the same plain-file format as the content: a scheme of work whose sequencing, pacing,
+and coverage claims are checkable by a validator against the vocabulary it cites, in
+a document a teacher can open and read. That — not the existence of machine-readable
+curricula — is the gap the Curriculum Pack addresses.</p>
+<h2 id="landscape"><a class="header" href="#landscape">Landscape</a></h2>
+<p>LC-JSON is one of several specifications that touch learning content. It sits at a specific layer — <strong>content interchange</strong> — and is intended to be used alongside, not instead of, the formats that handle adjacent concerns.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Format</th><th>Layer</th><th>Relation to LC-JSON</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>LTI 1.3 / Advantage</strong></td><td>Tool launch, deep linking, roster, grade passback</td><td>Different layer. LTI is how an LMS launches and integrates with an external tool; LC-JSON is the content that tool may have authored or consumed. Complementary.</td></tr>
+<tr><td><strong>xAPI / cmi5</strong></td><td>Learning activity records</td><td>Different layer. xAPI describes what a learner did; LC-JSON describes the content they did it with. Complementary.</td></tr>
+<tr><td><strong>SCORM 2004</strong></td><td>Packaged courseware delivery and runtime API</td><td>Older, XML-based, designed for self-paced corporate compliance training and bound to a runtime API. LC-JSON is editable interchange, not a delivery wrapper.</td></tr>
+<tr><td><strong>IMS Common Cartridge</strong></td><td>Multi-format content package</td><td>Bundles QTI, SCORM, web links, and a manifest into a single archive. LC-JSON is a single JSON-native artifact rather than a package format.</td></tr>
+<tr><td><strong>QTI 2.x / 3.0</strong></td><td>Question and assessment interchange</td><td>Closest peer. QTI was conceived as XML; 3.0 added a JSON binding but the conceptual model remains XML-shaped and the surface area is broad. LC-JSON is JSON-native from the start, course-shaped as well as question-bank-shaped, narrower in surface, and designed for direct human inspection.</td></tr>
+<tr><td><strong>OneRoster</strong></td><td>Roster, enrollment, grade exchange</td><td>Different layer; orthogonal to content.</td></tr>
+<tr><td><strong>CASE</strong></td><td>Competency and academic-standards framework</td><td>The nearest overlap is in objectives. CASE provides a standardized way for an authority to <em>publish</em> a canonical competency framework; an LC-JSON Subject Collection is a portable working vocabulary of objectives and tags that can declare its relationship to such a framework through typed <code>externalAlignments</code>, rather than republishing it. Complementary — the Subject Collection points to the external register; it does not replace or author it.</td></tr>
+<tr><td><strong>H5P</strong></td><td>Interactive content packages and runtimes</td><td>Different layer. H5P provides executable interaction types and player/runtime semantics; LC-JSON is a neutral editable source/interchange format that could generate or map to selected runtime targets.</td></tr>
+<tr><td><strong>Caliper</strong></td><td>Learning analytics event model</td><td>Different layer. Like xAPI, Caliper describes learner activity events; LC-JSON describes the content those events may refer to. Complementary.</td></tr>
+</tbody>
+</table>
+</div>
+<p>This is a high-level map, not an exhaustive comparison. LC-JSON’s intended combination — JSON-native, human-inspectable, and covering hierarchical course structure as well as flat question sets — is uncommon among established educational interchange formats. 1.1 extends that combination beyond the content to the curriculum around it — a shared vocabulary of objectives and tags, and a scheme-of-work arrangement, in the same plain-file format — and adds something rarer still: a curriculum pack whose sequencing and coverage claims a validator can check against the vocabulary it cites.</p>
+<p>The question of whether such a format needs to exist resolves as follows: QTI is mature and deep for assessment exchange, and LC-JSON deliberately targets a narrower, JSON-native course-and-question authoring source rather than competing on assessment surface area; SCORM and Common Cartridge are package-and-delivery formats from an earlier era, not editable JSON; xAPI, Caliper, LTI, OneRoster, and CASE are oriented at other layers. LC-JSON exists to occupy the JSON-native, teacher-readable interchange slot — and, with 1.1, to widen it beyond courses and questions to the curriculum around them: a shared vocabulary authors can classify against, and a validator-checkable scheme of work that sequences content against it.</p>
+<h2 id="how-lc-json-differs"><a class="header" href="#how-lc-json-differs">How LC-JSON Differs</a></h2>
+<p>The same comparison, expressed as field-level stances:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Need</th><th>LC-JSON stance</th><th>Typical peer behavior</th></tr>
+</thead>
+<tbody>
+<tr><td>Teacher-readable interchange files</td><td>First-class design principle</td><td>Many established interchange formats prioritize machine/tool processing over direct human inspection</td></tr>
+<tr><td>JSON-native validation</td><td>Published JSON Schemas (Draft 7)</td><td>QTI is XML-shaped (3.0 added a JSON binding); SCORM and Common Cartridge are XML and package-based</td></tr>
+<tr><td>Course + question portability in one family</td><td>Separate <code>course</code> and <code>questionSet</code> artifacts under a common flat root</td><td>QTI covers questions; SCORM and Common Cartridge package courses; few formats cover both as editable JSON</td></tr>
+<tr><td>Shared curriculum vocabulary across courses</td><td>A <code>subjectCollection</code> is a portable, owned vocabulary of reusable objectives and tags with stable member ids that are never re-minted. It can declare typed relationships to external frameworks (e.g. CASE) through <code>externalAlignments</code>. Courses can carry copies of collection-origin objectives with their ids preserved; a <code>curriculumPack</code> can reference the collection directly and use its objective and tag ids to sequence and pace content. This lets courses within a compatible scope share objective identities, while packs use a referenced objective-and-tag vocabulary for sequencing and coverage</td><td>Alignment references may exist in packages — for example, Common Cartridge can carry standards and CASE URIs — but a reusable, editable objective and tag vocabulary is typically managed separately from the portable content package, such as in an LMS or standards service</td></tr>
+<tr><td>Curriculum sequencing and coverage as checkable data</td><td>A <code>curriculumPack</code> makes the plan portable and calendar-relative. It can declare coverage assertions against a cited collection and enables validators to enforce the defined taught-before-used sequencing rules</td><td>Other systems can order resources, and schemes of work often live as prose or LMS structures; they do not generally encode this combination of relative pacing, coverage assertions, and taught-before-used rules as a portable, independently machine-checkable contract against a cited vocabulary</td></tr>
+<tr><td>Accessibility metadata preservation across import/export</td><td>Base consumer-conformance preservation floor for <code>alt</code>, <code>&lt;track&gt;</code>, <code>lang</code>, <code>dir</code>, <code>language</code>, <code>supportLanguage</code>, reserved-type accessibility metadata</td><td>Accessibility metadata can be dropped or normalized away during transformation</td></tr>
+<tr><td>Accessible delivery claims</td><td>Opt-in Accessibility Profile binding (see <a href="ACCESSIBILITY.html"><code>ACCESSIBILITY.md</code></a>)</td><td>Accessibility-conformance claims are typically made about the delivery platform, not the interchange file</td></tr>
+<tr><td>Unsupported future question types</td><td>Preserve verbatim and report; never silently drop</td><td>Fallback behavior varies by implementation; without an explicit preservation contract, data loss is a practical risk</td></tr>
+<tr><td>Tool-specific data</td><td>Namespaced <code>x-</code> extensions; other consumers ignore unknown namespaces and extension-preserving consumers round-trip them where possible (see <a href="NORMATIVE.html"><code>NORMATIVE.md</code></a> §7)</td><td>Custom-extension mechanisms exist (e.g. QTI custom interactions) but are often tightly coupled to one tool</td></tr>
+<tr><td>Version stability</td><td>Immutable schema URL paths per spec version</td><td>URL stability practices vary by specification</td></tr>
+<tr><td>LMS / runtime integration</td><td>Out of scope unless a future LC-JSON version adds a portable contract</td><td>SCORM defines a runtime API; LTI defines launch and grade integration</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="adoption-positioning"><a class="header" href="#adoption-positioning">Adoption Positioning</a></h2>
+<p>For teachers:</p>
+<blockquote>
+<p>LC-JSON is a portable course file format for moving teaching materials between compatible platforms.</p>
+</blockquote>
+<p>For institutions:</p>
+<blockquote>
+<p>LC-JSON is an open, JSON-based interchange format that makes teacher-authored learning content portable between compatible tools and platforms. From version 1.1 it also supports shared curriculum vocabularies: a portable Subject Collection carries reusable learning objectives and tags and can declare typed relationships to official curriculum frameworks. Courses can carry objectives from the collection with their ids preserved, while a Curriculum Pack can reference the collection directly to sequence content and check coverage against it. Courses within a compatible scope can therefore reuse objective identities, while packs can reuse the collection’s objective and tag vocabulary.</p>
+</blockquote>
+<p>For developers:</p>
+<blockquote>
+<p>LC-JSON defines a schema-validated JSON wire format plus producer/consumer conformance rules for learning-content interchange.</p>
+</blockquote>
+<p>For standards reviewers:</p>
+<blockquote>
+<p>LC-JSON is an emerging open learning-content interchange specification with a published 1.0 release and a 1.1 release candidate, published schemas, conformance fixtures, and explicit producer/consumer obligations.</p>
+</blockquote>
+<h2 id="scope-and-limits"><a class="header" href="#scope-and-limits">Scope and Limits</a></h2>
+<p>LC-JSON is a focused, open, schema-validated interchange specification for portable learning content. It is not — on its own — any of the following:</p>
+<ul>
+<li>A WCAG conformance claim. LC-JSON’s Accessibility Profile binds preservation and rendering obligations on conforming consumers, but WCAG conformance is established by the delivery platform under test, not by the interchange file.</li>
+<li>An LMS interoperability format. Tool launch, deep linking, and grade passback are LTI’s domain.</li>
+<li>A roster, enrollment, or grade-exchange format. That is OneRoster’s domain.</li>
+<li>A learning-analytics or activity-record format. That is xAPI / cmi5’s domain.</li>
+<li>A runtime delivery wrapper. SCORM 2004 defines a runtime API; LC-JSON does not.</li>
+<li>A broadly adopted industry specification. LC-JSON is an emerging open specification with published, versioned schemas, conformance fixtures, and explicit producer/consumer obligations. Whether it becomes widely adopted will be determined by implementers and time, not by self-description.</li>
+</ul>
+<p>Within those limits, LC-JSON aims to do one thing well: provide a JSON-native, human-inspectable interchange format for three learner-facing content types — hierarchical courses, flat question sets, and glossaries — plus two coordinating types: Subject Collections, which provide reusable objective-and-tag vocabularies, and Curriculum Packs, which arrange content against those vocabularies. It supports extension-preserving round-trips, a base accessibility-preservation floor, and an opt-in Accessibility Profile for delivery obligations.</p>
+<hr>
+<ol class="footnote-definition">
+<li id="footnote-case">
+<p>CASE® and 1EdTech® are trademarks of 1EdTech Consortium, Inc. (<a href="https://www.1edtech.org">1edtech.org</a>). <a href="#fr-case-1">↩</a></p>
+</li>
+</ol>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="README-spec.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="NORMATIVE.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="README-spec.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="NORMATIVE.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>

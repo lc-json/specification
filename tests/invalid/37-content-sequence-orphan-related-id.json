@@ -1,0 +1,60 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Invalid: ContentSequence relatedItemIds referential-integrity violation",
+  "language": "en",
+  "units": [
+    {
+      "globalId": "37373737-0000-4000-8000-000000000001",
+      "title": "Unit 1",
+      "sequence": 1,
+      "lessons": [
+        {
+          "globalId": "37373737-0000-4000-8000-000000000002",
+          "title": "Lesson 1.1",
+          "sequence": 1,
+          "items": [
+            {
+              "type": "content",
+              "globalId": "37373737-0000-4000-8000-000000000003",
+              "title": "Reading passage",
+              "sequence": 1,
+              "html": "<p>Read the passage, then answer the questions alongside.</p>"
+            },
+            {
+              "type": "exercise",
+              "globalId": "37373737-0000-4000-8000-000000000004",
+              "title": "Comprehension check",
+              "sequence": 2,
+              "instructions": "Answer based on the passage.",
+              "questions": [
+                {
+                  "type": "trueFalseQuestion",
+                  "globalId": "37373737-0000-4000-8000-000000000005",
+                  "title": "Q1",
+                  "points": 1.0,
+                  "prompt": "The passage asks you to read it first.",
+                  "correctAnswer": true,
+                  "feedback": { "correct": "Yes.", "incorrect": "It does." }
+                }
+              ]
+            },
+            {
+              "type": "contentsequence",
+              "globalId": "37373737-0000-4000-8000-000000000006",
+              "title": "Passage with side-by-side questions",
+              "sequence": 3,
+              "contentItemId": "37373737-0000-4000-8000-000000000003",
+              "relatedItemIds": [
+                "37373737-0000-4000-8000-000000000004",
+                "99999999-9999-4999-8999-999999999999"
+              ],
+              "layout": "Split"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

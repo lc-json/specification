@@ -1,0 +1,9 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "title": "Minimal Conforming Course",
+  "language": "en",
+  "supportLanguage": null,
+  "units": []
+}

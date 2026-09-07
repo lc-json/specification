@@ -1,0 +1,23 @@
+{
+  "$schema": "https://lc-json.org/1.1/question-set.schema.json",
+  "documentType": "questionSet",
+  "specVersion": "1.1",
+  "title": "ShortAnswer — per-type conformance fixture",
+  "language": "en",
+  "questions": [
+    {
+      "type": "shortAnswer",
+      "globalId": "19191919-0000-4000-8000-000000000001",
+      "title": "Capital of France",
+      "points": 1.0,
+      "difficulty": 1.0,
+      "prompt": "What is the capital of France?",
+      "acceptedAnswers": ["Paris"],
+      "caseSensitive": false,
+      "feedback": {
+        "correct": "Correct.",
+        "incorrect": "It's the city on the Seine."
+      }
+    }
+  ]
+}

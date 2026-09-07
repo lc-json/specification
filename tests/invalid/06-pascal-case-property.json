@@ -1,0 +1,9 @@
+{
+  "$schema": "https://lc-json.org/1.1/course.schema.json",
+  "documentType": "course",
+  "specVersion": "1.1",
+  "Title": "PascalCase property name — invalid per §4.4",
+  "language": "en",
+  "supportLanguage": null,
+  "units": []
+}

@@ -1,0 +1,63 @@
+{
+  "type": "wordBankCloze",
+  "globalId": "550e8400-e29b-41d4-a716-446655440004",
+  "title": "Articles in Context - Definite vs Indefinite",
+  "tags": [
+    "grammar:articles",
+    "level:B1",
+    "exam:fce-prep",
+    "skill:context"
+  ],
+  "points": 6.0,
+  "difficulty": 5.0,
+  "hint": "First mention of something usually takes 'a' or 'an'. When you mention it again, use 'the'. Specific or unique things always take 'the'.",
+  "prompt": "",
+  "passage": "Yesterday, I went to @@@1 park near my house. In @@@2 park, I saw @@@3 old man sitting on @@@4 bench. @@@5 man was feeding @@@6 birds with bread crumbs.",
+  "wordBank": [
+    "a",
+    "an",
+    "the",
+    "some",
+    "any",
+    "The"
+  ],
+  "gapAcceptedAnswers": {
+    "1": [
+      "the",
+      "a"
+    ],
+    "2": [
+      "the"
+    ],
+    "3": [
+      "an"
+    ],
+    "4": [
+      "a"
+    ],
+    "5": [
+      "The"
+    ],
+    "6": [
+      "the"
+    ]
+  },
+  "gapCaseSensitive": {
+    "5": true
+  },
+  "gapFeedback": {
+    "1": "Use 'the' if it's a specific park you know, or 'a' if it's any park near your house. Both work here.",
+    "2": "Second mention of 'park' - it's now specific, so use 'the'.",
+    "3": "'Old' starts with a vowel sound, so use 'an'.",
+    "4": "First mention of 'bench' - use the indefinite article 'a'.",
+    "5": "Start of sentence + second mention of 'man' - capitalize 'The'.",
+    "6": "First mention of 'birds', but in this context 'the' works because we're referring to the birds that were there at that specific time."
+  },
+  "allowPartialCredit": true,
+  "allowWordReuse": true,
+  "bankPosition": "above",
+  "feedback": {
+    "correct": "Perfect! You've correctly used articles throughout the passage. You understand when to use indefinite articles (a/an) for first mentions and definite articles (the) for subsequent references and specific items.",
+    "incorrect": "Review your article choices. Remember: first mention = a/an, subsequent mention = the. 'The' is also used for specific or unique things. Check each gap carefully."
+  }
+}

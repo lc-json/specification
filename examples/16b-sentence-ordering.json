@@ -1,0 +1,28 @@
+{
+  "type": "ordering",
+  "globalId": "550e8400-e29b-41d4-a716-446655441620",
+  "title": "Cellular Respiration — Order the Stages",
+  "tags": [
+    "biology:cell-biology:respiration",
+    "qualification:a-level",
+    "bloom:understand"
+  ],
+  "points": 4.0,
+  "difficulty": 6.0,
+  "hint": "Follow the carbon: where is the glucose first broken down, where is it fully oxidised, and where is most of the ATP actually made?",
+  "prompt": "",
+  "sourceText": "Glucose enters the cell and is split into two pyruvate molecules in the cytoplasm during glycolysis, releasing a small amount of ATP. Each pyruvate is then transported into the mitochondrion and converted to acetyl-CoA, releasing carbon dioxide as a by-product. Acetyl-CoA enters the Krebs cycle, where it is fully oxidised to carbon dioxide and electrons are captured by NAD+ and FAD. The electrons pass along the electron transport chain in the inner mitochondrial membrane, pumping protons outward to build a gradient. Finally, protons flow back through ATP synthase, driving the bulk synthesis of ATP, while oxygen accepts the spent electrons and forms water.",
+  "items": [
+    "Glucose enters the cell and is split into two pyruvate molecules in the cytoplasm during glycolysis, releasing a small amount of ATP.",
+    "Each pyruvate is then transported into the mitochondrion and converted to acetyl-CoA, releasing carbon dioxide as a by-product.",
+    "Acetyl-CoA enters the Krebs cycle, where it is fully oxidised to carbon dioxide and electrons are captured by NAD+ and FAD.",
+    "The electrons pass along the electron transport chain in the inner mitochondrial membrane, pumping protons outward to build a gradient.",
+    "Finally, protons flow back through ATP synthase, driving the bulk synthesis of ATP, while oxygen accepts the spent electrons and forms water."
+  ],
+  "scoringMode": "kendall",
+  "orderingUnit": "sentence",
+  "feedback": {
+    "correct": "Excellent. Aerobic respiration follows glycolysis (cytoplasm) → pyruvate oxidation (mitochondrial matrix) → Krebs cycle (matrix) → electron transport chain (inner membrane) → chemiosmosis at ATP synthase. The first three stages liberate the carbons of glucose; the last two convert the captured electrons into the ATP that the cell actually spends.",
+    "incorrect": "Trace the carbon and the electrons separately. Glucose is split first, in the cytoplasm. Its carbons are released as CO₂ across pyruvate oxidation and the Krebs cycle. The captured electrons (on NADH and FADH₂) are spent later, by the electron transport chain and ATP synthase. The chemiosmotic step — protons flowing back through ATP synthase — is always last."
+  }
+}

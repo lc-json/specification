@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://lc-json.org/1.0-rc.3/content-item.schema.json",
+  "title": "ContentItem Schema",
+  "description": "Reading/content page with HTML content",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "item-base.schema.json"
+    },
+    {
+      "properties": {
+        "type": {
+          "const": "content"
+        },
+        "html": {
+          "type": "string",
+          "description": "HTML content for this item",
+          "default": ""
+        }
+      },
+      "required": [
+        "html"
+      ]
+    }
+  ]
+}
